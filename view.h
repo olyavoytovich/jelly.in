@@ -15,13 +15,10 @@ class View : public QMainWindow {
   explicit View(GameController* game_controller);
   ~View();
 
- private slots:
-  void paintEvent(QPaintEvent*);
-  void Update();
-
  private:
   GameController* game_controller_;
   QTimer* timer_;
+  void paintEvent(QPaintEvent*);
 };
 
 #endif  // VIEW_H_
