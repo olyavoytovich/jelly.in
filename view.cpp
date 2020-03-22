@@ -1,14 +1,9 @@
 #include "view.h"
 
 #include <QObject>
-#include <QPaintEvent>
 #include <QPainter>
-#include <QTimer>
 
 #include "game_controller.h"
-#include "game_object.h"
-
-View::View() : game_controller_(nullptr), timer_(nullptr) {}
 
 View::View(GameController* game_controller)
     : game_controller_(game_controller) {

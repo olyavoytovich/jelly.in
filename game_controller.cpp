@@ -1,8 +1,5 @@
 #include "game_controller.h"
 
-#include "game_object.h"
-#include "view.h"
-
 GameController::GameController() {
   view_ = new View(this);
   view_->resize(800, 600);
@@ -15,7 +12,7 @@ void GameController::Update() {
   view_->repaint();
 }
 
-GameObject* GameController::GetGameObject() { return game_object_; }
+GameObject* GameController::GetGameObject() const { return game_object_; }
 
 GameController::~GameController() {
   delete view_;

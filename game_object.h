@@ -1,9 +1,8 @@
 #ifndef GAME_OBJECT_H_
 #define GAME_OBJECT_H_
 
+#include <QPainter>
 #include <QRect>
-
-class QPainter;
 
 class GameObject {
  public:
@@ -11,7 +10,7 @@ class GameObject {
   ~GameObject() = default;
 
   void Update();
-  void Draw(QPainter*);
+  void Draw(QPainter* painter) const;
 
  private:
   QRect rect_;

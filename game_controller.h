@@ -1,15 +1,15 @@
 #ifndef GAME_CONTROLLER_H_
 #define GAME_CONTROLLER_H_
 
-class View;
-class GameObject;
+#include "game_object.h"
+#include "view.h"
 
 class GameController {
  public:
   GameController();
   ~GameController();
 
-  GameObject* GetGameObject();
+  GameObject* GetGameObject() const;
   void Update();
 
  private:

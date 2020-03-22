@@ -1,8 +1,5 @@
 #include "game_object.h"
 
-#include <QPainter>
-#include <iostream>
-
 GameObject::GameObject() : rect_(300, 300, 100, 100), dx_(2) {}
 
 void GameObject::Update() {
@@ -11,10 +8,10 @@ void GameObject::Update() {
   } else if (rect_.x() + dx_ < 0) {
     dx_ = 2;
   }
-  rect_.moveTo(rect_.x() + dx_, rect_.y());
+  rect_.translate(dx_, 0);
 }
 
-void GameObject::Draw(QPainter* painter) {
+void GameObject::Draw(QPainter* painter) const {
   painter->setBrush(QBrush("#c9a0dc"));
   painter->drawEllipse(rect_);
 }
