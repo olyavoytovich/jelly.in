@@ -1,6 +1,8 @@
 #ifndef GAME_CONTROLLER_H_
 #define GAME_CONTROLLER_H_
 
+#include <memory>
+
 #include "abstract_game_controller.h"
 #include "abstract_view.h"
 #include "view.h"
