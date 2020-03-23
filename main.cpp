@@ -4,6 +4,7 @@
 
 int main(int argc, char* argv[]) {
   QApplication a(argc, argv);
-  GameController game_controller;
+  std::shared_ptr<GameController>
+      game_controller = std::make_shared<GameController>();
   return a.exec();
 }

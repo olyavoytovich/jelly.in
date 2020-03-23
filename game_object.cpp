@@ -12,6 +12,8 @@ void GameObject::Update() {
 }
 
 void GameObject::Draw(QPainter* painter) const {
+  painter->save();
   painter->setBrush(QBrush("#c9a0dc"));
   painter->drawEllipse(rect_);
+  painter->restore();
 }

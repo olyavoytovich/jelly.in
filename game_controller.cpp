@@ -1,10 +1,9 @@
 #include "game_controller.h"
 
-GameController::GameController() {
-  view_ = new View(this);
-  view_->resize(800, 600);
+GameController::GameController()
+    : view_(std::make_shared<View>(this)),
+      game_object_(std::make_shared<GameObject>()) {
   view_->show();
-  game_object_ = new GameObject();
 }
 
 void GameController::Update() {
@@ -12,9 +11,6 @@ void GameController::Update() {
   view_->repaint();
 }
 
-GameObject* GameController::GetGameObject() const { return game_object_; }
-
-GameController::~GameController() {
-  delete view_;
-  delete game_object_;
+void GameController::Draw(QPainter* painter) const {
+  game_object_->Draw(painter);
 }

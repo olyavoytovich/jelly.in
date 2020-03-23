@@ -1,20 +1,21 @@
 #ifndef GAME_CONTROLLER_H_
 #define GAME_CONTROLLER_H_
 
-#include "game_object.h"
+#include "abstract_game_controller.h"
+#include "abstract_view.h"
 #include "view.h"
 
-class GameController {
+class GameController : public AbstractGameController {
  public:
   GameController();
-  ~GameController();
+  ~GameController() override = default;
 
-  GameObject* GetGameObject() const;
-  void Update();
+  void Update() override;
+  void Draw(QPainter* painter) const override;
 
  private:
-  View* view_;
-  GameObject* game_object_;
+  std::shared_ptr<View> view_;
+  std::shared_ptr<GameObject> game_object_;
 };
 
 #endif  // GAME_CONTROLLER_H_
