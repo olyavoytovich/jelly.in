@@ -2,11 +2,12 @@
 
 View::View(AbstractGameController* game_controller)
     : game_controller_(game_controller),
-      timer_(std::make_shared<QTimer>(this)) {
+      timer_(new QTimer(this)) {
   this->resize(800, 600);
   timer_->setInterval(16);
-  connect(timer_.get(), &QTimer::timeout, this,
-          [&]() { game_controller_->Update(); });
+  connect(timer_, &QTimer::timeout, this, [this]() {
+    game_controller_->Update();
+  });
   timer_->start();
 }
 

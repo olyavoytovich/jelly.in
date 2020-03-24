@@ -1,10 +1,10 @@
 #ifndef VIEW_H_
 #define VIEW_H_
 
+#include <QMainWindow>
 #include <QObject>
 #include <QPaintEvent>
 #include <QTimer>
-#include <memory>
 
 #include "abstract_game_controller.h"
 #include "abstract_view.h"
@@ -17,11 +17,11 @@ class View : public QMainWindow, public AbstractView {
   ~View() override = default;
 
  private:
-  AbstractGameController* game_controller_ = nullptr;
-  std::shared_ptr<QTimer> timer_;
+  void paintEvent(QPaintEvent*) override;
 
  private:
-  void paintEvent(QPaintEvent*) override;
+  AbstractGameController* game_controller_ = nullptr;
+  QTimer* timer_;
 };
 
 #endif  // VIEW_H_

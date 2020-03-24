@@ -5,6 +5,7 @@
 
 #include "abstract_game_controller.h"
 #include "abstract_view.h"
+#include "game_object.h"
 #include "view.h"
 
 class GameController : public AbstractGameController {
