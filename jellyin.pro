@@ -14,6 +14,8 @@ SOURCES += \
         game_controller.cpp \
         game_object.cpp \
         main.cpp \
+        map.cpp \
+        map_loader.cpp \
         view.cpp
 
 HEADERS += \
@@ -21,5 +23,10 @@ HEADERS += \
     abstract_view.h \
     game_controller.h \
     game_object.h \
+    map.h \
+    map_loader.h \
     view.h
+
+RESOURCES += \
+    resources.qrc
 

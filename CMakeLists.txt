@@ -17,7 +17,10 @@ find_package(Qt5Widgets REQUIRED)
 add_executable(jellyin  main.cpp
                         game_controller.cpp
                         game_object.cpp
-                        view.cpp)
+                        map.cpp
+                        view.cpp
+                        map_loader.cpp
+                        resources.qrc)
 
 target_link_libraries(jellyin Qt5::Core)
 target_link_libraries(jellyin Qt5::Widgets)
