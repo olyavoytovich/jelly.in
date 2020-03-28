@@ -6,6 +6,8 @@
 #include "abstract_game_controller.h"
 #include "abstract_view.h"
 #include "game_object.h"
+#include "map.h"
+#include "map_loader.h"
 #include "view.h"
 
 class GameController : public AbstractGameController {
@@ -18,7 +20,7 @@ class GameController : public AbstractGameController {
 
  private:
   std::shared_ptr<View> view_;
-  std::shared_ptr<GameObject> game_object_;
+  std::shared_ptr<Map> map_;
 };
 
 #endif  // GAME_CONTROLLER_H_

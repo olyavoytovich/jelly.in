@@ -2,15 +2,15 @@
 
 GameController::GameController()
     : view_(std::make_shared<View>(this)),
-      game_object_(std::make_shared<GameObject>()) {
+      map_(MapLoader::LoadMap("test_map")) {
   view_->show();
 }
 
 void GameController::Update() {
-  game_object_->Update();
+  map_->Update();
   view_->repaint();
 }
 
 void GameController::Draw(QPainter* painter) const {
-  game_object_->Draw(painter);
+  map_->Draw(painter);
 }

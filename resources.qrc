@@ -1,0 +1,6 @@
+<RCC>
+    <qresource>
+        <file>data/test_map.json</file>
+        <file>images/test_map.png</file>
+    </qresource>
+</RCC>

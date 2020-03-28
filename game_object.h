@@ -2,18 +2,19 @@
 #define GAME_OBJECT_H_
 
 #include <QPainter>
-#include <QRect>
+#include <QPolygon>
+#include <utility>
 
 class GameObject {
  public:
-  GameObject();
+  explicit GameObject(QPolygon polygon, int dx = 0);
   ~GameObject() = default;
 
   void Update();
   void Draw(QPainter* painter) const;
 
  private:
-  QRect rect_;
+  QPolygon polygon_;
   int dx_;
 };
 

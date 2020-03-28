@@ -1,19 +1,16 @@
 #include "game_object.h"
 
-GameObject::GameObject() : rect_(300, 300, 100, 100), dx_(2) {}
+GameObject::GameObject(QPolygon polygon, int dx)
+    : polygon_(std::move(polygon)), dx_(dx) {}
 
 void GameObject::Update() {
-  if (rect_.x() + dx_ + rect_.width() > 800) {
-    dx_ = -2;
-  } else if (rect_.x() + dx_ < 0) {
-    dx_ = 2;
-  }
-  rect_.translate(dx_, 0);
+  polygon_.translate(dx_, 0);
 }
 
 void GameObject::Draw(QPainter* painter) const {
   painter->save();
-  painter->setBrush(QBrush("#c9a0dc"));
-  painter->drawEllipse(rect_);
+  painter->setBrush(QBrush(QColor(201, 160, 220, 50),
+                           Qt::BrushStyle::BDiagPattern));
+  painter->drawPolygon(polygon_);
   painter->restore();
 }
