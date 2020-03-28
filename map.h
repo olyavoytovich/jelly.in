@@ -9,17 +9,21 @@
 
 class Map {
  public:
-  explicit Map(QImage* map_image);
-  ~Map();
+  explicit Map(const QImage& map_image);
+  ~Map() = default;
 
   void Update();
-  void Draw(QPainter* painter) const;
+  void Draw(QPainter* painter);
 
   void AddGameObject(const std::shared_ptr<GameObject>& object);
 
  private:
+  void UpdateImageScale(int width, int height);
+
+ private:
   std::vector<std::shared_ptr<GameObject>> game_objects_;
-  QImage* map_image_;
+  QImage map_image_;
+  QImage scaled_image_;
 };
 
 #endif  // MAP_H_
