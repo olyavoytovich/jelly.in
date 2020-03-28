@@ -23,7 +23,7 @@ class Map {
  private:
   std::vector<std::shared_ptr<GameObject>> game_objects_;
   QImage map_image_;
-  QImage scaled_image_;
+  QImage scaled_map_image_;
 };
 
 #endif  // MAP_H_

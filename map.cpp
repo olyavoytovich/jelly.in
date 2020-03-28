@@ -1,7 +1,7 @@
 #include "map.h"
 
 Map::Map(const QImage& map_image)
-    : map_image_(map_image), scaled_image_(map_image) {}
+    : map_image_(map_image), scaled_map_image_(map_image) {}
 
 void Map::Update() {
   for (const auto& object : game_objects_) {
@@ -13,7 +13,7 @@ void Map::Draw(QPainter* painter) {
   painter->save();
 
   UpdateImageScale(painter->window().width(), painter->window().height());
-  painter->drawImage(0, 0, scaled_image_);
+  painter->drawImage(0, 0, scaled_map_image_);
 
   double scale = std::min(
       static_cast<double>(painter->window().width()) / map_image_.width(),
@@ -32,7 +32,8 @@ void Map::AddGameObject(const std::shared_ptr<GameObject>& object) {
 }
 
 void Map::UpdateImageScale(int width, int height) {
-  if (scaled_image_.width() != width && scaled_image_.height() != height) {
-    scaled_image_ = map_image_.scaled(width, height, Qt::KeepAspectRatio);
+  if (scaled_map_image_.width() != width
+      && scaled_map_image_.height() != height) {
+    scaled_map_image_ = map_image_.scaled(width, height, Qt::KeepAspectRatio);
   }
 }
