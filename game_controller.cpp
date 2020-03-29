@@ -12,7 +12,7 @@ GameController::GameController()
 }
 
 void GameController::Update(int time) {
-  world_->Step((float) (time / 1000.), 6, 2);
+  world_->Step(static_cast<float> (time / 1000.), 6, 2);
   view_->repaint();
 }
 

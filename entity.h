@@ -1,5 +1,5 @@
-#ifndef ENTITY_H
-#define ENTITY_H
+#ifndef ENTITY_H_
+#define ENTITY_H_
 
 #include "box2d/box2d.h"
 #include "game_object.h"
@@ -21,4 +21,4 @@ class Entity : public GameObject {
   b2Body* body_;
 };
 
-#endif //ENTITY_H
+#endif  // ENTITY_H_

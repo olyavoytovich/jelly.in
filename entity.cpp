@@ -24,8 +24,8 @@ void Entity::DrawShape(QPainter* painter,
     case b2Shape::e_circle: {
       auto* circle = dynamic_cast<b2CircleShape*>(shape->GetShape());
       painter->drawEllipse(ToCoords(body->GetWorldCenter()),
-                           (int) (circle->m_radius),
-                           (int) (circle->m_radius));
+                           static_cast<int>(circle->m_radius),
+                           static_cast<int>(circle->m_radius));
     }
   }
   painter->restore();
@@ -70,7 +70,7 @@ void Entity::MakeObject(b2BodyType type) {
 }
 
 QPoint Entity::ToCoords(b2Vec2 position) const {
-  return QPoint(int(position.x), int(position.y));
+  return QPoint(static_cast<int>(position.x), static_cast<int>(position.y));
 }
 
 QVector<QPoint> Entity::ToCoords(QVector<b2Vec2> points) const {
