@@ -6,7 +6,7 @@ View::View(AbstractGameController* game_controller)
   this->resize(800, 600);
   timer_->setInterval(16);
   connect(timer_, &QTimer::timeout, this, [this]() {
-    game_controller_->Update();
+    game_controller_->Update(timer_->interval());
   });
   timer_->start();
 }

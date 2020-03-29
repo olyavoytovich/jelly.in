@@ -10,7 +10,7 @@
 #include "abstract_view.h"
 
 class View : public QMainWindow, public AbstractView {
-  Q_OBJECT
+ Q_OBJECT
 
  public:
   explicit View(AbstractGameController* game_controller);
