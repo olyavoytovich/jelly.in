@@ -20,8 +20,11 @@ file(GLOB box2d
 add_executable(jellyin main.cpp
         game_controller.cpp
         game_object.cpp
-        view.cpp
         entity.cpp
+        map.cpp
+        map_loader.cpp
+        resources.qrc
+        view.cpp
         ${box2d})
 
 target_link_libraries(jellyin Qt5::Core)

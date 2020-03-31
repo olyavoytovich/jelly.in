@@ -1,7 +1,8 @@
 #include "game_controller.h"
 
 GameController::GameController()
-    : view_(std::make_shared<View>(this)) {
+    : view_(std::make_shared<View>(this)),
+      map_(MapLoader::LoadMap("test_map")) {
   world_ = new b2World(b2Vec2(0, -10));
 
   QPoint position = QPoint(300, -300);
@@ -30,10 +31,13 @@ GameController::GameController()
 
 void GameController::Update(int time) {
   world_->Step(static_cast<float> (time / 1000.), 6, 2);
+  map_->Update();
   view_->repaint();
 }
 
 void GameController::Draw(QPainter* painter) const {
+  map_->Draw(painter);
+  
   painter->setBrush(Qt::BDiagPattern);
   entity_->Draw(painter);
   entity2_->Draw(painter);

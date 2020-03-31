@@ -15,6 +15,10 @@ SOURCES += \
         game_controller.cpp \
         game_object.cpp \
         main.cpp \
+        map.cpp \
+        map_loader.cpp \
+        view.cpp \
+
         src/box2d/collision/b2_broad_phase.cpp \
         src/box2d/collision/b2_chain_shape.cpp \
         src/box2d/collision/b2_circle_shape.cpp \
@@ -60,12 +64,18 @@ SOURCES += \
         src/box2d/dynamics/b2_wheel_joint.cpp \
         src/box2d/dynamics/b2_world.cpp \
         src/box2d/dynamics/b2_world_callbacks.cpp \
-        src/box2d/rope/b2_rope.cpp \
-        view.cpp
+        src/box2d/rope/b2_rope.cpp
 
 HEADERS += \
     abstract_game_controller.h \
     abstract_view.h \
+    game_controller.h \
+    game_object.h \
+    entity.h \
+    map.h \
+    map_loader.h \
+    view.h \
+    
     box2d/b2_block_allocator.h \
     box2d/b2_body.h \
     box2d/b2_broad_phase.h \
@@ -104,9 +114,7 @@ HEADERS += \
     box2d/b2_world.h \
     box2d/b2_world_callbacks.h \
     box2d/box2d.h \
-    entity.h \
-    game_controller.h \
-    game_object.h \
+
     src/box2d/dynamics/b2_chain_circle_contact.h \
     src/box2d/dynamics/b2_chain_polygon_contact.h \
     src/box2d/dynamics/b2_circle_contact.h \
@@ -115,8 +123,7 @@ HEADERS += \
     src/box2d/dynamics/b2_edge_polygon_contact.h \
     src/box2d/dynamics/b2_island.h \
     src/box2d/dynamics/b2_polygon_circle_contact.h \
-    src/box2d/dynamics/b2_polygon_contact.h \
-    view.h
+    src/box2d/dynamics/b2_polygon_contact.h
 
-
-
+RESOURCES += \
+    resources.qrc

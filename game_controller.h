@@ -10,6 +10,8 @@
 #include "box2d/box2d.h"
 #include "entity.h"
 #include "game_object.h"
+#include "map.h"
+#include "map_loader.h"
 #include "view.h"
 
 class GameController : public AbstractGameController {
@@ -22,10 +24,13 @@ class GameController : public AbstractGameController {
 
  private:
   std::shared_ptr<View> view_;
+
   b2World* world_;
   Entity* entity_;
   Entity* entity2_;
   Entity* entity3_;
+
+  std::shared_ptr<Map> map_;
 };
 
 #endif  // GAME_CONTROLLER_H_

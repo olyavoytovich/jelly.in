@@ -1,7 +1,5 @@
 #include "game_object.h"
 
-#include <utility>
-
 GameObject::GameObject(QPolygon polygon, int dx)
     : polygon_(std::move(polygon)), dx_(dx) {}
 
@@ -11,7 +9,8 @@ void GameObject::Update() {
 
 void GameObject::Draw(QPainter* painter) const {
   painter->save();
-  painter->setBrush(QBrush("#c9a0dc"));
+  painter->setBrush(QBrush(QColor(201, 160, 220, 50),
+                           Qt::BrushStyle::BDiagPattern));
   painter->drawPolygon(polygon_);
   painter->restore();
 }
