@@ -2,6 +2,8 @@
 #define GAME_CONTROLLER_H_
 
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "abstract_game_controller.h"
 #include "abstract_view.h"
