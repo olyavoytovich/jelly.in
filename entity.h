@@ -1,6 +1,9 @@
 #ifndef ENTITY_H_
 #define ENTITY_H_
 
+#include <utility>
+#include <vector>
+
 #include "box2d/box2d.h"
 #include "game_object.h"
 

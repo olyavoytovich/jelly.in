@@ -81,9 +81,9 @@ void Entity::DrawShape(QPainter* painter,
 }
 
 void Entity::Draw(QPainter* painter) const {
-  // fixter используется, чтобы прикрепить форму к телу для обнаружения коллизий.
-  // Содержит необходимые для отрисовки геометрические данные, кроме них -
-  // трение, фильтр коллизий и др.
+  // fixter используется, чтобы прикрепить форму к телу для обнаружения
+  // коллизий. Содержит необходимые для отрисовки геометрические данные,
+  // кроме них - трение, фильтр коллизий и др.
   for (b2Fixture* f_list = body_->GetFixtureList(); f_list;
        f_list = f_list->GetNext()) {
     DrawShape(painter, f_list, body_);
@@ -97,15 +97,17 @@ QPoint Entity::ToCoords(b2Vec2 position) const {
 b2PolygonShape Entity::AddShape(const QPolygon& polygon) const {
   b2PolygonShape shape;
   std::vector<QPoint> poly_points = polygon.toStdVector();
+  std::vector<b2Vec2> poly_points2;
   int n = poly_points.size();
+  b2Vec2 vec_2;
 
-  b2Vec2 points[n];
   for (int i = 0; i < n; i++) {
-    points[i].Set(static_cast<float>(poly_points[i].x()),
-                  static_cast<float>(poly_points[i].y()));
+    vec_2.Set(static_cast<float>(poly_points[i].x()),
+              static_cast<float>(poly_points[i].y()));
+    poly_points2.push_back(vec_2);
   }
 
-  shape.Set(points, n);
+  shape.Set(poly_points2.data(), n);
   return shape;
 }
 
