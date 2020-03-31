@@ -37,7 +37,7 @@ void GameController::Update(int time) {
 
 void GameController::Draw(QPainter* painter) const {
   map_->Draw(painter);
-  
+
   painter->setBrush(Qt::BDiagPattern);
   entity_->Draw(painter);
   entity2_->Draw(painter);

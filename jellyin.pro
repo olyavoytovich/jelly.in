@@ -18,7 +18,6 @@ SOURCES += \
         map.cpp \
         map_loader.cpp \
         view.cpp \
-
         src/box2d/collision/b2_broad_phase.cpp \
         src/box2d/collision/b2_chain_shape.cpp \
         src/box2d/collision/b2_circle_shape.cpp \
@@ -75,7 +74,6 @@ HEADERS += \
     map.h \
     map_loader.h \
     view.h \
-    
     box2d/b2_block_allocator.h \
     box2d/b2_body.h \
     box2d/b2_broad_phase.h \
@@ -114,7 +112,6 @@ HEADERS += \
     box2d/b2_world.h \
     box2d/b2_world_callbacks.h \
     box2d/box2d.h \
-
     src/box2d/dynamics/b2_chain_circle_contact.h \
     src/box2d/dynamics/b2_chain_polygon_contact.h \
     src/box2d/dynamics/b2_circle_contact.h \
