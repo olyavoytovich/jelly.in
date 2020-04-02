@@ -17,7 +17,7 @@
 class GameController : public AbstractGameController {
  public:
   GameController();
-  ~GameController() override;
+  ~GameController() override = default;
 
   void Update(int time) override;
   void Draw(QPainter* painter) const override;
@@ -25,10 +25,11 @@ class GameController : public AbstractGameController {
  private:
   std::shared_ptr<View> view_;
 
-  b2World* world_;
-  Entity* entity_;
-  Entity* entity2_;
-  Entity* entity3_;
+  std::shared_ptr<b2World> world_;
+
+  std::shared_ptr<Entity> entity_;
+  std::shared_ptr<Entity> entity2_;
+  std::shared_ptr<Entity> entity3_;
 
   std::shared_ptr<Map> map_;
 };
