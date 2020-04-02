@@ -17,27 +17,27 @@
 // то каждой форме можно задавать свои координаты (own_position).
 
 Entity::Entity(const QPolygon& polygon,
-               std::shared_ptr<b2World> world,
+               const std::shared_ptr<b2World>& world,
                b2BodyType type,
                QPoint position)
-    : world_(std::move(world)) {
+    : world_(world) {
   MakeObject(type, polygon, position);
 }
 
 Entity::Entity(int radius,
-               std::shared_ptr<b2World> world,
+               const std::shared_ptr<b2World>& world,
                b2BodyType type,
-               QPoint position) : world_(std::move(world)) {
+               QPoint position) : world_(world) {
   MakeObject(type, radius, position);
 }
 
-Entity::Entity(std::shared_ptr<b2World> world,
+Entity::Entity(const std::shared_ptr<b2World>& world,
                b2BodyType type,
                QPoint position, const
                std::vector<std::pair<int, QPoint>>& vec_of_circs,
                const std::vector<std::pair<QPolygon,
                                            QPoint>>& vec_of_polygons) :
-    world_(std::move(world)) {
+    world_(world) {
   MakeBody(type, position);
 
   for (auto const& circ : vec_of_circs) {
