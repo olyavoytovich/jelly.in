@@ -8,11 +8,11 @@ GameController::GameController()
   std::vector<std::pair<int, QPoint>> vec_of_circs;
   std::vector<std::pair<QPolygon, QPoint>> vec_of_polygons;
 
-  vec_of_circs.emplace_back(30, QPoint(10, 30));
-  vec_of_polygons.emplace_back(QRect(10, 10, 10, 10), QPoint(60, 10));
+  vec_of_circs.emplace_back(30, QPoint(80, 30));
+  vec_of_polygons.emplace_back(QRect(10, 10, 10, 10), QPoint(0, 0));
 
   entity_ =
-      std::make_shared<Entity>(QPolygon({QPoint(15, 0), QPoint(30, 0),
+      std::make_shared<Entity>(QPolygon({QPoint(15, 0), QPoint(30, 60),
                                          QPoint(50, 30), QPoint(0, 30)}),
                                world_,
                                b2_staticBody,

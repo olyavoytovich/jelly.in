@@ -21,14 +21,20 @@ Entity::Entity(const QPolygon& polygon,
                b2BodyType type,
                QPoint position)
     : world_(world) {
-  MakeObject(type, polygon, position);
+  MakeBody(type, position);
+  b2PolygonShape shape = AddShape(polygon);
+
+  body_->CreateFixture(&shape, 1);
 }
 
 Entity::Entity(int radius,
                const std::shared_ptr<b2World>& world,
                b2BodyType type,
                QPoint position) : world_(world) {
-  MakeObject(type, radius, position);
+  MakeBody(type, position);
+  b2CircleShape shape = AddShape(radius);
+
+  body_->CreateFixture(&shape, 1);
 }
 
 Entity::Entity(const std::shared_ptr<b2World>& world,
@@ -40,12 +46,12 @@ Entity::Entity(const std::shared_ptr<b2World>& world,
     world_(world) {
   MakeBody(type, position);
 
-  for (auto const& circ : vec_of_circs) {
+  for (const auto& circ : vec_of_circs) {
     b2CircleShape shape = AddShape(circ.first, circ.second);
     body_->CreateFixture(&shape, 1);
   }
 
-  for (auto const& polygon : vec_of_polygons) {
+  for (const auto& polygon : vec_of_polygons) {
     b2PolygonShape shape = AddShape(polygon.first, polygon.second);
     body_->CreateFixture(&shape, 1);
   }
@@ -56,12 +62,12 @@ Entity::~Entity() {
 }
 
 void Entity::Draw(QPainter* painter) const {
-  // fixter используется, чтобы прикрепить форму к телу для обнаружения
+  // fixture используется, чтобы прикрепить форму к телу для обнаружения
   // коллизий. Содержит необходимые для отрисовки геометрические данные,
   // кроме них - трение, фильтр коллизий и др.
-  for (b2Fixture* f_list = body_->GetFixtureList(); f_list;
-       f_list = f_list->GetNext()) {
-    DrawShape(painter, f_list, body_);
+  for (b2Fixture* fixture = body_->GetFixtureList(); fixture;
+       fixture = fixture->GetNext()) {
+    DrawShape(painter, fixture, body_);
   }
 }
 
@@ -102,43 +108,25 @@ b2PolygonShape Entity::AddShape(const QPolygon& polygon,
                              static_cast<float>(points.y()));
   }
 
+  shape.m_centroid.Set(static_cast<float>(own_position.x()),
+                       static_cast<float>(own_position.y()));
   shape.Set(poly_points.data(), polygon.size());
-  shape.m_centroid.Set(static_cast<float >(own_position.x()),
-                       static_cast<float >(own_position.y()));
-
   return shape;
 }
 
 b2CircleShape Entity::AddShape(int radius, QPoint own_position) const {
   b2CircleShape shape;
   shape.m_radius = static_cast<float>(radius);
-  shape.m_p.Set(static_cast<float >(own_position.x()),
-                static_cast<float >(own_position.y()));
+  shape.m_p.Set(static_cast<float>(own_position.x()),
+                static_cast<float>(own_position.y()));
 
   return shape;
 }
 
-void Entity::MakeObject(b2BodyType type,
-                        const QPolygon& polygon,
-                        QPoint position) {
-  MakeBody(type, position);
-
-  b2PolygonShape shape = AddShape(polygon);
-
-  body_->CreateFixture(&shape, 1);
-}
-
-void Entity::MakeObject(b2BodyType type, int radius, QPoint position) {
-  MakeBody(type, position);
-  b2CircleShape shape = AddShape(radius);
-
-  body_->CreateFixture(&shape, 1);
-}
-
 void Entity::MakeBody(b2BodyType type, QPoint position) {
   b2BodyDef bdef;
-  bdef.position.Set(static_cast<float >(position.x()),
-                    static_cast<float >(position.y()));
+  bdef.position.Set(static_cast<float>(position.x()),
+                    static_cast<float>(position.y()));
   bdef.type = type;
 
   body_ = world_->CreateBody(&bdef);

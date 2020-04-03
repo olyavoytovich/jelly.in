@@ -42,9 +42,6 @@ class Entity : public GameObject {
   b2CircleShape AddShape(int radius, QPoint position = QPoint(0, 0)) const;
 
  private:
-  void MakeObject(b2BodyType type, const QPolygon& polygon, QPoint position);
-  void MakeObject(b2BodyType type, int radius, QPoint position);
-
   void MakeBody(b2BodyType type, QPoint position);
 
   QPoint ToCoords(b2Vec2 position) const;
