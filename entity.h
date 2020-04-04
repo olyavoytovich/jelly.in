@@ -69,6 +69,7 @@ class Entity : public GameObject {
  private:
   std::shared_ptr<b2World> world_;
   b2Body* body_ = nullptr;
+  const float kBodyDensity = 1;
 };
 
 #endif  // ENTITY_H_

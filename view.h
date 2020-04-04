@@ -22,8 +22,8 @@ class View : public QMainWindow, public AbstractView {
 
  private:
   AbstractGameController* game_controller_ = nullptr;
-  QTimer* timer_;
   int timer_id_;
+  const int kFrameInterval = 16;
 };
 
 #endif  // VIEW_H_

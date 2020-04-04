@@ -1,12 +1,9 @@
 #include "view.h"
 
 View::View(AbstractGameController* game_controller)
-    : game_controller_(game_controller),
-      timer_(new QTimer(this)) {
+    : game_controller_(game_controller) {
   this->resize(800, 600);
-  timer_->setInterval(16);
-  timer_->start();
-  timer_id_ = startTimer(16);
+  timer_id_ = startTimer(kFrameInterval);
 }
 
 void View::paintEvent(QPaintEvent*) {
@@ -16,6 +13,6 @@ void View::paintEvent(QPaintEvent*) {
 
 void View::timerEvent(QTimerEvent* event) {
   if (event->timerId() == timer_id_) {
-    game_controller_->Update(timer_->interval());
+    game_controller_->Update(kFrameInterval);
   }
 }
