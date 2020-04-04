@@ -13,7 +13,7 @@ struct PolygonShape {
   QPoint shape_position;
 
   PolygonShape(QPolygon polygon, QPoint shape_position) :
-      polygon(std::move(polygon)), shape_position(shape_position) {};
+      polygon(std::move(polygon)), shape_position(shape_position) {}
 };
 
 struct CircleShape {
@@ -21,7 +21,7 @@ struct CircleShape {
   QPoint shape_position;
 
   CircleShape(int radius, QPoint shape_position)
-      : radius(radius), shape_position(shape_position) {};
+      : radius(radius), shape_position(shape_position) {}
 };
 
 class Entity : public GameObject {
