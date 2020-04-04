@@ -21,9 +21,11 @@ class View : public QMainWindow, public AbstractView {
   void timerEvent(QTimerEvent* event) override;
 
  private:
+  const int kFrameInterval = 16;
+
+ private:
   AbstractGameController* game_controller_ = nullptr;
   int timer_id_;
-  const int kFrameInterval = 16;
 };
 
 #endif  // VIEW_H_

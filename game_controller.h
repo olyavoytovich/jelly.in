@@ -23,6 +23,10 @@ class GameController : public AbstractGameController {
   void Draw(QPainter* painter) const override;
 
  private:
+  const int kVelocityIterations = 6;
+  const int kPositionIterations = 2;
+
+ private:
   std::shared_ptr<View> view_;
 
   std::shared_ptr<b2World> world_;

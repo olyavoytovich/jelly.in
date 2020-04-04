@@ -5,28 +5,28 @@ GameController::GameController()
       map_(MapLoader::LoadMap("test_map")),
       world_(std::make_shared<b2World>(b2Vec2(0, -10))) {
 
-  std::vector<CircleShape> vec_of_circs;
-  std::vector<PolygonShape> vec_of_polygons;
+  std::vector<CircleShape> circles;
+  std::vector<PolygonShape> polygons;
 
-  PolygonShape polygon = PolygonShape({QRect(10, 10, 10, 10), QPoint(0, 0)});
+  circles.emplace_back(CircleShape({30, QPoint(80, 30)}));
+  polygons.emplace_back(PolygonShape({QRect(10, 10, 10, 10), QPoint(0, 0)}));
 
-  CircleShape circle = CircleShape({30, QPoint(80, 30)});
+  entity_ = std::make_shared<Entity>(world_,
+                                     b2_staticBody,
+                                     QPoint(300, -300),
+                                     QPolygon({QPoint(15, 0), QPoint(30, 60),
+                                               QPoint(50, 30), QPoint(0, 30)}));
 
-  vec_of_circs.emplace_back(circle);
-  vec_of_polygons.emplace_back(polygon);
-
-  entity_ =
-      std::make_shared<Entity>(world_, b2_staticBody, QPoint(300, -300),
-                               QPolygon({QPoint(15, 0), QPoint(30, 60),
-                                         QPoint(50, 30), QPoint(0, 30)}));
-  entity2_ =
-      std::make_shared<Entity>(world_, b2_dynamicBody, QPoint(200, -100), 50);
+  entity2_ = std::make_shared<Entity>(world_,
+                                      b2_dynamicBody,
+                                      QPoint(200, -100),
+                                      50);
 
   entity3_ = std::make_shared<Entity>(world_,
                                       b2_dynamicBody,
                                       QPoint(500, -100),
-                                      vec_of_circs,
-                                      vec_of_polygons);
+                                      circles,
+                                      polygons);
 
   view_->show();
 }
@@ -40,7 +40,9 @@ void GameController::Update(int time) {
   // Использование меньшего количества повышают производительность, но страдает
   // точность. Аналогично, использование большего количества итераций снижает
   // производительность, но улучшает качество вашей симуляции.
-  world_->Step(static_cast<float>(time / 1000.0), 6, 2);
+  world_->Step(static_cast<float>(time / 1000.0),
+               kVelocityIterations,
+               kPositionIterations);
   map_->Update();
   view_->repaint();
 }

@@ -10,22 +10,11 @@
 // вправо, Oy - влево. Поэтому, чтобы динамические объекты летели к земле,
 // а не в небо, делаем painter->scale(1, -1);, тогда направление оси ординат
 // меняется, и мы получаем нужный результат.
-// Далее position - координаты данного тела в координатной системе окна.
-// А own_position - это координаты данной формы(!не тела) в системе координат
+// Далее body_position - координаты данного тела в координатной системе окна.
+// А shape_position - это координаты данной формы(!не тела) в системе координат
 // тела. Можно сказать, что у каждого тела есть свой мини-мир со своими
 // локальными координатами, и если нужно создать тело из нескольких форм,
-// то каждой форме можно задавать свои координаты (own_position).
-
-
-PolygonShape::PolygonShape(QPolygon polygon, QPoint own_position) {
-  this->polygon = std::move(polygon);
-  this->own_position = own_position;
-}
-
-CircleShape::CircleShape(int radius, QPoint own_position) {
-  this->radius = radius;
-  this->own_position = own_position;
-}
+// то каждой форме можно задавать свои координаты (shape_position).
 
 Entity::Entity(std::shared_ptr<b2World> world,
                b2BodyType body_type,
@@ -33,7 +22,7 @@ Entity::Entity(std::shared_ptr<b2World> world,
                const QPolygon& polygon)
     : world_(std::move(world)) {
   InitializeBody(body_type, body_position);
-  b2PolygonShape shape = CreateShape(polygon);
+  b2PolygonShape shape = CreatePolygonShape(polygon);
   body_->CreateFixture(&shape, kBodyDensity);
 }
 
@@ -42,7 +31,7 @@ Entity::Entity(std::shared_ptr<b2World> world,
                QPoint body_position,
                int radius) : world_(std::move(world)) {
   InitializeBody(body_type, body_position);
-  b2CircleShape shape = CreateShape(radius);
+  b2CircleShape shape = CreateCircleShape(radius);
   body_->CreateFixture(&shape, kBodyDensity);
 }
 
@@ -54,13 +43,13 @@ Entity::Entity(std::shared_ptr<b2World> world,
     world_(std::move(world)) {
   InitializeBody(body_type, body_position);
 
-  for (auto&&[radius, own_position] : circles) {
-    b2CircleShape shape = CreateShape(radius, own_position);
+  for (auto&&[radius, shape_position] : circles) {
+    b2CircleShape shape = CreateCircleShape(radius, shape_position);
     body_->CreateFixture(&shape, kBodyDensity);
   }
 
-  for (auto&&[polygon, own_position] : polygons) {
-    b2PolygonShape shape = CreateShape(polygon, own_position);
+  for (auto&&[polygon, shape_position] : polygons) {
+    b2PolygonShape shape = CreatePolygonShape(polygon, shape_position);
     body_->CreateFixture(&shape, kBodyDensity);
   }
 }
@@ -79,8 +68,7 @@ void Entity::Draw(QPainter* painter) const {
   }
 }
 
-void Entity::DrawShape(QPainter* painter,
-                       b2Fixture* shape) const {
+void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
   painter->save();
   painter->scale(1, -1);
 
@@ -90,7 +78,7 @@ void Entity::DrawShape(QPainter* painter,
       auto polygon = dynamic_cast<b2PolygonShape*>(shape->GetShape());
       for (int i = 0; i < polygon->m_count; i++) {
         points.push_back(
-            ToPoint(body_->GetWorldPoint(polygon->m_vertices[i])));
+            Box2dPointToQPoint(body_->GetWorldPoint(polygon->m_vertices[i])));
       }
       painter->drawPolygon(QPolygon(points));
       break;
@@ -98,18 +86,21 @@ void Entity::DrawShape(QPainter* painter,
 
     case b2Shape::e_circle: {
       auto circle = dynamic_cast<b2CircleShape*>(shape->GetShape());
-      painter->drawEllipse(ToPoint(body_->GetWorldCenter()),
+      painter->drawEllipse(Box2dPointToQPoint(body_->GetWorldCenter()),
                            static_cast<int>(circle->m_radius),
                            static_cast<int>(circle->m_radius));
       break;
     }
-    default:break;
+
+    default: {
+      break;
+    }
   }
   painter->restore();
 }
 
-b2PolygonShape Entity::CreateShape(const QPolygon& polygon,
-                                   QPoint own_position) const {
+b2PolygonShape Entity::CreatePolygonShape(const QPolygon& polygon,
+                                          QPoint shape_position) const {
   std::vector<b2Vec2> polygon_points;
 
   for (auto point : polygon) {
@@ -117,30 +108,31 @@ b2PolygonShape Entity::CreateShape(const QPolygon& polygon,
   }
 
   b2PolygonShape shape;
-  shape.m_centroid.Set(static_cast<float>(own_position.x()),
-                       static_cast<float>(own_position.y()));
+  shape.m_centroid.Set(static_cast<float>(shape_position.x()),
+                       static_cast<float>(shape_position.y()));
   shape.Set(polygon_points.data(), polygon_points.size());
 
   return shape;
 }
 
-b2CircleShape Entity::CreateShape(int radius, QPoint own_position) const {
+b2CircleShape Entity::CreateCircleShape(int radius,
+                                        QPoint shape_position) const {
   b2CircleShape shape;
   shape.m_radius = static_cast<float>(radius);
-  shape.m_p.Set(static_cast<float>(own_position.x()),
-                static_cast<float>(own_position.y()));
+  shape.m_p.Set(static_cast<float>(shape_position.x()),
+                static_cast<float>(shape_position.y()));
 
   return shape;
 }
 
-void Entity::InitializeBody(b2BodyType body_type, QPoint position) {
-  b2BodyDef body_defenition;
-  body_defenition.position.Set(static_cast<float>(position.x()),
-                               static_cast<float>(position.y()));
-  body_defenition.type = body_type;
-  body_ = world_->CreateBody(&body_defenition);
+void Entity::InitializeBody(b2BodyType body_type, QPoint body_position) {
+  b2BodyDef body_definition;
+  body_definition.position.Set(static_cast<float>(body_position.x()),
+                               static_cast<float>(body_position.y()));
+  body_definition.type = body_type;
+  body_ = world_->CreateBody(&body_definition);
 }
 
-QPoint Entity::ToPoint(b2Vec2 position) const {
+QPoint Entity::Box2dPointToQPoint(b2Vec2 position) const {
   return QPoint(static_cast<int>(position.x), static_cast<int>(position.y));
 }
