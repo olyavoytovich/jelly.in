@@ -10,7 +10,7 @@
 #include "abstract_view.h"
 
 class View : public QMainWindow, public AbstractView {
-  Q_OBJECT
+ Q_OBJECT
 
  public:
   explicit View(AbstractGameController* game_controller);
@@ -18,10 +18,12 @@ class View : public QMainWindow, public AbstractView {
 
  private:
   void paintEvent(QPaintEvent*) override;
+  void timerEvent(QTimerEvent* event) override;
 
  private:
   AbstractGameController* game_controller_ = nullptr;
   QTimer* timer_;
+  int timer_id_;
 };
 
 #endif  // VIEW_H_

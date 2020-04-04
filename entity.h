@@ -8,43 +8,63 @@
 #include "box2d/box2d.h"
 #include "game_object.h"
 
+struct PolygonShape {
+  QPolygon polygon;
+  QPoint own_position;
+
+  PolygonShape(QPolygon polygon, QPoint own_position);
+};
+
+struct CircleShape {
+  int radius;
+  QPoint own_position;
+
+  CircleShape(int radius, QPoint own_position);
+};
+
 class Entity : public GameObject {
  public:
-  // конструктор, создающий тело из одной формы - полигон
-  Entity(const QPolygon& polygon,
-         std::shared_ptr<b2World> world,
-         b2BodyType type,
-         QPoint position);
-
-  // конструктор, создающий тело из одной формы - круг
-  Entity(int radius,
-         std::shared_ptr<b2World> world,
-         b2BodyType type,
-         QPoint position);
-
-  // конструктор, благодаря которому можно создать тело из нескольких форм со
-  // своими локальными координатами.
+  // Конструктор, создающий тело из одной формы - полигон.
   Entity(std::shared_ptr<b2World> world,
          b2BodyType type,
-         const QPoint& position,
-         const std::vector<std::pair<int, QPoint>>& vec_of_circs,
-         const std::vector<std::pair<QPolygon,
-                                     QPoint>>& vec_of_polygons);
+         QPoint position,
+         const QPolygon& polygon);
+
+  // Конструктор, создающий тело из одной формы - круг.
+  Entity(std::shared_ptr<b2World> world,
+         b2BodyType type,
+         QPoint position,
+         int radius);
+
+  // Конструктор, благодаря которому можно создать тело из нескольких форм со
+  // своими локальными координатами. Здесь третий параметр (position) - это
+  // координаты всего тела, следующий параметр - вектор структур CircleShape.
+  // В каждой структуре хранятся данные о радиусе и о локальных координатах
+  // данного круга. Пятый параметр так же вектор структур. В одной структуре
+  // PolygonShape хранятся данные о форме QPolygon и о локальных координатах.
+  Entity(std::shared_ptr<b2World> world,
+         b2BodyType body_type,
+         const QPoint& body_position,
+         const std::vector<CircleShape>& circles,
+         const std::vector<PolygonShape>& polygons);
   ~Entity() override;
 
-  // отрисовывает все формы тела
+  // Отрисовывает все формы тела.
   void Draw(QPainter* painter) const override;
-  // рисует объекты в зависимости от типа их фигуры
-  void DrawShape(QPainter* paint, b2Fixture* shape, b2Body* body) const;
 
-  b2PolygonShape AddShape(const QPolygon& polygon,
-                          QPoint position = QPoint(0, 0)) const;
-  b2CircleShape AddShape(int radius, QPoint position = QPoint(0, 0)) const;
+  b2PolygonShape CreateShape(const QPolygon& polygon,
+                             QPoint position = {0, 0}) const;
+  b2CircleShape CreateShape(int radius, QPoint position = {0, 0}) const;
 
  private:
-  void MakeBody(b2BodyType type, QPoint position);
+  // Рисует формы в зависимости от типа их фигуры. Вторым параметром передается
+  // форму, которую будет отрисовывать эта функция.
+  void DrawShape(QPainter* painter, b2Fixture* shape) const;
 
-  QPoint ToCoords(b2Vec2 position) const;
+  void InitializeBody(b2BodyType body_type, QPoint position);
+
+  // Переводит позицию из типа b2Vec2  в удобный нам тип QPoint.
+  QPoint ToPoint(b2Vec2 position) const;
 
  private:
   std::shared_ptr<b2World> world_;
