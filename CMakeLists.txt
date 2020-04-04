@@ -15,7 +15,7 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 
 file(GLOB box2d
-        src/box2d/*/*.cpp)
+        box2d/*/*.cpp)
 
 add_executable(jellyin main.cpp
         game_controller.cpp

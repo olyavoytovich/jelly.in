@@ -12,21 +12,21 @@ class Entity : public GameObject {
  public:
   // конструктор, создающий тело из одной формы - полигон
   Entity(const QPolygon& polygon,
-         const std::shared_ptr<b2World>& world,
+         std::shared_ptr<b2World> world,
          b2BodyType type,
          QPoint position);
 
   // конструктор, создающий тело из одной формы - круг
   Entity(int radius,
-         const std::shared_ptr<b2World>& world,
+         std::shared_ptr<b2World> world,
          b2BodyType type,
          QPoint position);
 
   // конструктор, благодаря которому можно создать тело из нескольких форм со
   // своими локальными координатами.
-  Entity(const std::shared_ptr<b2World>& world,
+  Entity(std::shared_ptr<b2World> world,
          b2BodyType type,
-         QPoint position,
+         const QPoint& position,
          const std::vector<std::pair<int, QPoint>>& vec_of_circs,
          const std::vector<std::pair<QPolygon,
                                      QPoint>>& vec_of_polygons);

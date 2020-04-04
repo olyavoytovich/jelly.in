@@ -18,52 +18,52 @@ SOURCES += \
         map.cpp \
         map_loader.cpp \
         view.cpp \
-        src/box2d/collision/b2_broad_phase.cpp \
-        src/box2d/collision/b2_chain_shape.cpp \
-        src/box2d/collision/b2_circle_shape.cpp \
-        src/box2d/collision/b2_collide_circle.cpp \
-        src/box2d/collision/b2_collide_edge.cpp \
-        src/box2d/collision/b2_collide_polygon.cpp \
-        src/box2d/collision/b2_collision.cpp \
-        src/box2d/collision/b2_distance.cpp \
-        src/box2d/collision/b2_dynamic_tree.cpp \
-        src/box2d/collision/b2_edge_shape.cpp \
-        src/box2d/collision/b2_polygon_shape.cpp \
-        src/box2d/collision/b2_time_of_impact.cpp \
-        src/box2d/common/b2_block_allocator.cpp \
-        src/box2d/common/b2_draw.cpp \
-        src/box2d/common/b2_math.cpp \
-        src/box2d/common/b2_settings.cpp \
-        src/box2d/common/b2_stack_allocator.cpp \
-        src/box2d/common/b2_timer.cpp \
-        src/box2d/dynamics/b2_body.cpp \
-        src/box2d/dynamics/b2_chain_circle_contact.cpp \
-        src/box2d/dynamics/b2_chain_polygon_contact.cpp \
-        src/box2d/dynamics/b2_circle_contact.cpp \
-        src/box2d/dynamics/b2_contact.cpp \
-        src/box2d/dynamics/b2_contact_manager.cpp \
-        src/box2d/dynamics/b2_contact_solver.cpp \
-        src/box2d/dynamics/b2_distance_joint.cpp \
-        src/box2d/dynamics/b2_edge_circle_contact.cpp \
-        src/box2d/dynamics/b2_edge_polygon_contact.cpp \
-        src/box2d/dynamics/b2_fixture.cpp \
-        src/box2d/dynamics/b2_friction_joint.cpp \
-        src/box2d/dynamics/b2_gear_joint.cpp \
-        src/box2d/dynamics/b2_island.cpp \
-        src/box2d/dynamics/b2_joint.cpp \
-        src/box2d/dynamics/b2_motor_joint.cpp \
-        src/box2d/dynamics/b2_mouse_joint.cpp \
-        src/box2d/dynamics/b2_polygon_circle_contact.cpp \
-        src/box2d/dynamics/b2_polygon_contact.cpp \
-        src/box2d/dynamics/b2_prismatic_joint.cpp \
-        src/box2d/dynamics/b2_pulley_joint.cpp \
-        src/box2d/dynamics/b2_revolute_joint.cpp \
-        src/box2d/dynamics/b2_rope_joint.cpp \
-        src/box2d/dynamics/b2_weld_joint.cpp \
-        src/box2d/dynamics/b2_wheel_joint.cpp \
-        src/box2d/dynamics/b2_world.cpp \
-        src/box2d/dynamics/b2_world_callbacks.cpp \
-        src/box2d/rope/b2_rope.cpp
+          box2d/collision/b2_broad_phase.cpp \
+          box2d/collision/b2_chain_shape.cpp \
+          box2d/collision/b2_circle_shape.cpp \
+          box2d/collision/b2_collide_circle.cpp \
+          box2d/collision/b2_collide_edge.cpp \
+          box2d/collision/b2_collide_polygon.cpp \
+          box2d/collision/b2_collision.cpp \
+          box2d/collision/b2_distance.cpp \
+          box2d/collision/b2_dynamic_tree.cpp \
+          box2d/collision/b2_edge_shape.cpp \
+          box2d/collision/b2_polygon_shape.cpp \
+          box2d/collision/b2_time_of_impact.cpp \
+          box2d/common/b2_block_allocator.cpp \
+          box2d/common/b2_draw.cpp \
+          box2d/common/b2_math.cpp \
+          box2d/common/b2_settings.cpp \
+          box2d/common/b2_stack_allocator.cpp \
+          box2d/common/b2_timer.cpp \
+          box2d/dynamics/b2_body.cpp \
+          box2d/dynamics/b2_chain_circle_contact.cpp \
+          box2d/dynamics/b2_chain_polygon_contact.cpp \
+          box2d/dynamics/b2_circle_contact.cpp \
+          box2d/dynamics/b2_contact.cpp \
+          box2d/dynamics/b2_contact_manager.cpp \
+          box2d/dynamics/b2_contact_solver.cpp \
+          box2d/dynamics/b2_distance_joint.cpp \
+          box2d/dynamics/b2_edge_circle_contact.cpp \
+          box2d/dynamics/b2_edge_polygon_contact.cpp \
+          box2d/dynamics/b2_fixture.cpp \
+          box2d/dynamics/b2_friction_joint.cpp \
+          box2d/dynamics/b2_gear_joint.cpp \
+          box2d/dynamics/b2_island.cpp \
+          box2d/dynamics/b2_joint.cpp \
+          box2d/dynamics/b2_motor_joint.cpp \
+          box2d/dynamics/b2_mouse_joint.cpp \
+          box2d/dynamics/b2_polygon_circle_contact.cpp \
+          box2d/dynamics/b2_polygon_contact.cpp \
+          box2d/dynamics/b2_prismatic_joint.cpp \
+          box2d/dynamics/b2_pulley_joint.cpp \
+          box2d/dynamics/b2_revolute_joint.cpp \
+          box2d/dynamics/b2_rope_joint.cpp \
+          box2d/dynamics/b2_weld_joint.cpp \
+          box2d/dynamics/b2_wheel_joint.cpp \
+          box2d/dynamics/b2_world.cpp \
+          box2d/dynamics/b2_world_callbacks.cpp \
+          box2d/rope/b2_rope.cpp
 
 HEADERS += \
     abstract_game_controller.h \
@@ -112,15 +112,15 @@ HEADERS += \
     box2d/b2_world.h \
     box2d/b2_world_callbacks.h \
     box2d/box2d.h \
-    src/box2d/dynamics/b2_chain_circle_contact.h \
-    src/box2d/dynamics/b2_chain_polygon_contact.h \
-    src/box2d/dynamics/b2_circle_contact.h \
-    src/box2d/dynamics/b2_contact_solver.h \
-    src/box2d/dynamics/b2_edge_circle_contact.h \
-    src/box2d/dynamics/b2_edge_polygon_contact.h \
-    src/box2d/dynamics/b2_island.h \
-    src/box2d/dynamics/b2_polygon_circle_contact.h \
-    src/box2d/dynamics/b2_polygon_contact.h
+      box2d/dynamics/b2_chain_circle_contact.h \
+      box2d/dynamics/b2_chain_polygon_contact.h \
+      box2d/dynamics/b2_circle_contact.h \
+      box2d/dynamics/b2_contact_solver.h \
+      box2d/dynamics/b2_edge_circle_contact.h \
+      box2d/dynamics/b2_edge_polygon_contact.h \
+      box2d/dynamics/b2_island.h \
+      box2d/dynamics/b2_polygon_circle_contact.h \
+      box2d/dynamics/b2_polygon_contact.h
 
 RESOURCES += \
     resources.qrc
