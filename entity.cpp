@@ -81,7 +81,8 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
       QVector<QPoint> points;
       auto polygon = dynamic_cast<b2PolygonShape*>(shape->GetShape());
       for (int i = 0; i < polygon->m_count; i++) {
-        points.push_back(Point(body_->GetWorldPoint(polygon->m_vertices[i])).ToQPoint());
+        points.push_back(Point(body_->
+            GetWorldPoint(polygon->m_vertices[i])).ToQPoint());
       }
       painter->drawPolygon(QPolygon(points));
       break;
