@@ -33,7 +33,8 @@ Entity::Entity(std::shared_ptr<b2World> world,
 Entity::Entity(std::shared_ptr<b2World> world,
                b2BodyType body_type,
                const Point& body_position,
-               int radius) : world_(std::move(world)) {
+               float radius) :
+    world_(std::move(world)) {
   InitializeBody(body_type, body_position);
   b2CircleShape shape = CreateCircleShape(radius);
   body_->CreateFixture(&shape, kBodyDensity);
@@ -78,13 +79,13 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
 
   switch (shape->GetShape()->GetType()) {
     case b2Shape::e_polygon: {
-      QVector<QPoint> points;
-      auto polygon = dynamic_cast<b2PolygonShape*>(shape->GetShape());
-      for (int i = 0; i < polygon->m_count; i++) {
-        points.push_back(Point(body_->
-            GetWorldPoint(polygon->m_vertices[i])).ToQPoint());
+      QPolygon polygon;
+      auto polygon_shape = dynamic_cast<b2PolygonShape*>(shape->GetShape());
+      for (int i = 0; i < polygon_shape->m_count; i++) {
+        polygon << Point(body_->
+            GetWorldPoint(polygon_shape->m_vertices[i])).ToQPoint();
       }
-      painter->drawPolygon(QPolygon(points));
+      painter->drawPolygon(polygon);
       break;
     }
 
@@ -118,10 +119,10 @@ b2PolygonShape Entity::CreatePolygonShape(const QPolygon& polygon,
   return shape;
 }
 
-b2CircleShape Entity::CreateCircleShape(int radius,
+b2CircleShape Entity::CreateCircleShape(float radius,
                                         const Point& shape_position) const {
   b2CircleShape shape;
-  shape.m_radius = static_cast<float>(radius);
+  shape.m_radius = radius;
   shape.m_p.Set(shape_position.x, shape_position.y);
 
   return shape;

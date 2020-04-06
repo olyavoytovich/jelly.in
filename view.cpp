@@ -12,7 +12,8 @@ void View::paintEvent(QPaintEvent*) {
 }
 
 void View::timerEvent(QTimerEvent* event) {
-  if (event->timerId() == timer_id_) {
-    game_controller_->Update(kFrameInterval);
+  if (event->timerId() != timer_id_) {
+    return;
   }
+  game_controller_->Update(kFrameInterval);
 }

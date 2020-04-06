@@ -19,19 +19,19 @@ struct Point {
 };
 
 struct PolygonShape {
-  PolygonShape(QPolygon polygon, const Point& shape_position) :
-      polygon(std::move(polygon)), shape_position(shape_position) {}
+  PolygonShape(QPolygon polygon, const Point& position) :
+      polygon(std::move(polygon)), position(position) {}
 
   QPolygon polygon;
-  Point shape_position;
+  Point position;
 };
 
 struct CircleShape {
-  CircleShape(int radius, const Point& shape_position)
-      : radius(radius), shape_position(shape_position) {}
+  CircleShape(float radius, const Point& position)
+      : radius(radius), position(position) {}
 
-  int radius;
-  Point shape_position;
+  float radius;
+  Point position;
 };
 
 class Entity : public GameObject {
@@ -46,7 +46,7 @@ class Entity : public GameObject {
   Entity(std::shared_ptr<b2World> world,
          b2BodyType type,
          const Point& body_position,
-         int radius);
+         float radius);
 
   // Конструктор, благодаря которому можно создать тело из нескольких форм со
   // своими локальными координатами. Третий параметр (body_position) - это
@@ -67,7 +67,7 @@ class Entity : public GameObject {
 
   b2PolygonShape CreatePolygonShape(const QPolygon& polygon,
                                     const Point& shape_position = {0, 0}) const;
-  b2CircleShape CreateCircleShape(int radius,
+  b2CircleShape CreateCircleShape(float radius,
                                   const Point& shape_position = {0, 0}) const;
 
  private:

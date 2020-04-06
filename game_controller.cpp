@@ -8,8 +8,8 @@ GameController::GameController()
   std::vector<CircleShape> circles;
   std::vector<PolygonShape> polygons;
 
-  circles.emplace_back(CircleShape({30, Point(80, 30)}));
-  polygons.emplace_back(PolygonShape({QRect(10, 10, 10, 10), Point(0, 0)}));
+  circles.emplace_back(30, Point(80, 30));
+  polygons.emplace_back(QRect(10, 10, 10, 10), Point(0, 0));
 
   entity_ = std::make_shared<Entity>(world_,
                                      b2_staticBody,
