@@ -16,9 +16,13 @@
 // локальными координатами, и если нужно создать тело из нескольких форм,
 // то каждой форме можно задавать свои координаты (shape_position).
 
+QPoint Point::ToQPoint() {
+  return {static_cast<int>(x), static_cast<int>(y)};
+}
+
 Entity::Entity(std::shared_ptr<b2World> world,
                b2BodyType body_type,
-               QPoint body_position,
+               const Point& body_position,
                const QPolygon& polygon)
     : world_(std::move(world)) {
   InitializeBody(body_type, body_position);
@@ -28,7 +32,7 @@ Entity::Entity(std::shared_ptr<b2World> world,
 
 Entity::Entity(std::shared_ptr<b2World> world,
                b2BodyType body_type,
-               QPoint body_position,
+               const Point& body_position,
                int radius) : world_(std::move(world)) {
   InitializeBody(body_type, body_position);
   b2CircleShape shape = CreateCircleShape(radius);
@@ -37,7 +41,7 @@ Entity::Entity(std::shared_ptr<b2World> world,
 
 Entity::Entity(std::shared_ptr<b2World> world,
                b2BodyType body_type,
-               const QPoint& body_position,
+               const Point& body_position,
                const std::vector<CircleShape>& circles,
                const std::vector<PolygonShape>& polygons) :
     world_(std::move(world)) {
@@ -77,8 +81,7 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
       QVector<QPoint> points;
       auto polygon = dynamic_cast<b2PolygonShape*>(shape->GetShape());
       for (int i = 0; i < polygon->m_count; i++) {
-        points.push_back(
-            Box2dPointToQPoint(body_->GetWorldPoint(polygon->m_vertices[i])));
+        points.push_back(Point(body_->GetWorldPoint(polygon->m_vertices[i])).ToQPoint());
       }
       painter->drawPolygon(QPolygon(points));
       break;
@@ -86,7 +89,7 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
 
     case b2Shape::e_circle: {
       auto circle = dynamic_cast<b2CircleShape*>(shape->GetShape());
-      painter->drawEllipse(Box2dPointToQPoint(body_->GetWorldCenter()),
+      painter->drawEllipse(Point(body_->GetWorldCenter()).ToQPoint(),
                            static_cast<int>(circle->m_radius),
                            static_cast<int>(circle->m_radius));
       break;
@@ -100,7 +103,7 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
 }
 
 b2PolygonShape Entity::CreatePolygonShape(const QPolygon& polygon,
-                                          QPoint shape_position) const {
+                                          const Point& shape_position) const {
   std::vector<b2Vec2> polygon_points;
 
   for (auto point : polygon) {
@@ -108,31 +111,24 @@ b2PolygonShape Entity::CreatePolygonShape(const QPolygon& polygon,
   }
 
   b2PolygonShape shape;
-  shape.m_centroid.Set(static_cast<float>(shape_position.x()),
-                       static_cast<float>(shape_position.y()));
+  shape.m_centroid.Set(shape_position.x, shape_position.y);
   shape.Set(polygon_points.data(), polygon_points.size());
 
   return shape;
 }
 
 b2CircleShape Entity::CreateCircleShape(int radius,
-                                        QPoint shape_position) const {
+                                        const Point& shape_position) const {
   b2CircleShape shape;
   shape.m_radius = static_cast<float>(radius);
-  shape.m_p.Set(static_cast<float>(shape_position.x()),
-                static_cast<float>(shape_position.y()));
+  shape.m_p.Set(shape_position.x, shape_position.y);
 
   return shape;
 }
 
-void Entity::InitializeBody(b2BodyType body_type, QPoint body_position) {
+void Entity::InitializeBody(b2BodyType body_type, const Point& body_position) {
   b2BodyDef body_definition;
-  body_definition.position.Set(static_cast<float>(body_position.x()),
-                               static_cast<float>(body_position.y()));
+  body_definition.position.Set(body_position.x, body_position.y);
   body_definition.type = body_type;
   body_ = world_->CreateBody(&body_definition);
-}
-
-QPoint Entity::Box2dPointToQPoint(b2Vec2 position) const {
-  return QPoint(static_cast<int>(position.x), static_cast<int>(position.y));
 }

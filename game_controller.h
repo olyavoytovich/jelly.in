@@ -23,8 +23,16 @@ class GameController : public AbstractGameController {
   void Draw(QPainter* painter) const override;
 
  private:
-  const int kVelocityIterations = 6;
-  const int kPositionIterations = 2;
+  // Данные константы передаются в функцию Step(), которая используется при
+  // реализации метода Update(int time).
+  // kVelocityAccuracy и kPositionAccuracy отвечают за точность вычисления
+  // импульсов, необходимых для правильного движения и положения тел.
+  // Предлагаемое количество итераций для Box2D равно 6 и 2 соответственно.
+  // Использование меньшего количества повышают производительность, но страдает
+  // точность. Аналогично, использование большего количества итераций снижает
+  // производительность, но улучшает качество симуляции.
+  const int kVelocityAccuracy = 6;
+  const int kPositionAccuracy = 2;
 
  private:
   std::shared_ptr<View> view_;

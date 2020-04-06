@@ -8,20 +8,30 @@
 #include "box2d/box2d.h"
 #include "game_object.h"
 
-struct PolygonShape {
-  QPolygon polygon;
-  QPoint shape_position;
+struct Point {
+  explicit Point(const b2Vec2& position) : x(position.x), y(position.y) {}
+  Point(float x, float y) : x(x), y(y) {}
 
-  PolygonShape(QPolygon polygon, QPoint shape_position) :
+  QPoint ToQPoint();
+
+  float x;
+  float y;
+};
+
+struct PolygonShape {
+  PolygonShape(QPolygon polygon, const Point& shape_position) :
       polygon(std::move(polygon)), shape_position(shape_position) {}
+
+  QPolygon polygon;
+  Point shape_position;
 };
 
 struct CircleShape {
-  int radius;
-  QPoint shape_position;
-
-  CircleShape(int radius, QPoint shape_position)
+  CircleShape(int radius, const Point& shape_position)
       : radius(radius), shape_position(shape_position) {}
+
+  int radius;
+  Point shape_position;
 };
 
 class Entity : public GameObject {
@@ -29,13 +39,13 @@ class Entity : public GameObject {
   // Конструктор, создающий тело из одной формы - полигон.
   Entity(std::shared_ptr<b2World> world,
          b2BodyType type,
-         QPoint body_position,
+         const Point& body_position,
          const QPolygon& polygon);
 
   // Конструктор, создающий тело из одной формы - круг.
   Entity(std::shared_ptr<b2World> world,
          b2BodyType type,
-         QPoint body_position,
+         const Point& body_position,
          int radius);
 
   // Конструктор, благодаря которому можно создать тело из нескольких форм со
@@ -46,7 +56,7 @@ class Entity : public GameObject {
   // PolygonShape хранятся данные о форме QPolygon и о локальных координатах.
   Entity(std::shared_ptr<b2World> world,
          b2BodyType body_type,
-         const QPoint& body_position,
+         const Point& body_position,
          const std::vector<CircleShape>& circles,
          const std::vector<PolygonShape>& polygons);
 
@@ -56,19 +66,16 @@ class Entity : public GameObject {
   void Draw(QPainter* painter) const override;
 
   b2PolygonShape CreatePolygonShape(const QPolygon& polygon,
-                                    QPoint shape_position = {0, 0}) const;
+                                    const Point& shape_position = {0, 0}) const;
   b2CircleShape CreateCircleShape(int radius,
-                                  QPoint shape_position = {0, 0}) const;
+                                  const Point& shape_position = {0, 0}) const;
 
  private:
   // Рисует формы в зависимости от типа их фигуры. Вторым параметром передается
   // форму, которую будет отрисовывать эта функция.
   void DrawShape(QPainter* painter, b2Fixture* shape) const;
 
-  void InitializeBody(b2BodyType body_type, QPoint body_position);
-
-  // Переводит позицию из типа b2Vec2  в удобный нам тип QPoint.
-  QPoint Box2dPointToQPoint(b2Vec2 position) const;
+  void InitializeBody(b2BodyType body_type, const Point& body_position);
 
  private:
   const float kBodyDensity = 1;

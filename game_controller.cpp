@@ -8,23 +8,23 @@ GameController::GameController()
   std::vector<CircleShape> circles;
   std::vector<PolygonShape> polygons;
 
-  circles.emplace_back(CircleShape({30, QPoint(80, 30)}));
-  polygons.emplace_back(PolygonShape({QRect(10, 10, 10, 10), QPoint(0, 0)}));
+  circles.emplace_back(CircleShape({30, Point(80, 30)}));
+  polygons.emplace_back(PolygonShape({QRect(10, 10, 10, 10), Point(0, 0)}));
 
   entity_ = std::make_shared<Entity>(world_,
                                      b2_staticBody,
-                                     QPoint(300, -300),
+                                     Point(300, -300),
                                      QPolygon({QPoint(15, 0), QPoint(30, 60),
                                                QPoint(50, 30), QPoint(0, 30)}));
 
   entity2_ = std::make_shared<Entity>(world_,
                                       b2_dynamicBody,
-                                      QPoint(200, -100),
+                                      Point(200, -100),
                                       50);
 
   entity3_ = std::make_shared<Entity>(world_,
                                       b2_dynamicBody,
-                                      QPoint(500, -100),
+                                      Point(500, -100),
                                       circles,
                                       polygons);
 
@@ -32,17 +32,12 @@ GameController::GameController()
 }
 
 void GameController::Update(int time) {
-  // Первый передаваемый параметр - время. Для Box2D время должно измеряться
-  // в секундах, в то время как QTimer измеряет его в миллисекундах, поэтому
-  // изменяем единицу измерения времени.
-  // Второй параметр- velocity iterations, третий - position iterations.
-  // Предлагаемое количество итераций для Box2D равно 6 и 2 соответственно.
-  // Использование меньшего количества повышают производительность, но страдает
-  // точность. Аналогично, использование большего количества итераций снижает
-  // производительность, но улучшает качество вашей симуляции.
+  // Функция Step() обновляет Box2D.
+  // Первый передаваемый параметр - время. Время передается в миллисекундах, а
+  // для Box2D время должно измеряться в секундах.
   world_->Step(static_cast<float>(time / 1000.0),
-               kVelocityIterations,
-               kPositionIterations);
+               kVelocityAccuracy,
+               kPositionAccuracy);
   map_->Update();
   view_->repaint();
 }
