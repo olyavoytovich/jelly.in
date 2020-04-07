@@ -16,10 +16,6 @@
 // локальными координатами, и если нужно создать тело из нескольких форм,
 // то каждой форме можно задавать свои координаты (shape_position).
 
-QPoint Point::ToQPoint() {
-  return {static_cast<int>(x), static_cast<int>(y)};
-}
-
 Entity::Entity(std::shared_ptr<b2World> world,
                b2BodyType body_type,
                const Point& body_position,
@@ -33,8 +29,8 @@ Entity::Entity(std::shared_ptr<b2World> world,
 Entity::Entity(std::shared_ptr<b2World> world,
                b2BodyType body_type,
                const Point& body_position,
-               float radius) :
-    world_(std::move(world)) {
+               float radius)
+    : world_(std::move(world)) {
   InitializeBody(body_type, body_position);
   b2CircleShape shape = CreateCircleShape(radius);
   body_->CreateFixture(&shape, kBodyDensity);
@@ -82,8 +78,11 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
       QPolygon polygon;
       auto polygon_shape = dynamic_cast<b2PolygonShape*>(shape->GetShape());
       for (int i = 0; i < polygon_shape->m_count; i++) {
-        polygon << Point(body_->
-            GetWorldPoint(polygon_shape->m_vertices[i])).ToQPoint();
+        polygon.putPoints(i, 1,
+                          static_cast<int>(body_->
+                              GetWorldPoint(polygon_shape->m_vertices[i]).x),
+                          static_cast<int>(body_->
+                              GetWorldPoint(polygon_shape->m_vertices[i]).y));
       }
       painter->drawPolygon(polygon);
       break;
@@ -91,9 +90,12 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
 
     case b2Shape::e_circle: {
       auto circle = dynamic_cast<b2CircleShape*>(shape->GetShape());
-      painter->drawEllipse(Point(body_->GetWorldCenter()).ToQPoint(),
-                           static_cast<int>(circle->m_radius),
-                           static_cast<int>(circle->m_radius));
+      painter->drawEllipse(static_cast<int>(body_->GetWorldCenter().x
+                               - circle->m_radius),
+                           static_cast<int>(body_->GetWorldCenter().y
+                               - circle->m_radius),
+                           2 * static_cast<int>(circle->m_radius),
+                           2 * static_cast<int>(circle->m_radius));
       break;
     }
 

@@ -12,15 +12,17 @@ struct Point {
   explicit Point(const b2Vec2& position) : x(position.x), y(position.y) {}
   Point(float x, float y) : x(x), y(y) {}
 
-  QPoint ToQPoint();
+  QPoint ToQPoint() {
+    return {static_cast<int>(x), static_cast<int>(y)};
+  }
 
   float x;
   float y;
 };
 
 struct PolygonShape {
-  PolygonShape(QPolygon polygon, const Point& position) :
-      polygon(std::move(polygon)), position(position) {}
+  PolygonShape(QPolygon polygon, const Point& position)
+      : polygon(std::move(polygon)), position(position) {}
 
   QPolygon polygon;
   Point position;
