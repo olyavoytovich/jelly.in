@@ -7,11 +7,12 @@
 
 class GameObject {
  public:
+  GameObject() = default;
   explicit GameObject(QPolygon polygon, int dx = 0);
-  ~GameObject() = default;
+  virtual ~GameObject() = default;
 
   void Update();
-  void Draw(QPainter* painter) const;
+  virtual void Draw(QPainter* painter) const;
 
  private:
   QPolygon polygon_;

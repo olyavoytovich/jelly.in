@@ -1,17 +1,19 @@
 #include "view.h"
 
 View::View(AbstractGameController* game_controller)
-    : game_controller_(game_controller),
-      timer_(new QTimer(this)) {
+    : game_controller_(game_controller) {
   this->resize(800, 600);
-  timer_->setInterval(16);
-  connect(timer_, &QTimer::timeout, this, [this]() {
-    game_controller_->Update();
-  });
-  timer_->start();
+  timer_id_ = startTimer(kFrameInterval);
 }
 
 void View::paintEvent(QPaintEvent*) {
   QPainter painter(this);
   game_controller_->Draw(&painter);
+}
+
+void View::timerEvent(QTimerEvent* event) {
+  if (event->timerId() != timer_id_) {
+    return;
+  }
+  game_controller_->Update(kFrameInterval);
 }

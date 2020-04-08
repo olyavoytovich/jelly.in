@@ -18,10 +18,14 @@ class View : public QMainWindow, public AbstractView {
 
  private:
   void paintEvent(QPaintEvent*) override;
+  void timerEvent(QTimerEvent* event) override;
+
+ private:
+  const int kFrameInterval = 16;
 
  private:
   AbstractGameController* game_controller_ = nullptr;
-  QTimer* timer_;
+  int timer_id_;
 };
 
 #endif  // VIEW_H_
