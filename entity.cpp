@@ -78,11 +78,10 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
       QPolygon polygon;
       auto polygon_shape = dynamic_cast<b2PolygonShape*>(shape->GetShape());
       for (int i = 0; i < polygon_shape->m_count; i++) {
+        b2Vec2 point = body_->GetWorldPoint(polygon_shape->m_vertices[i]);
         polygon.putPoints(i, 1,
-                          static_cast<int>(body_->
-                              GetWorldPoint(polygon_shape->m_vertices[i]).x),
-                          static_cast<int>(body_->
-                              GetWorldPoint(polygon_shape->m_vertices[i]).y));
+                          static_cast<int>(point.x),
+                          static_cast<int>(point.y));
       }
       painter->drawPolygon(polygon);
       break;
