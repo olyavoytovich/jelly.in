@@ -1,5 +1,5 @@
-#ifndef MODEL_SHOOTER_H_
-#define MODEL_SHOOTER_H_
+#ifndef MODEL_PATROLLER_H_
+#define MODEL_PATROLLER_H_
 
 #include <memory>
 #include <vector>
@@ -23,4 +23,4 @@ class Patroller : public Entity {
             const std::vector<Point>& way_points, float speed);
 };
 
-#endif  // MODEL_SHOOTER_H_
+#endif  // MODEL_PATROLLER_H_

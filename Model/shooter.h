@@ -1,5 +1,5 @@
-#ifndef SHOOTER_H_
-#define SHOOTER_H_
+#ifndef MODEL_SHOOTER_H_
+#define MODEL_SHOOTER_H_
 
 #include <QPainter>
 #include <algorithm>
@@ -64,4 +64,4 @@ class Shooter : public Entity {
   float bullet_speed_;
 };
 
-#endif  // SHOOTER_H_
+#endif  // MODEL_SHOOTER_H_
