@@ -1,5 +1,5 @@
-#ifndef MAP_H_
-#define MAP_H_
+#ifndef MODEL_MAP_H_
+#define MODEL_MAP_H_
 
 #include <QPainter>
 #include <memory>
@@ -26,4 +26,4 @@ class Map {
   QImage scaled_map_image_;
 };
 
-#endif  // MAP_H_
+#endif  // MODEL_MAP_H_

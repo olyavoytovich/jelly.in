@@ -2,6 +2,9 @@
 #define SHOOTER_H_
 
 #include <QPainter>
+#include <algorithm>
+#include <memory>
+#include <vector>
 #include <utility>
 
 #include "entity.h"

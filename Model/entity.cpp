@@ -167,7 +167,6 @@ void Entity::Update(int) {
     body_->SetLinearVelocity(b2Vec2(
         (next_point.x - current_position.x) * speed_ / current_speed,
         (next_point.y - current_position.y) * speed_ / current_speed));
-
   }
 }
 

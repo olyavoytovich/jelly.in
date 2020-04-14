@@ -1,5 +1,5 @@
-#ifndef GAME_OBJECT_H_
-#define GAME_OBJECT_H_
+#ifndef MODEL_GAME_OBJECT_H_
+#define MODEL_GAME_OBJECT_H_
 
 #include <QPainter>
 #include <QPolygon>
@@ -19,4 +19,4 @@ class GameObject {
   int dx_;
 };
 
-#endif  // GAME_OBJECT_H_
+#endif  // MODEL_GAME_OBJECT_H_

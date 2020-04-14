@@ -1,5 +1,5 @@
-#ifndef GAME_CONTROLLER_H_
-#define GAME_CONTROLLER_H_
+#ifndef CONTROLLER_GAME_CONTROLLER_H_
+#define CONTROLLER_GAME_CONTROLLER_H_
 
 #include <memory>
 #include <utility>
@@ -54,4 +54,4 @@ class GameController : public AbstractGameController {
   std::shared_ptr<Map> map_;
 };
 
-#endif  // GAME_CONTROLLER_H_
+#endif  // CONTROLLER_GAME_CONTROLLER_H_

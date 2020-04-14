@@ -1,9 +1,9 @@
-#ifndef ABSTRACT_VIEW_H_
-#define ABSTRACT_VIEW_H_
+#ifndef VIEW_ABSTRACT_VIEW_H_
+#define VIEW_ABSTRACT_VIEW_H_
 
 class AbstractView {
  public:
   virtual ~AbstractView() = default;
 };
 
-#endif  // ABSTRACT_VIEW_H_
+#endif  // VIEW_ABSTRACT_VIEW_H_

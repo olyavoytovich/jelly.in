@@ -8,8 +8,8 @@ set(CMAKE_AUTORCC ON) # Enable Qt resources compiler
 set(CMAKE_AUTOUIC ON) # Enable Qt UI compiler
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_PREFIX_PATH "~/Qt/5.13.2/gcc_64/lib/cmake")  # Linux
-#set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.13.0/5.13.0/mingw73_64/lib/cmake")  # Windows
+#set(CMAKE_PREFIX_PATH "~/Qt/5.13.2/gcc_64/lib/cmake")  # Linux
+set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.13.0/5.13.0/mingw73_64/lib/cmake")  # Windows
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)

@@ -1,5 +1,5 @@
-#ifndef ENTITY_H_
-#define ENTITY_H_
+#ifndef MODEL_ENTITY_H_
+#define MODEL_ENTITY_H_
 
 #include <memory>
 #include <utility>
@@ -102,4 +102,4 @@ class Entity : public GameObject {
   const float kBodyDensity = 1;
 };
 
-#endif  // ENTITY_H_
+#endif  // MODEL_ENTITY_H_

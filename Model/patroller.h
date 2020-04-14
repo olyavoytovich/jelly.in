@@ -1,6 +1,8 @@
-#ifndef PATROLLER_H_
-#define PATROLLER_H_
+#ifndef MODEL_PATROLLER_H_
+#define MODEL_PATROLLER_H_
 
+#include <memory>
+#include <vector>
 #include <utility>
 
 #include "entity.h"
@@ -21,4 +23,4 @@ class Patroller : public Entity {
             const std::vector<Point>& way_points, float speed);
 };
 
-#endif  // PATROLLER_H_
+#endif  // MODEL_PATROLLER_H_

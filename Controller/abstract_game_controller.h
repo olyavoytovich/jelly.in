@@ -1,5 +1,5 @@
-#ifndef ABSTRACT_GAME_CONTROLLER_H_
-#define ABSTRACT_GAME_CONTROLLER_H_
+#ifndef CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_
+#define CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_
 
 #include <QPainter>
 
@@ -11,4 +11,4 @@ class AbstractGameController {
   virtual void Draw(QPainter* painter) const = 0;
 };
 
-#endif  // ABSTRACT_GAME_CONTROLLER_H_
+#endif  // CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_

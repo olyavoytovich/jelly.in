@@ -1,5 +1,5 @@
-#ifndef VIEW_H_
-#define VIEW_H_
+#ifndef VIEW_VIEW_H_
+#define VIEW_VIEW_H_
 
 #include <QMainWindow>
 #include <QObject>
@@ -28,4 +28,4 @@ class View : public QMainWindow, public AbstractView {
   int timer_id_;
 };
 
-#endif  // VIEW_H_
+#endif  // VIEW_VIEW_H_
