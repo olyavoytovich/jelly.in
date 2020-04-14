@@ -6,8 +6,8 @@
 #include <QPaintEvent>
 #include <QTimer>
 
-#include "abstract_game_controller.h"
-#include "abstract_view.h"
+#include "Controller/abstract_game_controller.h"
+#include "View/abstract_view.h"
 
 class View : public QMainWindow, public AbstractView {
   Q_OBJECT

@@ -1,8 +1,8 @@
 #ifndef MAP_H_
 #define MAP_H_
 
-#include <memory>
 #include <QPainter>
+#include <memory>
 #include <vector>
 
 #include "game_object.h"
@@ -12,7 +12,7 @@ class Map {
   explicit Map(const QImage& map_image);
   ~Map() = default;
 
-  void Update();
+  void Update(int time);
   void Draw(QPainter* painter);
 
   void AddGameObject(const std::shared_ptr<GameObject>& object);

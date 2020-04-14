@@ -5,14 +5,16 @@
 #include <utility>
 #include <vector>
 
+#include "Model/entity.h"
+#include "Model/game_object.h"
+#include "Model/map.h"
+#include "Model/map_loader.h"
+#include "Model/patroller.h"
+#include "Model/shooter.h"
+#include "View/abstract_view.h"
+#include "View/view.h"
 #include "abstract_game_controller.h"
-#include "abstract_view.h"
 #include "box2d/box2d.h"
-#include "entity.h"
-#include "game_object.h"
-#include "map.h"
-#include "map_loader.h"
-#include "view.h"
 
 class GameController : public AbstractGameController {
  public:
@@ -39,9 +41,15 @@ class GameController : public AbstractGameController {
 
   std::shared_ptr<b2World> world_;
 
-  std::shared_ptr<Entity> entity_;
-  std::shared_ptr<Entity> entity2_;
-  std::shared_ptr<Entity> entity3_;
+  std::shared_ptr<Entity> platform1_;
+  std::shared_ptr<Entity> platform2_;
+  std::shared_ptr<Entity> platform3_;
+
+  std::shared_ptr<Patroller> patroller_;
+  std::shared_ptr<Shooter> shooter1_;
+  std::shared_ptr<Shooter> shooter2_;
+  std::shared_ptr<Shooter> shooter3_;
+  std::shared_ptr<Shooter> shooter4_;
 
   std::shared_ptr<Map> map_;
 };

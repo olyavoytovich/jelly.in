@@ -11,7 +11,7 @@ class GameObject {
   explicit GameObject(QPolygon polygon, int dx = 0);
   virtual ~GameObject() = default;
 
-  void Update();
+  virtual void Update(int time);
   virtual void Draw(QPainter* painter) const;
 
  private:

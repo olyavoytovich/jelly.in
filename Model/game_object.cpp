@@ -3,7 +3,7 @@
 GameObject::GameObject(QPolygon polygon, int dx)
     : polygon_(std::move(polygon)), dx_(dx) {}
 
-void GameObject::Update() {
+void GameObject::Update(int) {
   polygon_.translate(dx_, 0);
 }
 

@@ -1,6 +1,5 @@
 #include "entity.h"
 
-#include <utility>
 
 // Про координаты. Координаты в Box2D такие же, как у математиков. То есть
 // ось абсцисс направлена вправо, ось ординат - вверх.
@@ -53,6 +52,15 @@ Entity::Entity(std::shared_ptr<b2World> world,
     b2PolygonShape shape = CreatePolygonShape(polygon, shape_position);
     body_->CreateFixture(&shape, kBodyDensity);
   }
+}
+
+Entity::Entity(const std::shared_ptr<b2World>& world,
+               b2BodyType type,
+               const Point& body_position,
+               const QPolygon& polygon,
+               const b2Vec2& velocity)
+    : Entity(world, type, body_position, polygon) {
+  body_->SetLinearVelocity(velocity);
 }
 
 Entity::~Entity() {
@@ -125,13 +133,55 @@ b2CircleShape Entity::CreateCircleShape(float radius,
   b2CircleShape shape;
   shape.m_radius = radius;
   shape.m_p.Set(shape_position.x, shape_position.y);
-
   return shape;
+}
+
+void Entity::SetWayPoints(const std::vector<Point>& way_points) {
+  way_points_ = way_points;
+  float current_speed = CalculateSpeed(way_points_[1], way_points_[0]);
+  body_->SetLinearVelocity(b2Vec2(
+      (way_points[1].x - way_points[0].x) * speed_ / current_speed,
+      (way_points[1].y - way_points[0].y) * speed_ / current_speed));
+}
+
+void Entity::SetSpeed(float speed) {
+  speed_ = speed;
+}
+
+void Entity::Update(int) {
+  b2Vec2 current_position = body_->GetPosition();
+  if (abs(
+      current_position.x
+          - way_points_[index_of_current_point_ + direction_].x) <= 2 &&
+      abs(current_position.y
+              - way_points_[index_of_current_point_ + direction_].y <= 2)) {
+    index_of_current_point_ += direction_;
+    if (index_of_current_point_ == way_points_.size() - 1
+        || index_of_current_point_ == 0) {
+      direction_ *= (-1);
+    }
+    b2Vec2 next_point(way_points_[index_of_current_point_ + direction_].x,
+                      way_points_[index_of_current_point_ + direction_].y);
+    float current_speed =
+        CalculateSpeed(Point(current_position), Point(next_point));
+    body_->SetLinearVelocity(b2Vec2(
+        (next_point.x - current_position.x) * speed_ / current_speed,
+        (next_point.y - current_position.y) * speed_ / current_speed));
+
+  }
+}
+
+float Entity::CalculateSpeed(const Point& point1, const Point& point2) const {
+  float speed = sqrt(
+      (point1.x - point2.x) * (point1.x - point2.x)
+          + (point1.y - point2.y) * (point1.y - point2.y));
+  return speed;
 }
 
 void Entity::InitializeBody(b2BodyType body_type, const Point& body_position) {
   b2BodyDef body_definition;
   body_definition.position.Set(body_position.x, body_position.y);
   body_definition.type = body_type;
+  body_definition.fixedRotation = true;
   body_ = world_->CreateBody(&body_definition);
 }

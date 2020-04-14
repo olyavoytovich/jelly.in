@@ -1,11 +1,11 @@
 #ifndef MAP_LOADER_H_
 #define MAP_LOADER_H_
 
-#include <memory>
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <memory>
 
 #include "map.h"
 

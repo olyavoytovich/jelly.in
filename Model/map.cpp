@@ -3,9 +3,9 @@
 Map::Map(const QImage& map_image)
     : map_image_(map_image), scaled_map_image_(map_image) {}
 
-void Map::Update() {
+void Map::Update(int time) {
   for (const auto& object : game_objects_) {
-    object->Update();
+    object->Update(time);
   }
 }
 
