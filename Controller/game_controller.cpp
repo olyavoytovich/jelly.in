@@ -39,7 +39,7 @@ GameController::GameController()
                                         QPolygon(QRect(-20, 0, 50, 50)),
                                         way_points_for_shooter1,
                                         BulletDirection::kLeftRight,
-                                        1008, 100, 80);
+                                        1008, 100, 5, 40);
 
   std::vector<Point> way_points_for_shooter2;
   way_points_for_shooter2.emplace_back(50, -400);
@@ -50,7 +50,18 @@ GameController::GameController()
                                         QPolygon(QRect(-20, 20, 80, 30)),
                                         way_points_for_shooter2,
                                         BulletDirection::kBottom,
-                                        600, 80, 80);
+                                        600, 80, 5, 80);
+
+  std::vector<Point> way_points_for_shooter3;
+  way_points_for_shooter3.emplace_back(150, -275);
+  way_points_for_shooter3.emplace_back(350, -275);
+  shooter3_ = std::make_shared<Shooter>(world_,
+                                        b2_dynamicBody,
+                                        Point(150, -275),
+                                        25,
+                                        way_points_for_shooter3,
+                                        BulletDirection::kLeftRight,
+                                        1018, 120, 5, 100);
 
   std::vector<Point> way_points_for_shooter4;
   way_points_for_shooter4.emplace_back(350, -400);
@@ -65,18 +76,8 @@ GameController::GameController()
                                         polygon_shapes,
                                         way_points_for_shooter4,
                                         BulletDirection::kBottom,
-                                        500, 120, 80);
+                                        500, 120, 5, 80);
 
-  std::vector<Point> way_points_for_shooter3;
-  way_points_for_shooter3.emplace_back(150, -275);
-  way_points_for_shooter3.emplace_back(350, -275);
-  shooter3_ = std::make_shared<Shooter>(world_,
-                                        b2_dynamicBody,
-                                        Point(150, -275),
-                                        25,
-                                        way_points_for_shooter3,
-                                        BulletDirection::kLeftRight,
-                                        1018, 100, 80);
   view_->show();
 }
 

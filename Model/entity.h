@@ -12,7 +12,13 @@ struct Point {
   explicit Point(const b2Vec2& position) : x(position.x), y(position.y) {}
   Point(float x, float y) : x(x), y(y) {}
 
-  QPoint ToQPoint() { return {static_cast<int>(x), static_cast<int>(y)}; }
+  QPoint ToQPoint() {
+    return {static_cast<int>(x), static_cast<int>(y)};
+  }
+
+  b2Vec2 ToB2Vec2() {
+    return b2Vec2(x, y);
+  }
 
   float x;
   float y;
@@ -54,12 +60,6 @@ class Entity : public GameObject {
          const Point& body_position, const std::vector<CircleShape>& circles,
          const std::vector<PolygonShape>& polygons);
 
-  // Конструктор, создающий тело из одной формы (полигон)
-  // а также сразу задающий вектор скорости
-  Entity(const std::shared_ptr<b2World>& world, b2BodyType type,
-         const Point& body_position, const QPolygon& polygon,
-         const b2Vec2& velocity);
-
   ~Entity() override;
 
   // Отрисовывает все формы тела.
@@ -72,11 +72,9 @@ class Entity : public GameObject {
 
   void SetWayPoints(const std::vector<Point>& way_points);
   void SetSpeed(float speed);
+  void SetLinearVelocity(b2Vec2 velocity);
 
   void Update(int time) override;
-
- protected:
-  float CalculateSpeed(const Point& point1, const Point& point2) const;
 
  protected:
   b2Body* body_ = nullptr;
@@ -84,7 +82,7 @@ class Entity : public GameObject {
   int index_of_current_point_ = 0;
 
   float speed_ = 0;
-  // Направление, в котором идет Entity:
+  // Направление, по которому итерируемся по way_points:
   //    -- direction_ = 1 - из начала в конец
   //    -- direction_ = -1 - из конца в начало
   int direction_ = 1;

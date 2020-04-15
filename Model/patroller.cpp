@@ -30,5 +30,3 @@ Patroller::Patroller(std::shared_ptr<b2World> world,
   SetSpeed(speed);
   SetWayPoints(way_points);
 }
-
-
