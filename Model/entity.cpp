@@ -1,6 +1,5 @@
 #include "entity.h"
 
-
 // Про координаты. Координаты в Box2D такие же, как у математиков. То есть
 // ось абсцисс направлена вправо, ось ординат - вверх.
 // Но рисуем объекты мы в координатах окна. При этом центр КС бокса ставим в
@@ -130,10 +129,10 @@ b2CircleShape Entity::CreateCircleShape(float radius,
 void Entity::SetWayPoints(const std::vector<Point>& way_points) {
   way_points_ = way_points;
   if (!way_points_.empty()) {
-    b2Vec2 velocity = way_points_[1].ToB2Vec2() - way_points_[0].ToB2Vec2();
-    velocity.Normalize();
-    velocity *= speed_;
-    body_->SetLinearVelocity(velocity);
+    if (body_->GetPosition() != way_points_[0].ToB2Vec2()) {
+      way_points_.insert(way_points_.begin(), Point(body_->GetPosition()));
+      SetVelocity(way_points_[0].ToB2Vec2(), body_->GetPosition(), speed_);
+    }
   }
 }
 
@@ -141,25 +140,28 @@ void Entity::SetSpeed(float speed) {
   speed_ = speed;
 }
 
-void Entity::SetLinearVelocity(b2Vec2 velocity) {
+void Entity::SetVelocity(b2Vec2 target_position,
+                         b2Vec2 current_position,
+                         float speed) {
+  b2Vec2 velocity = target_position - current_position;
+  velocity.Normalize();
+  velocity *= speed;
   body_->SetLinearVelocity(velocity);
 }
 
 void Entity::Update(int) {
-  if (way_points_.size() >= 2 && (body_->GetPosition()
-      - way_points_[index_of_current_point_ + direction_].ToB2Vec2()).Length()
+  if (way_points_.size() <= 1) {
+    return;
+  }
+  if ((body_->GetPosition() - way_points_[way_point_index_].ToB2Vec2()).Length()
       <= 2) {
-    index_of_current_point_ += direction_;
-    if (index_of_current_point_ == way_points_.size() - 1
-        || index_of_current_point_ == 0) {
+    way_point_index_ += direction_;
+    if (way_point_index_ == way_points_.size() - 1
+        || way_point_index_ == 0) {
       direction_ *= -1;
     }
-    b2Vec2 velocity =
-        way_points_[index_of_current_point_ + direction_].ToB2Vec2()
-            - body_->GetPosition();
-    velocity.Normalize();
-    velocity *= speed_;
-    body_->SetLinearVelocity(velocity);
+    SetVelocity(way_points_[way_point_index_].ToB2Vec2(), body_->GetPosition(),
+                speed_);
   }
 }
 

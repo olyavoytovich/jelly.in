@@ -13,16 +13,7 @@ Shooter::Shooter(std::shared_ptr<b2World> world, b2BodyType type,
       bullet_radius_(bullet_radius) {
   SetSpeed(speed);
   SetWayPoints(way_points);
-  CheckPolygonPoints(
-      dynamic_cast<b2PolygonShape*>(body_->GetFixtureList()->GetShape()));
-  if (bullet_direction_ == BulletDirection::kLeftRight) {
-    float coordinate_y = (left_point_.y - right_point_.y) / 2;
-    left_point_.Set(left_point_.x - bullet_radius_, coordinate_y);
-    right_point_.Set(right_point_.x + bullet_radius_, coordinate_y);
-  } else {
-    left_point_.Set(left_point_.x, right_point_.y - bullet_radius_);
-    right_point_.Set(right_point_.x, right_point_.y - bullet_radius_);
-  }
+  InitializeBoundaryPoints();
 }
 
 Shooter::Shooter(std::shared_ptr<b2World> world, b2BodyType type,
@@ -38,8 +29,7 @@ Shooter::Shooter(std::shared_ptr<b2World> world, b2BodyType type,
       bullet_radius_(bullet_radius) {
   SetSpeed(speed);
   SetWayPoints(way_points);
-  left_point_.Set(-radius - bullet_radius_, 0);
-  right_point_.Set(radius + bullet_radius_, 0);
+  InitializeBoundaryPoints();
 }
 
 Shooter::Shooter(std::shared_ptr<b2World> world, b2BodyType body_type,
@@ -57,11 +47,82 @@ Shooter::Shooter(std::shared_ptr<b2World> world, b2BodyType body_type,
       bullet_radius_(bullet_radius) {
   SetSpeed(speed);
   SetWayPoints(way_points);
+  InitializeBoundaryPoints();
+}
+
+void Shooter::Draw(QPainter* painter) const {
+  Entity::Draw(painter);
+  for (const auto& bullet : bullets_) {
+    bullet->Draw(painter);
+  }
+}
+
+void Shooter::Update(int time) {
+  Entity::Update(time);
+  last_shoot_time_ += time;
+  if (last_shoot_time_ < shoot_period_) {
+    return;
+  }
+  if (way_points_.size() <= 1) {
+    return;
+  }
+  last_shoot_time_ = 0;
+  if (bullets_.size() > 50) {
+    bullets_.erase(bullets_.begin(),
+                   bullets_.begin()
+                       + static_cast<int>(right_point_.x - left_point_.x)
+                           / 15 + 1);
+  }
+  if (bullet_direction_ == BulletDirection::kLeftRight) {
+    if (way_points_[way_point_index_].ToB2Vec2().x - body_->GetPosition().x
+        >= 0) {
+      AddBullet(Point(body_->GetWorldPoint(right_point_)));
+
+    } else {
+      AddBullet(Point(body_->GetWorldPoint(left_point_)));
+    }
+    bullets_.back()->SetVelocity(way_points_[way_point_index_].ToB2Vec2(),
+                                 body_->GetPosition(),
+                                 bullet_speed_);
+  } else {
+    int width = static_cast<int>(right_point_.x - left_point_.x);
+    for (int i = 0; i <= width; i += 15) {
+      b2Vec2 bullet_position
+          (left_point_.x + static_cast<float>(i),
+           right_point_.y - bullet_radius_);
+      AddBullet(Point(body_->GetWorldPoint(bullet_position)));
+      bullets_.back()->SetVelocity(
+          body_->GetPosition() + b2Vec2(0, -bullet_speed_),
+          body_->GetPosition(),
+          bullet_speed_);
+    }
+  }
+}
+
+void Shooter::AddBullet(const Point& bullet_position) {
+  bullets_.emplace_back(std::make_shared<Entity>(world_,
+                                                 b2_kinematicBody,
+                                                 bullet_position,
+                                                 bullet_radius_));
+}
+
+void Shooter::InitializeBoundaryPoints() {
   for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
        fixture = fixture->GetNext()) {
     switch (fixture->GetShape()->GetType()) {
       case b2Shape::e_polygon: {
-        CheckPolygonPoints(dynamic_cast<b2PolygonShape*>(fixture->GetShape()));
+        b2PolygonShape* polygon_shape =
+            dynamic_cast<b2PolygonShape*>(fixture->GetShape());
+        for (int i = 0; i < polygon_shape->m_count; i++) {
+          left_point_.x =
+              std::min(left_point_.x, polygon_shape->m_vertices[i].x);
+          right_point_.x =
+              std::max(right_point_.x, polygon_shape->m_vertices[i].x);
+          left_point_.y =
+              std::max(left_point_.y, polygon_shape->m_vertices[i].y);
+          right_point_.y =
+              std::min(right_point_.y, polygon_shape->m_vertices[i].y);
+        }
         break;
       }
 
@@ -79,74 +140,14 @@ Shooter::Shooter(std::shared_ptr<b2World> world, b2BodyType body_type,
       }
     }
   }
-  if (bullet_direction == BulletDirection::kLeftRight) {
-    float coordinate_y = (left_point_.y - right_point_.y) / 2;
+  if (bullet_direction_ == BulletDirection::kLeftRight) {
+    float coordinate_y = (left_point_.y + right_point_.y) / 2;
     left_point_.Set(left_point_.x - bullet_radius_, coordinate_y);
-    left_point_.Set(right_point_.x + bullet_radius_, coordinate_y);
+    right_point_.Set(right_point_.x + bullet_radius_, coordinate_y);
   } else {
     left_point_.Set(left_point_.x,
-                    -right_point_.x - bullet_radius_);
-    left_point_.Set(right_point_.y,
-                    -right_point_.y - bullet_radius_);
-  }
-}
-
-void Shooter::Draw(QPainter* painter) const {
-  Entity::Draw(painter);
-  for (const auto& bullet : bullets_) {
-    bullet->Draw(painter);
-  }
-}
-
-void Shooter::Update(int time) {
-  Entity::Update(time);
-  last_shoot_time_ += time;
-  if (last_shoot_time_ >= shoot_period_ && way_points_.size() >= 2) {
-    last_shoot_time_ = 0;
-    if (bullets_.size() > 50) {
-      bullets_.erase(bullets_.begin(),
-                     bullets_.begin()
-                         + static_cast<int>(right_point_.x - left_point_.x)
-                             / 15 + 1);
-    }
-    b2Vec2
-        velocity = way_points_[index_of_current_point_ + direction_].ToB2Vec2()
-        - body_->GetPosition();
-    velocity.Normalize();
-    velocity *= bullet_speed_;
-    if (bullet_direction_ == BulletDirection::kLeftRight) {
-      if (velocity.x > 0) {
-        AddBullet(Point(body_->GetWorldPoint(right_point_)));
-      } else {
-        AddBullet(Point(body_->GetWorldPoint(left_point_)));
-      }
-      bullets_[bullets_.size() - 1]->SetLinearVelocity(velocity);
-    } else {
-      velocity.y = -bullet_speed_;
-      int width = static_cast<int>(right_point_.x - left_point_.x);
-      for (int i = 0; i <= width; i += 15) {
-        b2Vec2 bullet_position
-            (left_point_.x + static_cast<float>(i),
-             right_point_.y - bullet_radius_);
-        AddBullet(Point(body_->GetWorldPoint(bullet_position)));
-        bullets_[bullets_.size() - 1]->SetLinearVelocity(velocity);
-      }
-    }
-  }
-}
-
-void Shooter::AddBullet(const Point& bullet_position) {
-  bullets_.emplace_back(std::make_shared<Entity>(world_,
-                                                 b2_kinematicBody,
-                                                 bullet_position,
-                                                 bullet_radius_));
-}
-
-void Shooter::CheckPolygonPoints(b2PolygonShape* polygon_shape) {
-  for (int i = 0; i < polygon_shape->m_count; i++) {
-    left_point_.x = std::min(left_point_.x, polygon_shape->m_vertices[i].x);
-    right_point_.x = std::max(right_point_.x, polygon_shape->m_vertices[i].x);
-    left_point_.y = std::max(left_point_.y, polygon_shape->m_vertices[i].y);
-    right_point_.y = std::min(right_point_.y, polygon_shape->m_vertices[i].y);
+                    right_point_.x - bullet_radius_);
+    right_point_.Set(right_point_.x,
+                     right_point_.y - bullet_radius_);
   }
 }

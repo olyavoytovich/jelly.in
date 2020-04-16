@@ -31,23 +31,27 @@ GameController::GameController()
                                            way_points_for_patroller, 80);
 
   std::vector<Point> way_points_for_shooter1;
-  way_points_for_shooter1.emplace_back(150, -200);
-  way_points_for_shooter1.emplace_back(350, -200);
+  way_points_for_shooter1.emplace_back(150, -175);
+  way_points_for_shooter1.emplace_back(350, -175);
   shooter1_ = std::make_shared<Shooter>(world_,
                                         b2_dynamicBody,
-                                        Point(150, -200),
-                                        QPolygon(QRect(-20, 0, 50, 50)),
+                                        Point(150, -175),
+                                        QPolygon(QPolygon({{-25, -25},
+                                                           {-25, 25},
+                                                           {25, 25},
+                                                           {25, -25}})),
                                         way_points_for_shooter1,
                                         BulletDirection::kLeftRight,
                                         1008, 100, 5, 40);
 
   std::vector<Point> way_points_for_shooter2;
-  way_points_for_shooter2.emplace_back(50, -400);
-  way_points_for_shooter2.emplace_back(250, -400);
+  way_points_for_shooter2.emplace_back(50, -390);
+  way_points_for_shooter2.emplace_back(250, -390);
   shooter2_ = std::make_shared<Shooter>(world_,
                                         b2_kinematicBody,
-                                        Point(50, -400),
-                                        QPolygon(QRect(-20, 20, 80, 30)),
+                                        Point(50, -390),
+                                        QPolygon({{-40, -10}, {-40, 10},
+                                                  {40, 10}, {40, -10}}),
                                         way_points_for_shooter2,
                                         BulletDirection::kBottom,
                                         600, 80, 5, 80);
@@ -68,7 +72,8 @@ GameController::GameController()
   way_points_for_shooter4.emplace_back(550, -400);
   std::vector<CircleShape> circle_shapes = {CircleShape(25, Point(10, 20))};
   std::vector<PolygonShape> polygon_shapes =
-      {PolygonShape(QPolygon(QRect(-20, 0, 50, 50)), Point(0, 0))};
+      {PolygonShape(QPolygon({{-15, -25}, {-15, 25},
+                              {35, 20}, {35, -22}}), Point(0, 0))};
   shooter4_ = std::make_shared<Shooter>(world_,
                                         b2_kinematicBody,
                                         Point(350, -400),
@@ -76,7 +81,7 @@ GameController::GameController()
                                         polygon_shapes,
                                         way_points_for_shooter4,
                                         BulletDirection::kBottom,
-                                        500, 120, 5, 80);
+                                        200, 120, 5, 80);
 
   view_->show();
 }

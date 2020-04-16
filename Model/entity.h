@@ -72,16 +72,22 @@ class Entity : public GameObject {
 
   void SetWayPoints(const std::vector<Point>& way_points);
   void SetSpeed(float speed);
-  void SetLinearVelocity(b2Vec2 velocity);
+  void SetVelocity(b2Vec2 target_position,
+                   b2Vec2 current_position,
+                   float speed);
 
   void Update(int time) override;
 
  protected:
   b2Body* body_ = nullptr;
+
   std::vector<Point> way_points_;
-  int index_of_current_point_ = 0;
+
+  // Индекс текущего way_point в векторе way_points_
+  int way_point_index_ = 0;
 
   float speed_ = 0;
+
   // Направление, по которому итерируемся по way_points:
   //    -- direction_ = 1 - из начала в конец
   //    -- direction_ = -1 - из конца в начало

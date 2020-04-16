@@ -46,12 +46,8 @@ class Shooter : public Entity {
  private:
   void AddBullet(const Point& bullet_position);
 
-  // Проверяет точки-вершины полигона. Устанавливает в
-  //    left_point_.x - наименьшее значение координаты x среди точек полигона
-  //    left_point_.y - наибольшее значение координаты y среди точек полигона
-  //    right_point_.x - наибольшее значение координаты x среди точек полигона
-  //    right_point_.y - наименьшее значение координаты y среди точек полигона
-  void CheckPolygonPoints(b2PolygonShape* polygon_shape);
+  // Инициализирует left_point_, right_point_
+  void InitializeBoundaryPoints();
 
  private:
   BulletDirection bullet_direction_;
