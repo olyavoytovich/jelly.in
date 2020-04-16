@@ -23,6 +23,7 @@ add_executable(jellyin main.cpp
         entity.cpp
         map.cpp
         map_loader.cpp
+	player.cpp
         resources.qrc
         view.cpp
         ${box2d})

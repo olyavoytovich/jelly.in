@@ -72,7 +72,13 @@ class Entity : public GameObject {
   b2CircleShape CreateCircleShape(float radius,
                                   const Point& shape_position = {0, 0}) const;
 
- private:
+  void SetLinearVelocity(b2Vec2 velocity);
+  void SetApplyLinearImpulse(b2Vec2 force);
+
+protected:
+  b2Body* body_ = nullptr;
+
+private:
   // Рисует формы в зависимости от типа их фигуры. Вторым параметром передается
   // форму, которую будет отрисовывать эта функция.
   void DrawShape(QPainter* painter, b2Fixture* shape) const;
@@ -84,7 +90,6 @@ class Entity : public GameObject {
 
  private:
   std::shared_ptr<b2World> world_;
-  b2Body* body_ = nullptr;
 };
 
 #endif  // ENTITY_H_

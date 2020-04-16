@@ -3,7 +3,8 @@
 GameController::GameController()
     : view_(std::make_shared<View>(this)),
       map_(MapLoader::LoadMap("test_map")),
-      world_(std::make_shared<b2World>(b2Vec2(0, -10))) {
+      world_(std::make_shared<b2World>(b2Vec2(0, -200))),
+      is_key_pressed_(3, 0) {
 
   std::vector<CircleShape> circles;
   std::vector<PolygonShape> polygons;
@@ -13,20 +14,19 @@ GameController::GameController()
 
   entity_ = std::make_shared<Entity>(world_,
                                      b2_staticBody,
-                                     Point(300, -300),
-                                     QPolygon({QPoint(15, 0), QPoint(30, 60),
-                                               QPoint(50, 30), QPoint(0, 30)}));
+                                     Point(400, -220),
+                                     QPolygon(QRect(-400, 0, 800, 20)));
 
-  entity2_ = std::make_shared<Entity>(world_,
-                                      b2_dynamicBody,
-                                      Point(200, -100),
-                                      50);
+//  entity2_ = std::make_shared<Entity>(world_,
+//                                      b2_dynamicBody,
+//                                      Point(200, -100),
+//                                      50);
 
-  entity3_ = std::make_shared<Entity>(world_,
-                                      b2_dynamicBody,
-                                      Point(500, -100),
-                                      circles,
-                                      polygons);
+//  entity3_ = std::make_shared<Player>(world_,
+//                                     b2_dynamicBody,
+//                                     Point(200, -220),
+//                                     QPolygon(QRect(10, 0, -10, 20)),
+//                                     this);
 
   view_->show();
 }
@@ -40,6 +40,7 @@ void GameController::Update(int time) {
                kPositionAccuracy);
   map_->Update();
   view_->repaint();
+  //entity3_->Update();
 }
 
 void GameController::Draw(QPainter* painter) const {
@@ -47,6 +48,46 @@ void GameController::Draw(QPainter* painter) const {
 
   painter->setBrush(Qt::BDiagPattern);
   entity_->Draw(painter);
-  entity2_->Draw(painter);
-  entity3_->Draw(painter);
+ // entity2_->Draw(painter);
+ // entity3_->Draw(painter);
+ // player_->Draw(painter);
+}
+
+void GameController::PressKey(QKeyEvent *event) {
+  switch (event->key()) {
+    case Qt::Key_Left: {
+      is_key_pressed_[static_cast<int>(Keys::LEFT)] = 1;
+      is_key_pressed_[static_cast<int>(Keys::RIGHT)] = 0;
+      break;
+    }
+    case Qt::Key_Right: {
+      is_key_pressed_[static_cast<int>(Keys::LEFT)] = 0;
+      is_key_pressed_[static_cast<int>(Keys::RIGHT)] = 1;
+      break;
+    }
+  }
+  if (event->key() == Qt::Key_Up) {
+    is_key_pressed_[static_cast<int>(Keys::UP)] = 1;
+  }
+}
+
+void GameController::ReleaseKey(QKeyEvent *event) {
+  switch (event->key()) {
+    case Qt::Key_Left: {
+      is_key_pressed_[static_cast<int>(Keys::LEFT)] = 0;
+      break;
+    }
+    case Qt::Key_Right: {
+      is_key_pressed_[static_cast<int>(Keys::RIGHT)] = 0;
+      break;
+    }
+    case Qt::Key_Up: {
+      is_key_pressed_[static_cast<int>(Keys::UP)] = 0;
+      break;
+    }
+  }
+}
+
+bool GameController::GetKey(Keys key) {
+  return is_key_pressed_[static_cast<int>(key)];
 }

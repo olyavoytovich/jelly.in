@@ -12,6 +12,7 @@
 #include "game_object.h"
 #include "map.h"
 #include "map_loader.h"
+#include "player.h"
 #include "view.h"
 
 class GameController : public AbstractGameController {
@@ -21,6 +22,9 @@ class GameController : public AbstractGameController {
 
   void Update(int time) override;
   void Draw(QPainter* painter) const override;
+  void PressKey(QKeyEvent* event) override;
+  void ReleaseKey(QKeyEvent* event) override;
+  bool GetKey(Keys key);
 
  private:
   // Данные константы передаются в функцию Step(), которая используется при
@@ -34,14 +38,21 @@ class GameController : public AbstractGameController {
   const int kVelocityAccuracy = 6;
   const int kPositionAccuracy = 2;
 
+  // Массив нажатых кнопок, а точнее:
+  // 0: left
+  // 1: right
+  // 2: up
+  std::vector<bool> is_key_pressed_;
+
  private:
   std::shared_ptr<View> view_;
 
   std::shared_ptr<b2World> world_;
 
   std::shared_ptr<Entity> entity_;
-  std::shared_ptr<Entity> entity2_;
-  std::shared_ptr<Entity> entity3_;
+//  std::shared_ptr<Entity> entity2_;
+//  std::shared_ptr<Player> entity3_;
+  //std::shared_ptr<Player> player_;
 
   std::shared_ptr<Map> map_;
 };

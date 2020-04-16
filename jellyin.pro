@@ -17,6 +17,7 @@ SOURCES += \
         main.cpp \
         map.cpp \
         map_loader.cpp \
+        player.cpp \
         view.cpp \
           box2d/collision/b2_broad_phase.cpp \
           box2d/collision/b2_chain_shape.cpp \
@@ -73,6 +74,7 @@ HEADERS += \
     entity.h \
     map.h \
     map_loader.h \
+    player.h \
     view.h \
     box2d/b2_block_allocator.h \
     box2d/b2_body.h \
