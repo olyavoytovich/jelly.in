@@ -16,9 +16,9 @@ class AbstractGameController {
 
   virtual void Update(int time) = 0;
   virtual void Draw(QPainter* painter) const = 0;
-  virtual void PressKey(int key) = 0;
-  virtual void ClampKey(int key) = 0;
-  virtual void ReleaseKey(int key) = 0;
+  virtual void PressKey(int key_code) = 0;
+  virtual void ClampKey(int key_code) = 0;
+  virtual void ReleaseKey(int key_code) = 0;
   virtual bool GetPressedKeyStatus(Key key) = 0;
   virtual bool GetClampedKeyStatus(Key key) = 0;
 };
