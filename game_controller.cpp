@@ -1,10 +1,10 @@
 #include "game_controller.h"
 
 GameController::GameController()
-    : view_(std::make_shared<View>(this)),
-      map_(MapLoader::LoadMap("test_map")),
+    : is_key_pressed_(3, 0), is_key_clamped_(3, 0),
+      view_(std::make_shared<View>(this)),
       world_(std::make_shared<b2World>(b2Vec2(0, -10))),
-      is_key_pressed_(3, 0), is_key_clamped_(3, 0) {
+      map_(MapLoader::LoadMap("test_map")) {
 
   std::vector<CircleShape> circles;
   std::vector<PolygonShape> polygons;
@@ -89,9 +89,9 @@ void GameController::ReleaseKey(int key_code) {
 }
 
 bool GameController::GetPressedKeyStatus(Key key) {
-  return is_key_pressed_[static_cast<int>(key)];
+  return is_key_pressed_[static_cast<unsigned int>(key)];
 }
 
 bool GameController::GetClampedKeyStatus(Key key) {
-  return is_key_clamped_[static_cast<int>(key)];
+  return is_key_clamped_[static_cast<unsigned int>(key)];
 }

@@ -73,7 +73,7 @@ class Entity : public GameObject {
                                   const Point& shape_position = {0, 0}) const;
 
  protected:
-  const float kEps = static_cast<float>(0.00001);
+  const float kEpsilon = 1e-5;
   b2Body* body_ = nullptr;
 
  private:
@@ -83,10 +83,10 @@ class Entity : public GameObject {
 
   void InitializeBody(b2BodyType body_type, const Point& body_position);
 
-  qreal MetersToPixels(float value) const;
-  QPointF MetersToPixels(b2Vec2 vector) const;
-  float PixelsToMeters(qreal value) const;
-  b2Vec2 PixelsToMeters(QPointF vector) const;
+  double MetersToPixels(float value) const;
+  QPoint MetersToPixels(b2Vec2 vector) const;
+  float PixelsToMeters(double value) const;
+  b2Vec2 PixelsToMeters(QPoint vector) const;
 
  private:
   const float kBodyDensity = 1;

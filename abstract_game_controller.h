@@ -1,8 +1,8 @@
 #ifndef ABSTRACT_GAME_CONTROLLER_H_
 #define ABSTRACT_GAME_CONTROLLER_H_
 
-#include <QPainter>
 #include <QKeyEvent>
+#include <QPainter>
 
 enum class Key {
     LEFT,

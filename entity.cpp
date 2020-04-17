@@ -78,7 +78,7 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
       QPolygon polygon;
       auto polygon_shape = dynamic_cast<b2PolygonShape*>(shape->GetShape());
       for (int i = 0; i < polygon_shape->m_count; i++) {
-        auto point =
+        QPoint point =
             MetersToPixels(body_->GetWorldPoint(polygon_shape->m_vertices[i]));
         polygon.putPoints(i, 1, static_cast<int>(point.x()),
                           static_cast<int>(point.y()));
@@ -89,12 +89,11 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
 
     case b2Shape::e_circle: {
       auto circle = dynamic_cast<b2CircleShape*>(shape->GetShape());
-      auto center = MetersToPixels(body_->GetWorldCenter());
-      float radius = MetersToPixels(circle->m_radius);
+      QPoint center = MetersToPixels(body_->GetWorldCenter());
+      int radius = static_cast<int>(MetersToPixels(circle->m_radius));
       painter->drawEllipse(static_cast<int>(center.x() - radius),
                            static_cast<int>(center.y() - radius),
-                           2 * static_cast<int>(radius),
-                           2 * static_cast<int>(radius));
+                           2 * radius, 2 * radius);
       break;
     }
 
@@ -138,18 +137,18 @@ void Entity::InitializeBody(b2BodyType body_type, const Point& body_position) {
   body_ = world_->CreateBody(&body_definition);
 }
 
-qreal Entity::MetersToPixels(float value) const {
+double Entity::MetersToPixels(float value) const {
     return static_cast<qreal>(value * kPixelsPerMeter);
 }
 
-QPointF Entity::MetersToPixels(b2Vec2 vector) const {
-    return QPointF(MetersToPixels(vector.x), MetersToPixels(vector.y));
+QPoint Entity::MetersToPixels(b2Vec2 vector) const {
+    return QPoint(MetersToPixels(vector.x), MetersToPixels(vector.y));
 }
 
-float Entity::PixelsToMeters(qreal value) const {
+float Entity::PixelsToMeters(double value) const {
     return value / kPixelsPerMeter;
 }
 
-b2Vec2 Entity::PixelsToMeters(QPointF vector) const {
+b2Vec2 Entity::PixelsToMeters(QPoint vector) const {
     return b2Vec2(PixelsToMeters(vector.x()), PixelsToMeters(vector.y()));
 }
