@@ -10,7 +10,7 @@ Player::Player(std::shared_ptr<b2World> world,
 
 void Player::Update() {
   if (game_controller_->GetPressedKeyStatus(Key::UP) &&
-      abs(body_->GetLinearVelocity().y) < kEps) {
+      abs(body_->GetLinearVelocity().y) < kEpsilon) {
     body_->ApplyLinearImpulseToCenter(b2Vec2(0, kJumpSpeed * body_->GetMass()),
                                       true);
   }
