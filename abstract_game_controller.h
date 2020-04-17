@@ -4,10 +4,10 @@
 #include <QPainter>
 #include <QKeyEvent>
 
-enum class Keys {
+enum class Key {
     LEFT,
-    RIGHT,
     UP,
+    RIGHT
 };
 
 class AbstractGameController {
@@ -16,9 +16,11 @@ class AbstractGameController {
 
   virtual void Update(int time) = 0;
   virtual void Draw(QPainter* painter) const = 0;
-  virtual void PressKey(QKeyEvent* event) = 0;
-  virtual void ReleaseKey(QKeyEvent* event) = 0;
-  virtual bool GetKey(Keys key) = 0;
+  virtual void PressKey(int key) = 0;
+  virtual void ClampKey(int key) = 0;
+  virtual void ReleaseKey(int key) = 0;
+  virtual bool GetPressedKeyStatus(Key key) = 0;
+  virtual bool GetClampedKeyStatus(Key key) = 0;
 };
 
 #endif  // ABSTRACT_GAME_CONTROLLER_H_

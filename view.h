@@ -1,4 +1,4 @@
-    #ifndef VIEW_H_
+#ifndef VIEW_H_
 #define VIEW_H_
 
 #include <QMainWindow>

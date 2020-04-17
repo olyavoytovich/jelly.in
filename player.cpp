@@ -9,16 +9,18 @@ Player::Player(std::shared_ptr<b2World> world,
       game_controller_(game_controller) {}
 
 void Player::Update() {
-  b2Vec2 velocity = body_->GetLinearVelocity();
-  if (game_controller_->GetKey(Keys::UP) == true) {
-    velocity.y = 1000;
+  if (game_controller_->GetPressedKeyStatus(Key::UP) &&
+      abs(body_->GetLinearVelocity().y) < kEps) {
+    body_->ApplyLinearImpulseToCenter(b2Vec2(0, kJumpSpeed * body_->GetMass()),
+                                      true);
   }
-  if (game_controller_->GetKey(Keys::LEFT) == true) {
-    velocity.x = -300;
-  } else if (game_controller_->GetKey(Keys::RIGHT) == true) {
-    velocity.x = 300;
-  } else {
-    velocity.x = 0;
+  float target_speed = -body_->GetLinearVelocity().x;
+  if (game_controller_->GetClampedKeyStatus(Key::LEFT)) {
+    target_speed -= kPlayerSpeed;
   }
-  SetLinearVelocity(velocity);
+  if (game_controller_->GetClampedKeyStatus(Key::RIGHT)) {
+    target_speed += kPlayerSpeed;
+  }
+  body_->ApplyLinearImpulseToCenter(b2Vec2(target_speed * body_->GetMass(), 0),
+                                    true);
 }

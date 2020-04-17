@@ -78,10 +78,10 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
       QPolygon polygon;
       auto polygon_shape = dynamic_cast<b2PolygonShape*>(shape->GetShape());
       for (int i = 0; i < polygon_shape->m_count; i++) {
-        b2Vec2 point = body_->GetWorldPoint(polygon_shape->m_vertices[i]);
-        polygon.putPoints(i, 1,
-                          static_cast<int>(point.x),
-                          static_cast<int>(point.y));
+        auto point =
+            MetersToPixels(body_->GetWorldPoint(polygon_shape->m_vertices[i]));
+        polygon.putPoints(i, 1, static_cast<int>(point.x()),
+                          static_cast<int>(point.y()));
       }
       painter->drawPolygon(polygon);
       break;
@@ -89,12 +89,12 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
 
     case b2Shape::e_circle: {
       auto circle = dynamic_cast<b2CircleShape*>(shape->GetShape());
-      painter->drawEllipse(static_cast<int>(body_->GetWorldCenter().x
-                               - circle->m_radius),
-                           static_cast<int>(body_->GetWorldCenter().y
-                               - circle->m_radius),
-                           2 * static_cast<int>(circle->m_radius),
-                           2 * static_cast<int>(circle->m_radius));
+      auto center = MetersToPixels(body_->GetWorldCenter());
+      float radius = MetersToPixels(circle->m_radius);
+      painter->drawEllipse(static_cast<int>(center.x() - radius),
+                           static_cast<int>(center.y() - radius),
+                           2 * static_cast<int>(radius),
+                           2 * static_cast<int>(radius));
       break;
     }
 
@@ -110,11 +110,12 @@ b2PolygonShape Entity::CreatePolygonShape(const QPolygon& polygon,
   std::vector<b2Vec2> polygon_points;
 
   for (auto point : polygon) {
-    polygon_points.emplace_back(point.x(), point.y());
+    polygon_points.emplace_back(PixelsToMeters(point));
   }
 
   b2PolygonShape shape;
-  shape.m_centroid.Set(shape_position.x, shape_position.y);
+  shape.m_centroid.Set(PixelsToMeters(shape_position.x),
+                       PixelsToMeters(shape_position.y));
   shape.Set(polygon_points.data(), polygon_points.size());
 
   return shape;
@@ -140,7 +141,24 @@ void Entity::SetApplyLinearImpulse(b2Vec2 force) {
 
 void Entity::InitializeBody(b2BodyType body_type, const Point& body_position) {
   b2BodyDef body_definition;
-  body_definition.position.Set(body_position.x, body_position.y);
+  body_definition.position.Set(PixelsToMeters(body_position.x),
+                               PixelsToMeters(body_position.y));
   body_definition.type = body_type;
   body_ = world_->CreateBody(&body_definition);
+}
+
+qreal Entity::MetersToPixels(float value) const {
+    return static_cast<qreal>(value * kPixelsPerMeter);
+}
+
+QPointF Entity::MetersToPixels(b2Vec2 vector) const {
+    return QPointF(MetersToPixels(vector.x), MetersToPixels(vector.y));
+}
+
+float Entity::PixelsToMeters(qreal value) const {
+    return value / kPixelsPerMeter;
+}
+
+b2Vec2 Entity::PixelsToMeters(QPointF vector) const {
+    return b2Vec2(PixelsToMeters(vector.x()), PixelsToMeters(vector.y()));
 }

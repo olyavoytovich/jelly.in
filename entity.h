@@ -75,18 +75,25 @@ class Entity : public GameObject {
   void SetLinearVelocity(b2Vec2 velocity);
   void SetApplyLinearImpulse(b2Vec2 force);
 
-protected:
+ protected:
+  const float kEps = static_cast<float>(0.00001);
   b2Body* body_ = nullptr;
 
-private:
+ private:
   // Рисует формы в зависимости от типа их фигуры. Вторым параметром передается
   // форму, которую будет отрисовывать эта функция.
   void DrawShape(QPainter* painter, b2Fixture* shape) const;
 
   void InitializeBody(b2BodyType body_type, const Point& body_position);
 
+  qreal MetersToPixels(float value) const;
+  QPointF MetersToPixels(b2Vec2 vector) const;
+  float PixelsToMeters(qreal value) const;
+  b2Vec2 PixelsToMeters(QPointF vector) const;
+
  private:
   const float kBodyDensity = 1;
+  const float kPixelsPerMeter = 100;
 
  private:
   std::shared_ptr<b2World> world_;
