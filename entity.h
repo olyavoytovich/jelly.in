@@ -72,9 +72,6 @@ class Entity : public GameObject {
   b2CircleShape CreateCircleShape(float radius,
                                   const Point& shape_position = {0, 0}) const;
 
-  void SetLinearVelocity(b2Vec2 velocity);
-  void SetApplyLinearImpulse(b2Vec2 force);
-
  protected:
   const float kEps = static_cast<float>(0.00001);
   b2Body* body_ = nullptr;

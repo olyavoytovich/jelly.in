@@ -1,8 +1,9 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "entity.h"
 #include "abstract_game_controller.h"
+#include "entity.h"
+#include <memory>
 
 class Player : public Entity {
  public:

@@ -130,15 +130,6 @@ b2CircleShape Entity::CreateCircleShape(float radius,
   return shape;
 }
 
-void Entity::SetLinearVelocity(b2Vec2 force) {
-  //body_->SetLinearVelocity(velocity);
-  body_->ApplyLinearImpulse(force, body_->GetPosition(), true);
-}
-
-void Entity::SetApplyLinearImpulse(b2Vec2 force) {
-  body_->ApplyLinearImpulse(force, body_->GetPosition(), true);
-}
-
 void Entity::InitializeBody(b2BodyType body_type, const Point& body_position) {
   b2BodyDef body_definition;
   body_definition.position.Set(PixelsToMeters(body_position.x),
