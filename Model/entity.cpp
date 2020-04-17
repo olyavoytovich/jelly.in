@@ -129,7 +129,7 @@ b2CircleShape Entity::CreateCircleShape(float radius,
 void Entity::SetWayPoints(const std::vector<Point>& way_points) {
   way_points_ = way_points;
   if (!way_points_.empty()) {
-    if (body_->GetPosition() != way_points_[0].ToB2Vec2()) {
+    if ((body_->GetPosition() - way_points_[0].ToB2Vec2()).Length() <= 1e-9) {
       way_points_.insert(way_points_.begin(), Point(body_->GetPosition()));
       SetVelocity(way_points_[0].ToB2Vec2(), body_->GetPosition(), speed_);
     }
@@ -138,6 +138,10 @@ void Entity::SetWayPoints(const std::vector<Point>& way_points) {
 
 void Entity::SetSpeed(float speed) {
   speed_ = speed;
+}
+
+void Entity::SetVelocity(b2Vec2 velocity) {
+  body_->SetLinearVelocity(velocity);
 }
 
 void Entity::SetVelocity(b2Vec2 target_position,

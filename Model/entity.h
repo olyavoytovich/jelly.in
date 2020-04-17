@@ -72,6 +72,7 @@ class Entity : public GameObject {
 
   void SetWayPoints(const std::vector<Point>& way_points);
   void SetSpeed(float speed);
+  void SetVelocity(b2Vec2 velocity);
   void SetVelocity(b2Vec2 target_position,
                    b2Vec2 current_position,
                    float speed);

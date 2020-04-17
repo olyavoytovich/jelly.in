@@ -91,10 +91,7 @@ void Shooter::Update(int time) {
           (left_point_.x + static_cast<float>(i),
            right_point_.y - bullet_radius_);
       AddBullet(Point(body_->GetWorldPoint(bullet_position)));
-      bullets_.back()->SetVelocity(
-          body_->GetPosition() + b2Vec2(0, -bullet_speed_),
-          body_->GetPosition(),
-          bullet_speed_);
+      bullets_.back()->SetVelocity(b2Vec2(0, -bullet_speed_));
     }
   }
 }
@@ -146,7 +143,7 @@ void Shooter::InitializeBoundaryPoints() {
     right_point_.Set(right_point_.x + bullet_radius_, coordinate_y);
   } else {
     left_point_.Set(left_point_.x,
-                    right_point_.x - bullet_radius_);
+                    right_point_.y - bullet_radius_);
     right_point_.Set(right_point_.x,
                      right_point_.y - bullet_radius_);
   }
