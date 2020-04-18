@@ -1,9 +1,15 @@
 #include "map.h"
 
 Map::Map(const QImage& map_image)
-    : map_image_(map_image), scaled_map_image_(map_image) {}
+    : map_image_(map_image),
+      scaled_map_image_(map_image),
+      world_(std::make_shared<b2World>(b2Vec2(0, 0.1))) {}
 
 void Map::Update(int time) {
+  world_->Step(static_cast<float>(time / 1000.0),
+               kVelocityAccuracy,
+               kPositionAccuracy);
+
   for (const auto& object : game_objects_) {
     object->Update(time);
   }
@@ -19,6 +25,7 @@ void Map::Draw(QPainter* painter) {
       static_cast<double>(painter->window().width()) / map_image_.width(),
       static_cast<double>(painter->window().height()) / map_image_.height());
   painter->scale(scale, scale);
+  painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
 
   for (const auto& object : game_objects_) {
     object->Draw(painter);
@@ -36,4 +43,8 @@ void Map::UpdateImageScale(int width, int height) {
       && scaled_map_image_.height() != height) {
     scaled_map_image_ = map_image_.scaled(width, height, Qt::KeepAspectRatio);
   }
+}
+
+b2Body* Map::CreateBody(b2BodyDef* body_definition) {
+  return world_->CreateBody(body_definition);
 }

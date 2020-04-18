@@ -7,6 +7,7 @@
 #include <QJsonObject>
 #include <memory>
 
+#include "entity.h"
 #include "map.h"
 
 class MapLoader {

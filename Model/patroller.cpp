@@ -1,32 +1,32 @@
 #include "patroller.h"
 
-Patroller::Patroller(std::shared_ptr<b2World> world,
+Patroller::Patroller(std::shared_ptr<Map> map,
                      b2BodyType type,
-                     const Point& body_position,
+                     const QPoint& body_position,
                      const QPolygon& polygon,
-                     const std::vector<Point>& way_points, float speed)
-    : Entity(std::move(world), type, body_position, polygon) {
+                     const std::vector<QPoint>& way_points, int speed)
+    : Entity(std::move(map), type, body_position, polygon) {
   SetSpeed(speed);
   SetWayPoints(way_points);
 }
 
-Patroller::Patroller(std::shared_ptr<b2World> world,
+Patroller::Patroller(std::shared_ptr<Map> map,
                      b2BodyType type,
-                     const Point& body_position,
-                     float radius,
-                     const std::vector<Point>& way_points, float speed)
-    : Entity(std::move(world), type, body_position, radius) {
+                     const QPoint& body_position,
+                     int radius,
+                     const std::vector<QPoint>& way_points, int speed)
+    : Entity(std::move(map), type, body_position, radius) {
   SetSpeed(speed);
   SetWayPoints(way_points);
 }
 
-Patroller::Patroller(std::shared_ptr<b2World> world,
+Patroller::Patroller(std::shared_ptr<Map> map,
                      b2BodyType body_type,
-                     const Point& body_position,
+                     const QPoint& body_position,
                      const std::vector<CircleShape>& circles,
                      const std::vector<PolygonShape>& polygons,
-                     const std::vector<Point>& way_points, float speed)
-    : Entity(std::move(world), body_type, body_position, circles, polygons) {
+                     const std::vector<QPoint>& way_points, int speed)
+    : Entity(std::move(map), body_type, body_position, circles, polygons) {
   SetSpeed(speed);
   SetWayPoints(way_points);
 }

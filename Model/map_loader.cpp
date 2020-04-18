@@ -19,22 +19,23 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   for (const auto& solid_object : solids) {
     object = solid_object.toObject();
 
-    QPolygon object_polygon;
+    QPolygon object_points;
+    QPoint object_position = QPoint(object["x"].toInt(), object["y"].toInt());
     if (!object["polygon"].isNull()) {
       // Add a polygon
       for (const auto& point : object["polygon"].toArray()) {
         point_obj = point.toObject();
-        object_polygon << QPoint(object["x"].toInt() + point_obj["x"].toInt(),
-                                 object["y"].toInt() + point_obj["y"].toInt());
+        object_points << QPoint(point_obj["x"].toInt(), point_obj["y"].toInt());
       }
     } else {
       // Add a rectangle
-      object_polygon = QRect(object["x"].toInt(),
-                             object["y"].toInt(),
-                             object["width"].toInt(),
-                             object["height"].toInt());
+      object_points =
+          QRect(0, 0, object["width"].toInt(), object["height"].toInt());
     }
-    map->AddGameObject(std::make_shared<GameObject>(object_polygon));
+    map->AddGameObject(std::make_shared<Entity>(map,
+                                                b2_staticBody,
+                                                object_position,
+                                                object_points));
   }
 
   return map;

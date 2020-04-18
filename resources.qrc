@@ -2,5 +2,7 @@
     <qresource>
         <file>data/test_map.json</file>
         <file>images/test_map.png</file>
+        <file>data/level_1.json</file>
+        <file>images/level_1.png</file>
     </qresource>
 </RCC>

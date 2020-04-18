@@ -14,32 +14,32 @@
 // локальными координатами, и если нужно создать тело из нескольких форм,
 // то каждой форме можно задавать свои координаты (shape_position).
 
-Entity::Entity(std::shared_ptr<b2World> world,
+Entity::Entity(std::shared_ptr<Map> map,
                b2BodyType body_type,
-               const Point& body_position,
+               const QPoint& body_position,
                const QPolygon& polygon)
-    : world_(std::move(world)) {
+    : map_(std::move(map)) {
   InitializeBody(body_type, body_position);
   b2PolygonShape shape = CreatePolygonShape(polygon);
   body_->CreateFixture(&shape, kBodyDensity);
 }
 
-Entity::Entity(std::shared_ptr<b2World> world,
+Entity::Entity(std::shared_ptr<Map> map,
                b2BodyType body_type,
-               const Point& body_position,
-               float radius)
-    : world_(std::move(world)) {
+               const QPoint& body_position,
+               int radius)
+    : map_(std::move(map)) {
   InitializeBody(body_type, body_position);
   b2CircleShape shape = CreateCircleShape(radius);
   body_->CreateFixture(&shape, kBodyDensity);
 }
 
-Entity::Entity(std::shared_ptr<b2World> world,
+Entity::Entity(std::shared_ptr<Map> map,
                b2BodyType body_type,
-               const Point& body_position,
+               const QPoint& body_position,
                const std::vector<CircleShape>& circles,
                const std::vector<PolygonShape>& polygons) :
-    world_(std::move(world)) {
+    map_(std::move(map)) {
   InitializeBody(body_type, body_position);
 
   for (auto&&[radius, shape_position] : circles) {
@@ -51,10 +51,6 @@ Entity::Entity(std::shared_ptr<b2World> world,
     b2PolygonShape shape = CreatePolygonShape(polygon, shape_position);
     body_->CreateFixture(&shape, kBodyDensity);
   }
-}
-
-Entity::~Entity() {
-  world_->DestroyBody(body_);
 }
 
 void Entity::Draw(QPainter* painter) const {
@@ -69,7 +65,6 @@ void Entity::Draw(QPainter* painter) const {
 
 void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
   painter->save();
-  painter->scale(1, -1);
 
   switch (shape->GetShape()->GetType()) {
     case b2Shape::e_polygon: {
@@ -78,8 +73,8 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
       for (int i = 0; i < polygon_shape->m_count; i++) {
         b2Vec2 point = body_->GetWorldPoint(polygon_shape->m_vertices[i]);
         polygon.putPoints(i, 1,
-                          static_cast<int>(point.x),
-                          static_cast<int>(point.y));
+                          MetersToPixels(point.x),
+                          MetersToPixels(point.y));
       }
       painter->drawPolygon(polygon);
       break;
@@ -87,12 +82,12 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
 
     case b2Shape::e_circle: {
       auto circle = dynamic_cast<b2CircleShape*>(shape->GetShape());
-      painter->drawEllipse(static_cast<int>(body_->GetWorldCenter().x
-                               - circle->m_radius),
-                           static_cast<int>(body_->GetWorldCenter().y
-                               - circle->m_radius),
-                           2 * static_cast<int>(circle->m_radius),
-                           2 * static_cast<int>(circle->m_radius));
+      int radius = MetersToPixels(circle->m_radius);
+      QPoint center = MetersToPixels(body_->GetWorldCenter());
+      painter->drawEllipse(center.x() - radius,
+                           center.y() - radius,
+                           2 * radius,
+                           2 * radius);
       break;
     }
 
@@ -104,43 +99,37 @@ void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
 }
 
 b2PolygonShape Entity::CreatePolygonShape(const QPolygon& polygon,
-                                          const Point& shape_position) const {
+                                          const QPoint& shape_position) const {
   std::vector<b2Vec2> polygon_points;
 
   for (auto point : polygon) {
-    polygon_points.emplace_back(point.x(), point.y());
+    polygon_points.emplace_back(PixelsToMeters(point));
   }
 
   b2PolygonShape shape;
-  shape.m_centroid.Set(shape_position.x, shape_position.y);
+  shape.m_centroid = PixelsToMeters(shape_position);
   shape.Set(polygon_points.data(), polygon_points.size());
 
   return shape;
 }
 
-b2CircleShape Entity::CreateCircleShape(float radius,
-                                        const Point& shape_position) const {
+b2CircleShape Entity::CreateCircleShape(int radius,
+                                        const QPoint& shape_position) const {
   b2CircleShape shape;
-  shape.m_radius = radius;
-  shape.m_p.Set(shape_position.x, shape_position.y);
+  shape.m_radius = PixelsToMeters(radius);
+  shape.m_p = PixelsToMeters(shape_position);
   return shape;
 }
 
-void Entity::SetWayPoints(const std::vector<Point>& way_points) {
-  if (!way_points_.empty()) {
-    if ((body_->GetPosition() - way_points_[0].ToB2Vec2()).Length()
-        <= kEpsilon) {
-      way_points_.insert(way_points_.begin(), Point(body_->GetPosition()));
-      SetVelocity(way_points_[0].ToB2Vec2(), body_->GetPosition(), speed_);
-    }
+void Entity::SetWayPoints(const std::vector<QPoint>& way_points) {
+  way_points_.clear();
+  for (const auto& point : way_points) {
+    way_points_.emplace_back(PixelsToMeters(point));
   }
-  std::copy(way_points.begin(),
-            way_points.end(),
-            std::back_inserter(way_points_));
 }
 
-void Entity::SetSpeed(float speed) {
-  speed_ = speed;
+void Entity::SetSpeed(int speed) {
+  speed_ = PixelsToMeters(speed);
 }
 
 void Entity::SetVelocity(b2Vec2 velocity) {
@@ -160,22 +149,35 @@ void Entity::Update(int) {
   if (way_points_.size() <= 1) {
     return;
   }
-  if ((body_->GetPosition() - way_points_[way_point_index_].ToB2Vec2()).Length()
-      <= 2) {
+  if ((body_->GetPosition() - way_points_[way_point_index_]).Length() <= 0.02) {
     way_point_index_ += direction_;
-    if (way_point_index_ == way_points_.size() - 1
-        || way_point_index_ == 0) {
+    if (way_point_index_ == way_points_.size() - 1 || way_point_index_ == 0) {
       direction_ *= -1;
     }
-    SetVelocity(way_points_[way_point_index_].ToB2Vec2(), body_->GetPosition(),
-                speed_);
+    SetVelocity(way_points_[way_point_index_], body_->GetPosition(), speed_);
   }
 }
 
-void Entity::InitializeBody(b2BodyType body_type, const Point& body_position) {
+void Entity::InitializeBody(b2BodyType body_type, const QPoint& body_position) {
   b2BodyDef body_definition;
-  body_definition.position.Set(body_position.x, body_position.y);
+  body_definition.position = PixelsToMeters(body_position);
   body_definition.type = body_type;
   body_definition.fixedRotation = true;
-  body_ = world_->CreateBody(&body_definition);
+  body_ = map_->CreateBody(&body_definition);
+}
+
+int Entity::MetersToPixels(float value) const {
+  return static_cast<int>(value * kPixelsPerMeter);
+}
+
+QPoint Entity::MetersToPixels(b2Vec2 vector) const {
+  return QPoint(MetersToPixels(vector.x), MetersToPixels(vector.y));
+}
+
+float Entity::PixelsToMeters(int value) const {
+  return static_cast<float>(value) / kPixelsPerMeter;
+}
+
+b2Vec2 Entity::PixelsToMeters(QPoint vector) const {
+  return b2Vec2(PixelsToMeters(vector.x()), PixelsToMeters(vector.y()));
 }
