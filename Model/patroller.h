@@ -18,7 +18,8 @@ class Patroller : public Entity {
             const std::vector<QPoint>& way_points, int speed);
 
   Patroller(std::shared_ptr<Map> map, b2BodyType body_type,
-            const QPoint& body_position, const std::vector<CircleShape>& circles,
+            const QPoint& body_position,
+            const std::vector<CircleShape>& circles,
             const std::vector<PolygonShape>& polygons,
             const std::vector<QPoint>& way_points, int speed);
 
