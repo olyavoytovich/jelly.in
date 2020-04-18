@@ -93,7 +93,6 @@ void Shooter::Update(int time) {
       bullets_.back()->SetVelocity(b2Vec2(0, -bullet_speed_));
     }
   }
-
 }
 
 void Shooter::AddBullet(const Point& bullet_position) {

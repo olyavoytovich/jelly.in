@@ -1,6 +1,7 @@
 #ifndef MODEL_ENTITY_H_
 #define MODEL_ENTITY_H_
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 #include <vector>
