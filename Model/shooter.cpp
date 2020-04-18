@@ -71,13 +71,12 @@ void Shooter::Update(int time) {
     bullets_.erase(bullets_.begin(),
                    bullets_.begin()
                        + static_cast<int>(right_point_.x - left_point_.x)
-                           / 15 + 1);
+                           / (3 * bullet_radius_) + 1);
   }
   if (bullet_direction_ == BulletDirection::kLeftRight) {
     if (way_points_[way_point_index_].ToB2Vec2().x - body_->GetPosition().x
         >= 0) {
       AddBullet(Point(body_->GetWorldPoint(right_point_)));
-
     } else {
       AddBullet(Point(body_->GetWorldPoint(left_point_)));
     }
@@ -86,7 +85,7 @@ void Shooter::Update(int time) {
                                  bullet_speed_);
   } else {
     int width = static_cast<int>(right_point_.x - left_point_.x);
-    for (int i = 0; i <= width; i += 15) {
+    for (int i = 0; i <= width; i += 3 * bullet_radius_) {
       b2Vec2 bullet_position
           (left_point_.x + static_cast<float>(i),
            right_point_.y - bullet_radius_);
@@ -94,6 +93,7 @@ void Shooter::Update(int time) {
       bullets_.back()->SetVelocity(b2Vec2(0, -bullet_speed_));
     }
   }
+
 }
 
 void Shooter::AddBullet(const Point& bullet_position) {

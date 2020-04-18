@@ -39,6 +39,8 @@ class Shooter : public Entity {
           int shoot_period, float bullet_speed, float bullet_radius,
           float speed = 0);
 
+  ~Shooter() override = default;
+
   void Draw(QPainter* painter) const override;
 
   void Update(int time) override;

@@ -80,6 +80,9 @@ class Entity : public GameObject {
   void Update(int time) override;
 
  protected:
+  float kEpsilon = 1e-5;
+
+ protected:
   b2Body* body_ = nullptr;
 
   std::vector<Point> way_points_;

@@ -21,6 +21,8 @@ class Patroller : public Entity {
             const Point& body_position, const std::vector<CircleShape>& circles,
             const std::vector<PolygonShape>& polygons,
             const std::vector<Point>& way_points, float speed);
+
+  ~Patroller() override = default;
 };
 
 #endif  // MODEL_PATROLLER_H_
