@@ -6,7 +6,6 @@
 #include <utility>
 #include <vector>
 
-#include "box2d/box2d.h"
 #include "game_object.h"
 #include "map.h"
 
@@ -59,12 +58,13 @@ class Entity : public GameObject {
 
   void SetWayPoints(const std::vector<QPoint>& way_points);
   void SetSpeed(int speed);
-  void SetVelocity(b2Vec2 velocity);
-  void SetVelocity(b2Vec2 target_position,
-                   b2Vec2 current_position,
-                   float speed);
+  void SetVelocity(b2Vec2 velocity, bool apply_once = false);
+  void SetVelocity(b2Vec2 target_position, b2Vec2 current_position,
+                   float speed, bool apply_once = false);
 
   void Update(int time) override;
+
+  b2Body* GetB2Body() const override;
 
  protected:
   int MetersToPixels(float value) const;
@@ -99,9 +99,14 @@ class Entity : public GameObject {
 
   void InitializeBody(b2BodyType body_type, const QPoint& body_position);
 
+  void ApplyImpulse();
+
  private:
   const float kBodyDensity = 1;
   const float kPixelsPerMeter = 100;
+
+ private:
+  b2Vec2 target_velocity = {0, 0};
 };
 
 #endif  // MODEL_ENTITY_H_

@@ -425,8 +425,9 @@
       "height": 0
     },
     {
-      "x": 1408,
-      "y": 512,
+      "x": 1280,
+      "y": 544,
+      "speed": 100,
       "type": "patroller",
       "way_point_size": 2,
       "name": "patroller1",
@@ -444,9 +445,13 @@
       ]
     },
     {
-      "x": 1600,
-      "y": 800,
+      "x": 1440,
+      "y": 832,
+      "bullet_radius": 10,
+      "bullet_speed": 300,
       "shoot_direction": "down",
+      "shoot_period": 1000,
+      "speed": 100,
       "type": "shooter",
       "way_point_size": 2,
       "name": "shooter1",
@@ -464,9 +469,13 @@
       ]
     },
     {
-      "x": 768,
-      "y": 224,
+      "x": 704,
+      "y": 288,
+      "bullet_radius": 10,
+      "bullet_speed": 300,
       "shoot_direction": "down",
+      "shoot_period": 1000,
+      "speed": 100,
       "type": "shooter",
       "way_point_size": 4,
       "name": "shooter2",
@@ -492,9 +501,13 @@
       ]
     },
     {
-      "x": 1632,
-      "y": 96,
+      "x": 1648,
+      "y": 112,
+      "bullet_radius": 10,
+      "bullet_speed": 300,
       "shoot_direction": "left_right",
+      "shoot_period": 1000,
+      "speed": 100,
       "type": "shooter",
       "way_point_size": 2,
       "name": "shooter3",

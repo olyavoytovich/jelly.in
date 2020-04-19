@@ -68,9 +68,12 @@ void Shooter::Update(int time) {
   }
   last_shoot_time_ = 0;
   if (bullets_.size() > 50) {
-    bullets_.erase(bullets_.begin(),
-                   bullets_.begin() +
-                   (right_point_.x - left_point_.x) / (3 * bullet_radius_) + 1);
+    int bullets_to_delete = static_cast<int>((right_point_.x - left_point_.x)
+        / (3 * bullet_radius_));
+    for (int i = 0; i <= bullets_to_delete; i++) {
+      bullets_[i]->DeleteMe();
+    }
+    bullets_.erase(bullets_.begin(), bullets_.begin() + bullets_to_delete + 1);
   }
   if (bullet_direction_ == BulletDirection::kLeftRight) {
     if (way_points_[way_point_index_].x - body_->GetPosition().x >= 0) {
@@ -80,23 +83,26 @@ void Shooter::Update(int time) {
     }
     bullets_.back()->SetVelocity(way_points_[way_point_index_],
                                  body_->GetPosition(),
-                                 bullet_speed_);
+                                 bullet_speed_, true);
   } else {
-    int width = static_cast<int>(right_point_.x - left_point_.x);
-    for (int i = 0; i <= width; i += 3 * bullet_radius_) {
-      b2Vec2 bullet_position(left_point_.x + static_cast<float>(i),
-                             right_point_.y - bullet_radius_);
+    int bullets_amount =
+        static_cast<int>((right_point_.x - left_point_.x) / bullet_radius_ / 3);
+    for (int i = 0; i < bullets_amount; i++) {
+      b2Vec2 bullet_position
+          (left_point_.x + bullet_radius_ * static_cast<float>(i * 3),
+           left_point_.y + bullet_radius_);
       AddBullet(body_->GetWorldPoint(bullet_position));
-      bullets_.back()->SetVelocity(b2Vec2(0, -bullet_speed_));
+      bullets_.back()->SetVelocity(b2Vec2(0, bullet_speed_), true);
     }
   }
 }
 
 void Shooter::AddBullet(const b2Vec2& bullet_position) {
   bullets_.push_back(std::make_shared<Entity>(map_,
-                                              b2_kinematicBody,
+                                              b2_dynamicBody,
                                               MetersToPixels(bullet_position),
                                               MetersToPixels(bullet_radius_)));
+  map_->AddGameObject(bullets_.back());
 }
 
 void Shooter::InitializeBoundaryPoints() {
@@ -138,8 +144,8 @@ void Shooter::InitializeBoundaryPoints() {
     right_point_.Set(right_point_.x + bullet_radius_, coordinate_y);
   } else {
     left_point_.Set(left_point_.x,
-                    right_point_.y - bullet_radius_);
+                    left_point_.y + bullet_radius_);
     right_point_.Set(right_point_.x,
-                     right_point_.y - bullet_radius_);
+                     left_point_.y + bullet_radius_);
   }
 }

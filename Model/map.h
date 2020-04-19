@@ -39,6 +39,7 @@ class Map {
   std::shared_ptr<b2World> world_;
 
   std::vector<std::shared_ptr<GameObject>> game_objects_;
+  std::vector<std::shared_ptr<GameObject>> game_objects_to_add_;
   QImage map_image_;
   QImage scaled_map_image_;
 };

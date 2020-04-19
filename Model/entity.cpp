@@ -4,10 +4,6 @@
 // ось абсцисс направлена вправо, ось ординат - вверх.
 // Но рисуем объекты мы в координатах окна. При этом центр КС бокса ставим в
 // центр КС окна.
-// В то время как у окна центр - это левый верхний угол, ось Ox направлена
-// вправо, Oy - влево. Поэтому, чтобы динамические объекты летели к земле,
-// а не в небо, делаем painter->scale(1, -1);, тогда направление оси ординат
-// меняется, и мы получаем нужный результат.
 // Далее body_position - координаты данного тела в координатной системе окна.
 // А shape_position - это координаты данной формы(!не тела) в системе координат
 // тела. Можно сказать, что у каждого тела есть свой мини-мир со своими
@@ -38,8 +34,8 @@ Entity::Entity(std::shared_ptr<Map> map,
                b2BodyType body_type,
                const QPoint& body_position,
                const std::vector<CircleShape>& circles,
-               const std::vector<PolygonShape>& polygons) :
-    map_(std::move(map)) {
+               const std::vector<PolygonShape>& polygons)
+    : map_(std::move(map)) {
   InitializeBody(body_type, body_position);
 
   for (auto&&[radius, shape_position] : circles) {
@@ -123,6 +119,14 @@ b2CircleShape Entity::CreateCircleShape(int radius,
 
 void Entity::SetWayPoints(const std::vector<QPoint>& way_points) {
   way_points_.clear();
+  if (way_points.empty()) {
+    return;
+  }
+
+  b2Vec2 body_position = body_->GetWorldCenter();
+  if ((body_position - PixelsToMeters(way_points[0])).Length() > 0.02) {
+    way_points_.emplace_back(body_position);
+  }
   for (const auto& point : way_points) {
     way_points_.emplace_back(PixelsToMeters(point));
   }
@@ -132,29 +136,39 @@ void Entity::SetSpeed(int speed) {
   speed_ = PixelsToMeters(speed);
 }
 
-void Entity::SetVelocity(b2Vec2 velocity) {
-  body_->SetLinearVelocity(velocity);
+void Entity::SetVelocity(b2Vec2 velocity, bool apply_once) {
+  if (body_->GetType() == b2_kinematicBody) {
+    body_->SetLinearVelocity(velocity);
+  }
+  target_velocity = velocity;
+  if (apply_once) {
+    ApplyImpulse();
+    target_velocity = b2Vec2(0, 0);
+  }
 }
 
 void Entity::SetVelocity(b2Vec2 target_position,
                          b2Vec2 current_position,
-                         float speed) {
+                         float speed, bool apply_once) {
   b2Vec2 velocity = target_position - current_position;
   velocity.Normalize();
   velocity *= speed;
-  body_->SetLinearVelocity(velocity);
+  SetVelocity(velocity, apply_once);
 }
 
 void Entity::Update(int) {
   if (way_points_.size() <= 1) {
     return;
   }
-  if ((body_->GetPosition() - way_points_[way_point_index_]).Length() <= 0.02) {
+  ApplyImpulse();
+
+  b2Vec2 body_position = body_->GetWorldCenter();
+  if ((body_position - way_points_[way_point_index_]).Length() <= 0.02) {
     way_point_index_ += direction_;
     if (way_point_index_ == way_points_.size() - 1 || way_point_index_ == 0) {
       direction_ *= -1;
     }
-    SetVelocity(way_points_[way_point_index_], body_->GetPosition(), speed_);
+    SetVelocity(way_points_[way_point_index_], body_position, speed_);
   }
 }
 
@@ -180,4 +194,14 @@ float Entity::PixelsToMeters(int value) const {
 
 b2Vec2 Entity::PixelsToMeters(QPoint vector) const {
   return b2Vec2(PixelsToMeters(vector.x()), PixelsToMeters(vector.y()));
+}
+
+b2Body* Entity::GetB2Body() const {
+  return body_;
+}
+
+void Entity::ApplyImpulse() {
+  b2Vec2 target_impulse = target_velocity - body_->GetLinearVelocity();
+  target_impulse *= body_->GetMass();
+  body_->ApplyLinearImpulseToCenter(target_impulse, true);
 }

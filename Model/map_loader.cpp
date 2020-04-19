@@ -38,5 +38,57 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                                 object_points));
   }
 
+  QJsonArray dynamic_objects = json_main["dynamic_objects"].toArray();
+  for (const auto& dynamic_object : dynamic_objects) {
+    object = dynamic_object.toObject();
+    if (object["type"].isNull()) {
+      continue;
+    }
+
+    QJsonArray way_point_array = object["way_points"].toArray();
+    std::vector<QPoint> way_points(object["way_point_size"].toInt());
+    for (int i = 0; i < way_points.size(); i++) {
+      way_points[i] = QPoint(way_point_array[i].toObject()["x"].toInt(),
+                             way_point_array[i].toObject()["y"].toInt());
+    }
+
+    QPoint object_position(object["x"].toInt(), object["y"].toInt());
+    QPolygon object_points = QRect(-object["width"].toInt() / 2,
+                                   -object["height"].toInt() / 2,
+                                   object["width"].toInt(),
+                                   object["height"].toInt());
+    int object_speed = object["speed"].toInt();
+
+    if (object["type"].toString() == "patroller") {
+      map->AddGameObject(std::make_shared<Patroller>(map,
+                                                     b2_dynamicBody,
+                                                     object_position,
+                                                     object_points,
+                                                     way_points,
+                                                     object_speed));
+    }
+    if (object["type"].toString() == "shooter") {
+      BulletDirection bullet_direction = BulletDirection::kLeftRight;
+      b2BodyType body_type = b2_dynamicBody;
+      if (object["shoot_direction"].toString() == "down") {
+        bullet_direction = BulletDirection::kBottom;
+        body_type = b2_kinematicBody;
+      }
+      int shoot_period = object["shoot_period"].toInt();
+      int bullet_speed = object["bullet_speed"].toInt();
+      int bullet_radius = object["bullet_radius"].toInt();
+      map->AddGameObject(std::make_shared<Shooter>(map,
+                                                   body_type,
+                                                   object_position,
+                                                   object_points,
+                                                   way_points,
+                                                   bullet_direction,
+                                                   shoot_period,
+                                                   bullet_speed,
+                                                   bullet_radius,
+                                                   object_speed));
+    }
+  }
+
   return map;
 }

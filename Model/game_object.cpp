@@ -14,3 +14,15 @@ void GameObject::Draw(QPainter* painter) const {
   painter->drawPolygon(polygon_);
   painter->restore();
 }
+
+void GameObject::DeleteMe() {
+  is_object_deleted_ = true;
+}
+
+bool GameObject::IsDeleted() const {
+  return is_object_deleted_;
+}
+
+b2Body* GameObject::GetB2Body() const {
+  return nullptr;
+}

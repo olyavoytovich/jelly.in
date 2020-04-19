@@ -9,6 +9,8 @@
 
 #include "entity.h"
 #include "map.h"
+#include "patroller.h"
+#include "shooter.h"
 
 class MapLoader {
  public:
