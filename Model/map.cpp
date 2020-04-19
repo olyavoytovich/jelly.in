@@ -27,6 +27,9 @@ void Map::Update(int time) {
                                        return object == nullptr;
                                      }), game_objects_.end());
 
+  // Функция Step() обновляет Box2D.
+  // Первый передаваемый параметр - время. Время передается в миллисекундах, а
+  // для Box2D время должно измеряться в секундах.
   world_->Step(static_cast<float>(time / 1000.0),
                kVelocityAccuracy,
                kPositionAccuracy);

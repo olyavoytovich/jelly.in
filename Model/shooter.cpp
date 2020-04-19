@@ -68,12 +68,12 @@ void Shooter::Update(int time) {
   }
   last_shoot_time_ = 0;
   if (bullets_.size() > 50) {
-    int bullets_to_delete = static_cast<int>((right_point_.x - left_point_.x)
-        / (3 * bullet_radius_));
-    for (int i = 0; i <= bullets_to_delete; i++) {
-      bullets_[i]->DeleteMe();
+    int bullets_amount =
+        static_cast<int>((right_point_.x - left_point_.x) / 3 / bullet_radius_);
+    for (int i = 0; i <= bullets_amount; i++) {
+      bullets_[i]->MarkAsDeleted();
     }
-    bullets_.erase(bullets_.begin(), bullets_.begin() + bullets_to_delete + 1);
+    bullets_.erase(bullets_.begin(), bullets_.begin() + bullets_amount + 1);
   }
   if (bullet_direction_ == BulletDirection::kLeftRight) {
     if (way_points_[way_point_index_].x - body_->GetPosition().x >= 0) {
@@ -87,7 +87,7 @@ void Shooter::Update(int time) {
   } else {
     int bullets_amount =
         static_cast<int>((right_point_.x - left_point_.x) / bullet_radius_ / 3);
-    for (int i = 0; i < bullets_amount; i++) {
+    for (int i = 0; i <= bullets_amount; i++) {
       b2Vec2 bullet_position
           (left_point_.x + bullet_radius_ * static_cast<float>(i * 3),
            left_point_.y + bullet_radius_);

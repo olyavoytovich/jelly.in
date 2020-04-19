@@ -7,9 +7,6 @@ GameController::GameController()
 }
 
 void GameController::Update(int time) {
-  // Функция Step() обновляет Box2D.
-  // Первый передаваемый параметр - время. Время передается в миллисекундах, а
-  // для Box2D время должно измеряться в секундах.
   map_->Update(time);
   view_->repaint();
 }
