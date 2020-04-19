@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <memory>
+#include <vector>
 
 #include "entity.h"
 #include "map.h"
