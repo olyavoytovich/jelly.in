@@ -139,9 +139,8 @@ void Shooter::InitializeBoundaryPoints() {
     }
   }
   if (bullet_direction_ == BulletDirection::kLeftRight) {
-    float coordinate_y = (left_point_.y + right_point_.y) / 2;
-    left_point_.Set(left_point_.x - bullet_radius_, coordinate_y);
-    right_point_.Set(right_point_.x + bullet_radius_, coordinate_y);
+    left_point_.Set(left_point_.x - bullet_radius_, 0);
+    right_point_.Set(right_point_.x + bullet_radius_, 0);
   } else {
     left_point_.Set(left_point_.x,
                     left_point_.y + bullet_radius_);
