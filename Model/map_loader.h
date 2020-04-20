@@ -1,13 +1,17 @@
-#ifndef MAP_LOADER_H_
-#define MAP_LOADER_H_
+#ifndef MODEL_MAP_LOADER_H_
+#define MODEL_MAP_LOADER_H_
 
-#include <memory>
 #include <QFile>
 #include <QJsonArray>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <memory>
+#include <vector>
 
+#include "entity.h"
 #include "map.h"
+#include "patroller.h"
+#include "shooter.h"
 
 class MapLoader {
  public:
@@ -15,4 +19,4 @@ class MapLoader {
   static std::shared_ptr<Map> LoadMap(const QString& map_name);
 };
 
-#endif  // MAP_LOADER_H_
+#endif  // MODEL_MAP_LOADER_H_

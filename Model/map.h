@@ -1,26 +1,27 @@
-#ifndef GAME_CONTROLLER_H_
-#define GAME_CONTROLLER_H_
+#ifndef MODEL_MAP_H_
+#define MODEL_MAP_H_
 
+#include <QPainter>
 #include <memory>
-#include <utility>
 #include <vector>
 
-#include "abstract_game_controller.h"
-#include "abstract_view.h"
 #include "box2d/box2d.h"
-#include "entity.h"
 #include "game_object.h"
-#include "map.h"
-#include "map_loader.h"
-#include "view.h"
 
-class GameController : public AbstractGameController {
+class Map {
  public:
-  GameController();
-  ~GameController() override = default;
+  explicit Map(const QImage& map_image);
+  ~Map() = default;
 
-  void Update(int time) override;
-  void Draw(QPainter* painter) const override;
+  void Update(int time);
+  void Draw(QPainter* painter);
+
+  void AddGameObject(const std::shared_ptr<GameObject>& object);
+
+  b2Body* CreateBody(b2BodyDef* body_definition);
+
+ private:
+  void UpdateImageScale(int width, int height);
 
  private:
   // Данные константы передаются в функцию Step(), которая используется при
@@ -35,15 +36,12 @@ class GameController : public AbstractGameController {
   const int kPositionAccuracy = 2;
 
  private:
-  std::shared_ptr<View> view_;
-
   std::shared_ptr<b2World> world_;
 
-  std::shared_ptr<Entity> entity_;
-  std::shared_ptr<Entity> entity2_;
-  std::shared_ptr<Entity> entity3_;
-
-  std::shared_ptr<Map> map_;
+  std::vector<std::shared_ptr<GameObject>> game_objects_;
+  std::vector<std::shared_ptr<GameObject>> game_objects_to_add_;
+  QImage map_image_;
+  QImage scaled_map_image_;
 };
 
-#endif  // GAME_CONTROLLER_H_
+#endif  // MODEL_MAP_H_

@@ -11,13 +11,15 @@ CONFIG += c++17
 QMAKE_CXXFLAGS += -std=c++17
 
 SOURCES += \
-        entity.cpp \
-        game_controller.cpp \
-        game_object.cpp \
+        Model/entity.cpp \
+        Controller/game_controller.cpp \
+        Model/game_object.cpp \
         main.cpp \
-        map.cpp \
-        map_loader.cpp \
-        view.cpp \
+        Model/map.cpp \
+        Model/map_loader.cpp \
+        Model/patroller.cpp \
+        Model/shooter.cpp \
+        View/view.cpp \
           box2d/collision/b2_broad_phase.cpp \
           box2d/collision/b2_chain_shape.cpp \
           box2d/collision/b2_circle_shape.cpp \
@@ -66,14 +68,16 @@ SOURCES += \
           box2d/rope/b2_rope.cpp
 
 HEADERS += \
-    abstract_game_controller.h \
-    abstract_view.h \
-    game_controller.h \
-    game_object.h \
-    entity.h \
-    map.h \
-    map_loader.h \
-    view.h \
+    Controller/abstract_game_controller.h \
+    View/abstract_view.h \
+    Controller/game_controller.h \
+    Model/game_object.h \
+    Model/entity.h \
+    Model/map.h \
+    Model/map_loader.h \
+    Model/patroller.h \
+    Model/shooter.h \
+    View/view.h \
     box2d/b2_block_allocator.h \
     box2d/b2_body.h \
     box2d/b2_broad_phase.h \
