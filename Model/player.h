@@ -1,19 +1,20 @@
-#ifndef PLAYER_H_
-#define PLAYER_H_
+#ifndef MODEL_PLAYER_H_
+#define MODEL_PLAYER_H_
 
 #include <memory>
+#include <utility>
 
-#include "abstract_game_controller.h"
+#include "Controller/abstract_game_controller.h"
 #include "entity.h"
 
 class Player : public Entity {
  public:
-  Player(std::shared_ptr<b2World> world,
+  Player(std::shared_ptr<Map> map,
          b2BodyType type,
-         const Point& body_position,
+         const QPoint& body_position,
          const QPolygon& polygon,
          AbstractGameController* game_controller);
-  ~Player() = default;
+  ~Player() override = default;
 
   void Update();
 
@@ -25,4 +26,4 @@ class Player : public Entity {
   AbstractGameController* game_controller_ = nullptr;
 };
 
-#endif  // PLAYER_H_
+#endif  // MODEL_PLAYER_H_

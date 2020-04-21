@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "game_controller.h"
+#include "Controller/game_controller.h"
 
 int main(int argc, char* argv[]) {
   QApplication a(argc, argv);

@@ -1,13 +1,13 @@
-#ifndef VIEW_H_
-#define VIEW_H_
+#ifndef VIEW_VIEW_H_
+#define VIEW_VIEW_H_
 
 #include <QMainWindow>
 #include <QObject>
 #include <QPaintEvent>
 #include <QTimer>
 
-#include "abstract_game_controller.h"
-#include "abstract_view.h"
+#include "Controller/abstract_game_controller.h"
+#include "View/abstract_view.h"
 
 class View : public QMainWindow, public AbstractView {
   Q_OBJECT
@@ -30,4 +30,4 @@ class View : public QMainWindow, public AbstractView {
   int timer_id_;
 };
 
-#endif  // VIEW_H_
+#endif  // VIEW_VIEW_H_

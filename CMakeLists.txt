@@ -8,8 +8,8 @@ set(CMAKE_AUTORCC ON) # Enable Qt resources compiler
 set(CMAKE_AUTOUIC ON) # Enable Qt UI compiler
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_PREFIX_PATH "~/Qt/5.13.2/gcc_64/lib/cmake")  # Linux
-#set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.13.0/5.13.0/mingw73_64/lib/cmake")  # Windows
+#set(CMAKE_PREFIX_PATH "~/Qt/5.13.2/gcc_64/lib/cmake")  # Linux
+set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.13.0/5.13.0/mingw73_64/lib/cmake")  # Windows
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
@@ -18,14 +18,16 @@ file(GLOB box2d
         box2d/*/*.cpp)
 
 add_executable(jellyin main.cpp
-        game_controller.cpp
-        game_object.cpp
-        entity.cpp
-        map.cpp
-        map_loader.cpp
-        player.cpp
+        Controller/game_controller.cpp
+        Model/entity.cpp
+        Model/game_object.cpp
+        Model/map.cpp
+        Model/map_loader.cpp
+        Model/patroller.cpp
+        Model/player.cpp
+        Model/shooter.cpp
         resources.qrc
-        view.cpp
+        View/view.cpp
         ${box2d})
 
 target_link_libraries(jellyin Qt5::Core)

@@ -1,11 +1,11 @@
 #include "player.h"
 
-Player::Player(std::shared_ptr<b2World> world,
+Player::Player(std::shared_ptr<Map> map,
                b2BodyType type,
-               const Point& body_position,
+               const QPoint& body_position,
                const QPolygon& polygon,
                AbstractGameController* game_controller)
-    : Entity(world, type, body_position, polygon),
+    : Entity(std::move(map), type, body_position, polygon),
       game_controller_(game_controller) {}
 
 void Player::Update() {
