@@ -11,16 +11,16 @@ CONFIG += c++17
 QMAKE_CXXFLAGS += -std=c++17
 
 SOURCES += \
-        Model/entity.cpp \
         Controller/game_controller.cpp \
-        Model/game_object.cpp \
         main.cpp \
+        Model/entity.cpp \
+        Model/game_object.cpp \
         Model/map.cpp \
         Model/map_loader.cpp \
         Model/patroller.cpp \
+        Model/player.cpp \
         Model/shooter.cpp \
         View/view.cpp \
-        player.cpp \
         box2d/collision/b2_broad_phase.cpp \
         box2d/collision/b2_chain_shape.cpp \
         box2d/collision/b2_circle_shape.cpp \
