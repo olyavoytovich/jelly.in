@@ -3,6 +3,7 @@
 
 #include <QPainter>
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "box2d/box2d.h"

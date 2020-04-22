@@ -1,7 +1,8 @@
 #include "map_loader.h"
 
-std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name,
-                                        AbstractGameController* game_controller) {
+std::shared_ptr<Map> MapLoader::LoadMap(
+    const QString& map_name,
+    AbstractGameController* game_controller) {
   QFile input_file(":/data/" + map_name + ".json");
 
   input_file.open(QIODevice::ReadOnly);
