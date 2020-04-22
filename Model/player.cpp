@@ -8,16 +8,16 @@ Player::Player(std::shared_ptr<Map> map,
       game_controller_(game_controller) {}
 
 void Player::Update(int) {
-  if (game_controller_->GetPressedKeyStatus(Key::UP)) {
+  if (game_controller_->IsKeyPressed(Key::kUp)) {
     body_->SetLinearVelocity(b2Vec2(body_->GetLinearVelocity().x, 0));
     body_->ApplyLinearImpulseToCenter(
         b2Vec2(0, -kPlayerJumpSpeed * body_->GetMass()), true);
   }
   float target_speed = -body_->GetLinearVelocity().x;
-  if (game_controller_->GetClampedKeyStatus(Key::LEFT)) {
+  if (game_controller_->IsKeyClamped(Key::kLeft)) {
     target_speed -= kPlayerSpeed;
   }
-  if (game_controller_->GetClampedKeyStatus(Key::RIGHT)) {
+  if (game_controller_->IsKeyClamped(Key::kRight)) {
     target_speed += kPlayerSpeed;
   }
   body_->ApplyLinearImpulseToCenter(b2Vec2(target_speed * body_->GetMass(), 0),

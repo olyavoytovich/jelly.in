@@ -38,9 +38,9 @@ class Map {
   const int kVelocityAccuracy = 6;
   const int kPositionAccuracy = 2;
 
-  // Width and Height of the Camera
+  // Ширина и Высота камеры
   const QPoint kVisibleSize = QPoint(800, 600);
-  // Width and Height of the Player's rectangle (from Camera's center)
+  // Ширина и Высота прямоугольника игрока (из центра камеры)
   const QPoint kPlayerBoundary = QPoint(200, 150);
 
  private:

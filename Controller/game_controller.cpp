@@ -20,49 +20,49 @@ void GameController::Draw(QPainter* painter) const {
 
 void GameController::PressKey(int key_code) {
   if (key_code == Qt::Key_Left) {
-    is_key_pressed_[static_cast<int>(Key::LEFT)] = true;
+    is_key_pressed_[static_cast<int>(Key::kLeft)] = true;
   }
   if (key_code == Qt::Key_Right) {
-    is_key_pressed_[static_cast<int>(Key::RIGHT)] = true;
+    is_key_pressed_[static_cast<int>(Key::kRight)] = true;
   }
   if (key_code == Qt::Key_Up) {
-    is_key_pressed_[static_cast<int>(Key::UP)] = true;
+    is_key_pressed_[static_cast<int>(Key::kUp)] = true;
   }
 }
 
 void GameController::ClampKey(int key_code) {
   if (key_code == Qt::Key_Left) {
-    is_key_clamped_[static_cast<int>(Key::LEFT)] = true;
-    is_key_clamped_[static_cast<int>(Key::RIGHT)] = false;
+    is_key_clamped_[static_cast<int>(Key::kLeft)] = true;
+    is_key_clamped_[static_cast<int>(Key::kRight)] = false;
   }
   if (key_code == Qt::Key_Right) {
-    is_key_clamped_[static_cast<int>(Key::LEFT)] = false;
-    is_key_clamped_[static_cast<int>(Key::RIGHT)] = true;
+    is_key_clamped_[static_cast<int>(Key::kLeft)] = false;
+    is_key_clamped_[static_cast<int>(Key::kRight)] = true;
   }
   if (key_code == Qt::Key_Up) {
-    is_key_clamped_[static_cast<int>(Key::UP)] = true;
+    is_key_clamped_[static_cast<int>(Key::kUp)] = true;
   }
 }
 
 void GameController::ReleaseKey(int key_code) {
   if (key_code == Qt::Key_Left) {
-    is_key_pressed_[static_cast<int>(Key::LEFT)] = false;
-    is_key_clamped_[static_cast<int>(Key::LEFT)] = false;
+    is_key_pressed_[static_cast<int>(Key::kLeft)] = false;
+    is_key_clamped_[static_cast<int>(Key::kLeft)] = false;
   }
   if (key_code == Qt::Key_Right) {
-    is_key_pressed_[static_cast<int>(Key::RIGHT)] = false;
-    is_key_clamped_[static_cast<int>(Key::RIGHT)] = false;
+    is_key_pressed_[static_cast<int>(Key::kRight)] = false;
+    is_key_clamped_[static_cast<int>(Key::kRight)] = false;
   }
   if (key_code == Qt::Key_Up) {
-    is_key_pressed_[static_cast<int>(Key::UP)] = false;
-    is_key_clamped_[static_cast<int>(Key::UP)] = false;
+    is_key_pressed_[static_cast<int>(Key::kUp)] = false;
+    is_key_clamped_[static_cast<int>(Key::kUp)] = false;
   }
 }
 
-bool GameController::GetPressedKeyStatus(Key key) {
-  return is_key_pressed_[static_cast<unsigned int>(key)];
+bool GameController::IsKeyPressed(Key key) {
+  return is_key_pressed_[static_cast<int>(key)];
 }
 
-bool GameController::GetClampedKeyStatus(Key key) {
-  return is_key_clamped_[static_cast<unsigned int>(key)];
+bool GameController::IsKeyClamped(Key key) {
+  return is_key_clamped_[static_cast<int>(key)];
 }

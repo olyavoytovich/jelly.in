@@ -25,8 +25,8 @@ class GameController : public AbstractGameController {
   void PressKey(int event) override;
   void ClampKey(int event) override;
   void ReleaseKey(int event) override;
-  bool GetPressedKeyStatus(Key key) override;
-  bool GetClampedKeyStatus(Key key) override;
+  bool IsKeyPressed(Key key) override;
+  bool IsKeyClamped(Key key) override;
 
  private:
   std::shared_ptr<View> view_;
