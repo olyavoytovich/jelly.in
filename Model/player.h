@@ -16,11 +16,11 @@ class Player : public Entity {
          AbstractGameController* game_controller);
   ~Player() override = default;
 
-  void Update();
+  void Update(int time) override;
 
  private:
-  const int kPlayerSpeed = 3;
-  const int kJumpSpeed = 4;
+  const float kPlayerSpeed = 3;
+  const float kJumpSpeed = 4;
 
  private:
   AbstractGameController* game_controller_ = nullptr;

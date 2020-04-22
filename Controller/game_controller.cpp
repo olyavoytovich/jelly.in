@@ -2,7 +2,7 @@
 
 GameController::GameController()
     : view_(std::make_shared<View>(this)),
-      map_(MapLoader::LoadMap("level_1")),
+      map_(MapLoader::LoadMap("level_1", this)),
       is_key_pressed_(3, false),
       is_key_clamped_(3, false) {
   view_->show();

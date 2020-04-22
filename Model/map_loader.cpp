@@ -1,6 +1,7 @@
 #include "map_loader.h"
 
-std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
+std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name,
+                                        AbstractGameController* game_controller) {
   QFile input_file(":/data/" + map_name + ".json");
 
   input_file.open(QIODevice::ReadOnly);
@@ -41,6 +42,17 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QJsonArray dynamic_objects = json_main["dynamic_objects"].toArray();
   for (const auto& dynamic_object : dynamic_objects) {
     object = dynamic_object.toObject();
+
+    if (object["name"].toString() == "player") {
+      QPoint position(object["x"].toInt(), object["y"].toInt());
+      map->SetPlayerObject(std::dynamic_pointer_cast<GameObject>(
+          std::make_shared<Player>(map,
+                                   b2_dynamicBody,
+                                   position,
+                                   QPolygon(QRect(-10, -15, 20, 30)),
+                                   game_controller)));
+    }
+
     if (object["type"].isNull()) {
       continue;
     }

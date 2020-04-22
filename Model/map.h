@@ -16,12 +16,14 @@ class Map {
   void Update(int time);
   void Draw(QPainter* painter);
 
-  void AddGameObject(const std::shared_ptr<GameObject>& object);
+  void AddGameObject(std::shared_ptr<GameObject> object);
+  void SetPlayerObject(std::shared_ptr<GameObject> player);
 
   b2Body* CreateBody(b2BodyDef* body_definition);
 
  private:
   void UpdateImageScale(int width, int height);
+  void UpdateCameraPosition();
 
  private:
   // Данные константы передаются в функцию Step(), которая используется при
@@ -35,8 +37,16 @@ class Map {
   const int kVelocityAccuracy = 6;
   const int kPositionAccuracy = 2;
 
+  // Width and Height of the Camera
+  const QPoint kVisibleSize = QPoint(800, 600);
+  // Width and Height of the Player's rectangle (from Camera's center)
+  const QPoint kPlayerBoundary = QPoint(200, 150);
+
  private:
   std::shared_ptr<b2World> world_;
+  std::shared_ptr<GameObject> player_;
+
+  QRect current_camera_;
 
   std::vector<std::shared_ptr<GameObject>> game_objects_;
   std::vector<std::shared_ptr<GameObject>> game_objects_to_add_;

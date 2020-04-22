@@ -8,15 +8,18 @@
 #include <memory>
 #include <vector>
 
+#include "Controller/abstract_game_controller.h"
 #include "entity.h"
 #include "map.h"
 #include "patroller.h"
+#include "player.h"
 #include "shooter.h"
 
 class MapLoader {
  public:
   // Returns a pointer to the loaded map, or nullptr if loading failed
-  static std::shared_ptr<Map> LoadMap(const QString& map_name);
+  static std::shared_ptr<Map> LoadMap(const QString& map_name,
+                                      AbstractGameController* game_controller);
 };
 
 #endif  // MODEL_MAP_LOADER_H_

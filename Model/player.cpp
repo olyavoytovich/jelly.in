@@ -8,11 +8,11 @@ Player::Player(std::shared_ptr<Map> map,
     : Entity(std::move(map), type, body_position, polygon),
       game_controller_(game_controller) {}
 
-void Player::Update() {
-  if (game_controller_->GetPressedKeyStatus(Key::UP) &&
-      abs(body_->GetLinearVelocity().y) < kEpsilon) {
-    body_->ApplyLinearImpulseToCenter(b2Vec2(0, kJumpSpeed * body_->GetMass()),
-                                      true);
+void Player::Update(int) {
+  if (game_controller_->GetPressedKeyStatus(Key::UP)) {
+    body_->SetLinearVelocity(b2Vec2(body_->GetLinearVelocity().x, 0));
+    body_->ApplyLinearImpulseToCenter(
+        b2Vec2(0, -kJumpSpeed * body_->GetMass()), true);
   }
   float target_speed = -body_->GetLinearVelocity().x;
   if (game_controller_->GetClampedKeyStatus(Key::LEFT)) {
