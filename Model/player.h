@@ -10,7 +10,6 @@
 class Player : public Entity {
  public:
   Player(std::shared_ptr<Map> map,
-         b2BodyType type,
          const QPoint& body_position,
          const QPolygon& polygon,
          AbstractGameController* game_controller);
@@ -18,9 +17,13 @@ class Player : public Entity {
 
   void Update(int time) override;
 
+ public:
+  static const int kPlayerWidth = 20;
+  static const int kPlayerHeight = 30;
+
  private:
   const float kPlayerSpeed = 3;
-  const float kJumpSpeed = 4;
+  const float kPlayerJumpSpeed = 4;
 
  private:
   AbstractGameController* game_controller_ = nullptr;

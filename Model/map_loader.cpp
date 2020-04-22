@@ -46,12 +46,14 @@ std::shared_ptr<Map> MapLoader::LoadMap(
 
     if (object["name"].toString() == "player") {
       QPoint position(object["x"].toInt(), object["y"].toInt());
-      map->SetPlayerObject(std::dynamic_pointer_cast<GameObject>(
-          std::make_shared<Player>(map,
-                                   b2_dynamicBody,
-                                   position,
-                                   QPolygon(QRect(-10, -15, 20, 30)),
-                                   game_controller)));
+      QPolygon object_points = QRect(-Player::kPlayerWidth / 2,
+                                     -Player::kPlayerHeight / 2,
+                                     Player::kPlayerWidth,
+                                     Player::kPlayerHeight);
+      map->SetPlayerObject(std::make_shared<Player>(map,
+                                                    position,
+                                                    object_points,
+                                                    game_controller));
     }
 
     if (object["type"].isNull()) {
