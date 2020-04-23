@@ -15,7 +15,3 @@ bool GameObject::IsDeleted() const {
 b2Body* GameObject::GetB2Body() const {
   return nullptr;
 }
-
-QPoint GameObject::GetPositionInPixels() const {
-  return QPoint(0, 0);
-}

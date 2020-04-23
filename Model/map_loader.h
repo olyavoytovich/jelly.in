@@ -18,8 +18,7 @@
 class MapLoader {
  public:
   // Returns a pointer to the loaded map, or nullptr if loading failed
-  static std::shared_ptr<Map> LoadMap(const QString& map_name,
-                                      AbstractGameController* game_controller);
+  static std::shared_ptr<Map> LoadMap(const QString& map_name);
 };
 
 #endif  // MODEL_MAP_LOADER_H_

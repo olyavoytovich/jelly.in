@@ -2,16 +2,13 @@
 
 GameController::GameController()
     : view_(std::make_shared<View>(this)),
-      map_(MapLoader::LoadMap("level_1", this)),
-      is_key_pressed_(3, false),
-      is_key_clamped_(3, false) {
+      map_(MapLoader::LoadMap("level_1")) {
   view_->show();
 }
 
 void GameController::Update(int time) {
   map_->Update(time);
   view_->repaint();
-  is_key_pressed_.assign(is_key_pressed_.size(), false);
 }
 
 void GameController::Draw(QPainter* painter) const {
@@ -20,49 +17,38 @@ void GameController::Draw(QPainter* painter) const {
 
 void GameController::PressKey(int key_code) {
   if (key_code == Qt::Key_Left) {
-    is_key_pressed_[static_cast<int>(Key::kLeft)] = true;
-  }
-  if (key_code == Qt::Key_Right) {
-    is_key_pressed_[static_cast<int>(Key::kRight)] = true;
-  }
-  if (key_code == Qt::Key_Up) {
-    is_key_pressed_[static_cast<int>(Key::kUp)] = true;
+    map_->SetPressedKeyStatus(Key::kLeft, true);
+  } else if (key_code == Qt::Key_Right) {
+    map_->SetPressedKeyStatus(Key::kRight, true);
+  } else if (key_code == Qt::Key_Up) {
+    map_->SetPressedKeyStatus(Key::kUp, true);
   }
 }
 
 void GameController::ClampKey(int key_code) {
   if (key_code == Qt::Key_Left) {
-    is_key_clamped_[static_cast<int>(Key::kLeft)] = true;
-    is_key_clamped_[static_cast<int>(Key::kRight)] = false;
+    map_->SetClampedKeyStatus(Key::kLeft, true);
+    map_->SetClampedKeyStatus(Key::kRight, false);
+  } else if (key_code == Qt::Key_Right) {
+    map_->SetClampedKeyStatus(Key::kLeft, false);
+    map_->SetClampedKeyStatus(Key::kRight, true);
+  } else if (key_code == Qt::Key_Up) {
+    map_->SetClampedKeyStatus(Key::kUp, true);
   }
-  if (key_code == Qt::Key_Right) {
-    is_key_clamped_[static_cast<int>(Key::kLeft)] = false;
-    is_key_clamped_[static_cast<int>(Key::kRight)] = true;
-  }
-  if (key_code == Qt::Key_Up) {
-    is_key_clamped_[static_cast<int>(Key::kUp)] = true;
-  }
+}
+
+
+void GameController::ReleaseKey(Key key) {
+  map_->SetPressedKeyStatus(key, false);
+  map_->SetClampedKeyStatus(key, false);
 }
 
 void GameController::ReleaseKey(int key_code) {
   if (key_code == Qt::Key_Left) {
-    is_key_pressed_[static_cast<int>(Key::kLeft)] = false;
-    is_key_clamped_[static_cast<int>(Key::kLeft)] = false;
+    ReleaseKey(Key::kLeft);
+  } else if (key_code == Qt::Key_Right) {
+    ReleaseKey(Key::kRight);
+  } else if (key_code == Qt::Key_Up) {
+    ReleaseKey(Key::kUp);
   }
-  if (key_code == Qt::Key_Right) {
-    is_key_pressed_[static_cast<int>(Key::kRight)] = false;
-    is_key_clamped_[static_cast<int>(Key::kRight)] = false;
-  }
-  if (key_code == Qt::Key_Up) {
-    is_key_pressed_[static_cast<int>(Key::kUp)] = false;
-    is_key_clamped_[static_cast<int>(Key::kUp)] = false;
-  }
-}
-
-bool GameController::IsKeyPressed(Key key) {
-  return is_key_pressed_[static_cast<int>(key)];
-}
-
-bool GameController::IsKeyClamped(Key key) {
-  return is_key_clamped_[static_cast<int>(key)];
 }

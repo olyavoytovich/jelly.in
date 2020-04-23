@@ -6,6 +6,7 @@
 #include <utility>
 #include <vector>
 
+#include "Controller/abstract_game_controller.h"
 #include "box2d/box2d.h"
 #include "game_object.h"
 
@@ -21,6 +22,12 @@ class Map {
   void SetPlayerObject(std::shared_ptr<GameObject> player);
 
   b2Body* CreateBody(b2BodyDef* body_definition);
+
+  void SetPressedKeyStatus(Key key, bool value);
+  void SetClampedKeyStatus(Key key, bool value);
+
+  bool IsKeyPressed(Key key);
+  bool IsKeyClamped(Key key);
 
  private:
   void UpdateImageScale(int width, int height);
@@ -53,6 +60,9 @@ class Map {
   std::vector<std::shared_ptr<GameObject>> game_objects_to_add_;
   QImage map_image_;
   QImage scaled_map_image_;
+
+  std::vector<bool> is_key_pressed_;
+  std::vector<bool> is_key_clamped_;
 };
 
 #endif  // MODEL_MAP_H_

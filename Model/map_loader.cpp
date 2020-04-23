@@ -1,8 +1,7 @@
 #include "map_loader.h"
 
 std::shared_ptr<Map> MapLoader::LoadMap(
-    const QString& map_name,
-    AbstractGameController* game_controller) {
+    const QString& map_name) {
   QFile input_file(":/data/" + map_name + ".json");
 
   input_file.open(QIODevice::ReadOnly);
@@ -52,8 +51,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(
                                      Player::kPlayerHeight);
       map->SetPlayerObject(std::make_shared<Player>(map,
                                                     position,
-                                                    object_points,
-                                                    game_controller));
+                                                    object_points));
     }
 
     if (object["type"].isNull()) {

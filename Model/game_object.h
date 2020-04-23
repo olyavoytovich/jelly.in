@@ -19,7 +19,7 @@ class GameObject {
   virtual bool IsDeleted() const;
 
   virtual b2Body* GetB2Body() const;
-  virtual QPoint GetPositionInPixels() const;
+  virtual QPoint GetPositionInPixels() const = 0;
 
  private:
   bool is_object_deleted_ = false;

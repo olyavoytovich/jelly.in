@@ -22,19 +22,15 @@ class GameController : public AbstractGameController {
 
   void Update(int time) override;
   void Draw(QPainter* painter) const override;
-  void PressKey(int event) override;
-  void ClampKey(int event) override;
-  void ReleaseKey(int event) override;
-  bool IsKeyPressed(Key key) override;
-  bool IsKeyClamped(Key key) override;
+  void PressKey(int key_code);
+  void ClampKey(int key_code);
+  void ReleaseKey(int key_code);
+  void ReleaseKey(Key key);
 
  private:
   std::shared_ptr<View> view_;
 
   std::shared_ptr<Map> map_;
-
-  std::vector<bool> is_key_pressed_;
-  std::vector<bool> is_key_clamped_;
 };
 
 #endif  // CONTROLLER_GAME_CONTROLLER_H_

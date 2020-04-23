@@ -1,10 +1,12 @@
 #include "map.h"
 
 Map::Map(const QImage& map_image)
-    : map_image_(map_image),
+    : world_(std::make_shared<b2World>(b2Vec2(0, 10))),
+      current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()),
+      map_image_(map_image),
       scaled_map_image_(map_image),
-      world_(std::make_shared<b2World>(b2Vec2(0, 10))),
-      current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()) {}
+      is_key_pressed_(3, false),
+      is_key_clamped_(3, false) {}
 
 void Map::Update(int time) {
   player_->Update(time);
@@ -36,6 +38,7 @@ void Map::Update(int time) {
   world_->Step(static_cast<float>(time / 1000.0),
                kVelocityAccuracy,
                kPositionAccuracy);
+  is_key_pressed_.assign(is_key_pressed_.size(), false);
 }
 
 void Map::Draw(QPainter* painter) {
@@ -74,6 +77,22 @@ void Map::AddGameObject(std::shared_ptr<GameObject> object) {
 
 void Map::SetPlayerObject(std::shared_ptr<GameObject> player) {
   player_ = std::move(player);
+}
+
+void Map::SetPressedKeyStatus(Key key, bool value) {
+  is_key_pressed_[static_cast<int>(key)] = value;
+}
+
+void Map::SetClampedKeyStatus(Key key, bool value) {
+  is_key_clamped_[static_cast<int>(key)] = value;
+}
+
+bool Map::IsKeyPressed(Key key) {
+  return is_key_pressed_[static_cast<int>(key)];
+}
+
+bool Map::IsKeyClamped(Key key) {
+  return is_key_clamped_[static_cast<int>(key)];
 }
 
 void Map::UpdateImageScale(int width, int height) {
