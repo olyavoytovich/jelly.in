@@ -3,8 +3,10 @@
 
 #include <QPainter>
 #include <memory>
+#include <utility>
 #include <vector>
 
+#include "Controller/abstract_game_controller.h"
 #include "box2d/box2d.h"
 #include "game_object.h"
 
@@ -16,12 +18,20 @@ class Map {
   void Update(int time);
   void Draw(QPainter* painter);
 
-  void AddGameObject(const std::shared_ptr<GameObject>& object);
+  void AddGameObject(std::shared_ptr<GameObject> object);
+  void SetPlayerObject(std::shared_ptr<GameObject> player);
 
   b2Body* CreateBody(b2BodyDef* body_definition);
 
+  void SetPressedKeyStatus(Key key, bool is_pressed);
+  void SetClampedKeyStatus(Key key, bool is_clamped);
+
+  bool IsKeyPressed(Key key);
+  bool IsKeyClamped(Key key);
+
  private:
   void UpdateImageScale(int width, int height);
+  void UpdateCameraPosition();
 
  private:
   // Данные константы передаются в функцию Step(), которая используется при
@@ -35,13 +45,24 @@ class Map {
   const int kVelocityAccuracy = 6;
   const int kPositionAccuracy = 2;
 
+  // Ширина и Высота камеры
+  const QPoint kVisibleSize = QPoint(800, 600);
+  // Ширина и Высота прямоугольника игрока (из центра камеры)
+  const QPoint kPlayerBoundary = QPoint(200, 150);
+
  private:
   std::shared_ptr<b2World> world_;
+  std::shared_ptr<GameObject> player_;
+
+  QRect current_camera_;
 
   std::vector<std::shared_ptr<GameObject>> game_objects_;
   std::vector<std::shared_ptr<GameObject>> game_objects_to_add_;
   QImage map_image_;
   QImage scaled_map_image_;
+
+  std::vector<bool> is_key_pressed_;
+  std::vector<bool> is_key_clamped_;
 };
 
 #endif  // MODEL_MAP_H_

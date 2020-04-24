@@ -19,6 +19,8 @@ class View : public QMainWindow, public AbstractView {
  private:
   void paintEvent(QPaintEvent*) override;
   void timerEvent(QTimerEvent* event) override;
+  void keyPressEvent(QKeyEvent* event) override;
+  void keyReleaseEvent(QKeyEvent* event) override;
 
  private:
   const int kFrameInterval = 16;

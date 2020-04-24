@@ -65,6 +65,7 @@ class Entity : public GameObject {
   void Update(int time) override;
 
   b2Body* GetB2Body() const override;
+  QPoint GetPositionInPixels() const override;
 
  protected:
   int MetersToPixels(float value) const;
