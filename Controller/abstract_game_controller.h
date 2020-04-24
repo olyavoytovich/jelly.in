@@ -5,9 +5,10 @@
 #include <QPainter>
 
 enum class Key {
-    kLeft,
-    kUp,
-    kRight
+  kLeft,
+  kUp,
+  kRight,
+  kAnyKey
 };
 
 class AbstractGameController {

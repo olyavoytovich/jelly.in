@@ -23,8 +23,8 @@ class Map {
 
   b2Body* CreateBody(b2BodyDef* body_definition);
 
-  void SetPressedKeyStatus(Key key, bool value);
-  void SetClampedKeyStatus(Key key, bool value);
+  void SetPressedKeyStatus(Key key, bool is_pressed);
+  void SetClampedKeyStatus(Key key, bool is_clamped);
 
   bool IsKeyPressed(Key key);
   bool IsKeyClamped(Key key);

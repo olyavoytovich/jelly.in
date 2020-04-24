@@ -79,12 +79,18 @@ void Map::SetPlayerObject(std::shared_ptr<GameObject> player) {
   player_ = std::move(player);
 }
 
-void Map::SetPressedKeyStatus(Key key, bool value) {
-  is_key_pressed_[static_cast<int>(key)] = value;
+void Map::SetPressedKeyStatus(Key key, bool is_pressed) {
+  is_key_pressed_[static_cast<int>(key)] = is_pressed;
 }
 
-void Map::SetClampedKeyStatus(Key key, bool value) {
-  is_key_clamped_[static_cast<int>(key)] = value;
+void Map::SetClampedKeyStatus(Key key, bool is_clamped) {
+  is_key_clamped_[static_cast<int>(key)] = is_clamped;
+  if (key == Key::kLeft && is_clamped) {
+    is_key_clamped_[static_cast<int>(Key::kRight)] = false;
+  }
+  if (key == Key::kRight && is_clamped) {
+    is_key_clamped_[static_cast<int>(Key::kLeft)] = false;
+  }
 }
 
 bool Map::IsKeyPressed(Key key) {

@@ -16,38 +16,29 @@ void GameController::Draw(QPainter* painter) const {
 }
 
 void GameController::PressKey(int key_code) {
-  if (key_code == Qt::Key_Left) {
-    map_->SetPressedKeyStatus(Key::kLeft, true);
-  } else if (key_code == Qt::Key_Right) {
-    map_->SetPressedKeyStatus(Key::kRight, true);
-  } else if (key_code == Qt::Key_Up) {
-    map_->SetPressedKeyStatus(Key::kUp, true);
-  }
+  map_->SetPressedKeyStatus(GetKeyFromCode(key_code), true);
 }
 
 void GameController::ClampKey(int key_code) {
-  if (key_code == Qt::Key_Left) {
-    map_->SetClampedKeyStatus(Key::kLeft, true);
-    map_->SetClampedKeyStatus(Key::kRight, false);
-  } else if (key_code == Qt::Key_Right) {
-    map_->SetClampedKeyStatus(Key::kLeft, false);
-    map_->SetClampedKeyStatus(Key::kRight, true);
-  } else if (key_code == Qt::Key_Up) {
-    map_->SetClampedKeyStatus(Key::kUp, true);
-  }
+  map_->SetClampedKeyStatus(GetKeyFromCode(key_code), true);
 }
 
-void GameController::ReleaseKey(Key key) {
+void GameController::ReleaseKey(int key_code) {
+  Key key = GetKeyFromCode(key_code);
   map_->SetPressedKeyStatus(key, false);
   map_->SetClampedKeyStatus(key, false);
 }
 
-void GameController::ReleaseKey(int key_code) {
+Key GameController::GetKeyFromCode(int key_code) {
   if (key_code == Qt::Key_Left) {
-    ReleaseKey(Key::kLeft);
-  } else if (key_code == Qt::Key_Right) {
-    ReleaseKey(Key::kRight);
-  } else if (key_code == Qt::Key_Up) {
-    ReleaseKey(Key::kUp);
+    return Key::kLeft;
   }
+  if (key_code == Qt::Key_Right) {
+    return Key::kRight;
+  }
+  if (key_code == Qt::Key_Up) {
+    return Key::kUp;
+  }
+  return Key::kAnyKey;
 }
+

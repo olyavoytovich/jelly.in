@@ -25,7 +25,10 @@ class GameController : public AbstractGameController {
   void PressKey(int key_code) override;
   void ClampKey(int key_code) override;
   void ReleaseKey(int key_code) override;
-  void ReleaseKey(Key key);
+
+ private:
+  Key GetKeyFromCode(int key_code);
+
 
  private:
   std::shared_ptr<View> view_;
