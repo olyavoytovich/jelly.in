@@ -22,6 +22,12 @@ class GameController : public AbstractGameController {
 
   void Update(int time) override;
   void Draw(QPainter* painter) const override;
+  void PressKey(int key_code) override;
+  void ClampKey(int key_code) override;
+  void ReleaseKey(int key_code) override;
+
+ private:
+  Key GetKeyFromCode(int key_code);
 
  private:
   std::shared_ptr<View> view_;

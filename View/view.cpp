@@ -17,3 +17,14 @@ void View::timerEvent(QTimerEvent* event) {
   }
   game_controller_->Update(kFrameInterval);
 }
+
+void View::keyPressEvent(QKeyEvent* event) {
+  if (!event->isAutoRepeat()) {
+    game_controller_->PressKey(event->key());
+  }
+  game_controller_->ClampKey(event->key());
+}
+
+void View::keyReleaseEvent(QKeyEvent* event) {
+  game_controller_->ReleaseKey(event->key());
+}
