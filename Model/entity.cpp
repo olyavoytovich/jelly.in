@@ -21,7 +21,7 @@ Entity::Entity(std::shared_ptr<Map> map,
   SetBoundingRectangle();
 }
 
-Entity::Entity(std::shared_ptr<Map> map ,
+Entity::Entity(std::shared_ptr<Map> map,
                b2BodyType body_type,
                const QPoint& body_position,
                int radius)
