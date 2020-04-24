@@ -104,7 +104,7 @@ class Entity : public GameObject {
 
   void ApplyImpulse();
 
-  void SetBoundingRectangle();
+  void InitializeBoundaryRectangle();
 
  private:
   const float kBodyDensity = 1;

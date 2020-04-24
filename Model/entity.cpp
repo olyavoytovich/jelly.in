@@ -18,7 +18,7 @@ Entity::Entity(std::shared_ptr<Map> map,
   InitializeBody(body_type, body_position);
   b2PolygonShape shape = CreatePolygonShape(polygon);
   body_->CreateFixture(&shape, kBodyDensity);
-  SetBoundingRectangle();
+  InitializeBoundaryRectangle();
 }
 
 Entity::Entity(std::shared_ptr<Map> map,
@@ -29,7 +29,7 @@ Entity::Entity(std::shared_ptr<Map> map,
   InitializeBody(body_type, body_position);
   b2CircleShape shape = CreateCircleShape(radius);
   body_->CreateFixture(&shape, kBodyDensity);
-  SetBoundingRectangle();
+  InitializeBoundaryRectangle();
 }
 
 Entity::Entity(std::shared_ptr<Map> map,
@@ -49,7 +49,7 @@ Entity::Entity(std::shared_ptr<Map> map,
     b2PolygonShape shape = CreatePolygonShape(polygon, shape_position);
     body_->CreateFixture(&shape, kBodyDensity);
   }
-  SetBoundingRectangle();
+  InitializeBoundaryRectangle();
 }
 
 void Entity::Draw(QPainter* painter) const {
@@ -209,7 +209,7 @@ void Entity::ApplyImpulse() {
   body_->ApplyLinearImpulseToCenter(target_impulse, true);
 }
 
-void Entity::SetBoundingRectangle() {
+void Entity::InitializeBoundaryRectangle() {
   QPoint left_point = QPoint(20000, 20000);
   QPoint right_point = QPoint(-20000, -20000);
   for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
