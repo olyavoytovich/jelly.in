@@ -37,7 +37,6 @@ void GameController::ClampKey(int key_code) {
   }
 }
 
-
 void GameController::ReleaseKey(Key key) {
   map_->SetPressedKeyStatus(key, false);
   map_->SetClampedKeyStatus(key, false);
