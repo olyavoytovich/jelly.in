@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 #include <QPainter>
 
+// kAnyKey должен быть в enum последним
 enum class Key {
   kLeft,
   kUp,

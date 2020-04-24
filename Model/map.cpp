@@ -5,8 +5,8 @@ Map::Map(const QImage& map_image)
       current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()),
       map_image_(map_image),
       scaled_map_image_(map_image),
-      is_key_pressed_(3, false),
-      is_key_clamped_(3, false) {}
+      is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
+      is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false) {}
 
 void Map::Update(int time) {
   player_->Update(time);
