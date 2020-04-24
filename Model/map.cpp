@@ -41,9 +41,7 @@ void Map::Draw(QPainter* painter) {
   UpdateImageScale(painter->window().width(), painter->window().height());
   painter->drawImage(0, 0, scaled_map_image_);
 
-  double scale = std::min(
-      static_cast<double>(painter->window().width()) / map_image_.width(),
-      static_cast<double>(painter->window().height()) / map_image_.height());
+  double scale = 0.5;
   painter->scale(scale, scale);
   painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
 

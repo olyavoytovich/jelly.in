@@ -46,21 +46,12 @@ class Shooter : public Entity {
   void Update(int time) override;
 
  private:
-  void AddBullet(const b2Vec2& bullet_position);
-
-  // Инициализирует left_point_, right_point_
-  void InitializeBoundaryPoints();
+  void AddBullet(const QPoint& bullet_position);
 
  private:
   BulletDirection bullet_direction_;
 
   std::vector<std::shared_ptr<Entity>> bullets_;
-
-  // Крайняя левая точка отрисовки пули, относительно тела
-  b2Vec2 left_point_ = b2Vec2(20000, -20000);
-
-  // Крайняя правая точка отрисовки пули, относительно тела
-  b2Vec2 right_point_ = b2Vec2(-20000, 20000);
 
   // Время, которое прошло с начала прошлого выстрела пули
   int last_shoot_time_ = 0;
@@ -71,7 +62,7 @@ class Shooter : public Entity {
   float bullet_speed_;
 
   // Радиус пули
-  float bullet_radius_;
+  int bullet_radius_;
 };
 
 #endif  // MODEL_SHOOTER_H_

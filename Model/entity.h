@@ -65,6 +65,7 @@ class Entity : public GameObject {
   void Update(int time) override;
 
   b2Body* GetB2Body() const override;
+  virtual QPoint GetPositionInPixels() const;
 
  protected:
   int MetersToPixels(float value) const;
@@ -90,6 +91,8 @@ class Entity : public GameObject {
   //    -- direction_ = -1 - из конца в начало
   int direction_ = 1;
 
+  QRect bounding_rectangle_;
+
   std::shared_ptr<Map> map_;
 
  private:
@@ -100,6 +103,8 @@ class Entity : public GameObject {
   void InitializeBody(b2BodyType body_type, const QPoint& body_position);
 
   void ApplyImpulse();
+
+  void SetBoundingRectangle();
 
  private:
   const float kBodyDensity = 1;
