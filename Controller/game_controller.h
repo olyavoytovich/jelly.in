@@ -29,7 +29,6 @@ class GameController : public AbstractGameController {
  private:
   Key GetKeyFromCode(int key_code);
 
-
  private:
   std::shared_ptr<View> view_;
 
