@@ -20,6 +20,7 @@ Entity::Entity(std::shared_ptr<Map> map,
   InitializeBody(body_type, body_position);
   b2PolygonShape shape = CreatePolygonShape(polygon);
   body_->CreateFixture(&shape, kBodyDensity);
+  InitializeBoundaryRectangle();
 }
 
 Entity::Entity(std::shared_ptr<Map> map,
@@ -30,6 +31,7 @@ Entity::Entity(std::shared_ptr<Map> map,
   InitializeBody(body_type, body_position);
   b2CircleShape shape = CreateCircleShape(radius);
   body_->CreateFixture(&shape, kBodyDensity);
+  InitializeBoundaryRectangle();
 }
 
 Entity::Entity(std::shared_ptr<Map> map,
@@ -49,6 +51,7 @@ Entity::Entity(std::shared_ptr<Map> map,
     b2PolygonShape shape = CreatePolygonShape(polygon, shape_position);
     body_->CreateFixture(&shape, kBodyDensity);
   }
+  InitializeBoundaryRectangle();
 }
 
 void Entity::Draw(QPainter* painter) const {
@@ -210,6 +213,42 @@ void Entity::ApplyImpulse() {
   b2Vec2 target_impulse = target_velocity - body_->GetLinearVelocity();
   target_impulse *= body_->GetMass();
   body_->ApplyLinearImpulseToCenter(target_impulse, true);
+}
+
+void Entity::InitializeBoundaryRectangle() {
+  QPoint left_point = QPoint(20000, 20000);
+  QPoint right_point = QPoint(-20000, -20000);
+  for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
+       fixture = fixture->GetNext()) {
+    switch (fixture->GetShape()->GetType()) {
+      case b2Shape::e_polygon: {
+        auto polygon_shape = dynamic_cast<b2PolygonShape*>(fixture->GetShape());
+        for (int i = 0; i < polygon_shape->m_count; i++) {
+          QPoint vertex = MetersToPixels(polygon_shape->m_vertices[i]);
+          left_point.rx() = std::min(left_point.x(), vertex.x());
+          right_point.rx() = std::max(right_point.x(), vertex.x());
+          left_point.ry() = std::min(left_point.y(), vertex.y());
+          right_point.ry() = std::max(right_point.y(), vertex.y());
+        }
+        break;
+      }
+
+      case b2Shape::e_circle: {
+        auto circle_shape = dynamic_cast<b2CircleShape*>(fixture->GetShape());
+        int radius = MetersToPixels(circle_shape->m_radius);
+        left_point.rx() = std::min(left_point.x(), -radius);
+        right_point.rx() = std::max(right_point.x(), radius);
+        left_point.ry() = std::min(left_point.y(), -radius);
+        right_point.ry() = std::max(right_point.y(), radius);
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+  }
+  bounding_rectangle_ = QRect(left_point, right_point);
 }
 
 QPoint Entity::GetPositionInPixels() const {

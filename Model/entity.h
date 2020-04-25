@@ -93,6 +93,8 @@ class Entity : public GameObject {
   //    -- direction_ = -1 - из конца в начало
   int direction_ = 1;
 
+  QRect bounding_rectangle_;
+
   std::shared_ptr<Map> map_;
 
   std::shared_ptr<Animator> animator_;
@@ -105,6 +107,8 @@ class Entity : public GameObject {
   void InitializeBody(b2BodyType body_type, const QPoint& body_position);
 
   void ApplyImpulse();
+
+  void InitializeBoundaryRectangle();
 
  private:
   const float kBodyDensity = 1;
