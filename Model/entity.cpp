@@ -1,5 +1,7 @@
 #include "entity.h"
 
+#include <utility>
+
 // Про координаты. Координаты в Box2D такие же, как у математиков. То есть
 // ось абсцисс направлена вправо, ось ординат - вверх.
 // Но рисуем объекты мы в координатах окна. При этом центр КС бокса ставим в
@@ -117,6 +119,10 @@ b2CircleShape Entity::CreateCircleShape(int radius,
   return shape;
 }
 
+void Entity::SetAnimator(std::shared_ptr<Animator> animator) {
+  animator_ = std::move(animator);
+}
+
 void Entity::SetWayPoints(const std::vector<QPoint>& way_points) {
   way_points_.clear();
   if (way_points.empty()) {
@@ -205,3 +211,4 @@ void Entity::ApplyImpulse() {
   target_impulse *= body_->GetMass();
   body_->ApplyLinearImpulseToCenter(target_impulse, true);
 }
+

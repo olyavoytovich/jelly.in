@@ -16,11 +16,17 @@ enum class BulletDirection {
 
 class Shooter : public Entity {
  public:
-  Shooter(std::shared_ptr<Map> map, b2BodyType type,
-          const QPoint& body_position, const QPolygon& polygon,
+  Shooter(std::shared_ptr<Map> map,
+          b2BodyType type,
+          const QPoint& body_position,
+          const QPolygon& polygon,
           const std::vector<QPoint>& way_points,
           BulletDirection bullet_direction,
-          int shoot_period, int bullet_speed, int bullet_radius,
+          int shoot_period,
+          int bullet_speed,
+          int bullet_radius,
+          std::shared_ptr<Animator> animator,
+          std::shared_ptr<Animator> bullet_animator,
           int speed = 0);
 
   Shooter(std::shared_ptr<Map> map, b2BodyType type,
@@ -28,6 +34,8 @@ class Shooter : public Entity {
           const std::vector<QPoint>& way_points,
           BulletDirection bullet_direction,
           int shoot_period, int bullet_speed, int bullet_radius,
+          std::shared_ptr<Animator> animator,
+          std::shared_ptr<Animator> bullet_animator,
           int speed = 0);
 
   Shooter(std::shared_ptr<Map> map, b2BodyType body_type,
@@ -37,6 +45,8 @@ class Shooter : public Entity {
           const std::vector<QPoint>& way_points,
           BulletDirection bullet_direction,
           int shoot_period, int bullet_speed, int bullet_radius,
+          std::shared_ptr<Animator> animator,
+          std::shared_ptr<Animator> bullet_animator,
           int speed = 0);
 
   ~Shooter() override = default;
@@ -72,6 +82,8 @@ class Shooter : public Entity {
 
   // Радиус пули
   float bullet_radius_;
+
+  std::shared_ptr<Animator> bullet_animator_;
 };
 
 #endif  // MODEL_SHOOTER_H_

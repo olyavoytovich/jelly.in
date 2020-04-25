@@ -6,6 +6,7 @@
 #include <utility>
 #include <vector>
 
+#include "animator.h"
 #include "game_object.h"
 #include "map.h"
 
@@ -56,6 +57,7 @@ class Entity : public GameObject {
   b2CircleShape CreateCircleShape(int radius,
                                   const QPoint& shape_position = {0, 0}) const;
 
+  void SetAnimator(std::shared_ptr<Animator> animator);
   void SetWayPoints(const std::vector<QPoint>& way_points);
   void SetSpeed(int speed);
   void SetVelocity(b2Vec2 velocity, bool apply_once = false);
@@ -91,6 +93,8 @@ class Entity : public GameObject {
   int direction_ = 1;
 
   std::shared_ptr<Map> map_;
+
+  std::shared_ptr<Animator> animator_;
 
  private:
   // Рисует формы в зависимости от типа их фигуры. Вторым параметром передается

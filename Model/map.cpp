@@ -44,7 +44,7 @@ void Map::Draw(QPainter* painter) {
   double scale = std::min(
       static_cast<double>(painter->window().width()) / map_image_.width(),
       static_cast<double>(painter->window().height()) / map_image_.height());
-  painter->scale(scale, scale);
+  painter->scale(0.5, 0.5);
   painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
 
   for (const auto& object : game_objects_) {

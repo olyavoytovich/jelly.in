@@ -413,7 +413,10 @@
     {
       "x": 112,
       "y": 1168,
+      "animation_duration": 500,
+      "animation_name": "player",
       "name": "player",
+      "frames_count": 1,
       "width": 0,
       "height": 0
     },
@@ -427,6 +430,9 @@
     {
       "x": 1280,
       "y": 544,
+      "animation_duration": 500,
+      "animation_name": "stone",
+      "frames_count": 1,
       "speed": 100,
       "type": "patroller",
       "way_point_size": 2,
@@ -447,8 +453,14 @@
     {
       "x": 1440,
       "y": 832,
+      "animation_duration": 500,
+      "animation_name": "cloud",
+      "bullet_animation_duration": 100,
+      "bullet_animation_name": "cloud_bullet",
       "bullet_radius": 10,
       "bullet_speed": 300,
+      "frames_count": 1,
+      "bullet_frame_count": 1,
       "shoot_direction": "down",
       "shoot_period": 1000,
       "speed": 100,
@@ -471,8 +483,14 @@
     {
       "x": 704,
       "y": 288,
+      "animation_duration": 500,
+      "animation_name": "cloud",
+      "bullet_animation_duration": 100,
+      "bullet_animation_name": "cloud_bullet",
       "bullet_radius": 10,
       "bullet_speed": 300,
+      "frames_count": 1,
+      "bullet_frame_count": 1,
       "shoot_direction": "down",
       "shoot_period": 1000,
       "speed": 100,
@@ -503,8 +521,14 @@
     {
       "x": 1648,
       "y": 112,
+      "animation_duration": 500,
+      "animation_name": "burdock",
+      "bullet_animation_duration": 100,
+      "bullet_animation_name": "burdock_bullet",
       "bullet_radius": 10,
       "bullet_speed": 300,
+      "frames_count": 5,
+      "bullet_frame_count": 1,
       "shoot_direction": "left_right",
       "shoot_period": 1000,
       "speed": 100,
@@ -521,6 +545,36 @@
         {
           "x": 1808,
           "y": 112
+        }
+      ]
+    },
+    {
+      "x": 640,
+      "y": 740,
+      "animation_duration": 500,
+      "animation_name": "burdock",
+      "bullet_animation_duration": 100,
+      "bullet_animation_name": "burdock_bullet",
+      "bullet_radius": 10,
+      "bullet_speed": 300,
+      "frames_count": 5,
+      "burdock_frame_count": 1,
+      "shoot_direction": "left_right",
+      "shoot_period": 1000,
+      "speed": 0,
+      "type": "shooter",
+      "way_point_size": 2,
+      "name": "shooter4",
+      "width": 64,
+      "height": 64,
+      "way_points": [
+        {
+          "x": 640,
+          "y": 704
+        },
+        {
+          "x": 384,
+          "y": 704
         }
       ]
     }
