@@ -14,9 +14,9 @@ class Player : public Entity {
   ~Player() override = default;
 
   void Update(int time) override;
-  void BeginCollision(EntityType my_type, b2Fixture* fixture,
+  void BeginCollision(b2Fixture* fixture, EntityType my_type,
                       EntityType other_type) override;
-  void EndCollision(EntityType my_type, b2Fixture* my_fixture,
+  void EndCollision(b2Fixture* my_fixture, EntityType my_type,
                     EntityType other_type) override;
 
  public:
@@ -29,9 +29,9 @@ class Player : public Entity {
   const int kPlayerJumpCount = 2;
 
  private:
-  int jumps_left_ = 0;
-  int left_collisions = 0;
-  int right_collisions = 0;
+  int jumps_remaining_ = 0;
+  int left_collisions_ = 0;
+  int right_collisions_ = 0;
 
   b2Fixture* bottom_sensor_ = nullptr;
   b2Fixture* left_sensor_ = nullptr;

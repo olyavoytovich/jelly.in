@@ -15,8 +15,7 @@ Entity::Entity(std::shared_ptr<Map> map,
                const QPoint& body_position,
                const QPolygon& polygon,
                EntityType entity_type)
-    : map_(std::move(map)),
-      entity_type_(std::make_shared<EntityType>(entity_type)) {
+    : map_(std::move(map)), entity_type_(entity_type) {
   InitializeBody(body_type, body_position);
   b2PolygonShape shape = CreatePolygonShape(polygon);
   CreateFixture(shape);
@@ -28,8 +27,7 @@ Entity::Entity(std::shared_ptr<Map> map,
                const QPoint& body_position,
                int radius,
                EntityType entity_type)
-    : map_(std::move(map)),
-      entity_type_(std::make_shared<EntityType>(entity_type)) {
+    : map_(std::move(map)), entity_type_(entity_type) {
   InitializeBody(body_type, body_position);
   b2CircleShape shape = CreateCircleShape(radius);
   CreateFixture(shape);
@@ -42,8 +40,7 @@ Entity::Entity(std::shared_ptr<Map> map,
                const std::vector<CircleShape>& circles,
                const std::vector<PolygonShape>& polygons,
                EntityType entity_type)
-    : map_(std::move(map)),
-      entity_type_(std::make_shared<EntityType>(entity_type)) {
+    : map_(std::move(map)), entity_type_(entity_type) {
   InitializeBody(body_type, body_position);
 
   for (auto&&[radius, shape_position] : circles) {
@@ -211,9 +208,9 @@ b2Vec2 Entity::PixelsToMeters(QPoint vector) const {
 
 b2Fixture* Entity::CreateFixture(const b2Shape& shape) {
   b2Fixture* fixture = body_->CreateFixture(&shape, kBodyDensity);
-  fixture->SetUserData(reinterpret_cast<void*>(entity_type_.get()));
+  fixture->SetUserData(reinterpret_cast<void*>(&entity_type_));
   b2Filter filter;
-  filter.categoryBits = static_cast<int>(*entity_type_);
+  filter.categoryBits = static_cast<int>(entity_type_);
   fixture->SetFilterData(filter);
   return fixture;
 }
@@ -268,11 +265,11 @@ QPoint Entity::GetPositionInPixels() const {
   return MetersToPixels(body_->GetWorldCenter());
 }
 
-void Entity::BeginCollision(EntityType my_type, b2Fixture*,
+void Entity::BeginCollision(b2Fixture*, EntityType my_type,
                             EntityType other_type) {
   if (my_type == EntityType::kBullet && other_type == EntityType::kGround) {
     MarkAsDeleted();
   }
 }
 
-void Entity::EndCollision(EntityType, b2Fixture*, EntityType) {}
+void Entity::EndCollision(b2Fixture*, EntityType, EntityType) {}

@@ -68,9 +68,9 @@ class Entity : public GameObject {
   b2Body* GetB2Body() const override;
   QPoint GetPositionInPixels() const override;
 
-  virtual void BeginCollision(EntityType my_type, b2Fixture* my_fixture,
+  virtual void BeginCollision(b2Fixture* my_fixture, EntityType my_type,
                               EntityType other_type);
-  virtual void EndCollision(EntityType my_type, b2Fixture* my_fixture,
+  virtual void EndCollision(b2Fixture* my_fixture, EntityType my_type,
                             EntityType other_type);
 
  protected:
@@ -120,7 +120,7 @@ class Entity : public GameObject {
 
  private:
   b2Vec2 target_velocity = {0, 0};
-  std::shared_ptr<EntityType> entity_type_;
+  EntityType entity_type_;
 };
 
 #endif  // MODEL_ENTITY_H_

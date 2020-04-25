@@ -22,11 +22,11 @@ void ContactListener::ProcessContact(b2Contact* contact, bool contact_begin) {
   Entity* entity_b = GetEntityFromFixture(fixture_b, type_b);
 
   if (contact_begin) {
-    entity_a->BeginCollision(type_a, fixture_a, type_b);
-    entity_b->BeginCollision(type_b, fixture_b, type_a);
+    entity_a->BeginCollision(fixture_a, type_a, type_b);
+    entity_b->BeginCollision(fixture_b, type_b, type_a);
   } else {
-    entity_a->EndCollision(type_a, fixture_a, type_b);
-    entity_b->EndCollision(type_b, fixture_b, type_a);
+    entity_a->EndCollision(fixture_a, type_a, type_b);
+    entity_b->EndCollision(fixture_b, type_b, type_a);
   }
 }
 
