@@ -1,11 +1,16 @@
 #include "map.h"
 
 Map::Map(const QImage& map_image)
-    : map_image_(map_image),
+    : world_(std::make_shared<b2World>(b2Vec2(0, 10))),
+      current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()),
+      map_image_(map_image),
       scaled_map_image_(map_image),
-      world_(std::make_shared<b2World>(b2Vec2(0, 10))) {}
+      is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
+      is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false) {}
 
 void Map::Update(int time) {
+  player_->Update(time);
+
   while (!game_objects_to_add_.empty()) {
     game_objects_.push_back(game_objects_to_add_.back());
     game_objects_to_add_.pop_back();
@@ -33,29 +38,67 @@ void Map::Update(int time) {
   world_->Step(static_cast<float>(time / 1000.0),
                kVelocityAccuracy,
                kPositionAccuracy);
+  is_key_pressed_.assign(is_key_pressed_.size(), false);
 }
 
 void Map::Draw(QPainter* painter) {
   painter->save();
 
-  UpdateImageScale(painter->window().width(), painter->window().height());
+  double scale = std::max(
+      static_cast<double>(painter->window().width()) / kVisibleSize.x(),
+      static_cast<double>(painter->window().height()) / kVisibleSize.y());
+
+  UpdateCameraPosition();
+  painter->translate(
+      (painter->window().width() - kVisibleSize.x() * scale) / 2.0,
+      (painter->window().height() - kVisibleSize.y() * scale) / 2.0);
+  painter->translate(-current_camera_.topLeft() * scale);
+
+  UpdateImageScale(static_cast<int>(map_image_.width() * scale),
+                   static_cast<int>(map_image_.height() * scale));
   painter->drawImage(0, 0, scaled_map_image_);
 
-  double scale = std::min(
-      static_cast<double>(painter->window().width()) / map_image_.width(),
-      static_cast<double>(painter->window().height()) / map_image_.height());
-  painter->scale(0.5, 0.5);
+  painter->scale(scale, scale);
   painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
 
   for (const auto& object : game_objects_) {
     object->Draw(painter);
   }
 
+  painter->setBrush(QBrush(Qt::green, Qt::BrushStyle::SolidPattern));
+  player_->Draw(painter);
+
   painter->restore();
 }
 
-void Map::AddGameObject(const std::shared_ptr<GameObject>& object) {
-  game_objects_to_add_.push_back(object);
+void Map::AddGameObject(std::shared_ptr<GameObject> object) {
+  game_objects_to_add_.push_back(std::move(object));
+}
+
+void Map::SetPlayerObject(std::shared_ptr<GameObject> player) {
+  player_ = std::move(player);
+}
+
+void Map::SetPressedKeyStatus(Key key, bool is_pressed) {
+  is_key_pressed_[static_cast<int>(key)] = is_pressed;
+}
+
+void Map::SetClampedKeyStatus(Key key, bool is_clamped) {
+  is_key_clamped_[static_cast<int>(key)] = is_clamped;
+  if (key == Key::kLeft && is_clamped) {
+    is_key_clamped_[static_cast<int>(Key::kRight)] = false;
+  }
+  if (key == Key::kRight && is_clamped) {
+    is_key_clamped_[static_cast<int>(Key::kLeft)] = false;
+  }
+}
+
+bool Map::IsKeyPressed(Key key) {
+  return is_key_pressed_[static_cast<int>(key)];
+}
+
+bool Map::IsKeyClamped(Key key) {
+  return is_key_clamped_[static_cast<int>(key)];
 }
 
 void Map::UpdateImageScale(int width, int height) {
@@ -67,4 +110,20 @@ void Map::UpdateImageScale(int width, int height) {
 
 b2Body* Map::CreateBody(b2BodyDef* body_definition) {
   return world_->CreateBody(body_definition);
+}
+
+void Map::UpdateCameraPosition() {
+  QPoint target = player_->GetPositionInPixels() - current_camera_.center();
+  if (kPlayerBoundary.x() / 2 < target.x()) {
+    current_camera_.translate(target.x() - kPlayerBoundary.x() / 2, 0);
+  }
+  if (-kPlayerBoundary.x() / 2 > target.x()) {
+    current_camera_.translate(target.x() + kPlayerBoundary.x() / 2, 0);
+  }
+  if (kPlayerBoundary.y() / 2 < target.y()) {
+    current_camera_.translate(0, target.y() - kPlayerBoundary.y() / 2);
+  }
+  if (-kPlayerBoundary.y() / 2 > target.y()) {
+    current_camera_.translate(0, target.y() + kPlayerBoundary.y() / 2);
+  }
 }

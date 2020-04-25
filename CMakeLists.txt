@@ -21,11 +21,12 @@ add_executable(jellyin main.cpp
         Model/animation.cpp
         Model/animator.cpp
         Controller/game_controller.cpp
-        Model/game_object.cpp
         Model/entity.cpp
-        Model/patroller.cpp
+        Model/game_object.cpp
         Model/map.cpp
         Model/map_loader.cpp
+        Model/patroller.cpp
+        Model/player.cpp
         Model/shooter.cpp
         resources.qrc
         View/view.cpp

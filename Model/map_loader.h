@@ -12,9 +12,11 @@
 
 #include "animator.h"
 #include "animation.h"
+#include "Controller/abstract_game_controller.h"
 #include "entity.h"
 #include "map.h"
 #include "patroller.h"
+#include "player.h"
 #include "shooter.h"
 
 class MapLoader {

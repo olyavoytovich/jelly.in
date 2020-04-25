@@ -212,3 +212,6 @@ void Entity::ApplyImpulse() {
   body_->ApplyLinearImpulseToCenter(target_impulse, true);
 }
 
+QPoint Entity::GetPositionInPixels() const {
+  return MetersToPixels(body_->GetWorldCenter());
+}
