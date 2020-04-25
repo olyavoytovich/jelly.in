@@ -10,6 +10,14 @@
 #include "box2d/box2d.h"
 #include "game_object.h"
 
+enum class EntityType {
+  kPlayer = 1,
+  kBullet = 2,
+  kPatroller = 4,
+  kShooter = 8,
+  kGround = 16
+};
+
 class Map {
  public:
   explicit Map(const QImage& map_image);
@@ -20,6 +28,7 @@ class Map {
 
   void AddGameObject(std::shared_ptr<GameObject> object);
   void SetPlayerObject(std::shared_ptr<GameObject> player);
+  void SetContactListener(std::shared_ptr<b2ContactListener> listener);
 
   b2Body* CreateBody(b2BodyDef* body_definition);
 
@@ -53,6 +62,7 @@ class Map {
  private:
   std::shared_ptr<b2World> world_;
   std::shared_ptr<GameObject> player_;
+  std::shared_ptr<b2ContactListener> contact_listener_;
 
   QRect current_camera_;
 

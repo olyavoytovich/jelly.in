@@ -16,6 +16,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QJsonObject object, point_obj;
 
   auto map = std::make_shared<Map>(map_image);
+  map->SetContactListener(std::make_shared<ContactListener>());
   for (const auto& solid_object : solids) {
     object = solid_object.toObject();
 
@@ -35,7 +36,8 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
     map->AddGameObject(std::make_shared<Entity>(map,
                                                 b2_staticBody,
                                                 object_position,
-                                                object_points));
+                                                object_points,
+                                                EntityType::kGround));
   }
 
   QJsonArray dynamic_objects = json_main["dynamic_objects"].toArray();
@@ -44,10 +46,10 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
 
     if (object["name"].toString() == "player") {
       QPoint position(object["x"].toInt(), object["y"].toInt());
-      QPolygon object_points = QRect(-Player::kPlayerWidth / 2,
-                                     -Player::kPlayerHeight / 2,
-                                     Player::kPlayerWidth,
-                                     Player::kPlayerHeight);
+      QRect object_points(-Player::kPlayerWidth / 2,
+                          -Player::kPlayerHeight / 2,
+                          Player::kPlayerWidth,
+                          Player::kPlayerHeight);
       map->SetPlayerObject(std::make_shared<Player>(map,
                                                     position,
                                                     object_points));

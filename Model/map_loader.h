@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "Controller/abstract_game_controller.h"
+#include "contact_listener.h"
 #include "entity.h"
 #include "map.h"
 #include "patroller.h"
