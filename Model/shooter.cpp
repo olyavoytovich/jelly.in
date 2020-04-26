@@ -1,6 +1,6 @@
 #include "shooter.h"
 
-#include <utility>
+#include <QDebug>
 
 Shooter::Shooter(std::shared_ptr<Map> map, b2BodyType type,
                  const QPoint& body_position, const QPolygon& polygon,
@@ -17,6 +17,7 @@ Shooter::Shooter(std::shared_ptr<Map> map, b2BodyType type,
       bullet_animator_(std::move(bullet_animator)) {
   SetSpeed(speed);
   SetAnimator(std::move(animator));
+  animator_->RepeatInReverseOrder();
   SetWayPoints(way_points);
 }
 
@@ -108,7 +109,9 @@ void Shooter::AddBullet(const QPoint& bullet_position) {
   bullets_.push_back(std::make_shared<Entity>(map_,
                                               b2_dynamicBody,
                                               bullet_position +
-                                              GetPositionInPixels(),
+                                                  GetPositionInPixels(),
                                               bullet_radius_));
+  bullets_.back()->SetAnimator(bullet_animator_);
+  animator_->Play();
   map_->AddGameObject(bullets_.back());
 }

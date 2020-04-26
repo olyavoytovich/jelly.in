@@ -58,9 +58,16 @@ void Entity::Draw(QPainter* painter) const {
   // Fixture используется, чтобы прикрепить форму к телу для обнаружения
   // коллизий. Содержит необходимые для отрисовки геометрические данные,
   // кроме них - трение, фильтр коллизий и др.
-  for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
-       fixture = fixture->GetNext()) {
-    DrawShape(painter, fixture);
+  if (animator_ != nullptr) {
+    QRect rectangle_for_image = bounding_rectangle_;
+    rectangle_for_image.moveTopLeft(
+        bounding_rectangle_.topLeft() + GetPositionInPixels());
+    painter->drawImage(rectangle_for_image, *(animator_->GetCurrentImage()));
+  } else {
+    for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
+         fixture = fixture->GetNext()) {
+      DrawShape(painter, fixture);
+    }
   }
 }
 
@@ -165,7 +172,10 @@ void Entity::SetVelocity(b2Vec2 target_position,
   SetVelocity(velocity, apply_once);
 }
 
-void Entity::Update(int) {
+void Entity::Update(int time) {
+  if (animator_ != nullptr) {
+    animator_->Update(time);
+  }
   if (way_points_.size() <= 1) {
     return;
   }

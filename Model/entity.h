@@ -97,7 +97,7 @@ class Entity : public GameObject {
 
   std::shared_ptr<Map> map_;
 
-  std::shared_ptr<Animator> animator_;
+  std::shared_ptr<Animator> animator_ = nullptr;
 
  private:
   // Рисует формы в зависимости от типа их фигуры. Вторым параметром передается

@@ -39,3 +39,8 @@ Patroller::Patroller(std::shared_ptr<Map> map,
   SetAnimator(std::move(animator));
   SetWayPoints(way_points);
 }
+
+void Patroller::Update(int time) {
+  animator_->Play();
+  Entity::Update(time);
+}

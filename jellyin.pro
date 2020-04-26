@@ -13,6 +13,8 @@ QMAKE_CXXFLAGS += -std=c++17
 SOURCES += \
         Controller/game_controller.cpp \
         main.cpp \
+        Model/animation.cpp \
+        Model/animator.cpp \
         Model/entity.cpp \
         Model/game_object.cpp \
         Model/map.cpp \

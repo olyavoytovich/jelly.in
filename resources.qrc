@@ -4,5 +4,34 @@
         <file>images/test_map.png</file>
         <file>data/level_1.json</file>
         <file>images/level_1.png</file>
+        <file>images/burdock0.png</file>
+        <file>images/burdock1.png</file>
+        <file>images/burdock2.png</file>
+        <file>images/burdock3.png</file>
+        <file>images/burdock4.png</file>
+        <file>images/burdock5.png</file>
+        <file>images/burdock6.png</file>
+        <file>images/cloud0.png</file>
+        <file>images/cloud1.png</file>
+        <file>images/cloud2.png</file>
+        <file>images/cloud3.png</file>
+        <file>images/cloud4.png</file>
+        <file>images/cloud5.png</file>
+        <file>images/cloud6.png</file>
+        <file>images/cloud7.png</file>
+        <file>images/cloud8.png</file>
+        <file>images/cloud9.png</file>
+        <file>images/stone0.png</file>
+        <file>images/bullet0.png</file>
+        <file>images/player0.png</file>
+        <file>images/chestnut0.png</file>
+        <file>images/chestnut1.png</file>
+        <file>images/chestnut2.png</file>
+        <file>images/chestnut3.png</file>
+        <file>images/chestnut4.png</file>
+        <file>images/chestnut5.png</file>
+        <file>images/chestnut6.png</file>
+        <file>images/drop0.png</file>
+        <file>images/thorn0.png</file>
     </qresource>
 </RCC>

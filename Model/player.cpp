@@ -2,8 +2,11 @@
 
 Player::Player(std::shared_ptr<Map> map,
                const QPoint& body_position,
-               const QPolygon& polygon)
-    : Entity(std::move(map), b2_dynamicBody, body_position, polygon) {}
+               const QPolygon& polygon,
+               std::shared_ptr<Animator> animator)
+    : Entity(std::move(map), b2_dynamicBody, body_position, polygon) {
+  SetAnimator(std::move(animator));
+}
 
 void Player::Update(int) {
   if (map_->IsKeyPressed(Key::kUp)) {

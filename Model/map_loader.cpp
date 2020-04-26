@@ -44,6 +44,11 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   for (const auto& dynamic_object : dynamic_objects) {
     object = dynamic_object.toObject();
 
+    QString animation_name = object["animation_name"].toString();
+    CreateAnimation(&name_to_animation, object, animation_name);
+    std::shared_ptr<Animator> animator =
+        std::make_shared<Animator>(name_to_animation[animation_name]);
+
     if (object["name"].toString() == "player") {
       QPoint position(object["x"].toInt(), object["y"].toInt());
       QPolygon object_points = QRect(-Player::kPlayerWidth / 2,
@@ -52,7 +57,8 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                      Player::kPlayerHeight);
       map->SetPlayerObject(std::make_shared<Player>(map,
                                                     position,
-                                                    object_points));
+                                                    object_points,
+                                                    animator));
     }
 
     if (object["type"].isNull()) {
@@ -72,11 +78,6 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                    object["width"].toInt(),
                                    object["height"].toInt());
     int object_speed = object["speed"].toInt();
-
-    QString animation_name = object["animation_name"].toString();
-    CreateAnimation(&name_to_animation, object, animation_name);
-    std::shared_ptr<Animator> animator =
-        std::make_shared<Animator>(name_to_animation[animation_name]);
 
     if (object["type"].toString() == "patroller") {
       map->AddGameObject(std::make_shared<Patroller>(map,
