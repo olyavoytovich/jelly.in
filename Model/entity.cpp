@@ -272,4 +272,4 @@ void Entity::BeginCollision(b2Fixture*, EntityType my_type,
   }
 }
 
-void Entity::EndCollision(b2Fixture*, EntityType, EntityType) {}
+void Entity::EndCollision(b2Fixture*) {}

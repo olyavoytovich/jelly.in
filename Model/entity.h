@@ -70,8 +70,7 @@ class Entity : public GameObject {
 
   virtual void BeginCollision(b2Fixture* my_fixture, EntityType my_type,
                               EntityType other_type);
-  virtual void EndCollision(b2Fixture* my_fixture, EntityType my_type,
-                            EntityType other_type);
+  virtual void EndCollision(b2Fixture* my_fixture);
 
  protected:
   int MetersToPixels(float value) const;

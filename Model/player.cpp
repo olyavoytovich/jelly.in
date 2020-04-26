@@ -60,7 +60,7 @@ void Player::BeginCollision(b2Fixture* fixture, EntityType,
   }
 }
 
-void Player::EndCollision(b2Fixture* my_fixture, EntityType, EntityType) {
+void Player::EndCollision(b2Fixture* my_fixture) {
   if (my_fixture == left_sensor_) {
     left_collisions_--;
   } else if (my_fixture == right_sensor_) {
