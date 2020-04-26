@@ -7,7 +7,8 @@ Patroller::Patroller(std::shared_ptr<Map> map,
                      const std::vector<QPoint>& way_points,
                      std::shared_ptr<Animator> animator,
                      int speed)
-    : Entity(std::move(map), type, body_position, polygon) {
+    : Entity(std::move(map), type, body_position, polygon,
+             EntityType::kPatroller) {
   SetSpeed(speed);
   SetAnimator(std::move(animator));
   animator_->LoopAnimation();
@@ -22,7 +23,8 @@ Patroller::Patroller(std::shared_ptr<Map> map,
                      const std::vector<QPoint>& way_points,
                      std::shared_ptr<Animator> animator,
                      int speed)
-    : Entity(std::move(map), type, body_position, radius) {
+    : Entity(std::move(map), type, body_position, radius,
+             EntityType::kPatroller) {
   SetSpeed(speed);
   SetAnimator(std::move(animator));
   animator_->LoopAnimation();
@@ -38,7 +40,8 @@ Patroller::Patroller(std::shared_ptr<Map> map,
                      const std::vector<QPoint>& way_points,
                      std::shared_ptr<Animator> animator,
                      int speed)
-    : Entity(std::move(map), body_type, body_position, circles, polygons) {
+    : Entity(std::move(map), body_type, body_position, circles, polygons,
+             EntityType::kPatroller) {
   SetSpeed(speed);
   SetAnimator(std::move(animator));
   animator_->LoopAnimation();

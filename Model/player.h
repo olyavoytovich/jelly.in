@@ -11,11 +11,15 @@ class Player : public Entity {
  public:
   Player(std::shared_ptr<Map> map,
          const QPoint& body_position,
-         const QPolygon& polygon,
+         const QRect& rectangle,
          std::shared_ptr<Animator> animator);
+
   ~Player() override = default;
 
   void Update(int time) override;
+  void BeginCollision(b2Fixture* fixture, EntityType my_type,
+                      EntityType other_type) override;
+  void EndCollision(b2Fixture* my_fixture) override;
 
  public:
   static const int kPlayerWidth = 30;
@@ -24,6 +28,16 @@ class Player : public Entity {
  private:
   const float kPlayerSpeed = 3;
   const float kPlayerJumpSpeed = 4;
+  const int kPlayerJumpCount = 2;
+
+ private:
+  int jumps_remaining_ = 0;
+  int left_collisions_ = 0;
+  int right_collisions_ = 0;
+
+  b2Fixture* bottom_sensor_ = nullptr;
+  b2Fixture* left_sensor_ = nullptr;
+  b2Fixture* right_sensor_ = nullptr;
 };
 
 #endif  // MODEL_PLAYER_H_

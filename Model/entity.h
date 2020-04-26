@@ -32,13 +32,15 @@ class Entity : public GameObject {
   Entity(std::shared_ptr<Map> map,
          b2BodyType type,
          const QPoint& body_position,
-         const QPolygon& polygon);
+         const QPolygon& polygon,
+         EntityType entity_type);
 
   // Конструктор, создающий тело из одной формы - круг.
   Entity(std::shared_ptr<Map> map,
          b2BodyType type,
          const QPoint& body_position,
-         int radius);
+         int radius,
+         EntityType entity_type);
 
   // Конструктор, благодаря которому можно создать тело из нескольких форм со
   // своими локальными координатами. Третий параметр (body_position) - это
@@ -50,7 +52,9 @@ class Entity : public GameObject {
          b2BodyType body_type,
          const QPoint& body_position,
          const std::vector<CircleShape>& circles,
-         const std::vector<PolygonShape>& polygons);
+         const std::vector<PolygonShape>& polygons,
+         EntityType entity_type);
+
 
   ~Entity() override = default;
 
@@ -75,11 +79,17 @@ class Entity : public GameObject {
   b2Body* GetB2Body() const override;
   QPoint GetPositionInPixels() const override;
 
+  virtual void BeginCollision(b2Fixture* my_fixture, EntityType my_type,
+                              EntityType other_type);
+  virtual void EndCollision(b2Fixture* my_fixture);
+
  protected:
   int MetersToPixels(float value) const;
   QPoint MetersToPixels(b2Vec2 vector) const;
   float PixelsToMeters(int value) const;
   b2Vec2 PixelsToMeters(QPoint vector) const;
+
+  b2Fixture* CreateFixture(const b2Shape& shape);
 
  protected:
   const float kEpsilon = 1e-5;
@@ -122,6 +132,7 @@ class Entity : public GameObject {
 
  private:
   b2Vec2 target_velocity = {0, 0};
+  EntityType entity_type_;
 };
 
 #endif  // MODEL_ENTITY_H_

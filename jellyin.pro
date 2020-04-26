@@ -15,6 +15,7 @@ SOURCES += \
         main.cpp \
         Model/animation.cpp \
         Model/animator.cpp \
+        Model/contact_listener.cpp \
         Model/entity.cpp \
         Model/game_object.cpp \
         Model/map.cpp \
@@ -75,6 +76,7 @@ HEADERS += \
     Controller/game_controller.h \
     Model/animation.h \
     Model/animator.h \
+    Model/contact_listener.h \
     Model/entity.h \
     Model/game_object.h \
     Model/map.h \

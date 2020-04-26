@@ -12,7 +12,8 @@ Shooter::Shooter(std::shared_ptr<Map> map,
                  std::shared_ptr<Animator> animator,
                  std::shared_ptr<Animator> bullet_animator,
                  int speed)
-    : Entity(std::move(map), type, body_position, polygon),
+    : Entity(std::move(map), type, body_position, polygon,
+        EntityType::kShooter),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
@@ -36,7 +37,7 @@ Shooter::Shooter(std::shared_ptr<Map> map,
                  std::shared_ptr<Animator> animator,
                  std::shared_ptr<Animator> bullet_animator,
                  int speed)
-    : Entity(std::move(map), type, body_position, radius),
+    : Entity(std::move(map), type, body_position, radius, EntityType::kShooter),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
@@ -60,7 +61,8 @@ Shooter::Shooter(std::shared_ptr<Map> map,
                  std::shared_ptr<Animator> animator,
                  std::shared_ptr<Animator> bullet_animator,
                  int speed)
-    : Entity(std::move(map), body_type, body_position, circles, polygons),
+    : Entity(std::move(map), body_type, body_position, circles, polygons,
+             EntityType::kShooter),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
@@ -119,8 +121,9 @@ void Shooter::AddBullet(const QPoint& bullet_position) {
   bullets_.push_back(std::make_shared<Entity>(map_,
                                               b2_dynamicBody,
                                               bullet_position +
-                                                  GetPositionInPixels(),
-                                              bullet_radius_));
+                                              GetPositionInPixels(),
+                                              bullet_radius_,
+                                              EntityType::kBullet));
   bullets_.back()->SetAnimator(bullet_animator_);
   animator_->Play();
   map_->AddGameObject(bullets_.back());

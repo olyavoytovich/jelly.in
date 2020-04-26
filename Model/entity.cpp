@@ -15,22 +15,24 @@
 Entity::Entity(std::shared_ptr<Map> map,
                b2BodyType body_type,
                const QPoint& body_position,
-               const QPolygon& polygon)
-    : map_(std::move(map)) {
+               const QPolygon& polygon,
+               EntityType entity_type)
+    : map_(std::move(map)), entity_type_(entity_type) {
   InitializeBody(body_type, body_position);
   b2PolygonShape shape = CreatePolygonShape(polygon);
-  body_->CreateFixture(&shape, kBodyDensity);
+  CreateFixture(shape);
   InitializeBoundaryRectangle();
 }
 
 Entity::Entity(std::shared_ptr<Map> map,
                b2BodyType body_type,
                const QPoint& body_position,
-               int radius)
-    : map_(std::move(map)) {
+               int radius,
+               EntityType entity_type)
+    : map_(std::move(map)), entity_type_(entity_type) {
   InitializeBody(body_type, body_position);
   b2CircleShape shape = CreateCircleShape(radius);
-  body_->CreateFixture(&shape, kBodyDensity);
+  CreateFixture(shape);
   InitializeBoundaryRectangle();
 }
 
@@ -38,18 +40,19 @@ Entity::Entity(std::shared_ptr<Map> map,
                b2BodyType body_type,
                const QPoint& body_position,
                const std::vector<CircleShape>& circles,
-               const std::vector<PolygonShape>& polygons)
-    : map_(std::move(map)) {
+               const std::vector<PolygonShape>& polygons,
+               EntityType entity_type)
+    : map_(std::move(map)), entity_type_(entity_type) {
   InitializeBody(body_type, body_position);
 
   for (auto&&[radius, shape_position] : circles) {
     b2CircleShape shape = CreateCircleShape(radius, shape_position);
-    body_->CreateFixture(&shape, kBodyDensity);
+    CreateFixture(shape);
   }
 
   for (auto&&[polygon, shape_position] : polygons) {
     b2PolygonShape shape = CreatePolygonShape(polygon, shape_position);
-    body_->CreateFixture(&shape, kBodyDensity);
+    CreateFixture(shape);
   }
   InitializeBoundaryRectangle();
 }
@@ -72,6 +75,9 @@ void Entity::Draw(QPainter* painter) const {
 }
 
 void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
+  if (shape->IsSensor()) {
+    return;
+  }
   painter->save();
 
   switch (shape->GetShape()->GetType()) {
@@ -196,6 +202,7 @@ void Entity::InitializeBody(b2BodyType body_type, const QPoint& body_position) {
   body_definition.position = PixelsToMeters(body_position);
   body_definition.type = body_type;
   body_definition.fixedRotation = true;
+  body_definition.userData = static_cast<void*>(this);
   body_ = map_->CreateBody(&body_definition);
 }
 
@@ -213,6 +220,15 @@ float Entity::PixelsToMeters(int value) const {
 
 b2Vec2 Entity::PixelsToMeters(QPoint vector) const {
   return b2Vec2(PixelsToMeters(vector.x()), PixelsToMeters(vector.y()));
+}
+
+b2Fixture* Entity::CreateFixture(const b2Shape& shape) {
+  b2Fixture* fixture = body_->CreateFixture(&shape, kBodyDensity);
+  fixture->SetUserData(static_cast<void*>(&entity_type_));
+  b2Filter filter;
+  filter.categoryBits = static_cast<int>(entity_type_);
+  fixture->SetFilterData(filter);
+  return fixture;
 }
 
 b2Body* Entity::GetB2Body() const {
@@ -264,3 +280,12 @@ void Entity::InitializeBoundaryRectangle() {
 QPoint Entity::GetPositionInPixels() const {
   return MetersToPixels(body_->GetWorldCenter());
 }
+
+void Entity::BeginCollision(b2Fixture*, EntityType my_type,
+                            EntityType other_type) {
+  if (my_type == EntityType::kBullet && other_type == EntityType::kGround) {
+    MarkAsDeleted();
+  }
+}
+
+void Entity::EndCollision(b2Fixture*) {}
