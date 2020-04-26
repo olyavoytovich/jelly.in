@@ -19,4 +19,4 @@ class Animation {
   int duration_;
 };
 
-#endif //  MODEL_ANIMATION_H_
+#endif  // MODEL_ANIMATION_H_

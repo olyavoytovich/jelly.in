@@ -29,4 +29,4 @@ class Animator {
   void Finish();
 };
 
-#endif //  MODEL_ANIMATOR_H_
+#endif  // MODEL_ANIMATOR_H_
