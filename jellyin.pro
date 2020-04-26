@@ -13,6 +13,7 @@ QMAKE_CXXFLAGS += -std=c++17
 SOURCES += \
         Controller/game_controller.cpp \
         main.cpp \
+        Model/contact_listener.cpp \
         Model/entity.cpp \
         Model/game_object.cpp \
         Model/map.cpp \
@@ -72,6 +73,7 @@ HEADERS += \
     Controller/abstract_game_controller.h \
     View/abstract_view.h \
     Controller/game_controller.h \
+    Model/contact_listener.h \
     Model/entity.h \
     Model/game_object.h \
     Model/map.h \

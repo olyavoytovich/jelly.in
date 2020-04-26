@@ -19,6 +19,7 @@ file(GLOB box2d
 
 add_executable(jellyin main.cpp
         Controller/game_controller.cpp
+        Model/contact_listener.cpp
         Model/entity.cpp
         Model/game_object.cpp
         Model/map.cpp

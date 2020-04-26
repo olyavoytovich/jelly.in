@@ -9,6 +9,9 @@ Map::Map(const QImage& map_image)
       is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false) {}
 
 void Map::Update(int time) {
+  if (player_->IsDeleted()) {
+    return;
+  }
   player_->Update(time);
 
   while (!game_objects_to_add_.empty()) {
@@ -77,6 +80,11 @@ void Map::AddGameObject(std::shared_ptr<GameObject> object) {
 
 void Map::SetPlayerObject(std::shared_ptr<GameObject> player) {
   player_ = std::move(player);
+}
+
+void Map::SetContactListener(std::shared_ptr<b2ContactListener> listener) {
+  contact_listener_ = std::move(listener);
+  world_->SetContactListener(contact_listener_.get());
 }
 
 void Map::SetPressedKeyStatus(Key key, bool is_pressed) {
