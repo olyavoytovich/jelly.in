@@ -186,7 +186,7 @@ void Entity::InitializeBody(b2BodyType body_type, const QPoint& body_position) {
   body_definition.position = PixelsToMeters(body_position);
   body_definition.type = body_type;
   body_definition.fixedRotation = true;
-  body_definition.userData = reinterpret_cast<void*>(this);
+  body_definition.userData = static_cast<void*>(this);
   body_ = map_->CreateBody(&body_definition);
 }
 
@@ -208,7 +208,7 @@ b2Vec2 Entity::PixelsToMeters(QPoint vector) const {
 
 b2Fixture* Entity::CreateFixture(const b2Shape& shape) {
   b2Fixture* fixture = body_->CreateFixture(&shape, kBodyDensity);
-  fixture->SetUserData(reinterpret_cast<void*>(&entity_type_));
+  fixture->SetUserData(static_cast<void*>(&entity_type_));
   b2Filter filter;
   filter.categoryBits = static_cast<int>(entity_type_);
   fixture->SetFilterData(filter);

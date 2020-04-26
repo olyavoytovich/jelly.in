@@ -15,10 +15,10 @@ void ContactListener::ProcessContact(b2Contact* contact, bool contact_begin) {
       || fixture_b->GetUserData() == nullptr) {
     return;
   }
-  EntityType type_a = *reinterpret_cast<EntityType*>(fixture_a->GetUserData());
+  EntityType type_a = *static_cast<EntityType*>(fixture_a->GetUserData());
   Entity* entity_a = GetEntityFromFixture(fixture_a, type_a);
 
-  EntityType type_b = *reinterpret_cast<EntityType*>(fixture_b->GetUserData());
+  EntityType type_b = *static_cast<EntityType*>(fixture_b->GetUserData());
   Entity* entity_b = GetEntityFromFixture(fixture_b, type_b);
 
   if (contact_begin) {
@@ -34,16 +34,16 @@ Entity* ContactListener::GetEntityFromFixture(b2Fixture* fixture,
                                               EntityType entity_type) {
   switch (entity_type) {
     case EntityType::kPatroller: {
-      return reinterpret_cast<Patroller*>(fixture->GetBody()->GetUserData());
+      return static_cast<Patroller*>(fixture->GetBody()->GetUserData());
     }
     case EntityType::kPlayer: {
-      return reinterpret_cast<Player*>(fixture->GetBody()->GetUserData());
+      return static_cast<Player*>(fixture->GetBody()->GetUserData());
     }
     case EntityType::kShooter: {
-      return reinterpret_cast<Shooter*>(fixture->GetBody()->GetUserData());
+      return static_cast<Shooter*>(fixture->GetBody()->GetUserData());
     }
     default: {
-      return reinterpret_cast<Entity*>(fixture->GetBody()->GetUserData());
+      return static_cast<Entity*>(fixture->GetBody()->GetUserData());
     }
   }
 }
