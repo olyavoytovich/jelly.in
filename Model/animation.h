@@ -1,5 +1,5 @@
-#ifndef ANIMATION_H_
-#define ANIMATION_H_
+#ifndef MODEL_ANIMATION_H_
+#define MODEL_ANIMATION_H_
 
 #include<QImage>
 #include <memory>
@@ -19,4 +19,4 @@ class Animation {
   int duration_;
 };
 
-#endif //ANIMATION_H_
+#endif //  MODEL_ANIMATION_H_

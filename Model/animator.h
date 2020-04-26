@@ -1,5 +1,5 @@
-#ifndef ANIMATOR_H_
-#define ANIMATOR_H_
+#ifndef MODEL_ANIMATOR_H_
+#define MODEL_ANIMATOR_H_
 
 #include <QImage>
 #include <memory>
@@ -29,4 +29,4 @@ class Animator {
   void Finish();
 };
 
-#endif //ANIMATOR_H_
+#endif //  MODEL_ANIMATOR_H_
