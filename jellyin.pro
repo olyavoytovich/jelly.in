@@ -72,8 +72,9 @@ SOURCES += \
 
 HEADERS += \
     Controller/abstract_game_controller.h \
-    View/abstract_view.h \
     Controller/game_controller.h \
+    Model/animation.h \
+    Model/animator.h \
     Model/entity.h \
     Model/game_object.h \
     Model/map.h \
@@ -81,6 +82,7 @@ HEADERS += \
     Model/patroller.h \
     Model/player.h \
     Model/shooter.h \
+    View/abstract_view.h \
     View/view.h \
     box2d/b2_block_allocator.h \
     box2d/b2_body.h \

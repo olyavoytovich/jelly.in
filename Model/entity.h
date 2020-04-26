@@ -29,12 +29,16 @@ struct CircleShape {
 class Entity : public GameObject {
  public:
   // Конструктор, создающий тело из одной формы - полигон.
-  Entity(std::shared_ptr<Map> map, b2BodyType type,
-         const QPoint& body_position, const QPolygon& polygon);
+  Entity(std::shared_ptr<Map> map,
+         b2BodyType type,
+         const QPoint& body_position,
+         const QPolygon& polygon);
 
   // Конструктор, создающий тело из одной формы - круг.
-  Entity(std::shared_ptr<Map> map, b2BodyType type,
-         const QPoint& body_position, int radius);
+  Entity(std::shared_ptr<Map> map,
+         b2BodyType type,
+         const QPoint& body_position,
+         int radius);
 
   // Конструктор, благодаря которому можно создать тело из нескольких форм со
   // своими локальными координатами. Третий параметр (body_position) - это
@@ -42,8 +46,10 @@ class Entity : public GameObject {
   // В каждой структуре хранятся данные о радиусе и о локальных координатах
   // данного круга. Пятый параметр так же вектор структур. В одной структуре
   // PolygonShape хранятся данные о форме QPolygon и о локальных координатах.
-  Entity(std::shared_ptr<Map> map, b2BodyType body_type,
-         const QPoint& body_position, const std::vector<CircleShape>& circles,
+  Entity(std::shared_ptr<Map> map,
+         b2BodyType body_type,
+         const QPoint& body_position,
+         const std::vector<CircleShape>& circles,
          const std::vector<PolygonShape>& polygons);
 
   ~Entity() override = default;

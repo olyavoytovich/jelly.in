@@ -11,8 +11,8 @@
 #include <memory>
 #include <vector>
 
-#include "animator.h"
 #include "animation.h"
+#include "animator.h"
 #include "Controller/abstract_game_controller.h"
 #include "entity.h"
 #include "map.h"

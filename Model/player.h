@@ -12,7 +12,7 @@ class Player : public Entity {
   Player(std::shared_ptr<Map> map,
          const QPoint& body_position,
          const QPolygon& polygon,
-         std::shared_ptr<Animator> animator_);
+         std::shared_ptr<Animator> animator);
   ~Player() override = default;
 
   void Update(int time) override;

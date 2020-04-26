@@ -43,10 +43,12 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QJsonArray dynamic_objects = json_main["dynamic_objects"].toArray();
   for (const auto& dynamic_object : dynamic_objects) {
     object = dynamic_object.toObject();
-
+    if (object["animation_name"].isNull()) {
+      continue;
+    }
     QString animation_name = object["animation_name"].toString();
     CreateAnimation(&name_to_animation, object, animation_name);
-    std::shared_ptr<Animator> animator =
+    auto animator =
         std::make_shared<Animator>(name_to_animation[animation_name]);
 
     if (object["name"].toString() == "player") {
@@ -93,7 +95,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
           bullet_animation_name = object["bullet_animation_name"].toString();
       CreateAnimation(&name_to_animation, object, bullet_animation_name);
 
-      std::shared_ptr<Animator> bullet_animator =
+      auto bullet_animator =
           std::make_shared<Animator>(name_to_animation[bullet_animation_name]);
 
       BulletDirection bullet_direction = BulletDirection::kLeftRight;
@@ -133,11 +135,10 @@ void MapLoader::CreateAnimation(
   }
   int frames_count = object["frames_count"].toInt();
   std::vector<std::shared_ptr<QImage>> frames;
-  for (int j = 0; j < frames_count; j++) {
+  for (int frame = 0; frame < frames_count; frame++) {
     frames.emplace_back(std::make_shared<QImage>(
-        ":/images/" + animation_name + QString::number(j) + ".png"));
+        ":/images/" + animation_name + QString::number(frame) + ".png"));
   }
-  std::shared_ptr<Animation> animation = std::make_shared<Animation>(
+  (*name_to_animation)[animation_name] = std::make_shared<Animation>(
       frames, object["animation_duration"].toInt());
-  (*name_to_animation)[animation_name] = animation;
 }

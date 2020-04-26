@@ -10,6 +10,8 @@ Patroller::Patroller(std::shared_ptr<Map> map,
     : Entity(std::move(map), type, body_position, polygon) {
   SetSpeed(speed);
   SetAnimator(std::move(animator));
+  animator_->LoopAnimation();
+  animator_->Play();
   SetWayPoints(way_points);
 }
 
@@ -23,6 +25,8 @@ Patroller::Patroller(std::shared_ptr<Map> map,
     : Entity(std::move(map), type, body_position, radius) {
   SetSpeed(speed);
   SetAnimator(std::move(animator));
+  animator_->LoopAnimation();
+  animator_->Play();
   SetWayPoints(way_points);
 }
 
@@ -37,10 +41,7 @@ Patroller::Patroller(std::shared_ptr<Map> map,
     : Entity(std::move(map), body_type, body_position, circles, polygons) {
   SetSpeed(speed);
   SetAnimator(std::move(animator));
-  SetWayPoints(way_points);
-}
-
-void Patroller::Update(int time) {
+  animator_->LoopAnimation();
   animator_->Play();
-  Entity::Update(time);
+  SetWayPoints(way_points);
 }

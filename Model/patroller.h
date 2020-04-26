@@ -34,8 +34,6 @@ class Patroller : public Entity {
             std::shared_ptr<Animator> animator,
             int speed);
 
-  void Update(int time) override;
-
   ~Patroller() override = default;
 };
 
