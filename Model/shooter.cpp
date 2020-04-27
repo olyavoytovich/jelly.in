@@ -13,7 +13,7 @@ Shooter::Shooter(std::shared_ptr<Map> map,
                  std::shared_ptr<Animator> bullet_animator,
                  int speed)
     : Entity(std::move(map), type, body_position, polygon,
-        EntityType::kShooter),
+             EntityType::kShooter),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
@@ -73,13 +73,6 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
 }
 
-void Shooter::Draw(QPainter* painter) const {
-  Entity::Draw(painter);
-  for (const auto& bullet : bullets_) {
-    bullet->Draw(painter);
-  }
-}
-
 void Shooter::Update(int time) {
   Entity::Update(time);
   last_shoot_time_ += time;
@@ -121,7 +114,7 @@ void Shooter::AddBullet(const QPoint& bullet_position) {
   bullets_.push_back(std::make_shared<Entity>(map_,
                                               b2_dynamicBody,
                                               bullet_position +
-                                              GetPositionInPixels(),
+                                                  GetPositionInPixels(),
                                               bullet_radius_,
                                               EntityType::kBullet));
   bullets_.back()->SetAnimator(bullet_animator_);

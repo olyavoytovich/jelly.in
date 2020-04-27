@@ -6,7 +6,6 @@ Animator::Animator(std::shared_ptr<Animation> animation)
 }
 
 std::shared_ptr<QImage> Animator::GetCurrentImage() {
-
   return animation_->GetCurrentFrame(current_frame_);
 }
 

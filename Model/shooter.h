@@ -58,8 +58,6 @@ class Shooter : public Entity {
 
   ~Shooter() override = default;
 
-  void Draw(QPainter* painter) const override;
-
   void Update(int time) override;
 
  private:
