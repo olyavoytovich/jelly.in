@@ -29,8 +29,7 @@ class MapLoader {
  private:
   static void CreateAnimation(
       std::map<QString, std::shared_ptr<Animation>>* name_to_animation,
-      const QJsonObject& objects,
-      const QString& animation_name);
+      int frames_count, int animation_duration, const QString& animation_name);
 };
 
 #endif  // MODEL_MAP_LOADER_H_

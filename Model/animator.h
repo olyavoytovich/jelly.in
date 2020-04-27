@@ -20,7 +20,7 @@ class Animator {
 
  private:
   void Finish();
-  
+
  private:
   std::shared_ptr<Animation> animation_;
   bool is_repeated_back_ = false;

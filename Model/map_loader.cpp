@@ -49,7 +49,10 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       continue;
     }
     QString animation_name = object["animation_name"].toString();
-    CreateAnimation(&name_to_animation, object, animation_name);
+    CreateAnimation(&name_to_animation,
+                    object["frames_count"].toInt(),
+                    object["animation_duration"].toInt(),
+                    animation_name);
     auto animator =
         std::make_shared<Animator>(name_to_animation[animation_name]);
 
@@ -95,7 +98,10 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
     if (object["type"].toString() == "shooter") {
       QString
           bullet_animation_name = object["bullet_animation_name"].toString();
-      CreateAnimation(&name_to_animation, object, bullet_animation_name);
+      CreateAnimation(&name_to_animation,
+                      object["bullet_frames_count"].toInt(),
+                      object["bullet_animation_duration"].toInt(),
+                      bullet_animation_name);
 
       auto bullet_animator =
           std::make_shared<Animator>(name_to_animation[bullet_animation_name]);
@@ -130,17 +136,15 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
 
 void MapLoader::CreateAnimation(
     std::map<QString, std::shared_ptr<Animation>>* name_to_animation,
-    const QJsonObject& object,
-    const QString& animation_name) {
+    int frames_count, int animation_duration, const QString& animation_name) {
   if (name_to_animation->find(animation_name) != name_to_animation->end()) {
     return;
   }
-  int frames_count = object["frames_count"].toInt();
   std::vector<std::shared_ptr<QImage>> frames;
   for (int frame = 0; frame < frames_count; frame++) {
     frames.emplace_back(std::make_shared<QImage>(
         ":/images/" + animation_name + QString::number(frame) + ".png"));
   }
   (*name_to_animation)[animation_name] = std::make_shared<Animation>(
-      frames, object["animation_duration"].toInt());
+      frames, animation_duration);
 }

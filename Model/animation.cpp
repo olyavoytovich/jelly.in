@@ -1,5 +1,7 @@
 #include "animation.h"
 
+#include <iostream>
+
 Animation::Animation(std::vector<std::shared_ptr<QImage>> frames,
                      int duration)
     : frames_(std::move(frames)), duration_(duration) {}

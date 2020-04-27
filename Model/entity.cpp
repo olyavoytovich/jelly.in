@@ -1,6 +1,6 @@
 #include "entity.h"
 
-#include <utility>
+#include <iostream>
 
 // Про координаты. Координаты в Box2D такие же, как у математиков. То есть
 // ось абсцисс направлена вправо, ось ординат - вверх.
@@ -63,8 +63,7 @@ void Entity::Draw(QPainter* painter) const {
   // кроме них - трение, фильтр коллизий и др.
   if (animator_ != nullptr) {
     QRect rectangle_for_image = bounding_rectangle_;
-    rectangle_for_image.moveTopLeft(
-        bounding_rectangle_.topLeft() + GetPositionInPixels());
+    rectangle_for_image.translate(GetPositionInPixels());
     painter->drawImage(rectangle_for_image, *(animator_->GetCurrentImage()));
   } else {
     for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
