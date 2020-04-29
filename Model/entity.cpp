@@ -169,11 +169,15 @@ void Entity::SetEntityType(EntityType entity_type) {
   entity_type_ = entity_type;
   for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
        fixture = fixture->GetNext()) {
-    fixture->SetUserData(static_cast<void*>(&entity_type_));
-    b2Filter filter = fixture->GetFilterData();
-    filter.categoryBits = static_cast<int>(entity_type_);
-    fixture->SetFilterData(filter);
+    ApplyEntityType(fixture);
   }
+}
+
+void Entity::ApplyEntityType(b2Fixture* fixture) {
+  fixture->SetUserData(static_cast<void*>(&entity_type_));
+  b2Filter filter = fixture->GetFilterData();
+  filter.categoryBits = static_cast<int>(entity_type_);
+  fixture->SetFilterData(filter);
 }
 
 void Entity::Update(int) {
@@ -219,7 +223,7 @@ b2Vec2 Entity::PixelsToMeters(QPoint vector) const {
 
 b2Fixture* Entity::CreateFixture(const b2Shape& shape) {
   b2Fixture* fixture = body_->CreateFixture(&shape, kBodyDensity);
-  SetEntityType(entity_type_);
+  ApplyEntityType(fixture);
   return fixture;
 }
 

@@ -117,6 +117,8 @@ class Entity : public GameObject {
 
   void InitializeBoundaryRectangle();
 
+  void ApplyEntityType(b2Fixture* fixture);
+
  private:
   const float kBodyDensity = 1;
   const float kPixelsPerMeter = 100;
