@@ -29,6 +29,10 @@ add_executable(jellyin main.cpp
         Model/shooter.cpp
         resources.qrc
         View/view.cpp
+        View/button.cpp
+        View/choose_level_menu.cpp
+        View/main_menu.cpp
+        View/menu.cpp
         ${box2d})
 
 target_link_libraries(jellyin Qt5::Core)
