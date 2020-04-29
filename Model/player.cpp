@@ -28,11 +28,28 @@ Player::Player(std::shared_ptr<Map> map,
   b2PolygonShape right_shape = CreatePolygonShape(side_rectangle, QPoint());
   right_sensor_ = CreateFixture(right_shape);
   right_sensor_->SetSensor(true);
+
+  SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
 }
 
 void Player::Update(int time) {
   if (no_damage_time_left_ > 0) {
     no_damage_time_left_ -= time;
+  }
+
+  if (map_->IsKeyPressed(Key::kSpace) && player_part_ == nullptr) {
+    player_part_ = std::make_shared<Entity>(map_,
+                                            b2_dynamicBody,
+                                            GetPositionInPixels(),
+                                            QPolygon(bounding_rectangle_),
+                                            EntityType::kPlayer);
+    player_part_->SetVelocity(body_->GetLinearVelocity(), true);
+    map_->AddGameObject(player_part_);
+  }
+
+  if (player_part_ != nullptr
+      && !player_part_->GetBoundings().intersects(GetBoundings())) {
+    player_part_->SetEntityType(EntityType::kPlayerPart);
   }
 
   if (map_->IsKeyPressed(Key::kUp) && jumps_remaining_ > 0) {
@@ -51,8 +68,14 @@ void Player::Update(int time) {
                                     true);
 }
 
-void Player::BeginCollision(b2Fixture* fixture, EntityType,
+void Player::BeginCollision(b2Fixture* fixture,
+                            EntityType,
                             EntityType other_type) {
+  if (player_part_ != nullptr && other_type == EntityType::kPlayerPart) {
+    player_part_->MarkAsDeleted();
+    player_part_ = nullptr;
+  }
+
   if (fixture == bottom_sensor_) {
     jumps_remaining_ = kPlayerJumpCount;
   } else if (fixture == left_sensor_) {

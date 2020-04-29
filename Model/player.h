@@ -14,7 +14,8 @@ class Player : public Entity {
   ~Player() override = default;
 
   void Update(int time) override;
-  void BeginCollision(b2Fixture* fixture, EntityType my_type,
+  void BeginCollision(b2Fixture* fixture,
+                      EntityType my_type,
                       EntityType other_type) override;
   void EndCollision(b2Fixture* my_fixture) override;
 
@@ -43,6 +44,8 @@ class Player : public Entity {
   b2Fixture* bottom_sensor_ = nullptr;
   b2Fixture* left_sensor_ = nullptr;
   b2Fixture* right_sensor_ = nullptr;
+
+  std::shared_ptr<Entity> player_part_ = nullptr;
 };
 
 #endif  // MODEL_PLAYER_H_

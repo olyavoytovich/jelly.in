@@ -62,13 +62,16 @@ class Entity : public GameObject {
   void SetVelocity(b2Vec2 velocity, bool apply_once = false);
   void SetVelocity(b2Vec2 target_position, b2Vec2 current_position,
                    float speed, bool apply_once = false);
+  void SetEntityType(EntityType entity_type);
 
   void Update(int time) override;
 
   b2Body* GetB2Body() const override;
   QPoint GetPositionInPixels() const override;
+  QRect GetBoundings() const;
 
-  virtual void BeginCollision(b2Fixture* my_fixture, EntityType my_type,
+  virtual void BeginCollision(b2Fixture* my_fixture,
+                              EntityType my_type,
                               EntityType other_type);
   virtual void EndCollision(b2Fixture* my_fixture);
 
@@ -79,6 +82,7 @@ class Entity : public GameObject {
   b2Vec2 PixelsToMeters(QPoint vector) const;
 
   b2Fixture* CreateFixture(const b2Shape& shape);
+  void SetNoCollisionMask(uint16_t mask);
 
  protected:
   const float kEpsilon = 1e-5;

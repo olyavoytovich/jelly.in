@@ -15,7 +15,8 @@ enum class EntityType {
   kBullet = 2,
   kPatroller = 4,
   kShooter = 8,
-  kGround = 16
+  kGround = 16,
+  kPlayerPart = 32
 };
 
 class Map {
