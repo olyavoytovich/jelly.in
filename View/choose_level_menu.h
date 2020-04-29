@@ -1,5 +1,7 @@
-#ifndef CHOOSE_LEVEL_MENU_H_
-#define CHOOSE_LEVEL_MENU_H_
+#ifndef VIEW_CHOOSE_LEVEL_MENU_H_
+#define VIEW_CHOOSE_LEVEL_MENU_H_
+
+#include <memory>
 
 #include "menu.h"
 
