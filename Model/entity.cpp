@@ -68,7 +68,6 @@ void Entity::Draw(QPainter* painter) const {
         static_cast<int>(bounding_rectangle_.height() * map_->GetScale());
     painter->drawImage(rectangle_for_image.topLeft() * map_->GetScale(),
                        *(animator_->GetCurrentImage(width, height)));
-
   }
 }
 
