@@ -7,6 +7,8 @@ Player::Player(std::shared_ptr<Map> map,
     : Entity(std::move(map), b2_dynamicBody, body_position, rectangle,
              EntityType::kPlayer) {
   SetAnimator(std::move(animator));
+  animator_->RepeatInReverseOrder();
+
   QPolygon bottom_rectangle = QRect(rectangle.left() + 1,
                                     rectangle.bottom() - 1,
                                     rectangle.width() - 2,
@@ -35,6 +37,7 @@ Player::Player(std::shared_ptr<Map> map,
 }
 
 void Player::Update(int time) {
+  Entity::Update(time);
   if (no_damage_time_left_ > 0) {
     no_damage_time_left_ -= time;
   }
@@ -49,6 +52,7 @@ void Player::Update(int time) {
     clone_velocity.Normalize();
     clone_velocity *= kCloneSpeed;
     player_part_->SetVelocity(clone_velocity, true);
+    player_part_->SetAnimator(std::make_shared<Animator>(*animator_));
     map_->AddGameObject(player_part_);
   }
 
@@ -105,6 +109,7 @@ void Player::TakeDamage() {
   if (no_damage_time_left_ > 0) {
     return;
   }
+  animator_->Play();
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;
   if (current_health_ <= 0) {

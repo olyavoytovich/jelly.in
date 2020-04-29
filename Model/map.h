@@ -73,7 +73,9 @@ class Map {
   std::vector<std::shared_ptr<GameObject>> game_objects_to_add_;
   QImage map_image_;
   QImage scaled_map_image_;
-  double scale_;
+
+  double scale_ = 1;
+  QPoint shift_ = QPoint();
 
   std::vector<bool> is_key_pressed_;
   std::vector<bool> is_key_clamped_;
