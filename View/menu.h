@@ -1,9 +1,10 @@
-#ifndef MENU_H_
-#define MENU_H_
+#ifndef VIEW_MENU_H_
+#define VIEW_MENU_H_
 
 #include <QDialog>
 #include <QMouseEvent>
 #include <QPainter>
+#include <algorithm>
 #include <memory>
 #include <vector>
 
@@ -12,6 +13,7 @@
 
 class Menu : public QDialog {
   Q_OBJECT
+
  public:
   Menu(QRect boundary_rectangle, AbstractGameController *game_controller,
        QWidget *parent = nullptr);
@@ -51,4 +53,4 @@ class Menu : public QDialog {
   QPoint shift_;
 };
 
-#endif  // MENU_H_
+#endif  // VIEW_MENU_H_

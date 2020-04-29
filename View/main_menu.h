@@ -1,5 +1,5 @@
-#ifndef MAIN_MENU_H_
-#define MAIN_MENU_H_
+#ifndef VIEW_MAIN_MENU_H_
+#define VIEW_MAIN_MENU_H_
 
 #include <QApplication>
 #include <memory>
@@ -9,7 +9,8 @@
 
 class MainMenu : public Menu {
  public:
-  MainMenu(QRect boundary_rectangle,AbstractGameController *game_controller, QWidget *parent = nullptr);
+  MainMenu(QRect boundary_rectangle, AbstractGameController *game_controller,
+           QWidget *parent = nullptr);
 
   void PressedButton(std::shared_ptr<Button> button) override;
 
@@ -19,4 +20,4 @@ class MainMenu : public Menu {
   std::shared_ptr<Button> play_button_;
 };
 
-#endif  // MAIN_MENU_H_
+#endif  // VIEW_MAIN_MENU_H_

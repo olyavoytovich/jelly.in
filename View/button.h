@@ -1,5 +1,5 @@
-#ifndef BUTTON_H_
-#define BUTTON_H_
+#ifndef VIEW_BUTTON_H_
+#define VIEW_BUTTON_H_
 
 #include <QImage>
 #include <functional>
@@ -30,4 +30,4 @@ class Button {
   QImage current_image_;
 };
 
-#endif  // BUTTON_H_
+#endif  // VIEW_BUTTON_H_
