@@ -26,6 +26,8 @@ class Map {
   void Update(int time);
   void Draw(QPainter* painter);
 
+  double GetScale() const;
+
   void AddGameObject(std::shared_ptr<GameObject> object);
   void SetPlayerObject(std::shared_ptr<GameObject> player);
   void SetContactListener(std::shared_ptr<b2ContactListener> listener);
@@ -70,6 +72,7 @@ class Map {
   std::vector<std::shared_ptr<GameObject>> game_objects_to_add_;
   QImage map_image_;
   QImage scaled_map_image_;
+  double scale_;
 
   std::vector<bool> is_key_pressed_;
   std::vector<bool> is_key_clamped_;

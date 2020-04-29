@@ -5,8 +5,8 @@ Animator::Animator(std::shared_ptr<Animation> animation)
   frame_duration_ = animation_->GetFrameDuration(is_repeated_back_);
 }
 
-std::shared_ptr<QImage> Animator::GetCurrentImage() {
-  return animation_->GetCurrentFrame(current_frame_);
+std::shared_ptr<QImage> Animator::GetCurrentImage(int width, int height) {
+  return animation_->GetCurrentFrame(current_frame_, width, height);
 }
 
 void Animator::RepeatInReverseOrder() {

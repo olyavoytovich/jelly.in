@@ -136,7 +136,9 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
 
 void MapLoader::CreateAnimation(
     std::map<QString, std::shared_ptr<Animation>>* name_to_animation,
-    int frames_count, int animation_duration, const QString& animation_name) {
+    int frames_count,
+    int animation_duration,
+    const QString& animation_name) {
   if (name_to_animation->find(animation_name) != name_to_animation->end()) {
     return;
   }

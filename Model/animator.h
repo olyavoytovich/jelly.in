@@ -11,12 +11,14 @@ class Animator {
  public:
   explicit Animator(std::shared_ptr<Animation> animation_);
 
+  ~Animator() = default;
+
   void RepeatInReverseOrder();
   void LoopAnimation();
   void Play();
 
   void Update(int time);
-  std::shared_ptr<QImage> GetCurrentImage();
+  std::shared_ptr<QImage> GetCurrentImage(int width, int height);
 
  private:
   void Finish();

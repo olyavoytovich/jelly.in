@@ -62,12 +62,13 @@ void Entity::Draw(QPainter* painter) const {
   if (animator_ != nullptr) {
     QRect rectangle_for_image = bounding_rectangle_;
     rectangle_for_image.translate(GetPositionInPixels());
-    painter->drawImage(rectangle_for_image, *(animator_->GetCurrentImage()));
-  } else {
-    for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
-         fixture = fixture->GetNext()) {
-      DrawShape(painter, fixture);
-    }
+    int width =
+        static_cast<int>(bounding_rectangle_.width() * map_->GetScale());
+    int height =
+        static_cast<int>(bounding_rectangle_.height() * map_->GetScale());
+    painter->drawImage(rectangle_for_image.topLeft() * map_->GetScale(),
+                       *(animator_->GetCurrentImage(width, height)));
+
   }
 }
 

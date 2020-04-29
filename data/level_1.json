@@ -519,8 +519,8 @@
       ]
     },
     {
-      "x": 1648,
-      "y": 112,
+      "x": 1680,
+      "y": 80,
       "animation_duration": 300,
       "animation_name": "burdock",
       "bullet_animation_duration": 100,
@@ -535,16 +535,16 @@
       "type": "shooter",
       "way_point_size": 2,
       "name": "shooter3",
-      "width": 32,
-      "height": 32,
+      "width": 96,
+      "height": 96,
       "way_points": [
         {
-          "x": 1648,
-          "y": 112
+          "x": 1680,
+          "y": 80
         },
         {
           "x": 1808,
-          "y": 112
+          "y": 80
         }
       ]
     },
