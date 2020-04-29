@@ -40,9 +40,21 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                                 EntityType::kGround));
   }
 
+  std::map<QString, std::shared_ptr<Animation>> name_to_animation;
+
   QJsonArray dynamic_objects = json_main["dynamic_objects"].toArray();
   for (const auto& dynamic_object : dynamic_objects) {
     object = dynamic_object.toObject();
+    if (object["animation_name"].isNull()) {
+      continue;
+    }
+    QString animation_name = object["animation_name"].toString();
+    CreateAnimation(&name_to_animation,
+                    object["frames_count"].toInt(),
+                    object["animation_duration"].toInt(),
+                    animation_name);
+    auto animator =
+        std::make_shared<Animator>(name_to_animation[animation_name]);
 
     if (object["name"].toString() == "player") {
       QPoint position(object["x"].toInt(), object["y"].toInt());
@@ -52,7 +64,8 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                           Player::kPlayerHeight);
       map->SetPlayerObject(std::make_shared<Player>(map,
                                                     position,
-                                                    object_points));
+                                                    object_points,
+                                                    animator));
     }
 
     if (object["type"].isNull()) {
@@ -79,9 +92,20 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                                      object_position,
                                                      object_points,
                                                      way_points,
+                                                     animator,
                                                      object_speed));
     }
     if (object["type"].toString() == "shooter") {
+      QString
+          bullet_animation_name = object["bullet_animation_name"].toString();
+      CreateAnimation(&name_to_animation,
+                      object["bullet_frames_count"].toInt(),
+                      object["bullet_animation_duration"].toInt(),
+                      bullet_animation_name);
+
+      auto bullet_animator =
+          std::make_shared<Animator>(name_to_animation[bullet_animation_name]);
+
       BulletDirection bullet_direction = BulletDirection::kLeftRight;
       b2BodyType body_type = b2_dynamicBody;
       if (object["shoot_direction"].toString() == "down") {
@@ -91,6 +115,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       int shoot_period = object["shoot_period"].toInt();
       int bullet_speed = object["bullet_speed"].toInt();
       int bullet_radius = object["bullet_radius"].toInt();
+
       map->AddGameObject(std::make_shared<Shooter>(map,
                                                    body_type,
                                                    object_position,
@@ -100,9 +125,28 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                                    shoot_period,
                                                    bullet_speed,
                                                    bullet_radius,
+                                                   animator,
+                                                   bullet_animator,
                                                    object_speed));
     }
   }
 
   return map;
+}
+
+void MapLoader::CreateAnimation(
+    std::map<QString, std::shared_ptr<Animation>>* name_to_animation,
+    int frames_count,
+    int animation_duration,
+    const QString& animation_name) {
+  if (name_to_animation->find(animation_name) != name_to_animation->end()) {
+    return;
+  }
+  std::vector<std::shared_ptr<QImage>> frames;
+  for (int frame = 0; frame < frames_count; frame++) {
+    frames.emplace_back(std::make_shared<QImage>(
+        ":/images/" + animation_name + QString::number(frame) + ".png"));
+  }
+  (*name_to_animation)[animation_name] = std::make_shared<Animation>(
+      frames, animation_duration);
 }

@@ -45,21 +45,19 @@ void Map::Update(int time) {
 void Map::Draw(QPainter* painter) {
   painter->save();
 
-  double scale = std::max(
+  scale_ = std::max(
       static_cast<double>(painter->window().width()) / kVisibleSize.x(),
       static_cast<double>(painter->window().height()) / kVisibleSize.y());
 
   UpdateCameraPosition();
   painter->translate(
-      (painter->window().width() - kVisibleSize.x() * scale) / 2.0,
-      (painter->window().height() - kVisibleSize.y() * scale) / 2.0);
-  painter->translate(-current_camera_.topLeft() * scale);
+      (painter->window().width() - kVisibleSize.x() * scale_) / 2.0,
+      (painter->window().height() - kVisibleSize.y() * scale_) / 2.0);
+  painter->translate(-current_camera_.topLeft() * scale_);
 
-  UpdateImageScale(static_cast<int>(map_image_.width() * scale),
-                   static_cast<int>(map_image_.height() * scale));
+  UpdateImageScale(static_cast<int>(map_image_.width() * scale_),
+                   static_cast<int>(map_image_.height() * scale_));
   painter->drawImage(0, 0, scaled_map_image_);
-
-  painter->scale(scale, scale);
   painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
 
   for (const auto& object : game_objects_) {
@@ -70,6 +68,10 @@ void Map::Draw(QPainter* painter) {
   player_->Draw(painter);
 
   painter->restore();
+}
+
+double Map::GetScale() const {
+  return scale_;
 }
 
 void Map::AddGameObject(std::shared_ptr<GameObject> object) {

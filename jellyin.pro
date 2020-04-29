@@ -17,6 +17,8 @@ SOURCES += \
         View/main_menu.cpp \
         View/menu.cpp \
         main.cpp \
+        Model/animation.cpp \
+        Model/animator.cpp \
         Model/contact_listener.cpp \
         Model/entity.cpp \
         Model/game_object.cpp \
@@ -75,8 +77,9 @@ SOURCES += \
 
 HEADERS += \
     Controller/abstract_game_controller.h \
-    View/abstract_view.h \
     Controller/game_controller.h \
+    Model/animation.h \
+    Model/animator.h \
     Model/contact_listener.h \
     Model/entity.h \
     Model/game_object.h \
@@ -85,6 +88,7 @@ HEADERS += \
     Model/patroller.h \
     Model/player.h \
     Model/shooter.h \
+    View/abstract_view.h \
     View/button.h \
     View/choose_level_menu.h \
     View/main_menu.h \

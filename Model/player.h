@@ -4,13 +4,16 @@
 #include <memory>
 #include <utility>
 
+#include "animator.h"
 #include "entity.h"
 
 class Player : public Entity {
  public:
   Player(std::shared_ptr<Map> map,
          const QPoint& body_position,
-         const QRect& rectangle);
+         const QRect& rectangle,
+         std::shared_ptr<Animator> animator);
+
   ~Player() override = default;
 
   void Update(int time) override;
@@ -19,7 +22,7 @@ class Player : public Entity {
   void EndCollision(b2Fixture* my_fixture) override;
 
  public:
-  static const int kPlayerWidth = 20;
+  static const int kPlayerWidth = 30;
   static const int kPlayerHeight = 30;
 
  private:

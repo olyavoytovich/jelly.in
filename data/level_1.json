@@ -413,6 +413,9 @@
     {
       "x": 112,
       "y": 1168,
+      "animation_duration": 500,
+      "animation_name": "player",
+      "frames_count": 1,
       "name": "player",
       "width": 0,
       "height": 0
@@ -427,6 +430,9 @@
     {
       "x": 1280,
       "y": 544,
+      "animation_duration": 600,
+      "animation_name": "chestnut",
+      "frames_count": 7,
       "speed": 100,
       "type": "patroller",
       "way_point_size": 2,
@@ -447,8 +453,14 @@
     {
       "x": 1440,
       "y": 832,
+      "animation_duration": 200,
+      "animation_name": "cloud",
+      "bullet_animation_duration": 100,
+      "bullet_animation_name": "drop",
       "bullet_radius": 5,
       "bullet_speed": 300,
+      "frames_count": 10,
+      "bullet_frames_count": 1,
       "shoot_direction": "down",
       "shoot_period": 1000,
       "speed": 100,
@@ -471,8 +483,14 @@
     {
       "x": 704,
       "y": 288,
+      "animation_duration": 200,
+      "animation_name": "cloud",
+      "bullet_animation_duration": 100,
+      "bullet_animation_name": "drop",
       "bullet_radius": 5,
       "bullet_speed": 300,
+      "frames_count": 10,
+      "bullet_frames_count": 1,
       "shoot_direction": "down",
       "shoot_period": 1000,
       "speed": 100,
@@ -501,26 +519,62 @@
       ]
     },
     {
-      "x": 1648,
-      "y": 112,
+      "x": 1680,
+      "y": 80,
+      "animation_duration": 300,
+      "animation_name": "burdock",
+      "bullet_animation_duration": 100,
+      "bullet_animation_name": "thorn",
       "bullet_radius": 5,
       "bullet_speed": 300,
+      "frames_count": 5,
+      "bullet_frames_count": 1,
       "shoot_direction": "left_right",
       "shoot_period": 1000,
       "speed": 100,
       "type": "shooter",
       "way_point_size": 2,
       "name": "shooter3",
-      "width": 32,
-      "height": 32,
+      "width": 96,
+      "height": 96,
       "way_points": [
         {
-          "x": 1648,
-          "y": 112
+          "x": 1680,
+          "y": 80
         },
         {
           "x": 1808,
-          "y": 112
+          "y": 80
+        }
+      ]
+    },
+    {
+      "x": 624,
+      "y": 688,
+      "animation_duration": 300,
+      "animation_name": "burdock",
+      "bullet_animation_duration": 100,
+      "bullet_animation_name": "thorn",
+      "bullet_radius": 5,
+      "bullet_speed": 300,
+      "frames_count": 5,
+      "burdock_frame_count": 1,
+      "shoot_direction": "left_right",
+      "shoot_period": 1000,
+      "speed": 0,
+      "type": "shooter",
+      "way_point_size": 2,
+      "name": "shooter4",
+      "width": 96,
+      "height": 96,
+      "way_points": [
+        {
+          "x": 624,
+          "y": 688
+        },
+        {
+          "x": 384,
+          "y": 688
         }
       ]
     }
