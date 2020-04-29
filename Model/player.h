@@ -29,6 +29,7 @@ class Player : public Entity {
  private:
   const float kPlayerSpeed = 3;
   const float kPlayerJumpSpeed = 4;
+  const float kCloneSpeed = 5;
   const int kPlayerJumpCount = 2;
   const int kNoDamageTime = 1000;
   const int kMaxHealth = 3;

@@ -43,7 +43,10 @@ void Player::Update(int time) {
                                             GetPositionInPixels(),
                                             QPolygon(bounding_rectangle_),
                                             EntityType::kPlayer);
-    player_part_->SetVelocity(body_->GetLinearVelocity(), true);
+    b2Vec2 clone_velocity(body_->GetLinearVelocity().x, -kPlayerJumpSpeed);
+    clone_velocity.Normalize();
+    clone_velocity *= kCloneSpeed;
+    player_part_->SetVelocity(clone_velocity, true);
     map_->AddGameObject(player_part_);
   }
 
