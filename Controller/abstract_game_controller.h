@@ -5,12 +5,7 @@
 #include <QPainter>
 
 // kAnyKey должен быть в enum последним
-enum class Key {
-  kLeft,
-  kUp,
-  kRight,
-  kAnyKey
-};
+enum class Key { kLeft, kUp, kRight, kAnyKey };
 
 class AbstractGameController {
  public:
@@ -21,6 +16,9 @@ class AbstractGameController {
   virtual void PressKey(int key_code) = 0;
   virtual void ClampKey(int key_code) = 0;
   virtual void ReleaseKey(int key_code) = 0;
+
+  virtual void OpenChooseLevelMenu() = 0;
+  virtual void CloseChooseLevelMenu() = 0;
 };
 
 #endif  // CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_

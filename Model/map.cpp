@@ -29,17 +29,15 @@ void Map::Update(int time) {
       object->Update(time);
     }
   }
-  game_objects_.erase(std::remove_if(game_objects_.begin(),
-                                     game_objects_.end(),
-                                     [](const auto& object) {
-                                       return object == nullptr;
-                                     }), game_objects_.end());
+  game_objects_.erase(
+      std::remove_if(game_objects_.begin(), game_objects_.end(),
+                     [](const auto& object) { return object == nullptr; }),
+      game_objects_.end());
 
   // Функция Step() обновляет Box2D.
   // Первый передаваемый параметр - время. Время передается в миллисекундах, а
   // для Box2D время должно измеряться в секундах.
-  world_->Step(static_cast<float>(time / 1000.0),
-               kVelocityAccuracy,
+  world_->Step(static_cast<float>(time / 1000.0), kVelocityAccuracy,
                kPositionAccuracy);
   is_key_pressed_.assign(is_key_pressed_.size(), false);
 }
@@ -110,8 +108,8 @@ bool Map::IsKeyClamped(Key key) {
 }
 
 void Map::UpdateImageScale(int width, int height) {
-  if (scaled_map_image_.width() != width
-      && scaled_map_image_.height() != height) {
+  if (scaled_map_image_.width() != width &&
+      scaled_map_image_.height() != height) {
     scaled_map_image_ = map_image_.scaled(width, height, Qt::KeepAspectRatio);
   }
 }

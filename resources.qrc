@@ -1,8 +1,27 @@
 <RCC>
-    <qresource>
+    <qresource prefix="/">
         <file>data/test_map.json</file>
         <file>images/test_map.png</file>
         <file>data/level_1.json</file>
         <file>images/level_1.png</file>
+        <file>images/exit_first.png</file>
+        <file>images/exit_second.png</file>
+        <file>images/exit_third.png</file>
+        <file>images/backgroundBig.png</file>
+        <file>images/settings_first.png</file>
+        <file>images/settings_second.png</file>
+        <file>images/settings_third.png</file>
+        <file>images/play_first.png</file>
+        <file>images/play_second.png</file>
+        <file>images/play_third.png</file>
+        <file>images/background.png</file>
+        <file>images/back_arrow_first.png</file>
+        <file>images/back_arrow_second.png</file>
+        <file>images/back_arrow_third.png</file>
+        <file>images/choose_level_back.png</file>
+        <file>images/level_button_first.png</file>
+        <file>images/level_button_second.png</file>
+        <file>images/shoose_level_menu_background.png</file>
+        <file>images/main_menu_backgrond.png</file>
     </qresource>
 </RCC>

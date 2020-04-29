@@ -12,6 +12,9 @@
 #include "Model/patroller.h"
 #include "Model/shooter.h"
 #include "View/abstract_view.h"
+#include "View/choose_level_menu.h"
+#include "View/main_menu.h"
+#include "View/menu.h"
 #include "View/view.h"
 #include "abstract_game_controller.h"
 
@@ -26,11 +29,18 @@ class GameController : public AbstractGameController {
   void ClampKey(int key_code) override;
   void ReleaseKey(int key_code) override;
 
+  void OpenChooseLevelMenu() override;
+  void CloseChooseLevelMenu() override;
+
  private:
   Key GetKeyFromCode(int key_code);
 
  private:
   std::shared_ptr<View> view_;
+
+  std::shared_ptr<MainMenu> main_menu_;
+
+  std::shared_ptr<ChooseLevelMenu> choose_level_menu_;
 
   std::shared_ptr<Map> map_;
 };
