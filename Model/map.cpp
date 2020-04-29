@@ -134,4 +134,17 @@ void Map::UpdateCameraPosition() {
   if (-kPlayerBoundary.y() / 2 > target.y()) {
     current_camera_.translate(0, target.y() + kPlayerBoundary.y() / 2);
   }
+
+  if (current_camera_.left() < 0) {
+    current_camera_.moveLeft(0);
+  }
+  if (current_camera_.right() > map_image_.width()) {
+    current_camera_.moveRight(map_image_.width());
+  }
+  if (current_camera_.top() < 0) {
+    current_camera_.moveTop(0);
+  }
+  if (current_camera_.bottom() > map_image_.height()) {
+    current_camera_.moveBottom(map_image_.height());
+  }
 }

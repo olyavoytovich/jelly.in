@@ -30,7 +30,11 @@ Player::Player(std::shared_ptr<Map> map,
   right_sensor_->SetSensor(true);
 }
 
-void Player::Update(int) {
+void Player::Update(int time) {
+  if (no_damage_time_left_ > 0) {
+    no_damage_time_left_ -= time;
+  }
+
   if (map_->IsKeyPressed(Key::kUp) && jumps_remaining_ > 0) {
     jumps_remaining_--;
     body_->SetLinearVelocity(b2Vec2(body_->GetLinearVelocity().x, 0));
@@ -55,8 +59,9 @@ void Player::BeginCollision(b2Fixture* fixture, EntityType,
     left_collisions_++;
   } else if (fixture == right_sensor_) {
     right_collisions_++;
-  } else if (other_type == EntityType::kBullet) {
-    MarkAsDeleted();
+  } else if (other_type == EntityType::kBullet
+      || other_type == EntityType::kPatroller) {
+    TakeDamage();
   }
 }
 
@@ -65,5 +70,16 @@ void Player::EndCollision(b2Fixture* my_fixture) {
     left_collisions_--;
   } else if (my_fixture == right_sensor_) {
     right_collisions_--;
+  }
+}
+
+void Player::TakeDamage() {
+  if (no_damage_time_left_ > 0) {
+    return;
+  }
+  no_damage_time_left_ = kNoDamageTime;
+  current_health_--;
+  if (current_health_ <= 0) {
+    MarkAsDeleted();
   }
 }

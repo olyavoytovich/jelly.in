@@ -23,11 +23,19 @@ class Player : public Entity {
   static const int kPlayerHeight = 30;
 
  private:
+  void TakeDamage();
+
+ private:
   const float kPlayerSpeed = 3;
   const float kPlayerJumpSpeed = 4;
   const int kPlayerJumpCount = 2;
+  const int kNoDamageTime = 1000;
+  const int kMaxHealth = 3;
 
  private:
+  int current_health_ = kMaxHealth;
+  int no_damage_time_left_ = 0;
+
   int jumps_remaining_ = 0;
   int left_collisions_ = 0;
   int right_collisions_ = 0;
