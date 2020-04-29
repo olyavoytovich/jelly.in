@@ -18,6 +18,8 @@ file(GLOB box2d
         box2d/*/*.cpp)
 
 add_executable(jellyin main.cpp
+        Model/animation.cpp
+        Model/animator.cpp
         Controller/game_controller.cpp
         Model/contact_listener.cpp
         Model/entity.cpp
