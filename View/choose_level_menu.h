@@ -30,4 +30,4 @@ class ChooseLevelMenu : public Menu {
   std::shared_ptr<Button> tvelvth_level_button_;
 };
 
-#endif  // CHOOSE_LEVEL_MENU_H_
+#endif  // VIEW_CHOOSE_LEVEL_MENU_H_
