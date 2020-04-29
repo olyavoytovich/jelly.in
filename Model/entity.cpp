@@ -59,9 +59,15 @@ void Entity::Draw(QPainter* painter) const {
   // Fixture используется, чтобы прикрепить форму к телу для обнаружения
   // коллизий. Содержит необходимые для отрисовки геометрические данные,
   // кроме них - трение, фильтр коллизий и др.
-  for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
-       fixture = fixture->GetNext()) {
-    DrawShape(painter, fixture);
+  if (animator_ != nullptr) {
+    QRect rectangle_for_image = bounding_rectangle_;
+    rectangle_for_image.translate(GetPositionInPixels());
+    int width =
+        static_cast<int>(bounding_rectangle_.width() * map_->GetScale());
+    int height =
+        static_cast<int>(bounding_rectangle_.height() * map_->GetScale());
+    painter->drawImage(rectangle_for_image.topLeft() * map_->GetScale(),
+                       *(animator_->GetCurrentImage(width, height)));
   }
 }
 
@@ -126,6 +132,10 @@ b2CircleShape Entity::CreateCircleShape(int radius,
   return shape;
 }
 
+void Entity::SetAnimator(std::shared_ptr<Animator> animator) {
+  animator_ = std::move(animator);
+}
+
 void Entity::SetWayPoints(const std::vector<QPoint>& way_points) {
   way_points_.clear();
   if (way_points.empty()) {
@@ -180,7 +190,10 @@ void Entity::ApplyEntityType(b2Fixture* fixture) {
   fixture->SetFilterData(filter);
 }
 
-void Entity::Update(int) {
+void Entity::Update(int time) {
+  if (animator_ != nullptr) {
+    animator_->Update(time);
+  }
   if (way_points_.size() <= 1) {
     return;
   }

@@ -1,59 +1,76 @@
 #include "shooter.h"
 
-Shooter::Shooter(std::shared_ptr<Map> map, b2BodyType type,
-                 const QPoint& body_position, const QPolygon& polygon,
+Shooter::Shooter(std::shared_ptr<Map> map,
+                 b2BodyType type,
+                 const QPoint& body_position,
+                 const QPolygon& polygon,
                  const std::vector<QPoint>& way_points,
                  BulletDirection bullet_direction,
-                 int shoot_period, int bullet_speed,
-                 int bullet_radius, int speed)
+                 int shoot_period,
+                 int bullet_speed,
+                 int bullet_radius,
+                 std::shared_ptr<Animator> animator,
+                 std::shared_ptr<Animator> bullet_animator,
+                 int speed)
     : Entity(std::move(map), type, body_position, polygon,
              EntityType::kShooter),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
-      bullet_radius_(bullet_radius) {
+      bullet_radius_(bullet_radius),
+      bullet_animator_(std::move(bullet_animator)) {
   SetSpeed(speed);
+  SetAnimator(std::move(animator));
+  animator_->RepeatInReverseOrder();
   SetWayPoints(way_points);
 }
 
-Shooter::Shooter(std::shared_ptr<Map> map, b2BodyType type,
+Shooter::Shooter(std::shared_ptr<Map> map,
+                 b2BodyType type,
                  const QPoint& body_position,
-                 int radius, const std::vector<QPoint>& way_points,
+                 int radius,
+                 const std::vector<QPoint>& way_points,
                  BulletDirection bullet_direction,
-                 int shoot_period, int bullet_speed,
-                 int bullet_radius, int speed)
+                 int shoot_period,
+                 int bullet_speed,
+                 int bullet_radius,
+                 std::shared_ptr<Animator> animator,
+                 std::shared_ptr<Animator> bullet_animator,
+                 int speed)
     : Entity(std::move(map), type, body_position, radius, EntityType::kShooter),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
-      bullet_radius_(bullet_radius) {
+      bullet_radius_(bullet_radius),
+      bullet_animator_(std::move(bullet_animator)) {
   SetSpeed(speed);
+  SetAnimator(std::move(animator));
   SetWayPoints(way_points);
 }
 
-Shooter::Shooter(std::shared_ptr<Map> map, b2BodyType body_type,
+Shooter::Shooter(std::shared_ptr<Map> map,
+                 b2BodyType body_type,
                  const QPoint& body_position,
                  const std::vector<CircleShape>& circles,
                  const std::vector<PolygonShape>& polygons,
                  const std::vector<QPoint>& way_points,
                  BulletDirection bullet_direction,
-                 int shoot_period, int bullet_speed,
-                 int bullet_radius, int speed)
+                 int shoot_period,
+                 int bullet_speed,
+                 int bullet_radius,
+                 std::shared_ptr<Animator> animator,
+                 std::shared_ptr<Animator> bullet_animator,
+                 int speed)
     : Entity(std::move(map), body_type, body_position, circles, polygons,
              EntityType::kShooter),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
-      bullet_radius_(bullet_radius) {
+      bullet_radius_(bullet_radius),
+      bullet_animator_(std::move(bullet_animator)) {
   SetSpeed(speed);
+  SetAnimator(std::move(animator));
   SetWayPoints(way_points);
-}
-
-void Shooter::Draw(QPainter* painter) const {
-  Entity::Draw(painter);
-  for (const auto& bullet : bullets_) {
-    bullet->Draw(painter);
-  }
 }
 
 void Shooter::Update(int time) {
@@ -97,8 +114,10 @@ void Shooter::AddBullet(const QPoint& bullet_position) {
   bullets_.push_back(std::make_shared<Entity>(map_,
                                               b2_dynamicBody,
                                               bullet_position +
-                                              GetPositionInPixels(),
+                                                  GetPositionInPixels(),
                                               bullet_radius_,
                                               EntityType::kBullet));
+  bullets_.back()->SetAnimator(bullet_animator_);
+  animator_->Play();
   map_->AddGameObject(bullets_.back());
 }

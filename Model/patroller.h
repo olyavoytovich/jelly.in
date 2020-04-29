@@ -9,19 +9,30 @@
 
 class Patroller : public Entity {
  public:
-  Patroller(std::shared_ptr<Map> map, b2BodyType type,
-            const QPoint& body_position, const QPolygon& polygon,
-            const std::vector<QPoint>& way_points, int speed);
+  Patroller(std::shared_ptr<Map> map,
+            b2BodyType type,
+            const QPoint& body_position,
+            const QPolygon& polygon,
+            const std::vector<QPoint>& way_points,
+            std::shared_ptr<Animator> animator,
+            int speed);
 
-  Patroller(std::shared_ptr<Map> map, b2BodyType type,
-            const QPoint& body_position, int radius,
-            const std::vector<QPoint>& way_points, int speed);
+  Patroller(std::shared_ptr<Map> map,
+            b2BodyType type,
+            const QPoint& body_position,
+            int radius,
+            const std::vector<QPoint>& way_points,
+            std::shared_ptr<Animator> animator,
+            int speed);
 
-  Patroller(std::shared_ptr<Map> map, b2BodyType body_type,
+  Patroller(std::shared_ptr<Map> map,
+            b2BodyType body_type,
             const QPoint& body_position,
             const std::vector<CircleShape>& circles,
             const std::vector<PolygonShape>& polygons,
-            const std::vector<QPoint>& way_points, int speed);
+            const std::vector<QPoint>& way_points,
+            std::shared_ptr<Animator> animator,
+            int speed);
 
   ~Patroller() override = default;
 };

@@ -2,9 +2,11 @@
 
 Player::Player(std::shared_ptr<Map> map,
                const QPoint& body_position,
-               const QRect& rectangle)
+               const QRect& rectangle,
+               std::shared_ptr<Animator> animator)
     : Entity(std::move(map), b2_dynamicBody, body_position, rectangle,
              EntityType::kPlayer) {
+  SetAnimator(std::move(animator));
   QPolygon bottom_rectangle = QRect(rectangle.left() + 1,
                                     rectangle.bottom() - 1,
                                     rectangle.width() - 2,

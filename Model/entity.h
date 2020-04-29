@@ -6,6 +6,7 @@
 #include <utility>
 #include <vector>
 
+#include "animator.h"
 #include "game_object.h"
 #include "map.h"
 
@@ -28,13 +29,18 @@ struct CircleShape {
 class Entity : public GameObject {
  public:
   // Конструктор, создающий тело из одной формы - полигон.
-  Entity(std::shared_ptr<Map> map, b2BodyType type,
-         const QPoint& body_position, const QPolygon& polygon,
+  Entity(std::shared_ptr<Map> map,
+         b2BodyType type,
+         const QPoint& body_position,
+         const QPolygon& polygon,
          EntityType entity_type);
 
   // Конструктор, создающий тело из одной формы - круг.
-  Entity(std::shared_ptr<Map> map, b2BodyType type,
-         const QPoint& body_position, int radius, EntityType entity_type);
+  Entity(std::shared_ptr<Map> map,
+         b2BodyType type,
+         const QPoint& body_position,
+         int radius,
+         EntityType entity_type);
 
   // Конструктор, благодаря которому можно создать тело из нескольких форм со
   // своими локальными координатами. Третий параметр (body_position) - это
@@ -42,9 +48,13 @@ class Entity : public GameObject {
   // В каждой структуре хранятся данные о радиусе и о локальных координатах
   // данного круга. Пятый параметр так же вектор структур. В одной структуре
   // PolygonShape хранятся данные о форме QPolygon и о локальных координатах.
-  Entity(std::shared_ptr<Map> map, b2BodyType body_type,
-         const QPoint& body_position, const std::vector<CircleShape>& circles,
-         const std::vector<PolygonShape>& polygons, EntityType entity_type);
+  Entity(std::shared_ptr<Map> map,
+         b2BodyType body_type,
+         const QPoint& body_position,
+         const std::vector<CircleShape>& circles,
+         const std::vector<PolygonShape>& polygons,
+         EntityType entity_type);
+
 
   ~Entity() override = default;
 
@@ -57,6 +67,7 @@ class Entity : public GameObject {
   b2CircleShape CreateCircleShape(int radius,
                                   const QPoint& shape_position = {0, 0}) const;
 
+  void SetAnimator(std::shared_ptr<Animator> animator);
   void SetWayPoints(const std::vector<QPoint>& way_points);
   void SetSpeed(int speed);
   void SetVelocity(b2Vec2 velocity, bool apply_once = false);
@@ -105,6 +116,8 @@ class Entity : public GameObject {
   QRect bounding_rectangle_;
 
   std::shared_ptr<Map> map_;
+
+  std::shared_ptr<Animator> animator_ = nullptr;
 
  private:
   // Рисует формы в зависимости от типа их фигуры. Вторым параметром передается
