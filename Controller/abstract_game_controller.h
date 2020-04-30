@@ -23,7 +23,7 @@ class AbstractGameController {
   virtual void ReleaseKey(int key_code) = 0;
 
   virtual void OpenChooseLevelMenu() = 0;
-  virtual void CloseChooseLevelMenu() = 0;
+  virtual void CloseMainMenu() = 0;
 };
 
 #endif  // CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_

@@ -30,8 +30,8 @@ class GameController : public AbstractGameController {
   void ReleaseKey(int key_code) override;
 
   void OpenChooseLevelMenu() override;
-  void CloseChooseLevelMenu() override;
-
+  void CloseMainMenu() override;
+  void OpenMenu(const std::shared_ptr<Menu>& menu);
  private:
   Key GetKeyFromCode(int key_code);
 

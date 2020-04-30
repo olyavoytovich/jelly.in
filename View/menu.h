@@ -15,14 +15,15 @@ class Menu : public QDialog {
   Q_OBJECT
 
  public:
-  Menu(const QRect& boundary_rectangle, AbstractGameController* game_controller,
-       QWidget* parent = nullptr);
+  explicit Menu(AbstractGameController* game_controller,
+                QWidget* parent = nullptr);
   ~Menu() override = default;
 
  protected:
   virtual void PressedButton(const std::shared_ptr<Button>& button) = 0;
 
-  void AddButton(const std::shared_ptr<Button>& button);
+  std::shared_ptr<Button> CreateButton(const QString& name, int x, int y,
+                                       int width, int height);
 
  protected:
   QImage background_;

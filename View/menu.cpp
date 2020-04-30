@@ -1,18 +1,21 @@
 #include "menu.h"
 
-Menu::Menu(const QRect& boundary_rect,
-           AbstractGameController* game_controller,
-           QWidget* parent)
-    : QDialog(parent),
-      game_controller_(game_controller) {
-  setGeometry(boundary_rect);
+Menu::Menu(AbstractGameController* game_controller, QWidget* parent)
+    : QDialog(parent), game_controller_(game_controller) {
   setMouseTracking(true);
 }
 
-void Menu::AddButton(const std::shared_ptr<Button>& button) {
+std::shared_ptr<Button> Menu::CreateButton(const QString& name, int x, int y,
+                                           int width, int height) {
+  QImage button_flat(":/images/menu/" + name + "_first.png");
+  QImage button_pressed(":/images/menu/" + name + "_second.png");
+  QImage button_hovered(":/images/menu/" + name + "_third.png");
+  QRect boundary_rectangle(x, y, width, height);
+  auto button = std::make_shared<Button>(boundary_rectangle, button_flat,
+                                         button_pressed, button_hovered);
   buttons_.push_back(button);
+  return button;
 }
-
 void Menu::mousePressEvent(QMouseEvent* event) {
   if (event->button() != Qt::LeftButton) {
     return;
@@ -65,11 +68,10 @@ void Menu::resizeEvent(QResizeEvent* event) {
   scale_ =
       std::min(static_cast<double>(event->size().width()) / kVisiblePart.x(),
                static_cast<double>(event->size().height()) / kVisiblePart.y());
-  shift_ =
-      QPoint(static_cast<int>(
-                 (event->size().width() - kVisiblePart.x() * scale_) / 2.0),
-             static_cast<int>(
-                 (event->size().height() - kVisiblePart.y() * scale_) / 2.0));
+
+  shift_ = QPoint(event->size().width(), event->size().height());
+  shift_ = (shift_ / scale_ - kVisiblePart) / 2.0;
+
   scaled_background_ =
       background_.scaled(event->size(), Qt::KeepAspectRatioByExpanding);
 }

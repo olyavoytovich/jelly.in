@@ -8,9 +8,8 @@
 
 class ChooseLevelMenu : public Menu {
  public:
-  ChooseLevelMenu(const QRect& boundary_rectangle,
-                  AbstractGameController* game_controller,
-                  QWidget* parent = nullptr);
+  explicit ChooseLevelMenu(AbstractGameController* game_controller,
+                           QWidget* parent = nullptr);
   ~ChooseLevelMenu() override = default;
 
   void PressedButton(const std::shared_ptr<Button>& button) override;

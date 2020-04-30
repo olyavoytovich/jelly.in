@@ -145,7 +145,7 @@ void MapLoader::CreateAnimation(
   std::vector<std::shared_ptr<QImage>> frames;
   for (int frame = 0; frame < frames_count; frame++) {
     frames.emplace_back(std::make_shared<QImage>(
-        ":/images/" + animation_name + QString::number(frame) + ".png"));
+        ":/images/animation/" + animation_name + QString::number(frame) + ".png"));
   }
   (*name_to_animation)[animation_name] = std::make_shared<Animation>(
       frames, animation_duration);

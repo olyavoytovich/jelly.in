@@ -6,8 +6,10 @@
 
 class Button {
  public:
-  Button(const QRect& rectangle, const QImage& flat_image,
-         const QImage& pressed_image, const QImage& hovered_image);
+  Button(const QRect& rectangle,
+         const QImage& flat_image,
+         const QImage& pressed_image,
+         const QImage& hovered_image);
 
   QRect GetRectangle() const;
 
