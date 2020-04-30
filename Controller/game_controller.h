@@ -38,9 +38,7 @@ class GameController : public AbstractGameController {
  private:
   std::shared_ptr<View> view_;
 
-  std::shared_ptr<MainMenu> main_menu_;
-
-  std::shared_ptr<ChooseLevelMenu> choose_level_menu_;
+  std::shared_ptr<Menu> menu_ = nullptr;
 
   std::shared_ptr<Map> map_;
 };

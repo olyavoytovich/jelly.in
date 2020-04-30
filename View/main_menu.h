@@ -9,10 +9,12 @@
 
 class MainMenu : public Menu {
  public:
-  MainMenu(QRect boundary_rectangle, AbstractGameController *game_controller,
-           QWidget *parent = nullptr);
+  MainMenu(const QRect& boundary_rectangle,
+           AbstractGameController* game_controller,
+           QWidget* parent = nullptr);
+  ~MainMenu() override = default;
 
-  void PressedButton(std::shared_ptr<Button> button) override;
+  void PressedButton(const std::shared_ptr<Button>& button) override;
 
  private:
   std::shared_ptr<Button> exit_button_;

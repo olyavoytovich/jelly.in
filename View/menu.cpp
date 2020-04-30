@@ -1,65 +1,67 @@
 #include "menu.h"
 
-Menu::Menu(QRect boundary_rect, AbstractGameController *game_controller,
-           QWidget *parent)
-    : QDialog(parent), game_controller_(game_controller) {
+Menu::Menu(const QRect& boundary_rect,
+           AbstractGameController* game_controller,
+           QWidget* parent)
+    : QDialog(parent),
+      game_controller_(game_controller) {
   setGeometry(boundary_rect);
   setMouseTracking(true);
 }
 
-void Menu::AddButton(std::shared_ptr<Button> button) {
+void Menu::AddButton(const std::shared_ptr<Button>& button) {
   buttons_.push_back(button);
 }
 
-void Menu::mousePressEvent(QMouseEvent *event) {
+void Menu::mousePressEvent(QMouseEvent* event) {
   if (event->button() != Qt::LeftButton) {
     return;
   }
+  repaint();
 
   QPoint position = ((event->pos() - shift_) / scale_);
-  for (auto button : buttons_) {
+  for (const auto& button : buttons_) {
     if (button->GetRectangle().contains(position)) {
       button->Pressed();
-      was_pressed_ = button;
+      pressed_button_ = button;
       PressedButton(button);
       break;
     }
   }
-  repaint();
 }
 
-void Menu::mouseReleaseEvent(QMouseEvent *event) {
+void Menu::mouseReleaseEvent(QMouseEvent* event) {
   if (event->button() != Qt::LeftButton) {
     return;
   }
-
-  if (was_pressed_ != nullptr) {
-    was_pressed_->NotPressed();
-    was_pressed_ = nullptr;
-  }
   repaint();
+
+  if (pressed_button_ != nullptr) {
+    pressed_button_->NotPressed();
+    pressed_button_ = nullptr;
+  }
 }
 
-void Menu::mouseMoveEvent(QMouseEvent *event) {
+void Menu::mouseMoveEvent(QMouseEvent* event) {
   QPoint position = ((event->pos() - shift_) / scale_);
+  repaint();
 
-  if (was_covered_ != nullptr &&
-      !was_covered_->GetRectangle().contains(position)) {
-    was_covered_->NotHovered();
-    was_covered_ = nullptr;
+  if (hovered_button_ != nullptr &&
+      !hovered_button_->GetRectangle().contains(position)) {
+    hovered_button_->NotHovered();
+    hovered_button_ = nullptr;
   }
 
-  for (auto button : buttons_) {
+  for (const auto& button : buttons_) {
     if (button->GetRectangle().contains(position)) {
       button->Hovered();
-      was_covered_ = button;
+      hovered_button_ = button;
       break;
     }
   }
-  repaint();
 }
 
-void Menu::resizeEvent(QResizeEvent *event) {
+void Menu::resizeEvent(QResizeEvent* event) {
   scale_ =
       std::min(static_cast<double>(event->size().width()) / kVisiblePart.x(),
                static_cast<double>(event->size().height()) / kVisiblePart.y());
@@ -68,22 +70,22 @@ void Menu::resizeEvent(QResizeEvent *event) {
                  (event->size().width() - kVisiblePart.x() * scale_) / 2.0),
              static_cast<int>(
                  (event->size().height() - kVisiblePart.y() * scale_) / 2.0));
-  small_background_ =
-      big_background_.scaled(event->size(), Qt::KeepAspectRatioByExpanding);
+  scaled_background_ =
+      background_.scaled(event->size(), Qt::KeepAspectRatioByExpanding);
 }
 
-void Menu::paintEvent(QPaintEvent *) {
+void Menu::paintEvent(QPaintEvent*) {
   QPainter painter(this);
 
   // отрисовывается фоновая часть меню
-  painter.drawImage(QPoint(0, 0), small_background_);
+  painter.drawImage(QPoint(0, 0), scaled_background_);
 
   // отрисовывается основная часть меню
   painter.translate(shift_);
   painter.scale(scale_, scale_);
   painter.drawImage(QPoint(0, 0), main_part_);
 
-  for (auto button : buttons_) {
+  for (const auto& button : buttons_) {
     button->Draw(&painter);
   }
 }

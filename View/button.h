@@ -2,14 +2,14 @@
 #define VIEW_BUTTON_H_
 
 #include <QImage>
-#include <functional>
+#include <QPainter>
 
 class Button {
  public:
-  Button(QRect rectangle, QImage flat_image, QImage pressed_image,
-         QImage hovered_image);
+  Button(const QRect& rectangle, const QImage& flat_image,
+         const QImage& pressed_image, const QImage& hovered_image);
 
-  QRect GetRectangle();
+  QRect GetRectangle() const;
 
   void Draw(QPainter* painter);
 

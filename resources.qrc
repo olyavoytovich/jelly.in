@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource>
         <file>data/test_map.json</file>
         <file>images/test_map.png</file>
         <file>data/level_1.json</file>

@@ -5,7 +5,12 @@
 #include <QPainter>
 
 // kAnyKey должен быть в enum последним
-enum class Key { kLeft, kUp, kRight, kAnyKey };
+enum class Key {
+  kLeft,
+  kUp,
+  kRight,
+  kAnyKey
+};
 
 class AbstractGameController {
  public:

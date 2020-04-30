@@ -15,36 +15,37 @@ class Menu : public QDialog {
   Q_OBJECT
 
  public:
-  Menu(QRect boundary_rectangle, AbstractGameController *game_controller,
-       QWidget *parent = nullptr);
+  Menu(const QRect& boundary_rectangle, AbstractGameController* game_controller,
+       QWidget* parent = nullptr);
+  ~Menu() override = default;
 
  protected:
-  virtual void PressedButton(std::shared_ptr<Button> button) = 0;
+  virtual void PressedButton(const std::shared_ptr<Button>& button) = 0;
 
-  void AddButton(std::shared_ptr<Button> button);
+  void AddButton(const std::shared_ptr<Button>& button);
 
  protected:
-  QImage big_background_;
-  QImage small_background_;
+  QImage background_;
+  QImage scaled_background_;
   QImage main_part_;
 
-  AbstractGameController *game_controller_ = nullptr;
+  AbstractGameController* game_controller_ = nullptr;
 
  private:
-  void mousePressEvent(QMouseEvent *event) override;
-  void mouseReleaseEvent(QMouseEvent *event) override;
-  void mouseMoveEvent(QMouseEvent *event) override;
+  void mousePressEvent(QMouseEvent* event) override;
+  void mouseReleaseEvent(QMouseEvent* event) override;
+  void mouseMoveEvent(QMouseEvent* event) override;
 
-  void resizeEvent(QResizeEvent *) override;
-  void paintEvent(QPaintEvent *) override;
+  void resizeEvent(QResizeEvent*) override;
+  void paintEvent(QPaintEvent*) override;
 
  private:
   // Ширина и Высота основной части меню
   const QPoint kVisiblePart = QPoint(512, 288);
 
  private:
-  std::shared_ptr<Button> was_pressed_ = nullptr;
-  std::shared_ptr<Button> was_covered_ = nullptr;
+  std::shared_ptr<Button> pressed_button_ = nullptr;
+  std::shared_ptr<Button> hovered_button_ = nullptr;
 
   std::vector<std::shared_ptr<Button>> buttons_;
 
