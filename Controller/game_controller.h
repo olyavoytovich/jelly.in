@@ -31,7 +31,7 @@ class GameController : public AbstractGameController {
 
   void OpenChooseLevelMenu() override;
   void OpenMainMenu() override;
-  void OpenMenu(const std::shared_ptr<Menu>& menu);
+  void OpenMenu(std::shared_ptr<Menu> menu);
 
   void StartLevel(int level_number) override;
 

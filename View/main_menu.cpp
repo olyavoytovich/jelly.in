@@ -7,9 +7,7 @@ MainMenu::MainMenu(AbstractGameController* game_controller, QWidget* parent)
   scaled_background_ = background_;
 
   exit_button_ = CreateButton("exit", 416, 160, 32, 32);
-
   settings_button_ = CreateButton("settings", 32, 128, 32, 32);
-
   play_button_ = CreateButton("play", 224, 128, 64, 64);
 }
 

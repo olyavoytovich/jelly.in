@@ -2,8 +2,9 @@
 
 GameController::GameController()
     : view_(std::make_shared<View>(this)) {
-  auto menu = std::make_shared<MainMenu>(this);
-  OpenMenu(menu);
+  view_->show();
+  OpenMenu(std::make_shared<MainMenu>(this));
+  view_->hide();
 }
 
 void GameController::Update(int time) {
@@ -58,16 +59,14 @@ Key GameController::GetKeyFromCode(int key_code) {
 }
 
 void GameController::OpenChooseLevelMenu() {
-  auto menu = std::make_shared<ChooseLevelMenu>(this);
-  OpenMenu(menu);
+  OpenMenu(std::make_shared<ChooseLevelMenu>(this));
 }
 
 void GameController::OpenMainMenu() {
-  auto menu = std::make_shared<MainMenu>(this);
-  OpenMenu(menu);
+  OpenMenu(std::make_shared<MainMenu>(this));
 }
 
-void GameController::OpenMenu(const std::shared_ptr<Menu>& menu) {
+void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
   QRect boundary_rectangle;
   if (menu_ == nullptr) {
     boundary_rectangle = view_->geometry();
@@ -75,9 +74,9 @@ void GameController::OpenMenu(const std::shared_ptr<Menu>& menu) {
     boundary_rectangle = menu_->geometry();
     menu_->close();
   }
-  menu->setGeometry(boundary_rectangle);
-  menu_ = menu;
   if (menu != nullptr) {
+    menu->setGeometry(boundary_rectangle);
+    menu_ = std::move(menu);
     menu_->show();
   }
 }

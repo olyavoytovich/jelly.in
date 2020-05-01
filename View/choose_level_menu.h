@@ -17,7 +17,7 @@ class ChooseLevelMenu : public Menu {
  private:
   std::shared_ptr<Button> back_button_;
 
-  std::vector<std::shared_ptr<Button>> buttons_;
+  std::vector<std::shared_ptr<Button>> level_buttons_;
 };
 
 #endif  // VIEW_CHOOSE_LEVEL_MENU_H_

@@ -16,6 +16,7 @@ std::shared_ptr<Button> Menu::CreateButton(const QString& name, int x, int y,
   buttons_.push_back(button);
   return button;
 }
+
 void Menu::mousePressEvent(QMouseEvent* event) {
   if (event->button() != Qt::LeftButton) {
     return;
