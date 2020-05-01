@@ -19,6 +19,6 @@ void MainMenu::PressedButton(const std::shared_ptr<Button>& button) {
   } else if (button == play_button_) {
     game_controller_->OpenChooseLevelMenu();
   } else {
-    // start settings_menu
+    // переход в SettingsMenu
   }
 }

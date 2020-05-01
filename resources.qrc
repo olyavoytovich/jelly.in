@@ -49,5 +49,7 @@
         <file>images/animation/drop0.png</file>
         <file>images/animation/player0.png</file>
         <file>images/animation/thorn0.png</file>
+        <file>images/level_2.png</file>
+        <file>data/level_2.json</file>
     </qresource>
 </RCC>

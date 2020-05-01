@@ -30,17 +30,22 @@ class GameController : public AbstractGameController {
   void ReleaseKey(int key_code) override;
 
   void OpenChooseLevelMenu() override;
-  void CloseMainMenu() override;
+  void OpenMainMenu() override;
   void OpenMenu(const std::shared_ptr<Menu>& menu);
+
+  void StartLevel(int level_number) override;
+
  private:
   Key GetKeyFromCode(int key_code);
 
  private:
+  int level_number_ = 0;
+
   std::shared_ptr<View> view_;
 
   std::shared_ptr<Menu> menu_ = nullptr;
 
-  std::shared_ptr<Map> map_;
+  std::shared_ptr<Map> map_ = nullptr;
 };
 
 #endif  // CONTROLLER_GAME_CONTROLLER_H_

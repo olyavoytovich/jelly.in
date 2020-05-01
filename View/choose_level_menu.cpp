@@ -24,8 +24,12 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
 
 void ChooseLevelMenu::PressedButton(const std::shared_ptr<Button>& button) {
   if (button == back_button_) {
-    game_controller_->CloseMainMenu();
+    game_controller_->OpenMainMenu();
   } else {
-    // start level
+    for (int i = 0; i < static_cast<int>(buttons_.size()); i++) {
+      if (button == buttons_[i]) {
+        game_controller_->StartLevel(i + 1);
+      }
+    }
   }
 }

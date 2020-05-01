@@ -1,32 +1,44 @@
 #include "game_controller.h"
 
 GameController::GameController()
-    : view_(std::make_shared<View>(this)),
-      map_(MapLoader::LoadMap("level_1")) {
-  view_->show();
+    : view_(std::make_shared<View>(this)) {
   auto menu = std::make_shared<MainMenu>(this);
   OpenMenu(menu);
-  view_->hide();
 }
 
 void GameController::Update(int time) {
-  map_->Update(time);
+  if (map_ == nullptr) {
+    return;
+  }
   view_->repaint();
+  map_->Update(time);
 }
 
 void GameController::Draw(QPainter* painter) const {
+  if (map_ == nullptr) {
+    return;
+  }
   map_->Draw(painter);
 }
 
 void GameController::PressKey(int key_code) {
+  if (map_ == nullptr) {
+    return;
+  }
   map_->SetPressedKeyStatus(GetKeyFromCode(key_code), true);
 }
 
 void GameController::ClampKey(int key_code) {
+  if (map_ == nullptr) {
+    return;
+  }
   map_->SetClampedKeyStatus(GetKeyFromCode(key_code), true);
 }
 
 void GameController::ReleaseKey(int key_code) {
+  if (map_ == nullptr) {
+    return;
+  }
   Key key = GetKeyFromCode(key_code);
   map_->SetPressedKeyStatus(key, false);
   map_->SetClampedKeyStatus(key, false);
@@ -50,7 +62,7 @@ void GameController::OpenChooseLevelMenu() {
   OpenMenu(menu);
 }
 
-void GameController::CloseMainMenu() {
+void GameController::OpenMainMenu() {
   auto menu = std::make_shared<MainMenu>(this);
   OpenMenu(menu);
 }
@@ -68,4 +80,10 @@ void GameController::OpenMenu(const std::shared_ptr<Menu>& menu) {
   if (menu != nullptr) {
     menu_->show();
   }
+}
+
+void GameController::StartLevel(int level_number) {
+  level_number_ = level_number;
+  map_ = MapLoader::LoadMap("level_" + QString::number(level_number_));
+  view_->show();
 }

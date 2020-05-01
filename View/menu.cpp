@@ -47,17 +47,18 @@ void Menu::mouseReleaseEvent(QMouseEvent* event) {
 
 void Menu::mouseMoveEvent(QMouseEvent* event) {
   QPoint position = ((event->pos() - shift_) / scale_);
-  repaint();
 
   if (hovered_button_ != nullptr &&
       !hovered_button_->GetRectangle().contains(position)) {
     hovered_button_->NotHovered();
+    repaint();
     hovered_button_ = nullptr;
   }
 
   for (const auto& button : buttons_) {
     if (button->GetRectangle().contains(position)) {
       button->Hovered();
+      repaint();
       hovered_button_ = button;
       break;
     }
