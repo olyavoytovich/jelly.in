@@ -74,9 +74,9 @@ void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
     boundary_rectangle = menu_->geometry();
     menu_->close();
   }
-  if (menu != nullptr) {
-    menu->setGeometry(boundary_rectangle);
-    menu_ = std::move(menu);
+  menu_ = std::move(menu);
+  if (menu_ != nullptr) {
+    menu_->setGeometry(boundary_rectangle);
     menu_->show();
   }
 }
@@ -85,4 +85,6 @@ void GameController::StartLevel(int level_number) {
   level_number_ = level_number;
   map_ = MapLoader::LoadMap("level_" + QString::number(level_number_));
   view_->show();
+  menu_->close();
+  menu_ = nullptr;
 }
