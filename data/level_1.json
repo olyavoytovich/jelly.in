@@ -413,9 +413,9 @@
     {
       "x": 112,
       "y": 1168,
-      "animation_duration": 500,
+      "animation_duration": 200,
       "animation_name": "player",
-      "frames_count": 1,
+      "frames_count": 6,
       "name": "player",
       "width": 0,
       "height": 0

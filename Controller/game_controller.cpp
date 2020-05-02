@@ -39,6 +39,9 @@ Key GameController::GetKeyFromCode(int key_code) {
   if (key_code == Qt::Key_Up) {
     return Key::kUp;
   }
+  if (key_code == Qt::Key_Space) {
+    return Key::kSpace;
+  }
   return Key::kAnyKey;
 }
 
