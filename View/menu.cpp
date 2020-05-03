@@ -1,9 +1,7 @@
 #include "menu.h"
 
 Menu::Menu(AbstractGameController* game_controller, QWidget* parent)
-    : QWidget(parent), game_controller_(game_controller) {
-  setMouseTracking(true);
-}
+    : QWidget(parent), game_controller_(game_controller) {}
 
 void Menu::resizeEvent(QResizeEvent* event) {
   QWidget::resizeEvent(event);

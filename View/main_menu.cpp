@@ -6,8 +6,6 @@ MainMenu::MainMenu(AbstractGameController* game_controller, QWidget* parent)
       settings_button_(
           new Button(std::make_shared<ImageSet>("settings"), this)),
       play_button_(new Button(std::make_shared<ImageSet>("play"), this)) {
-  auto img = std::make_shared<QImage>(":/images/menu/exit_first.png");
-
   background_ = QImage(":/images/menu/big_background.png");
   main_part_ = QImage(":/images/menu/main_menu.png");
   scaled_background_ = background_;

@@ -16,7 +16,10 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
   auto level_image_set = std::make_shared<ImageSet>("level_button");
   for (int i = 0; i < 12; i++) {
     level_buttons_.emplace_back(new Button(level_image_set, this));
-    connect(back_button_, &QPushButton::clicked, this, [&]() {
+  }
+
+  for (int i = 0; i < 2; i++) {
+    connect(level_buttons_[i], &QPushButton::clicked, this, [&, i]() {
       game_controller_->StartLevel(QString::number(i + 1));
     });
   }
@@ -25,8 +28,7 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
 void ChooseLevelMenu::resizeEvent(QResizeEvent* event) {
   Menu::resizeEvent(event);
 
-  int i = 0;
-  for (int pos_y = 1; pos_y <= 5; pos_y += 2) {
+  for (int pos_y = 1, i = 0; pos_y <= 5; pos_y += 2) {
     for (int pos_x = 3; pos_x <= 12; pos_x += 3, i++) {
       level_buttons_[i]->setGeometry(PositionRectangle(pos_x, pos_y, 2, 1));
     }

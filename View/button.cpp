@@ -1,8 +1,5 @@
 #include "button.h"
 
-#include <QDebug>
-#include <utility>
-
 ImageSet::ImageSet(const QString& name) {
   flat = QImage(":/images/menu/" + name + "_first.png");
   clicked = QImage(":/images/menu/" + name + "_second.png");
@@ -60,7 +57,9 @@ void Button::mouseReleaseEvent(QMouseEvent* event) {
   QPushButton::mouseReleaseEvent(event);
 }
 
-void Button::resizeEvent(QResizeEvent*) { repaint(); }
+void Button::resizeEvent(QResizeEvent*) {
+  repaint();
+}
 
 void Button::enterEvent(QEvent*) {
   status_ = Status::kHovered;

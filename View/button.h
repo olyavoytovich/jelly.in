@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QPushButton>
 #include <memory>
+#include <utility>
 
 struct ImageSet {
   explicit ImageSet(const QString& name);
@@ -34,7 +35,12 @@ class Button : public QPushButton {
   void leaveEvent(QEvent* event) override;
 
  private:
-  enum class Status { kFlat, kClicked, kHovered } status_;
+  enum class Status {
+    kFlat,
+    kClicked,
+    kHovered
+  } status_;
+
   std::shared_ptr<ImageSet> image_set_;
 };
 

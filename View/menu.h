@@ -37,7 +37,7 @@ class Menu : public QWidget {
   const QPoint kVisiblePart = QPoint(4096, 2304);
 
   double scale_ = 1;
-  QPoint shift_;
+  QPoint shift_ = QPoint(0, 0);
 };
 
 #endif  // VIEW_MENU_H_

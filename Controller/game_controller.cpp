@@ -76,4 +76,5 @@ void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
 void GameController::StartLevel(const QString& level_number) {
   level_number_ = level_number.toInt();
   map_ = MapLoader::LoadMap("level_" + level_number);
+  menu_ = nullptr;
 }
