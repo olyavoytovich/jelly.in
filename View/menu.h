@@ -12,7 +12,7 @@
 #include "button.h"
 
 class Menu : public QWidget {
- Q_OBJECT
+  Q_OBJECT
 
  public:
   explicit Menu(AbstractGameController* game_controller,
