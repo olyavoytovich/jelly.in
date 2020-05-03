@@ -1,5 +1,7 @@
 #include "map_loader.h"
 
+#include <QDebug>
+
 std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QFile input_file(":/data/" + map_name + ".json");
 
@@ -33,11 +35,17 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       object_points =
           QRect(0, 0, object["width"].toInt(), object["height"].toInt());
     }
+    EntityType entity_type;
+    if (object["type"].isNull()) {
+      entity_type = EntityType::kGround;
+    } else {
+      entity_type = EntityType::kSpikes;
+    }
     map->AddGameObject(std::make_shared<Entity>(map,
                                                 b2_staticBody,
                                                 object_position,
                                                 object_points,
-                                                EntityType::kGround));
+                                                entity_type));
   }
 
   std::map<QString, std::shared_ptr<Animation>> name_to_animation;
@@ -87,13 +95,24 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
     int object_speed = object["speed"].toInt();
 
     if (object["type"].toString() == "patroller") {
-      map->AddGameObject(std::make_shared<Patroller>(map,
-                                                     b2_dynamicBody,
-                                                     object_position,
-                                                     object_points,
-                                                     way_points,
-                                                     animator,
-                                                     object_speed));
+      if (!object["ellipse"].isNull()) {
+        int radius = object["width"].toInt() / 2;
+        map->AddGameObject(std::make_shared<Patroller>(map,
+                                                       b2_dynamicBody,
+                                                       object_position,
+                                                       radius,
+                                                       way_points,
+                                                       animator,
+                                                       object_speed));
+      } else {
+        map->AddGameObject(std::make_shared<Patroller>(map,
+                                                       b2_dynamicBody,
+                                                       object_position,
+                                                       object_points,
+                                                       way_points,
+                                                       animator,
+                                                       object_speed));
+      }
     }
     if (object["type"].toString() == "shooter") {
       QString
@@ -116,6 +135,14 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       int bullet_speed = object["bullet_speed"].toInt();
       int bullet_radius = object["bullet_radius"].toInt();
 
+      EntityType shooter_type;
+      if (animation_name == "sunflower") {
+        shooter_type = EntityType::kSunflower;
+      } else if (animation_name == "cloud") {
+        shooter_type = EntityType::kCloud;
+      } else {
+        shooter_type = EntityType::kBurdock;
+      }
       map->AddGameObject(std::make_shared<Shooter>(map,
                                                    body_type,
                                                    object_position,
@@ -127,10 +154,10 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                                    bullet_radius,
                                                    animator,
                                                    bullet_animator,
+                                                   shooter_type,
                                                    object_speed));
     }
   }
-
   return map;
 }
 

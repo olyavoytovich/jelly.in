@@ -34,7 +34,15 @@
         <file>images/chestnut4.png</file>
         <file>images/chestnut5.png</file>
         <file>images/chestnut6.png</file>
+        <file>images/sunflower0.png</file>
+        <file>images/sunflower1.png</file>
+        <file>images/sunflower2.png</file>
+        <file>images/sunflower3.png</file>
+        <file>images/sunflower4.png</file>
+        <file>images/sunflower5.png</file>
+        <file>images/sunflower6.png</file>
         <file>images/drop0.png</file>
+        <file>images/seed0.png</file>
         <file>images/thorn0.png</file>
     </qresource>
 </RCC>

@@ -13,10 +13,13 @@
 enum class EntityType {
   kPlayer = 1,
   kBullet = 2,
-  kPatroller = 4,
-  kShooter = 8,
-  kGround = 16,
-  kPlayerPart = 32
+  kChestnut = 4,
+  kCloud = 8,
+  kBurdock = 16,
+  kSunflower = 32,
+  kGround = 64,
+  kPlayerPart = 128,
+  kSpikes = 256
 };
 
 class Map {

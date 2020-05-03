@@ -92,7 +92,8 @@ void Player::BeginCollision(b2Fixture* fixture,
   } else if (fixture == right_sensor_) {
     right_collisions_++;
   } else if (other_type == EntityType::kBullet
-      || other_type == EntityType::kPatroller) {
+      || other_type == EntityType::kChestnut
+      || other_type == EntityType::kSpikes) {
     TakeDamage();
   }
 }
