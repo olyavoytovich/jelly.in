@@ -29,11 +29,13 @@ void Map::Update(int time) {
       object->Update(time);
     }
   }
-  game_objects_.erase(std::remove_if(game_objects_.begin(),
-                                     game_objects_.end(),
-                                     [](const auto& object) {
-                                       return object == nullptr;
-                                     }), game_objects_.end());
+  game_objects_.erase(
+      std::remove_if(game_objects_.begin(),
+                     game_objects_.end(),
+                     [](const auto& object) {
+                       return object == nullptr;
+                     }),
+      game_objects_.end());
 
   // Функция Step() обновляет Box2D.
   // Первый передаваемый параметр - время. Время передается в миллисекундах, а

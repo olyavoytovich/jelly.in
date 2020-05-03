@@ -12,6 +12,9 @@
 #include "Model/patroller.h"
 #include "Model/shooter.h"
 #include "View/abstract_view.h"
+#include "View/choose_level_menu.h"
+#include "View/main_menu.h"
+#include "View/menu.h"
 #include "View/view.h"
 #include "abstract_game_controller.h"
 
@@ -26,13 +29,24 @@ class GameController : public AbstractGameController {
   void ClampKey(int key_code) override;
   void ReleaseKey(int key_code) override;
 
+  void OpenChooseLevelMenu() override;
+  void OpenMainMenu() override;
+  void OpenMenu(std::shared_ptr<Menu> menu);
+
+  void StartLevel(const QString& level_number) override;
+
  private:
   Key GetKeyFromCode(int key_code);
 
  private:
+  int level_number_ = 0;
+
   std::shared_ptr<View> view_;
 
-  std::shared_ptr<Map> map_;
+  // Указатель на открытое в данный момент меню
+  std::shared_ptr<Menu> menu_ = nullptr;
+
+  std::shared_ptr<Map> map_ = nullptr;
 };
 
 #endif  // CONTROLLER_GAME_CONTROLLER_H_

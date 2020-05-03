@@ -3,6 +3,7 @@
 View::View(AbstractGameController* game_controller)
     : game_controller_(game_controller) {
   this->resize(800, 600);
+  this->setMinimumSize(400, 300);
   timer_id_ = startTimer(kFrameInterval);
 }
 
