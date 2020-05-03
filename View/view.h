@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QPaintEvent>
 #include <QTimer>
+#include <QVBoxLayout>
 
 #include "Controller/abstract_game_controller.h"
 #include "View/abstract_view.h"
@@ -14,15 +15,16 @@ class View : public QMainWindow, public AbstractView {
 
  public:
   explicit View(AbstractGameController* game_controller);
-  ~View() override = default;
 
+  ~View() override = default;
  private:
   void paintEvent(QPaintEvent*) override;
   void timerEvent(QTimerEvent* event) override;
   void keyPressEvent(QKeyEvent* event) override;
-  void keyReleaseEvent(QKeyEvent* event) override;
 
+  void keyReleaseEvent(QKeyEvent* event) override;
  private:
+
   const int kFrameInterval = 16;
 
  private:

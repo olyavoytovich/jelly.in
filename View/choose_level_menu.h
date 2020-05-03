@@ -12,12 +12,12 @@ class ChooseLevelMenu : public Menu {
                            QWidget* parent = nullptr);
   ~ChooseLevelMenu() override = default;
 
-  void PressedButton(const std::shared_ptr<Button>& button) override;
+ private:
+  void resizeEvent(QResizeEvent* event) override;
 
  private:
-  std::shared_ptr<Button> back_button_;
-
-  std::vector<std::shared_ptr<Button>> level_buttons_;
+  Button* back_button_;
+  std::vector<Button*> level_buttons_;
 };
 
 #endif  // VIEW_CHOOSE_LEVEL_MENU_H_

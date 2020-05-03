@@ -11,8 +11,8 @@
 #include "Controller/abstract_game_controller.h"
 #include "button.h"
 
-class Menu : public QDialog {
-  Q_OBJECT
+class Menu : public QWidget {
+ Q_OBJECT
 
  public:
   explicit Menu(AbstractGameController* game_controller,
@@ -20,38 +20,23 @@ class Menu : public QDialog {
   ~Menu() override = default;
 
  protected:
-  virtual void PressedButton(const std::shared_ptr<Button>& button) = 0;
-
-  std::shared_ptr<Button> CreateButton(const QString& name, int x, int y,
-                                       int width, int height);
-
- protected:
   QImage background_;
   QImage scaled_background_;
   QImage main_part_;
-
-  AbstractGameController* game_controller_ = nullptr;
-
- private:
-  void mousePressEvent(QMouseEvent* event) override;
-  void mouseReleaseEvent(QMouseEvent* event) override;
-  void mouseMoveEvent(QMouseEvent* event) override;
+  QImage scaled_main_part_;
 
   void resizeEvent(QResizeEvent*) override;
   void paintEvent(QPaintEvent*) override;
 
+  QRect PositionRectangle(int x, int y, int width, int height);
+
+  AbstractGameController* game_controller_ = nullptr;
+
  private:
   // Ширина и Высота основной части меню
-  const QPoint kVisiblePart = QPoint(512, 288);
+  const QPoint kVisiblePart = QPoint(4096, 2304);
 
- private:
-  std::shared_ptr<Button> pressed_button_ = nullptr;
-  std::shared_ptr<Button> hovered_button_ = nullptr;
-
-  std::vector<std::shared_ptr<Button>> buttons_;
-
-  double scale_;
-
+  double scale_ = 1;
   QPoint shift_;
 };
 

@@ -1,35 +1,41 @@
 #ifndef VIEW_BUTTON_H_
 #define VIEW_BUTTON_H_
 
-#include <QImage>
+#include <QObject>
+#include <QPaintEvent>
 #include <QPainter>
+#include <QPushButton>
+#include <memory>
 
-class Button {
+struct ImageSet {
+  explicit ImageSet(const QString& name);
+
+  QImage flat;
+  QImage clicked;
+  QImage hovered;
+
+  QImage flat_scaled;
+  QImage clicked_scaled;
+  QImage hovered_scaled;
+};
+
+class Button : public QPushButton {
  public:
-  Button(const QRect& rectangle,
-         const QImage& flat_image,
-         const QImage& pressed_image,
-         const QImage& hovered_image);
-
-  QRect GetRectangle() const;
-
-  void Draw(QPainter* painter);
-
-  void Pressed();
-  void NotPressed();
-
-  void Hovered();
-  void NotHovered();
+  explicit Button(std::shared_ptr<ImageSet> image_set,
+                  QWidget* parent = nullptr);
+  ~Button() override = default;
 
  private:
-  QRect boundary_rectangle_;
+  void paintEvent(QPaintEvent* event) override;
+  void mousePressEvent(QMouseEvent* event) override;
+  void mouseReleaseEvent(QMouseEvent* event) override;
+  void resizeEvent(QResizeEvent* event) override;
+  void enterEvent(QEvent* event) override;
+  void leaveEvent(QEvent* event) override;
 
-  bool is_hovered_ = false;
-
-  QImage flat_image_;
-  QImage pressed_image_;
-  QImage hovered_image_;
-  QImage current_image_;
+ private:
+  enum class Status { kFlat, kClicked, kHovered } status_;
+  std::shared_ptr<ImageSet> image_set_;
 };
 
 #endif  // VIEW_BUTTON_H_

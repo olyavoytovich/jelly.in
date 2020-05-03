@@ -2,34 +2,36 @@
 
 ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
                                  QWidget* parent)
-    : Menu(game_controller, parent) {
+    : Menu(game_controller, parent),
+      back_button_(new Button(std::make_shared<ImageSet>("back_arrow"), this)) {
   background_ = QImage(":/images/menu/big_background.png");
-  main_part_ = QImage(":/images/menu/shoose_level_menu_background.png");
+  main_part_ = QImage(":/images/menu/choose_level_menu.png");
   scaled_background_ = background_;
+  scaled_main_part_ = main_part_;
 
-  back_button_ = CreateButton("back_arrow", 32, 32, 32, 32);
+  connect(back_button_, &QPushButton::clicked, this, [&]() {
+    game_controller_->OpenMainMenu();
+  });
 
-  int pos_x = 0;
-  int pos_y = -1;
-  for (int i = 1; i <= 12; i++) {
-    pos_x += 3;
-    if (i % 4 == 1) {
-      pos_y += 2;
-      pos_x = 3;
-    }
-    auto button = CreateButton("level_button", pos_x * 32, pos_y * 32, 64, 32);
-    level_buttons_.push_back(button);
+  auto level_image_set = std::make_shared<ImageSet>("level_button");
+  for (int i = 0; i < 12; i++) {
+    level_buttons_.emplace_back(new Button(level_image_set, this));
+    connect(back_button_, &QPushButton::clicked, this, [&]() {
+      game_controller_->StartLevel(QString::number(i + 1));
+    });
   }
 }
 
-void ChooseLevelMenu::PressedButton(const std::shared_ptr<Button>& button) {
-  if (button == back_button_) {
-    game_controller_->OpenMainMenu();
-  } else {
-    for (int i = 0; i < static_cast<int>(level_buttons_.size()); i++) {
-      if (button == level_buttons_[i]) {
-        game_controller_->StartLevel(i + 1);
-      }
+void ChooseLevelMenu::resizeEvent(QResizeEvent* event) {
+  Menu::resizeEvent(event);
+
+  int i = 0;
+  for (int pos_y = 1; pos_y <= 5; pos_y += 2) {
+    for (int pos_x = 3; pos_x <= 12; pos_x += 3, i++) {
+      level_buttons_[i]->setGeometry(PositionRectangle(pos_x, pos_y, 2, 1));
     }
   }
+
+  back_button_->setGeometry(PositionRectangle(1, 1, 1, 1));
+  repaint();
 }

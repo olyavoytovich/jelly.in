@@ -11,6 +11,7 @@
         <file>images/menu/exit_first.png</file>
         <file>images/menu/exit_second.png</file>
         <file>images/menu/exit_third.png</file>
+        <file>images/menu/main_menu.png</file>
         <file>images/menu/main_menu_backgrond.png</file>
         <file>images/menu/settings_first.png</file>
         <file>images/menu/settings_second.png</file>
@@ -18,6 +19,7 @@
         <file>images/menu/back_arrow_first.png</file>
         <file>images/menu/back_arrow_second.png</file>
         <file>images/menu/back_arrow_third.png</file>
+        <file>images/menu/choose_level_menu.png</file>
         <file>images/menu/shoose_level_menu_background.png</file>
         <file>images/menu/level_button_first.png</file>
         <file>images/menu/level_button_second.png</file>

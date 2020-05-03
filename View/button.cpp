@@ -1,43 +1,75 @@
 #include "button.h"
 
-Button::Button(const QRect& rectangle,
-               const QImage& flat_image,
-               const QImage& pressed_image,
-               const QImage& hovered_image)
-    : boundary_rectangle_(rectangle),
-      flat_image_(flat_image),
-      pressed_image_(pressed_image),
-      hovered_image_(hovered_image),
-      current_image_(flat_image) {}
+#include <QDebug>
+#include <utility>
 
-QRect Button::GetRectangle() const {
-  return boundary_rectangle_;
+ImageSet::ImageSet(const QString& name) {
+  flat = QImage(":/images/menu/" + name + "_first.png");
+  clicked = QImage(":/images/menu/" + name + "_second.png");
+  hovered = QImage(":/images/menu/" + name + "_third.png");
+
+  flat_scaled = flat;
+  clicked_scaled = clicked;
+  hovered_scaled = hovered;
 }
 
-void Button::Draw(QPainter* painter) {
-  painter->drawImage(boundary_rectangle_, current_image_);
+Button::Button(std::shared_ptr<ImageSet> image_set, QWidget* parent)
+    : QPushButton(parent),
+      status_(Status::kFlat),
+      image_set_(std::move(image_set)) {
+  setMouseTracking(true);
 }
 
-void Button::Pressed() {
-  current_image_ = pressed_image_;
+void Button::paintEvent(QPaintEvent*) {
+  QPainter painter(this);
+  if (rect() != image_set_->flat_scaled.rect()) {
+    image_set_->flat_scaled = image_set_->flat.scaled(rect().size());
+    image_set_->clicked_scaled = image_set_->clicked.scaled(rect().size());
+    image_set_->hovered_scaled = image_set_->hovered.scaled(rect().size());
+  }
+
+  switch (status_) {
+    case Status::kFlat: {
+      painter.drawImage(QPoint(0, 0), image_set_->flat_scaled);
+      break;
+    }
+    case Status::kClicked: {
+      painter.drawImage(QPoint(0, 0), image_set_->clicked_scaled);
+      break;
+    }
+    case Status::kHovered: {
+      painter.drawImage(QPoint(0, 0), image_set_->hovered_scaled);
+      break;
+    }
+  }
 }
 
-void Button::NotPressed() {
-  if (!is_hovered_) {
-    current_image_ = flat_image_;
+void Button::mousePressEvent(QMouseEvent* event) {
+  status_ = Status::kClicked;
+  repaint();
+  QPushButton::mousePressEvent(event);
+}
+
+void Button::mouseReleaseEvent(QMouseEvent* event) {
+  if (underMouse()) {
+    status_ = Status::kHovered;
   } else {
-    current_image_ = hovered_image_;
+    status_ = Status::kFlat;
   }
+  repaint();
+  QPushButton::mouseReleaseEvent(event);
 }
 
-void Button::Hovered() {
-  current_image_ = hovered_image_;
-  is_hovered_ = true;
+void Button::resizeEvent(QResizeEvent*) { repaint(); }
+
+void Button::enterEvent(QEvent*) {
+  status_ = Status::kHovered;
+  repaint();
 }
 
-void Button::NotHovered() {
-  if (current_image_ != pressed_image_) {
-    current_image_ = flat_image_;
+void Button::leaveEvent(QEvent*) {
+  if (status_ != Status::kClicked) {
+    status_ = Status::kFlat;
   }
-  is_hovered_ = false;
+  repaint();
 }

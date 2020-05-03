@@ -1,10 +1,10 @@
 #include "game_controller.h"
 
 GameController::GameController()
-    : view_(std::make_shared<View>(this)) {
+    : view_(std::make_shared<View>(this)),
+      menu_(std::make_shared<MainMenu>(this)) {
   view_->show();
-  OpenMenu(std::make_shared<MainMenu>(this));
-  view_->hide();
+  view_->setCentralWidget(menu_.get());
 }
 
 void GameController::Update(int time) {
@@ -67,24 +67,13 @@ void GameController::OpenMainMenu() {
 }
 
 void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
-  QRect boundary_rectangle;
-  if (menu_ == nullptr) {
-    boundary_rectangle = view_->geometry();
-  } else {
-    boundary_rectangle = menu_->geometry();
-    menu_->close();
-  }
   menu_ = std::move(menu);
   if (menu_ != nullptr) {
-    menu_->setGeometry(boundary_rectangle);
-    menu_->show();
+    view_->setCentralWidget(menu_.get());
   }
 }
 
-void GameController::StartLevel(int level_number) {
-  level_number_ = level_number;
-  map_ = MapLoader::LoadMap("level_" + QString::number(level_number_));
-  view_->show();
-  menu_->close();
-  menu_ = nullptr;
+void GameController::StartLevel(const QString& level_number) {
+  level_number_ = level_number.toInt();
+  map_ = MapLoader::LoadMap("level_" + level_number);
 }

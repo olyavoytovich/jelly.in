@@ -2,6 +2,7 @@
 #define VIEW_MAIN_MENU_H_
 
 #include <QApplication>
+#include <QHBoxLayout>
 #include <memory>
 
 #include "choose_level_menu.h"
@@ -13,12 +14,13 @@ class MainMenu : public Menu {
                     QWidget* parent = nullptr);
   ~MainMenu() override = default;
 
-  void PressedButton(const std::shared_ptr<Button>& button) override;
+ private:
+  void resizeEvent(QResizeEvent* event) override;
 
  private:
-  std::shared_ptr<Button> exit_button_;
-  std::shared_ptr<Button> settings_button_;
-  std::shared_ptr<Button> play_button_;
+  Button* exit_button_;
+  Button* settings_button_;
+  Button* play_button_;
 };
 
 #endif  // VIEW_MAIN_MENU_H_

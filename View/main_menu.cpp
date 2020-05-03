@@ -1,22 +1,31 @@
 #include "main_menu.h"
 
 MainMenu::MainMenu(AbstractGameController* game_controller, QWidget* parent)
-    : Menu(game_controller, parent) {
-  background_ = QImage(":/images/menu/big_background.png");
-  main_part_ = QImage(":/images/menu/main_menu_backgrond.png");
-  scaled_background_ = background_;
+    : Menu(game_controller, parent),
+      exit_button_(new Button(std::make_shared<ImageSet>("exit"), this)),
+      settings_button_(
+          new Button(std::make_shared<ImageSet>("settings"), this)),
+      play_button_(new Button(std::make_shared<ImageSet>("play"), this)) {
+  auto img = std::make_shared<QImage>(":/images/menu/exit_first.png");
 
-  exit_button_ = CreateButton("exit", 416, 160, 32, 32);
-  settings_button_ = CreateButton("settings", 32, 128, 32, 32);
-  play_button_ = CreateButton("play", 224, 128, 64, 64);
+  background_ = QImage(":/images/menu/big_background.png");
+  main_part_ = QImage(":/images/menu/main_menu.png");
+  scaled_background_ = background_;
+  scaled_main_part_ = main_part_;
+
+  connect(play_button_, &QPushButton::clicked, this, [&]() {
+    game_controller_->OpenChooseLevelMenu();
+  });
+
+  connect(exit_button_, &QPushButton::clicked, this, [&]() {
+    qApp->exit();
+  });
 }
 
-void MainMenu::PressedButton(const std::shared_ptr<Button>& button) {
-  if (button == exit_button_) {
-    qApp->exit();
-  } else if (button == play_button_) {
-    game_controller_->OpenChooseLevelMenu();
-  } else {
-    // переход в SettingsMenu
-  }
+void MainMenu::resizeEvent(QResizeEvent* event) {
+  Menu::resizeEvent(event);
+
+  play_button_->setGeometry(PositionRectangle(7, 4, 2, 2));
+  exit_button_->setGeometry(PositionRectangle(13, 5, 1, 1));
+  settings_button_->setGeometry(PositionRectangle(2, 4, 1, 1));
 }
