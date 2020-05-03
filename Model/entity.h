@@ -55,7 +55,6 @@ class Entity : public GameObject {
          const std::vector<PolygonShape>& polygons,
          EntityType entity_type);
 
-
   ~Entity() override = default;
 
   // Отрисовывает все формы тела.
@@ -135,6 +134,9 @@ class Entity : public GameObject {
  private:
   const float kBodyDensity = 1;
   const float kPixelsPerMeter = 100;
+
+  const float kSunflowerWidthPercent = 2.0;
+  const float kSunflowerHeightPercent = 4.4;
 
  private:
   b2Vec2 target_velocity = {0, 0};

@@ -33,13 +33,15 @@ void ContactListener::ProcessContact(b2Contact* contact, bool contact_begin) {
 Entity* ContactListener::GetEntityFromFixture(b2Fixture* fixture,
                                               EntityType entity_type) {
   switch (entity_type) {
-    case EntityType::kPatroller: {
+    case EntityType::kChestnut: {
       return static_cast<Patroller*>(fixture->GetBody()->GetUserData());
     }
     case EntityType::kPlayer: {
       return static_cast<Player*>(fixture->GetBody()->GetUserData());
     }
-    case EntityType::kShooter: {
+    case EntityType::kSunflower:
+    case EntityType::kBurdock:
+    case EntityType::kCloud: {
       return static_cast<Shooter*>(fixture->GetBody()->GetUserData());
     }
     default: {

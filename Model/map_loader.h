@@ -7,6 +7,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
+#include <iostream>
 #include <map>
 #include <memory>
 #include <vector>

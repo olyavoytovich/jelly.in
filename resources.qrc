@@ -1,9 +1,21 @@
 <RCC>
     <qresource>
-        <file>data/test_map.json</file>
         <file>data/level_1.json</file>
         <file>images/level_1.png</file>
-        <file>images/animation/back_arrow_first.png</file>
+        <file>images/animation/player0.png</file>
+        <file>images/animation/player1.png</file>
+        <file>images/animation/player2.png</file>
+        <file>images/animation/player3.png</file>
+        <file>images/animation/player4.png</file>
+        <file>images/animation/player5.png</file>
+        <file>images/animation/sunflower0.png</file>
+        <file>images/animation/sunflower1.png</file>
+        <file>images/animation/sunflower2.png</file>
+        <file>images/animation/sunflower3.png</file>
+        <file>images/animation/sunflower4.png</file>
+        <file>images/animation/sunflower5.png</file>
+        <file>images/animation/sunflower6.png</file>
+        <file>images/animation/seed0.png</file>
         <file>images/menu/play_first.png</file>
         <file>images/menu/play_second.png</file>
         <file>images/menu/play_third.png</file>

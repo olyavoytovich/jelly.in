@@ -11,9 +11,9 @@ Shooter::Shooter(std::shared_ptr<Map> map,
                  int bullet_radius,
                  std::shared_ptr<Animator> animator,
                  std::shared_ptr<Animator> bullet_animator,
+                 EntityType entity_type,
                  int speed)
-    : Entity(std::move(map), type, body_position, polygon,
-             EntityType::kShooter),
+    : Entity(std::move(map), type, body_position, polygon, entity_type),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
@@ -36,8 +36,9 @@ Shooter::Shooter(std::shared_ptr<Map> map,
                  int bullet_radius,
                  std::shared_ptr<Animator> animator,
                  std::shared_ptr<Animator> bullet_animator,
+                 EntityType entity_type,
                  int speed)
-    : Entity(std::move(map), type, body_position, radius, EntityType::kShooter),
+    : Entity(std::move(map), type, body_position, radius, entity_type),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
@@ -60,9 +61,10 @@ Shooter::Shooter(std::shared_ptr<Map> map,
                  int bullet_radius,
                  std::shared_ptr<Animator> animator,
                  std::shared_ptr<Animator> bullet_animator,
+                 EntityType entity_type,
                  int speed)
     : Entity(std::move(map), body_type, body_position, circles, polygons,
-             EntityType::kShooter),
+             entity_type),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
@@ -79,45 +81,46 @@ void Shooter::Update(int time) {
   if (last_shoot_time_ < shoot_period_) {
     return;
   }
-  if (way_points_.size() <= 1) {
-    return;
-  }
   last_shoot_time_ = 0;
-  int bullets_amount = bounding_rectangle_.width() / 3 / bullet_radius_;
-  if (bullets_.size() > 50) {
-    for (int i = 0; i <= bullets_amount; i++) {
-      bullets_[i]->MarkAsDeleted();
-    }
-    bullets_.erase(bullets_.begin(), bullets_.begin() + bullets_amount + 1);
-  }
   if (bullet_direction_ == BulletDirection::kLeftRight) {
-    if (way_points_[way_point_index_].x - body_->GetPosition().x >= 0) {
-      AddBullet(QPoint(bounding_rectangle_.right() + bullet_radius_, 0));
-    } else {
-      AddBullet(QPoint(bounding_rectangle_.left() - bullet_radius_, 0));
+    if (way_points_.size() <= 1) {
+      return;
     }
-    bullets_.back()->SetVelocity(way_points_[way_point_index_],
-                                 body_->GetPosition(),
-                                 bullet_speed_, true);
+
+    if (way_points_[way_point_index_].x - body_->GetPosition().x >= 0) {
+      std::shared_ptr<Entity> bullet =
+          CreateBullet(QPoint(bounding_rectangle_.right() + bullet_radius_, 0));
+      bullet->SetVelocity(way_points_[way_point_index_],
+                          body_->GetPosition(),
+                          bullet_speed_, true);
+    } else {
+      std::shared_ptr<Entity> bullet =
+          CreateBullet(QPoint(bounding_rectangle_.left() - bullet_radius_, 0));
+      bullet->SetVelocity(way_points_[way_point_index_],
+                          body_->GetPosition(),
+                          bullet_speed_, true);
+    }
   } else {
+    int bullets_amount = bounding_rectangle_.width() / 3 / bullet_radius_;
     for (int i = 0; i <= bullets_amount; i++) {
       QPoint bullet_position
           (bounding_rectangle_.left() + bullet_radius_ * i * 3,
            bounding_rectangle_.bottom() + bullet_radius_);
-      AddBullet(bullet_position);
-      bullets_.back()->SetVelocity(b2Vec2(0, bullet_speed_), true);
+      std::shared_ptr<Entity> bullet = CreateBullet(bullet_position);
+      bullet->SetVelocity(b2Vec2(0, bullet_speed_), true);
     }
   }
 }
 
-void Shooter::AddBullet(const QPoint& bullet_position) {
-  bullets_.push_back(std::make_shared<Entity>(map_,
-                                              b2_dynamicBody,
-                                              bullet_position +
-                                                  GetPositionInPixels(),
-                                              bullet_radius_,
-                                              EntityType::kBullet));
-  bullets_.back()->SetAnimator(bullet_animator_);
+std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
+  auto bullet = std::make_shared<Entity>(map_,
+                                         b2_dynamicBody,
+                                         bullet_position +
+                                             GetPositionInPixels(),
+                                         bullet_radius_,
+                                         EntityType::kBullet);
+  bullet->SetAnimator(bullet_animator_);
+  map_->AddGameObject(bullet);
   animator_->Play();
-  map_->AddGameObject(bullets_.back());
+  return bullet;
 }

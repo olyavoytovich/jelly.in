@@ -27,6 +27,7 @@ class Shooter : public Entity {
           int bullet_radius,
           std::shared_ptr<Animator> animator,
           std::shared_ptr<Animator> bullet_animator,
+          EntityType entity_type,
           int speed = 0);
 
   Shooter(std::shared_ptr<Map> map,
@@ -40,6 +41,7 @@ class Shooter : public Entity {
           int bullet_radius,
           std::shared_ptr<Animator> animator,
           std::shared_ptr<Animator> bullet_animator,
+          EntityType entity_type,
           int speed = 0);
 
   Shooter(std::shared_ptr<Map> map,
@@ -54,6 +56,7 @@ class Shooter : public Entity {
           int bullet_radius,
           std::shared_ptr<Animator> animator,
           std::shared_ptr<Animator> bullet_animator,
+          EntityType entity_type,
           int speed = 0);
 
   ~Shooter() override = default;
@@ -61,12 +64,10 @@ class Shooter : public Entity {
   void Update(int time) override;
 
  private:
-  void AddBullet(const QPoint& bullet_position);
+  std::shared_ptr<Entity> CreateBullet(const QPoint& bullet_position);
 
  private:
   BulletDirection bullet_direction_;
-
-  std::vector<std::shared_ptr<Entity>> bullets_;
 
   // Время, которое прошло с начала прошлого выстрела пули
   int last_shoot_time_ = 0;

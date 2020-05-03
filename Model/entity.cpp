@@ -60,12 +60,15 @@ void Entity::Draw(QPainter* painter) const {
   // коллизий. Содержит необходимые для отрисовки геометрические данные,
   // кроме них - трение, фильтр коллизий и др.
   if (animator_ != nullptr) {
-    QRect rectangle_for_image = bounding_rectangle_;
-    rectangle_for_image.translate(GetPositionInPixels());
+    QRect rectangle_for_image = GetBoundings();
     int width =
         static_cast<int>(bounding_rectangle_.width() * map_->GetScale());
     int height =
         static_cast<int>(bounding_rectangle_.height() * map_->GetScale());
+    if (entity_type_ == EntityType::kSunflower) {
+      width = static_cast<int>(width * kSunflowerWidthPercent);
+      height = static_cast<int>(height * kSunflowerHeightPercent);
+    }
     painter->drawImage(rectangle_for_image.topLeft() * map_->GetScale(),
                        *(animator_->GetCurrentImage(width, height)));
   }
