@@ -131,12 +131,20 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       int bullet_speed = object["bullet_speed"].toInt();
       int bullet_radius = object["bullet_radius"].toInt();
 
-      EntityType shooter_type = EntityType::kBurdock;
+      EntityType shooter_type = EntityType::kDefault;
       if (animation_name == "sunflower") {
         shooter_type = EntityType::kSunflower;
       } else if (animation_name == "cloud") {
         shooter_type = EntityType::kCloud;
+      } else if (animation_name == "burdock"){
+        shooter_type = EntityType::kBurdock;
       }
+
+      if (shooter_type == EntityType::kDefault) {
+        std::cout << "Error!";
+        return nullptr;
+      }
+
       map->AddGameObject(std::make_shared<Shooter>(map,
                                                    body_type,
                                                    object_position,

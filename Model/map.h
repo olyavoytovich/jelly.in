@@ -19,7 +19,8 @@ enum class EntityType {
   kSunflower = 32,
   kGround = 64,
   kPlayerPart = 128,
-  kSpikes = 256
+  kSpikes = 256,
+  kDefault
 };
 
 class Map {

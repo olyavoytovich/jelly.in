@@ -7,10 +7,11 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QString>
+#include <iostream>
 #include <map>
 #include <memory>
-#include <vector>
 
+#include <vector>
 #include "Controller/abstract_game_controller.h"
 #include "animation.h"
 #include "animator.h"
