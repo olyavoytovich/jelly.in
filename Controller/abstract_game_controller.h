@@ -22,6 +22,11 @@ class AbstractGameController {
   virtual void PressKey(int key_code) = 0;
   virtual void ClampKey(int key_code) = 0;
   virtual void ReleaseKey(int key_code) = 0;
+
+  virtual void OpenChooseLevelMenu() = 0;
+  virtual void OpenMainMenu() = 0;
+
+  virtual void StartLevel(const QString& level_number) = 0;
 };
 
 #endif  // CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_

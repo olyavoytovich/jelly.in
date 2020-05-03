@@ -3,16 +3,14 @@
 Animation::Animation(std::vector<std::shared_ptr<QImage>> frames,
                      int duration)
     : frames_(std::move(frames)),
-      duration_(duration) {
-  scaled_frames_.resize(frames_.size());
+      duration_(duration), scaled_frames_(frames_.size()) {
   for (int i = 0; i < frames_.size(); i++) {
     scaled_frames_[i] = std::make_shared<QImage>(*frames_[i]);
   }
 }
 
-std::shared_ptr<QImage> Animation::GetCurrentFrame(int index,
-                                                   int width,
-                                                   int height) {
+std::shared_ptr<QImage> Animation::GetCurrentFrame(
+    int index, int width, int height) {
   if (scaled_frames_[index]->width() != width
       && scaled_frames_[index]->height() != height) {
     for (int i = 0; i < frames_.size(); i++) {

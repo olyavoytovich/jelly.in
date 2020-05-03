@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QPaintEvent>
 #include <QTimer>
+#include <QVBoxLayout>
 
 #include "Controller/abstract_game_controller.h"
 #include "View/abstract_view.h"

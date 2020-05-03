@@ -23,13 +23,13 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
     QPolygon object_points;
     QPoint object_position = QPoint(object["x"].toInt(), object["y"].toInt());
     if (!object["polygon"].isNull()) {
-      // Add a polygon
+      // Добавляет полигон
       for (const auto& point : object["polygon"].toArray()) {
         point_obj = point.toObject();
         object_points << QPoint(point_obj["x"].toInt(), point_obj["y"].toInt());
       }
     } else {
-      // Add a rectangle
+      // Добавляет прямоугольник
       object_points =
           QRect(0, 0, object["width"].toInt(), object["height"].toInt());
     }
@@ -174,7 +174,8 @@ void MapLoader::CreateAnimation(
   std::vector<std::shared_ptr<QImage>> frames;
   for (int frame = 0; frame < frames_count; frame++) {
     frames.emplace_back(std::make_shared<QImage>(
-        ":/images/" + animation_name + QString::number(frame) + ".png"));
+        ":/images/animation/" + animation_name + QString::number(frame)
+            + ".png"));
   }
   (*name_to_animation)[animation_name] = std::make_shared<Animation>(
       frames, animation_duration);

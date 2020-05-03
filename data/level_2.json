@@ -1,0 +1,29 @@
+{
+  "solids": [
+    {
+      "x": 1184,
+      "y": 576,
+      "width": 352,
+      "height": 96
+    }
+  ],
+  "dynamic_objects": [
+    {
+      "x": 1296,
+      "y": 520,
+      "animation_duration": 500,
+      "animation_name": "player",
+      "frames_count": 1,
+      "name": "player",
+      "width": 0,
+      "height": 0
+    },
+    {
+      "x": 1488,
+      "y": 552,
+      "name": "exit",
+      "width": 0,
+      "height": 0
+    }
+  ]
+}
