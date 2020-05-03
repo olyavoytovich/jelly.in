@@ -141,7 +141,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       }
 
       if (shooter_type == EntityType::kDefault) {
-        std::cout << "Error!";
+        std::cout << "Error loading animation " << animation_name.toStdString();
         return nullptr;
       }
 
