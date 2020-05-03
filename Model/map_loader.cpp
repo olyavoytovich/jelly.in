@@ -136,7 +136,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
         shooter_type = EntityType::kSunflower;
       } else if (animation_name == "cloud") {
         shooter_type = EntityType::kCloud;
-      } else if (animation_name == "burdock"){
+      } else if (animation_name == "burdock") {
         shooter_type = EntityType::kBurdock;
       }
 
