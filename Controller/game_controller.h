@@ -43,7 +43,7 @@ class GameController : public AbstractGameController {
 
   std::shared_ptr<View> view_;
 
-  // Указатель на открытое в даный момент меню
+  // Указатель на открытое в данный момент меню
   std::shared_ptr<Menu> menu_ = nullptr;
 
   std::shared_ptr<Map> map_ = nullptr;

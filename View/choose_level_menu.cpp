@@ -28,9 +28,11 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
 void ChooseLevelMenu::resizeEvent(QResizeEvent* event) {
   Menu::resizeEvent(event);
 
-  for (int pos_y = 1, i = 0; pos_y <= 5; pos_y += 2) {
-    for (int pos_x = 3; pos_x <= 12; pos_x += 3, i++) {
+  int i = 0;
+  for (int pos_y = 1; pos_y <= 5; pos_y += 2) {
+    for (int pos_x = 3; pos_x <= 12; pos_x += 3) {
       level_buttons_[i]->setGeometry(PositionRectangle(pos_x, pos_y, 2, 1));
+      i++;
     }
   }
 
