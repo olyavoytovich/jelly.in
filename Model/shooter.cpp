@@ -13,8 +13,7 @@ Shooter::Shooter(std::shared_ptr<Map> map,
                  std::shared_ptr<Animator> bullet_animator,
                  EntityType entity_type,
                  int speed)
-    : Entity(std::move(map), type, body_position, polygon,
-             entity_type),
+    : Entity(std::move(map), type, body_position, polygon, entity_type),
       bullet_direction_(bullet_direction),
       shoot_period_(shoot_period),
       bullet_speed_(PixelsToMeters(bullet_speed)),
@@ -125,4 +124,3 @@ std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
   animator_->Play();
   return bullet;
 }
-

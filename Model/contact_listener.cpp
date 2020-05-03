@@ -32,15 +32,20 @@ void ContactListener::ProcessContact(b2Contact* contact, bool contact_begin) {
 
 Entity* ContactListener::GetEntityFromFixture(b2Fixture* fixture,
                                               EntityType entity_type) {
-  if (entity_type == EntityType::kChestnut) {
-    return static_cast<Patroller*>(fixture->GetBody()->GetUserData());
-  } else if (entity_type == EntityType::kPlayer) {
-    return static_cast<Player*>(fixture->GetBody()->GetUserData());
-  } else if (entity_type == EntityType::kBurdock
-      || entity_type == EntityType::kCloud
-      || entity_type == EntityType::kSunflower) {
-    return static_cast<Shooter*>(fixture->GetBody()->GetUserData());
-  } else {
-    return static_cast<Entity*>(fixture->GetBody()->GetUserData());
+  switch (entity_type) {
+    case EntityType::kChestnut: {
+      return static_cast<Patroller*>(fixture->GetBody()->GetUserData());
+    }
+    case EntityType::kPlayer: {
+      return static_cast<Player*>(fixture->GetBody()->GetUserData());
+    }
+    case EntityType::kSunflower:
+    case EntityType::kBurdock:
+    case EntityType::kCloud: {
+      return static_cast<Shooter*>(fixture->GetBody()->GetUserData());
+    }
+    default: {
+      return static_cast<Entity*>(fixture->GetBody()->GetUserData());
+    }
   }
 }

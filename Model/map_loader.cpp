@@ -1,7 +1,5 @@
 #include "map_loader.h"
 
-#include <QDebug>
-
 std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QFile input_file(":/data/" + map_name + ".json");
 
@@ -35,10 +33,8 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       object_points =
           QRect(0, 0, object["width"].toInt(), object["height"].toInt());
     }
-    EntityType entity_type;
-    if (object["type"].isNull()) {
-      entity_type = EntityType::kGround;
-    } else {
+    EntityType entity_type = EntityType::kGround;
+    if (!object["type"].isNull()) {
       entity_type = EntityType::kSpikes;
     }
     map->AddGameObject(std::make_shared<Entity>(map,
@@ -135,13 +131,11 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       int bullet_speed = object["bullet_speed"].toInt();
       int bullet_radius = object["bullet_radius"].toInt();
 
-      EntityType shooter_type;
+      EntityType shooter_type = EntityType::kBurdock;
       if (animation_name == "sunflower") {
         shooter_type = EntityType::kSunflower;
       } else if (animation_name == "cloud") {
         shooter_type = EntityType::kCloud;
-      } else {
-        shooter_type = EntityType::kBurdock;
       }
       map->AddGameObject(std::make_shared<Shooter>(map,
                                                    body_type,
