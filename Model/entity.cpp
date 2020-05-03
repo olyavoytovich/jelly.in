@@ -175,6 +175,21 @@ void Entity::SetVelocity(b2Vec2 target_position,
   SetVelocity(velocity, apply_once);
 }
 
+void Entity::SetEntityType(EntityType entity_type) {
+  entity_type_ = entity_type;
+  for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
+       fixture = fixture->GetNext()) {
+    ApplyEntityType(fixture);
+  }
+}
+
+void Entity::ApplyEntityType(b2Fixture* fixture) {
+  fixture->SetUserData(static_cast<void*>(&entity_type_));
+  b2Filter filter = fixture->GetFilterData();
+  filter.categoryBits = static_cast<int>(entity_type_);
+  fixture->SetFilterData(filter);
+}
+
 void Entity::Update(int time) {
   if (animator_ != nullptr) {
     animator_->Update(time);
@@ -221,11 +236,17 @@ b2Vec2 Entity::PixelsToMeters(QPoint vector) const {
 
 b2Fixture* Entity::CreateFixture(const b2Shape& shape) {
   b2Fixture* fixture = body_->CreateFixture(&shape, kBodyDensity);
-  fixture->SetUserData(static_cast<void*>(&entity_type_));
-  b2Filter filter;
-  filter.categoryBits = static_cast<int>(entity_type_);
-  fixture->SetFilterData(filter);
+  ApplyEntityType(fixture);
   return fixture;
+}
+
+void Entity::SetNoCollisionMask(uint16_t mask) {
+  for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
+       fixture = fixture->GetNext()) {
+    b2Filter filter = fixture->GetFilterData();
+    filter.maskBits = ~mask;
+    fixture->SetFilterData(filter);
+  }
 }
 
 b2Body* Entity::GetB2Body() const {
@@ -278,7 +299,12 @@ QPoint Entity::GetPositionInPixels() const {
   return MetersToPixels(body_->GetWorldCenter());
 }
 
-void Entity::BeginCollision(b2Fixture*, EntityType my_type,
+QRect Entity::GetBoundings() const {
+  return bounding_rectangle_.translated(GetPositionInPixels());
+}
+
+void Entity::BeginCollision(b2Fixture*,
+                            EntityType my_type,
                             EntityType other_type) {
   if (my_type == EntityType::kBullet && other_type == EntityType::kGround) {
     MarkAsDeleted();

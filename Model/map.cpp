@@ -52,11 +52,11 @@ void Map::Draw(QPainter* painter) {
   scale_ = std::max(
       static_cast<double>(painter->window().width()) / kVisibleSize.x(),
       static_cast<double>(painter->window().height()) / kVisibleSize.y());
+  shift_ = QPoint(painter->window().width(), painter->window().height());
+  shift_ = (shift_ / scale_ - kVisibleSize) / 2.0;
 
   UpdateCameraPosition();
-  painter->translate(
-      (painter->window().width() - kVisibleSize.x() * scale_) / 2.0,
-      (painter->window().height() - kVisibleSize.y() * scale_) / 2.0);
+  painter->translate(shift_ * scale_);
   painter->translate(-current_camera_.topLeft() * scale_);
 
   UpdateImageScale(static_cast<int>(map_image_.width() * scale_),
@@ -137,5 +137,18 @@ void Map::UpdateCameraPosition() {
   }
   if (-kPlayerBoundary.y() / 2 > target.y()) {
     current_camera_.translate(0, target.y() + kPlayerBoundary.y() / 2);
+  }
+
+  if (current_camera_.left() < shift_.x()) {
+    current_camera_.moveLeft(shift_.x());
+  }
+  if (current_camera_.right() > map_image_.width() - shift_.x()) {
+    current_camera_.moveRight(map_image_.width() - shift_.x());
+  }
+  if (current_camera_.top() < shift_.y()) {
+    current_camera_.moveTop(shift_.y());
+  }
+  if (current_camera_.bottom() > map_image_.height() - shift_.y()) {
+    current_camera_.moveBottom(map_image_.height() - shift_.y());
   }
 }

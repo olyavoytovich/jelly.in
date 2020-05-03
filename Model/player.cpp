@@ -7,6 +7,8 @@ Player::Player(std::shared_ptr<Map> map,
     : Entity(std::move(map), b2_dynamicBody, body_position, rectangle,
              EntityType::kPlayer) {
   SetAnimator(std::move(animator));
+  animator_->RepeatInReverseOrder();
+
   QPolygon bottom_rectangle = QRect(rectangle.left() + 1,
                                     rectangle.bottom() - 1,
                                     rectangle.width() - 2,
@@ -30,9 +32,35 @@ Player::Player(std::shared_ptr<Map> map,
   b2PolygonShape right_shape = CreatePolygonShape(side_rectangle, QPoint());
   right_sensor_ = CreateFixture(right_shape);
   right_sensor_->SetSensor(true);
+
+  SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
 }
 
-void Player::Update(int) {
+void Player::Update(int time) {
+  Entity::Update(time);
+  if (no_damage_time_left_ > 0) {
+    no_damage_time_left_ -= time;
+  }
+
+  if (map_->IsKeyPressed(Key::kSpace) && player_part_ == nullptr) {
+    player_part_ = std::make_shared<Entity>(map_,
+                                            b2_dynamicBody,
+                                            GetPositionInPixels(),
+                                            QPolygon(bounding_rectangle_),
+                                            EntityType::kPlayer);
+    b2Vec2 clone_velocity(body_->GetLinearVelocity().x, -kPlayerJumpSpeed);
+    clone_velocity.Normalize();
+    clone_velocity *= kCloneSpeed;
+    player_part_->SetVelocity(clone_velocity, true);
+    player_part_->SetAnimator(std::make_shared<Animator>(*animator_));
+    map_->AddGameObject(player_part_);
+  }
+
+  if (player_part_ != nullptr
+      && !player_part_->GetBoundings().intersects(GetBoundings())) {
+    player_part_->SetEntityType(EntityType::kPlayerPart);
+  }
+
   if (map_->IsKeyPressed(Key::kUp) && jumps_remaining_ > 0) {
     jumps_remaining_--;
     body_->SetLinearVelocity(b2Vec2(body_->GetLinearVelocity().x, 0));
@@ -49,16 +77,23 @@ void Player::Update(int) {
                                     true);
 }
 
-void Player::BeginCollision(b2Fixture* fixture, EntityType,
+void Player::BeginCollision(b2Fixture* fixture,
+                            EntityType,
                             EntityType other_type) {
+  if (player_part_ != nullptr && other_type == EntityType::kPlayerPart) {
+    player_part_->MarkAsDeleted();
+    player_part_ = nullptr;
+  }
+
   if (fixture == bottom_sensor_) {
     jumps_remaining_ = kPlayerJumpCount;
   } else if (fixture == left_sensor_) {
     left_collisions_++;
   } else if (fixture == right_sensor_) {
     right_collisions_++;
-  } else if (other_type == EntityType::kBullet) {
-    MarkAsDeleted();
+  } else if (other_type == EntityType::kBullet
+      || other_type == EntityType::kPatroller) {
+    TakeDamage();
   }
 }
 
@@ -67,5 +102,17 @@ void Player::EndCollision(b2Fixture* my_fixture) {
     left_collisions_--;
   } else if (my_fixture == right_sensor_) {
     right_collisions_--;
+  }
+}
+
+void Player::TakeDamage() {
+  if (no_damage_time_left_ > 0) {
+    return;
+  }
+  animator_->Play();
+  no_damage_time_left_ = kNoDamageTime;
+  current_health_--;
+  if (current_health_ <= 0) {
+    MarkAsDeleted();
   }
 }

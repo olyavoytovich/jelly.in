@@ -9,6 +9,7 @@ enum class Key {
   kLeft,
   kUp,
   kRight,
+  kSpace,
   kAnyKey
 };
 
