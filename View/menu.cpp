@@ -13,10 +13,14 @@ void Menu::resizeEvent(QResizeEvent* event) {
   shift_ = QPoint(event->size().width(), event->size().height());
   shift_ = (shift_ / scale_ - kVisiblePart) / 2.0;
 
-  scaled_background_ =
-      background_.scaled(event->size(), Qt::KeepAspectRatioByExpanding);
-
-  scaled_main_part_ = main_part_.scaled(event->size(), Qt::KeepAspectRatio);
+  if (!background_.isNull()) {
+    scaled_background_ =
+        background_.scaled(event->size(), Qt::KeepAspectRatioByExpanding);
+  }
+  
+  if (!main_part_.isNull()) {
+    scaled_main_part_ = main_part_.scaled(event->size(), Qt::KeepAspectRatio);
+  }
 }
 
 void Menu::paintEvent(QPaintEvent*) {

@@ -22,6 +22,8 @@ class Player : public Entity {
                       EntityType other_type) override;
   void EndCollision(b2Fixture* my_fixture) override;
 
+  int GetCurrentHealth() const;
+
  public:
   static const int kPlayerWidth = 30;
   static const int kPlayerHeight = 30;

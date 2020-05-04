@@ -78,6 +78,10 @@ double Map::GetScale() const {
   return scale_;
 }
 
+std::shared_ptr<GameObject> Map::GetPlayer() const {
+  return player_;
+}
+
 void Map::AddGameObject(std::shared_ptr<GameObject> object) {
   game_objects_to_add_.push_back(std::move(object));
 }

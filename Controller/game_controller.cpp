@@ -13,6 +13,7 @@ void GameController::Update(int time) {
   }
   view_->repaint();
   map_->Update(time);
+  interface_->SetHealth(player_->GetCurrentHealth());
 }
 
 void GameController::Draw(QPainter* painter) const {
@@ -63,6 +64,9 @@ Key GameController::GetKeyFromCode(int key_code) {
 
 void GameController::OpenChooseLevelMenu() {
   OpenMenu(std::make_shared<ChooseLevelMenu>(this));
+  map_ = nullptr;
+  interface_ = nullptr;
+  player_ = nullptr;
 }
 
 void GameController::OpenMainMenu() {
@@ -79,5 +83,7 @@ void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
 void GameController::StartLevel(const QString& level_number) {
   level_number_ = level_number.toInt();
   map_ = MapLoader::LoadMap("level_" + level_number);
-  menu_ = nullptr;
+  player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
+  interface_ = std::make_shared<GameInterface>(this);
+  OpenMenu(interface_);
 }

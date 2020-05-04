@@ -32,6 +32,7 @@ class Map {
   void Draw(QPainter* painter);
 
   double GetScale() const;
+  std::shared_ptr<GameObject> GetPlayer() const;
 
   void AddGameObject(std::shared_ptr<GameObject> object);
   void SetPlayerObject(std::shared_ptr<GameObject> player);

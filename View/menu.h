@@ -25,6 +25,10 @@ class Menu : public QWidget {
   QImage main_part_;
   QImage scaled_main_part_;
 
+  double scale_ = 1;
+  QPoint shift_ = QPoint(0, 0);
+
+ protected:
   void resizeEvent(QResizeEvent*) override;
   void paintEvent(QPaintEvent*) override;
 
@@ -35,9 +39,6 @@ class Menu : public QWidget {
  private:
   // Ширина и Высота основной части меню
   const QPoint kVisiblePart = QPoint(4096, 2304);
-
-  double scale_ = 1;
-  QPoint shift_ = QPoint(0, 0);
 };
 
 #endif  // VIEW_MENU_H_

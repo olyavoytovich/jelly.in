@@ -13,6 +13,7 @@
 #include "Model/shooter.h"
 #include "View/abstract_view.h"
 #include "View/choose_level_menu.h"
+#include "View/game_interface.h"
 #include "View/main_menu.h"
 #include "View/menu.h"
 #include "View/view.h"
@@ -45,8 +46,10 @@ class GameController : public AbstractGameController {
 
   // Указатель на открытое в данный момент меню
   std::shared_ptr<Menu> menu_ = nullptr;
+  std::shared_ptr<GameInterface> interface_ = nullptr;
 
   std::shared_ptr<Map> map_ = nullptr;
+  std::shared_ptr<Player> player_ = nullptr;
 };
 
 #endif  // CONTROLLER_GAME_CONTROLLER_H_
