@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QWidget>
 #include <memory>
+#include <vector>
 
 class Movie : public QWidget {
  public:

@@ -2,6 +2,7 @@
 #define VIEW_GAME_INTERFACE_H_
 
 #include <memory>
+#include <vector>
 
 #include "menu.h"
 #include "movie.h"
