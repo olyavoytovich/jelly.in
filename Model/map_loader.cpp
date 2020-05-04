@@ -49,7 +49,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QJsonArray dynamic_objects = json_main["dynamic_objects"].toArray();
   for (const auto& dynamic_object : dynamic_objects) {
     object = dynamic_object.toObject();
-    
+
     if (object["name"].toString() == "exit") {
       QPoint position(object["x"].toInt(), object["y"].toInt());
       QRect object_points(-5, -5, 10, 10);
@@ -60,7 +60,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                                   EntityType::kExit));
       continue;
     }
-    
+
     if (object["animation_name"].isNull()) {
       continue;
     }

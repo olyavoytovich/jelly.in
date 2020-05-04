@@ -42,7 +42,7 @@ class Player : public Entity {
 
  private:
   bool reached_exit_ = false;
-  
+
   int current_health_ = kMaxHealth;
   int no_damage_time_left_ = 0;
 
