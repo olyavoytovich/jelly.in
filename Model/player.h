@@ -23,6 +23,7 @@ class Player : public Entity {
   void EndCollision(b2Fixture* my_fixture) override;
 
   int GetCurrentHealth() const;
+  bool ReachedExit() const;
 
  public:
   static const int kPlayerWidth = 30;
@@ -40,6 +41,8 @@ class Player : public Entity {
   const int kMaxHealth = 3;
 
  private:
+  bool reached_exit_ = false;
+  
   int current_health_ = kMaxHealth;
   int no_damage_time_left_ = 0;
 

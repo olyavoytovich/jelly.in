@@ -49,6 +49,18 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QJsonArray dynamic_objects = json_main["dynamic_objects"].toArray();
   for (const auto& dynamic_object : dynamic_objects) {
     object = dynamic_object.toObject();
+    
+    if (object["name"].toString() == "exit") {
+      QPoint position(object["x"].toInt(), object["y"].toInt());
+      QRect object_points(-5, -5, 10, 10);
+      map->AddGameObject(std::make_shared<Entity>(map,
+                                                  b2_staticBody,
+                                                  position,
+                                                  QPolygon(object_points),
+                                                  EntityType::kExit));
+      continue;
+    }
+    
     if (object["animation_name"].isNull()) {
       continue;
     }

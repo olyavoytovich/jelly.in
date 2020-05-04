@@ -20,6 +20,7 @@ enum class EntityType {
   kGround = 64,
   kPlayerPart = 128,
   kSpikes = 256,
+  kExit = 512,
   kDefault
 };
 

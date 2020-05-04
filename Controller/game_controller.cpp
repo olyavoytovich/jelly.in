@@ -14,6 +14,9 @@ void GameController::Update(int time) {
   view_->repaint();
   map_->Update(time);
   interface_->SetHealth(player_->GetCurrentHealth());
+  if (player_->ReachedExit()) {
+    OpenChooseLevelMenu();
+  }
 }
 
 void GameController::Draw(QPainter* painter) const {
