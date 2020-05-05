@@ -64,9 +64,9 @@ class Map {
   const int kPositionAccuracy = 2;
 
   // Ширина и Высота камеры
-  const QPoint kVisibleSize = QPoint(800, 600);
+  const QPoint kVisibleSize = QPoint(1600, 900);
   // Ширина и Высота прямоугольника игрока (из центра камеры)
-  const QPoint kPlayerBoundary = QPoint(200, 150);
+  const QPoint kPlayerBoundary = QPoint(400, 225);
 
  private:
   std::shared_ptr<b2World> world_;

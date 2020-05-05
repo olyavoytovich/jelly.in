@@ -26,9 +26,12 @@ SOURCES += \
         View/button.cpp \
         View/choose_level_menu.cpp \
         View/game_interface.cpp \
+        View/fail_menu.cpp \
         View/main_menu.cpp \
         View/menu.cpp \
         View/movie.cpp \
+        View/pause_menu.cpp \
+        View/victory_menu.cpp \
         View/view.cpp \
         box2d/collision/b2_broad_phase.cpp \
         box2d/collision/b2_chain_shape.cpp \
@@ -93,10 +96,13 @@ HEADERS += \
     View/abstract_view.h \
     View/button.h \
     View/choose_level_menu.h \
+    View/fail_menu.h \
     View/game_interface.h \
     View/main_menu.h \
     View/menu.h \
     View/movie.h \
+    View/pause_menu.h \
+    View/victory_menu.h \
     View/view.h \
     box2d/b2_block_allocator.h \
     box2d/b2_body.h \

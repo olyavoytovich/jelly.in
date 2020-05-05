@@ -74,26 +74,36 @@ Key GameController::GetKeyFromCode(int key_code) {
 void GameController::OpenChooseLevelMenu() {
   OpenMenu(std::make_shared<ChooseLevelMenu>(this));
   interface_ = nullptr;
+  map_ = nullptr;
+  player_ = nullptr;
 }
 
 void GameController::OpenMainMenu() {
   OpenMenu(std::make_shared<MainMenu>(this));
   interface_ = nullptr;
+  map_ = nullptr;
+  player_ = nullptr;
 }
 
 void GameController::OpenPauseMenu() {
   OpenMenu(std::make_shared<PauseMenu>(this));
   interface_ = nullptr;
+  map_ = nullptr;
+  player_ = nullptr;
 }
 
 void GameController::OpenVictoryMenu() {
   OpenMenu(std::make_shared<VictoryMenu>(this));
   interface_ = nullptr;
+  map_ = nullptr;
+  player_ = nullptr;
 }
 
 void GameController::OpenFailMenu() {
   OpenMenu(std::make_shared<FailMenu>(this));
   interface_ = nullptr;
+  map_ = nullptr;
+  player_ = nullptr;
 }
 
 void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
@@ -101,14 +111,12 @@ void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
   if (menu_ != nullptr) {
     view_->setCentralWidget(menu_.get());
   }
-  map_ = nullptr;
-  player_ = nullptr;
 }
 
 void GameController::StartLevel(const QString& level_number) {
   level_number_ = level_number.toInt();
-  interface_ = std::make_shared<GameInterface>(this);
-  OpenMenu(interface_);
   map_ = MapLoader::LoadMap("level_" + level_number);
   player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
+  interface_ = std::make_shared<GameInterface>(this);
+  OpenMenu(interface_);
 }

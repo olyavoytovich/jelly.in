@@ -1,29 +1,237 @@
 {
   "solids": [
     {
-      "x": 1184,
-      "y": 576,
-      "width": 352,
-      "height": 96
+      "x": 0,
+      "y": 2304,
+      "width": 192,
+      "height": 256
+    },
+    {
+      "x": 192,
+      "y": 2176,
+      "width": 64,
+      "height": 384
+    },
+    {
+      "x": 256,
+      "y": 2112,
+      "width": 256,
+      "height": 448
+    },
+    {
+      "x": 512,
+      "y": 2048,
+      "width": 64,
+      "height": 512
+    },
+    {
+      "x": 576,
+      "y": 1984,
+      "width": 192,
+      "height": 576
+    },
+    {
+      "x": 768,
+      "y": 2368,
+      "width": 192,
+      "height": 192
+    },
+    {
+      "x": 1792,
+      "y": 2304,
+      "width": 512,
+      "height": 256
+    },
+    {
+      "x": 2304,
+      "y": 2496,
+      "width": 960,
+      "height": 64
+    },
+    {
+      "x": 3264,
+      "y": 2304,
+      "width": 128,
+      "height": 256
+    },
+    {
+      "x": 3392,
+      "y": 2368,
+      "width": 448,
+      "height": 192
+    },
+    {
+      "x": 3200,
+      "y": 1728,
+      "width": 320,
+      "height": 64
+    },
+    {
+      "x": 2752,
+      "y": 1280,
+      "width": 896,
+      "height": 128
+    },
+    {
+      "x": 1024,
+      "y": 2176,
+      "width": 192,
+      "height": 0
+    },
+    {
+      "x": 1024,
+      "y": 2176,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 1280,
+      "y": 2048,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 1536,
+      "y": 2176,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 2496,
+      "y": 2176,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 2816,
+      "y": 2048,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 2496,
+      "y": 1920,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 2176,
+      "y": 1792,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 1856,
+      "y": 1664,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 2176,
+      "y": 1536,
+      "width": 64,
+      "height": 32
+    },
+    {
+      "x": 2368,
+      "y": 1472,
+      "width": 64,
+      "height": 32
+    },
+    {
+      "x": 2560,
+      "y": 1408,
+      "width": 64,
+      "height": 32
+    },
+    {
+      "x": 3648,
+      "y": 1600,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "name": "spikes1",
+      "x": 2304,
+      "y": 2464,
+      "width": 960,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "name": "spikes2",
+      "x": 768,
+      "y": 2336,
+      "width": 192,
+      "height": 32,
+      "type": "spikes"
     }
   ],
   "dynamic_objects": [
     {
-      "x": 1296,
-      "y": 520,
+      "name": "player",
+      "x": 96,
+      "y": 2208,
+      "width": 0,
+      "height": 0,
       "animation_duration": 500,
       "animation_name": "player",
-      "frames_count": 1,
-      "name": "player",
+      "frames_count": 6
+    },
+    {
+      "name": "exit",
+      "x": 3360,
+      "y": 1680,
       "width": 0,
       "height": 0
     },
     {
-      "x": 1488,
-      "y": 552,
-      "name": "exit",
-      "width": 0,
-      "height": 0
+      "name": "patroller1",
+      "x": 3456,
+      "y": 1216,
+      "width": 128,
+      "height": 128,
+      "ellipse": true,
+      "animation_duration": 600,
+      "animation_name": "chestnut",
+      "frames_count": 7,
+      "speed": 100,
+      "type": "patroller",
+      "way_point_size": 2,
+      "way_points": [
+        {
+          "x": 3456,
+          "y": 1216
+        },
+        {
+          "x": 2944,
+          "y": 1216
+        }
+      ]
+    },
+    {
+      "name": "patroller2",
+      "x": 3776,
+      "y": 2304,
+      "width": 128,
+      "height": 128,
+      "ellipse": true,
+      "animation_duration": 600,
+      "animation_name": "chestnut",
+      "frames_count": 7,
+      "speed": 100,
+      "type": "patroller",
+      "way_point_size": 2,
+      "way_points": [
+        {
+          "x": 3776,
+          "y": 2304
+        },
+        {
+          "x": 3456,
+          "y": 2304
+        }
+      ]
     }
   ]
 }

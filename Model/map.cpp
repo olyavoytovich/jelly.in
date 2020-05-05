@@ -1,7 +1,7 @@
 #include "map.h"
 
 Map::Map(const QImage& map_image)
-    : world_(std::make_shared<b2World>(b2Vec2(0, 10))),
+    : world_(std::make_shared<b2World>(b2Vec2(0, 20))),
       current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()),
       map_image_(map_image),
       scaled_map_image_(map_image),

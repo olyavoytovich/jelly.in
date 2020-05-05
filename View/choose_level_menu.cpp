@@ -18,7 +18,7 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
     level_buttons_.emplace_back(new Button(level_image_set, this));
   }
 
-  for (int i = 0; i < 2; i++) {
+  for (int i = 0; i < 3; i++) {
     connect(level_buttons_[i], &QPushButton::clicked, this, [&, i]() {
       game_controller_->StartLevel(QString::number(i + 1));
     });

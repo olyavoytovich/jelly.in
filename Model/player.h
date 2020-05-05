@@ -26,16 +26,16 @@ class Player : public Entity {
   bool ReachedExit() const;
 
  public:
-  static const int kPlayerWidth = 30;
-  static const int kPlayerHeight = 30;
+  static const int kPlayerWidth = 64;
+  static const int kPlayerHeight = 64;
 
  private:
   void TakeDamage();
 
  private:
-  const float kPlayerSpeed = 3;
-  const float kPlayerJumpSpeed = 4;
-  const float kCloneSpeed = 5;
+  const float kPlayerSpeed = 6;
+  const float kPlayerJumpSpeed = 8;
+  const float kCloneSpeed = 10;
   const int kPlayerJumpCount = 2;
   const int kNoDamageTime = 1000;
   const int kMaxHealth = 3;

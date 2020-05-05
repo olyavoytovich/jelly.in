@@ -79,6 +79,8 @@
         <file>images/animation/thorn0.png</file>
         <file>images/level_2.png</file>
         <file>data/level_2.json</file>
+        <file>images/level_3.png</file>
+        <file>data/level_3.json</file>
         <file>images/gifs/heart.gif</file>
         <file>images/gifs/pause_menu.gif</file>
     </qresource>
