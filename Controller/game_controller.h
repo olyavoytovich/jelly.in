@@ -41,7 +41,7 @@ class GameController : public AbstractGameController {
 
   void StartLevel(const QString& level_number) override;
   void OpenMenu(std::shared_ptr<Menu> menu);
-  
+
  private:
   Key GetKeyFromCode(int key_code);
 
