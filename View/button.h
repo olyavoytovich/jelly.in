@@ -46,7 +46,7 @@ class Button : public QPushButton {
 
   std::shared_ptr<ImageSet> image_set_;
 
-  QLabel* text_;
+  QLabel* text_ = nullptr;
 };
 
 #endif  // VIEW_BUTTON_H_

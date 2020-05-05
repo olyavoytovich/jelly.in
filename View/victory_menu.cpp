@@ -12,7 +12,9 @@ VictoryMenu::VictoryMenu(AbstractGameController* game_controller,
   next_level_button_ = new Button(image_set, this);
   restart_button_ = new Button(image_set, this);
   choose_level_button_ = new Button(image_set, this);
+  choose_level_button_->SetText("Choose Level");
   main_menu_button_ = new Button(image_set, this);
+  main_menu_button_->SetText("Main Menu");
 
   connect(main_menu_button_, &QPushButton::clicked, this, [&]() {
     game_controller_->OpenMainMenu();

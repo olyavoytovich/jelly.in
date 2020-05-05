@@ -58,9 +58,9 @@ void Button::mouseReleaseEvent(QMouseEvent* event) {
 }
 
 void Button::resizeEvent(QResizeEvent*) {
-  // if(text_ != nullptr){
-  //   text_->setGeometry(rect());
-  // }
+  if (text_ != nullptr) {
+    text_->setGeometry(0, 0, width(), height());
+  }
   repaint();
 }
 
@@ -78,5 +78,6 @@ void Button::leaveEvent(QEvent*) {
 
 void Button::SetText(const QString& text) {
   text_ = new QLabel(text, this);
-  text_->setScaledContents(true);
+  text_->setAlignment(Qt::AlignCenter);
+  text_->setFont(QFont("Comic Sans MS", 14));
 }

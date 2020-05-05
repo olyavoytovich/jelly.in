@@ -3,8 +3,9 @@
 
 #include <memory>
 
-#include "menu.h"
 #include "button.h"
+#include "menu.h"
+#include "movie.h"
 
 class VictoryMenu : public Menu {
  public:

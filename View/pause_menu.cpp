@@ -11,7 +11,9 @@ PauseMenu::PauseMenu(AbstractGameController* game_controller, QWidget* parent)
   resume_button_ = new Button(image_set, this);
   restart_button_ = new Button(image_set, this);
   choose_level_button_ = new Button(image_set, this);
+  choose_level_button_->SetText("Choose Level");
   main_menu_button_ = new Button(image_set, this);
+  main_menu_button_->SetText("Main Menu");
 
   burdock_ = std::make_shared<Movie>("pause_menu", this);
   burdock_->SetSpeed(200);

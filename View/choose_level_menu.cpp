@@ -16,6 +16,7 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
   auto level_image_set = std::make_shared<ImageSet>("level_button");
   for (int i = 0; i < 12; i++) {
     level_buttons_.emplace_back(new Button(level_image_set, this));
+    level_buttons_.back()->SetText(QString::number(i + 1));
   }
 
   for (int i = 0; i < 3; i++) {
