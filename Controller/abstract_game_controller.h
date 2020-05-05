@@ -25,6 +25,9 @@ class AbstractGameController {
 
   virtual void OpenChooseLevelMenu() = 0;
   virtual void OpenMainMenu() = 0;
+  virtual void OpenPauseMenu() = 0;
+  virtual void OpenVictoryMenu() = 0;
+  virtual void OpenFailMenu() = 0;
 
   virtual void StartLevel(const QString& level_number) = 0;
 };

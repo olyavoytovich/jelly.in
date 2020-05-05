@@ -58,6 +58,9 @@ void Button::mouseReleaseEvent(QMouseEvent* event) {
 }
 
 void Button::resizeEvent(QResizeEvent*) {
+  // if(text_ != nullptr){
+  //   text_->setGeometry(rect());
+  // }
   repaint();
 }
 
@@ -71,4 +74,9 @@ void Button::leaveEvent(QEvent*) {
     status_ = Status::kFlat;
   }
   repaint();
+}
+
+void Button::SetText(const QString& text) {
+  text_ = new QLabel(text, this);
+  text_->setScaledContents(true);
 }

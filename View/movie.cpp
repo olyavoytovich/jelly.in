@@ -2,9 +2,8 @@
 
 Movie::Movie(const QString& name, QWidget* parent)
     : QWidget(parent),
-      movie_(std::make_shared<QMovie>(":images/gifs/" + name + ".gif")) {
+      movie_(std::make_shared<QMovie>(":/images/gifs/" + name + ".gif")) {
   movie_->setCacheMode(QMovie::CacheMode::CacheAll);
-  movie_->jumpToFrame(0);
 
   connect(movie_.get(), &QMovie::frameChanged, this, [&]() {
     UpdateScale();
@@ -12,6 +11,7 @@ Movie::Movie(const QString& name, QWidget* parent)
   connect(movie_.get(), &QMovie::finished, this, [&]() {
     Finished();
   });
+  movie_->jumpToFrame(0);
 }
 
 void Movie::Play(bool is_looped) {

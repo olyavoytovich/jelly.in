@@ -13,9 +13,12 @@
 #include "Model/shooter.h"
 #include "View/abstract_view.h"
 #include "View/choose_level_menu.h"
+#include "View/fail_menu.h"
 #include "View/game_interface.h"
 #include "View/main_menu.h"
 #include "View/menu.h"
+#include "View/pause_menu.h"
+#include "View/victory_menu.h"
 #include "View/view.h"
 #include "abstract_game_controller.h"
 
@@ -32,10 +35,12 @@ class GameController : public AbstractGameController {
 
   void OpenChooseLevelMenu() override;
   void OpenMainMenu() override;
-  void OpenMenu(std::shared_ptr<Menu> menu);
+  void OpenPauseMenu() override;
+  void OpenVictoryMenu() override;
+  void OpenFailMenu() override;
 
   void StartLevel(const QString& level_number) override;
-
+  void OpenMenu(std::shared_ptr<Menu> menu);
  private:
   Key GetKeyFromCode(int key_code);
 

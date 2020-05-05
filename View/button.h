@@ -1,6 +1,7 @@
 #ifndef VIEW_BUTTON_H_
 #define VIEW_BUTTON_H_
 
+#include <QLabel>
 #include <QObject>
 #include <QPaintEvent>
 #include <QPainter>
@@ -26,6 +27,8 @@ class Button : public QPushButton {
                   QWidget* parent = nullptr);
   ~Button() override = default;
 
+  void SetText(const QString& text);
+
  private:
   void paintEvent(QPaintEvent* event) override;
   void mousePressEvent(QMouseEvent* event) override;
@@ -42,6 +45,8 @@ class Button : public QPushButton {
   } status_;
 
   std::shared_ptr<ImageSet> image_set_;
+
+  QLabel* text_;
 };
 
 #endif  // VIEW_BUTTON_H_
