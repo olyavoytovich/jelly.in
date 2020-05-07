@@ -9,8 +9,8 @@ VictoryMenu::VictoryMenu(AbstractGameController* game_controller,
   scaled_main_part_ = main_part_;
 
   auto image_set = std::make_shared<ImageSet>("orange");
-  next_level_button_ = new Button(image_set, this);
-  restart_button_ = new Button(image_set, this);
+  next_level_button_ = new Button(image_set, this, "Next Level");
+  restart_button_ = new Button(image_set, this, "Restart");
   choose_level_button_ = new Button(image_set, this, "Choose Level");
   main_menu_button_ = new Button(image_set, this, "Main Menu");
 
@@ -22,6 +22,16 @@ VictoryMenu::VictoryMenu(AbstractGameController* game_controller,
     game_controller_->OpenChooseLevelMenu();
   });
 
+  connect(restart_button_, &QPushButton::clicked, this, [&]() {
+    game_controller_->RestartGame();
+  });
+
+  connect(next_level_button_, &QPushButton::clicked, this, [&]() {
+    game_controller_->StartNextLevel();
+  });
+
+  main_button_group_.push_back(next_level_button_);
+  main_button_group_.push_back(restart_button_);
   main_button_group_.push_back(choose_level_button_);
   main_button_group_.push_back(main_menu_button_);
 }

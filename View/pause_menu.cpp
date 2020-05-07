@@ -8,8 +8,8 @@ PauseMenu::PauseMenu(AbstractGameController* game_controller, QWidget* parent)
   scaled_main_part_ = main_part_;
 
   auto image_set = std::make_shared<ImageSet>("blue");
-  resume_button_ = new Button(image_set, this);
-  restart_button_ = new Button(image_set, this);
+  resume_button_ = new Button(image_set, this, "Resume");
+  restart_button_ = new Button(image_set, this, "Restart");
   choose_level_button_ = new Button(image_set, this, "Choose Level");
   main_menu_button_ = new Button(image_set, this, "Main Menu");
 
@@ -25,6 +25,16 @@ PauseMenu::PauseMenu(AbstractGameController* game_controller, QWidget* parent)
     game_controller_->OpenChooseLevelMenu();
   });
 
+  connect(resume_button_, &QPushButton::clicked, this, [&]() {
+    game_controller_->ResumeGame();
+  });
+
+  connect(restart_button_, &QPushButton::clicked, this, [&]() {
+    game_controller_->RestartGame();
+  });
+
+  main_button_group_.push_back(resume_button_);
+  main_button_group_.push_back(restart_button_);
   main_button_group_.push_back(choose_level_button_);
   main_button_group_.push_back(main_menu_button_);
 }

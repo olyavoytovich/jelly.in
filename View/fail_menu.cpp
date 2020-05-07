@@ -8,7 +8,7 @@ FailMenu::FailMenu(AbstractGameController* game_controller, QWidget* parent)
   scaled_main_part_ = main_part_;
 
   auto image_set = std::make_shared<ImageSet>("malinovij");
-  restart_button_ = new Button(image_set, this);
+  restart_button_ = new Button(image_set, this, "Restart");
   choose_level_button_ = new Button(image_set, this, "Choose Level");
   main_menu_button_ = new Button(image_set, this, "Main Menu");
 
@@ -20,6 +20,11 @@ FailMenu::FailMenu(AbstractGameController* game_controller, QWidget* parent)
     game_controller_->OpenChooseLevelMenu();
   });
 
+  connect(restart_button_, &QPushButton::clicked, this, [&]() {
+    game_controller_->RestartGame();
+  });
+
+  main_button_group_.push_back(restart_button_);
   main_button_group_.push_back(choose_level_button_);
   main_button_group_.push_back(main_menu_button_);
 }

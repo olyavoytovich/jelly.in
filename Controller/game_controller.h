@@ -38,8 +38,11 @@ class GameController : public AbstractGameController {
   void OpenPauseMenu() override;
   void OpenVictoryMenu() override;
   void OpenFailMenu() override;
+  void ResumeGame() override;
+  void RestartGame() override;
+  void StartNextLevel() override;
 
-  void StartLevel(const QString& level_number) override;
+  void StartLevel(int level_number) override;
   void OpenMenu(std::shared_ptr<Menu> menu);
 
  private:

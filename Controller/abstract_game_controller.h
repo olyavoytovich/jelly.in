@@ -28,8 +28,11 @@ class AbstractGameController {
   virtual void OpenPauseMenu() = 0;
   virtual void OpenVictoryMenu() = 0;
   virtual void OpenFailMenu() = 0;
+  virtual void ResumeGame() = 0;
+  virtual void RestartGame() = 0;
+  virtual void StartNextLevel() = 0;
 
-  virtual void StartLevel(const QString& level_number) = 0;
+  virtual void StartLevel(int level_number) = 0;
 };
 
 #endif  // CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_

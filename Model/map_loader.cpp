@@ -3,11 +3,16 @@
 std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QFile input_file(":/data/" + map_name + ".json");
 
-  input_file.open(QIODevice::ReadOnly);
+  if (!input_file.open(QIODevice::ReadOnly)) {
+    return nullptr;
+  }
   QString file_text = input_file.readAll();
   input_file.close();
 
   QImage map_image(":/images/" + map_name + ".png");
+  if (map_image.isNull()) {
+    return nullptr;
+  }
 
   QJsonDocument json_document(QJsonDocument::fromJson(file_text.toUtf8()));
   QJsonObject json_main = json_document.object();
