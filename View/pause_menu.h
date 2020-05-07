@@ -1,6 +1,7 @@
 #ifndef VIEW_PAUSE_MENU_H_
 #define VIEW_PAUSE_MENU_H_
 
+#include <algorithm>
 #include <memory>
 
 #include "menu.h"

@@ -1,6 +1,7 @@
 #ifndef VIEW_VICTORY_MENU_H_
 #define VIEW_VICTORY_MENU_H_
 
+#include <algorithm>
 #include <memory>
 
 #include "button.h"

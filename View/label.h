@@ -5,6 +5,7 @@
 #include <QFontMetrics>
 #include <QLabel>
 #include <QPalette>
+#include <algorithm>
 
 class Label : public QLabel {
  public:
@@ -21,4 +22,4 @@ class Label : public QLabel {
   QRect bounding_rectangle_;
 };
 
-#endif  // LABEL_H_
+#endif  // VIEW_LABEL_H_
