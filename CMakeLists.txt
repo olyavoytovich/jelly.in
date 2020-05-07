@@ -32,6 +32,7 @@ add_executable(jellyin main.cpp
         View/button.cpp
         View/choose_level_menu.cpp
         View/game_interface.cpp
+        View/label.cpp
         View/main_menu.cpp
         View/menu.cpp
         View/movie.cpp

@@ -10,11 +10,16 @@ ImageSet::ImageSet(const QString& name) {
   hovered_scaled = hovered;
 }
 
-Button::Button(std::shared_ptr<ImageSet> image_set, QWidget* parent)
+Button::Button(std::shared_ptr<ImageSet> image_set,
+               QWidget* parent,
+               const QString& button_text)
     : QPushButton(parent),
       status_(Status::kFlat),
       image_set_(std::move(image_set)) {
   setMouseTracking(true);
+  if (!button_text.isEmpty()) {
+    SetText(button_text);
+  }
 }
 
 void Button::paintEvent(QPaintEvent*) {
@@ -58,9 +63,6 @@ void Button::mouseReleaseEvent(QMouseEvent* event) {
 }
 
 void Button::resizeEvent(QResizeEvent*) {
-  if (text_ != nullptr) {
-    text_->setGeometry(0, 0, width(), height());
-  }
   repaint();
 }
 
@@ -76,8 +78,40 @@ void Button::leaveEvent(QEvent*) {
   repaint();
 }
 
+int Button::GetFontSize() const {
+  if (text_ == nullptr) {
+    return 0;
+  }
+  return text_->GetFontSize();
+}
+
 void Button::SetText(const QString& text) {
-  text_ = new QLabel(text, this);
+  if (text_ != nullptr) {
+    text_->setText(text);
+    return;
+  }
+  text_ = new Label(text, this);
   text_->setAlignment(Qt::AlignCenter);
-  text_->setFont(QFont("Comic Sans MS", 14));
+  text_->SetFontColor(Qt::white);
+}
+
+void Button::SetFontSize(int text_size) {
+  if (text_ != nullptr) {
+    text_->SetFontSize(text_size);
+  }
+}
+
+void Button::SetRectangle(const QRect& rectangle) {
+  setGeometry(rectangle);
+  if (text_ != nullptr) {
+    int padding_x = static_cast<int>(width() * kTextPadding);
+    int padding_y = static_cast<int>(height() * kTextPadding);
+
+    // SetTextBounding используется только для установки размеров шрифта,
+    // но не размеров самой Label.
+    text_->SetTextBounding(QRect(padding_x, padding_y,
+                                 width() - 2 * padding_x,
+                                 height() - 2 * padding_y));
+    text_->setGeometry(0, 0, width(), height());
+  }
 }

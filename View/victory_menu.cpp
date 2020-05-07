@@ -11,10 +11,8 @@ VictoryMenu::VictoryMenu(AbstractGameController* game_controller,
   auto image_set = std::make_shared<ImageSet>("orange");
   next_level_button_ = new Button(image_set, this);
   restart_button_ = new Button(image_set, this);
-  choose_level_button_ = new Button(image_set, this);
-  choose_level_button_->SetText("Choose Level");
-  main_menu_button_ = new Button(image_set, this);
-  main_menu_button_->SetText("Main Menu");
+  choose_level_button_ = new Button(image_set, this, "Choose Level");
+  main_menu_button_ = new Button(image_set, this, "Main Menu");
 
   connect(main_menu_button_, &QPushButton::clicked, this, [&]() {
     game_controller_->OpenMainMenu();
@@ -27,8 +25,19 @@ VictoryMenu::VictoryMenu(AbstractGameController* game_controller,
 
 void VictoryMenu::resizeEvent(QResizeEvent* event) {
   Menu::resizeEvent(event);
-  next_level_button_->setGeometry(PositionRectangle(2, 1, 3, 2));
-  restart_button_->setGeometry(PositionRectangle(6, 1, 3, 2));
-  choose_level_button_->setGeometry(PositionRectangle(2, 4, 3, 2));
-  main_menu_button_->setGeometry(PositionRectangle(6, 4, 3, 2));
+  next_level_button_->SetRectangle(PositionRectangle(2, 1, 3, 2));
+  restart_button_->SetRectangle(PositionRectangle(6, 1, 3, 2));
+  choose_level_button_->SetRectangle(PositionRectangle(2, 4, 3, 2));
+  main_menu_button_->SetRectangle(PositionRectangle(6, 4, 3, 2));
+
+  int font_size = height();
+  if (choose_level_button_->GetFontSize() > 0) {
+    font_size = std::min(font_size, choose_level_button_->GetFontSize());
+  }
+  if (main_menu_button_->GetFontSize() > 0) {
+    font_size = std::min(font_size, main_menu_button_->GetFontSize());
+  }
+
+  choose_level_button_->SetFontSize(font_size);
+  main_menu_button_->SetFontSize(font_size);
 }

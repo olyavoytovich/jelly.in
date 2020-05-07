@@ -10,10 +10,8 @@ PauseMenu::PauseMenu(AbstractGameController* game_controller, QWidget* parent)
   auto image_set = std::make_shared<ImageSet>("blue");
   resume_button_ = new Button(image_set, this);
   restart_button_ = new Button(image_set, this);
-  choose_level_button_ = new Button(image_set, this);
-  choose_level_button_->SetText("Choose Level");
-  main_menu_button_ = new Button(image_set, this);
-  main_menu_button_->SetText("Main Menu");
+  choose_level_button_ = new Button(image_set, this, "Choose Level");
+  main_menu_button_ = new Button(image_set, this, "Main Menu");
 
   burdock_ = std::make_shared<Movie>("pause_menu", this);
   burdock_->SetSpeed(200);
@@ -31,10 +29,21 @@ PauseMenu::PauseMenu(AbstractGameController* game_controller, QWidget* parent)
 void PauseMenu::resizeEvent(QResizeEvent* event) {
   Menu::resizeEvent(event);
 
-  resume_button_->setGeometry(PositionRectangle(7, 1, 3, 2));
-  restart_button_->setGeometry(PositionRectangle(11, 1, 3, 2));
-  choose_level_button_->setGeometry(PositionRectangle(7, 4, 3, 2));
-  main_menu_button_->setGeometry(PositionRectangle(11, 4, 3, 2));
+  resume_button_->SetRectangle(PositionRectangle(7, 1, 3, 2));
+  restart_button_->SetRectangle(PositionRectangle(11, 1, 3, 2));
+  choose_level_button_->SetRectangle(PositionRectangle(7, 4, 3, 2));
+  main_menu_button_->SetRectangle(PositionRectangle(11, 4, 3, 2));
 
   burdock_->setGeometry(PositionRectangle(1, 1, 4, 5));
+
+  int font_size = height();
+  if (choose_level_button_->GetFontSize() > 0) {
+    font_size = std::min(font_size, choose_level_button_->GetFontSize());
+  }
+  if (main_menu_button_->GetFontSize() > 0) {
+    font_size = std::min(font_size, main_menu_button_->GetFontSize());
+  }
+
+  choose_level_button_->SetFontSize(font_size);
+  main_menu_button_->SetFontSize(font_size);
 }

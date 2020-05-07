@@ -25,8 +25,9 @@ SOURCES += \
         Model/shooter.cpp \
         View/button.cpp \
         View/choose_level_menu.cpp \
-        View/game_interface.cpp \
         View/fail_menu.cpp \
+        View/game_interface.cpp \
+        View/label.cpp \
         View/main_menu.cpp \
         View/menu.cpp \
         View/movie.cpp \
@@ -98,6 +99,7 @@ HEADERS += \
     View/choose_level_menu.h \
     View/fail_menu.h \
     View/game_interface.h \
+    View/label.h \
     View/main_menu.h \
     View/menu.h \
     View/movie.h \

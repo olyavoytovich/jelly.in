@@ -1,13 +1,14 @@
 #ifndef VIEW_BUTTON_H_
 #define VIEW_BUTTON_H_
 
-#include <QLabel>
 #include <QObject>
 #include <QPaintEvent>
 #include <QPainter>
 #include <QPushButton>
 #include <memory>
 #include <utility>
+
+#include "label.h"
 
 struct ImageSet {
   explicit ImageSet(const QString& name);
@@ -24,10 +25,15 @@ struct ImageSet {
 class Button : public QPushButton {
  public:
   explicit Button(std::shared_ptr<ImageSet> image_set,
-                  QWidget* parent = nullptr);
+                  QWidget* parent = nullptr,
+                  const QString& button_text = "");
   ~Button() override = default;
 
+  int GetFontSize() const;
+
   void SetText(const QString& text);
+  void SetFontSize(int text_size);
+  void SetRectangle(const QRect& rectangle);
 
  private:
   void paintEvent(QPaintEvent* event) override;
@@ -38,6 +44,10 @@ class Button : public QPushButton {
   void leaveEvent(QEvent* event) override;
 
  private:
+  // Размер отступа текста от краев кнопок в процентах от её ширины и высоты
+  const double kTextPadding = 0.05;
+
+ private:
   enum class Status {
     kFlat,
     kClicked,
@@ -46,7 +56,7 @@ class Button : public QPushButton {
 
   std::shared_ptr<ImageSet> image_set_;
 
-  QLabel* text_ = nullptr;
+  Label* text_ = nullptr;
 };
 
 #endif  // VIEW_BUTTON_H_
