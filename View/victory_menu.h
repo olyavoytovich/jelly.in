@@ -1,10 +1,9 @@
 #ifndef VIEW_VICTORY_MENU_H_
 #define VIEW_VICTORY_MENU_H_
 
-#include <algorithm>
 #include <memory>
+#include <vector>
 
-#include "button.h"
 #include "menu.h"
 #include "movie.h"
 
@@ -22,6 +21,8 @@ class VictoryMenu : public Menu {
   Button* restart_button_;
   Button* choose_level_button_;
   Button* main_menu_button_;
+
+  std::vector<Button*> main_button_group_;
 };
 
 #endif  // VIEW_VICTORY_MENU_H_

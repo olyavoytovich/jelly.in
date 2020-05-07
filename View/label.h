@@ -5,7 +5,6 @@
 #include <QFontMetrics>
 #include <QLabel>
 #include <QPalette>
-#include <algorithm>
 
 class Label : public QLabel {
  public:
@@ -16,6 +15,9 @@ class Label : public QLabel {
   void SetFontColor(const QColor& color);
   void SetFontSize(int font_size);
   void SetTextBounding(const QRect& bounding_rectangle);
+
+ private:
+  int FontSizeToFitWidth(int target_width, int current_size) const;
 
  private:
   QFont current_font_;

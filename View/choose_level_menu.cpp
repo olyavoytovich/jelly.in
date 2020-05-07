@@ -29,21 +29,14 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
 void ChooseLevelMenu::resizeEvent(QResizeEvent* event) {
   Menu::resizeEvent(event);
 
-  int text_size = height();
   int i = 0;
   for (int pos_y = 1; pos_y <= 5; pos_y += 2) {
     for (int pos_x = 3; pos_x <= 12; pos_x += 3) {
       level_buttons_[i]->SetRectangle(PositionRectangle(pos_x, pos_y, 2, 1));
-      if (level_buttons_[i]->GetFontSize() > 0) {
-        text_size = std::min(text_size, level_buttons_[i]->GetFontSize());
-      }
       i++;
     }
   }
-
-  for (i = 0; i < 12; i++) {
-    level_buttons_[i]->SetFontSize(text_size);
-  }
+  MakeEqualFontSize(level_buttons_);
 
   back_button_->SetRectangle(PositionRectangle(1, 1, 1, 1));
   repaint();

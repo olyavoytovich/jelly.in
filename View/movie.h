@@ -28,7 +28,6 @@ class Movie : public QWidget {
 
  private:
   std::shared_ptr<QMovie> movie_;
-  std::vector<QImage> frames_;
   std::vector<QImage> scaled_frames_;
 
   // Принимает true, если анимацию надо постоянно повторять

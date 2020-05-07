@@ -53,12 +53,11 @@ void Movie::paintEvent(QPaintEvent*) {
 
 void Movie::UpdateScale() {
   int current_frame = movie_->currentFrameNumber();
-  if (frames_.size() <= current_frame) {
-    frames_.emplace_back(movie_->currentImage());
+  if (scaled_frames_.size() <= current_frame) {
     scaled_frames_.emplace_back(movie_->currentImage());
   }
   if (scaled_frames_[current_frame].size() != size()) {
-    scaled_frames_[current_frame] = frames_[current_frame].scaled(size());
+    scaled_frames_[current_frame] = movie_->currentImage().scaled(size());
   }
   repaint();
 }

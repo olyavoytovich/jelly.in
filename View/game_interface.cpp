@@ -22,7 +22,7 @@ void GameInterface::SetHealth(int health) {
     }
   }
 
-  if (current_health_ == 0 && player_loosed_ && health_[0]->IsFinished()) {
+  if (player_loosed_ && health_[0]->IsFinished()) {
     game_controller_->OpenFailMenu();
   }
 }

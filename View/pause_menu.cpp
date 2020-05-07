@@ -24,6 +24,9 @@ PauseMenu::PauseMenu(AbstractGameController* game_controller, QWidget* parent)
   connect(choose_level_button_, &QPushButton::clicked, this, [&]() {
     game_controller_->OpenChooseLevelMenu();
   });
+
+  main_button_group_.push_back(choose_level_button_);
+  main_button_group_.push_back(main_menu_button_);
 }
 
 void PauseMenu::resizeEvent(QResizeEvent* event) {
@@ -36,14 +39,5 @@ void PauseMenu::resizeEvent(QResizeEvent* event) {
 
   burdock_->setGeometry(PositionRectangle(1, 1, 4, 5));
 
-  int font_size = height();
-  if (choose_level_button_->GetFontSize() > 0) {
-    font_size = std::min(font_size, choose_level_button_->GetFontSize());
-  }
-  if (main_menu_button_->GetFontSize() > 0) {
-    font_size = std::min(font_size, main_menu_button_->GetFontSize());
-  }
-
-  choose_level_button_->SetFontSize(font_size);
-  main_menu_button_->SetFontSize(font_size);
+  MakeEqualFontSize(main_button_group_);
 }

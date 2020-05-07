@@ -9,12 +9,11 @@ Label::Label(const QString& text, QWidget* parent)
 }
 
 int Label::GetFontSize() const {
-  double width = bounding_rectangle_.width();
   double height = bounding_rectangle_.height();
   QRect text_bounding = QFontMetrics(current_font_).boundingRect(text());
-  double scale_factor =
-      std::min(width / text_bounding.width(), height / text_bounding.height());
-  return static_cast<int>(current_font_.pixelSize() * scale_factor);
+  double scale_factor = height / text_bounding.height();
+  int font_size = static_cast<int>(current_font_.pixelSize() * scale_factor);
+  return FontSizeToFitWidth(bounding_rectangle_.width(), font_size);
 }
 
 void Label::SetFontColor(const QColor& color) {
@@ -34,4 +33,13 @@ void Label::SetFontSize(int font_size) {
 
 void Label::SetTextBounding(const QRect& bounding_rectangle) {
   bounding_rectangle_ = bounding_rectangle;
+}
+
+int Label::FontSizeToFitWidth(int target_width, int current_size) const {
+  QFont font = current_font_;
+  font.setPixelSize(current_size);
+  while (QFontMetrics(font).boundingRect(text()).width() > target_width) {
+    font.setPixelSize(font.pixelSize() - 1);
+  }
+  return font.pixelSize();
 }

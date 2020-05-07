@@ -27,14 +27,14 @@ class Menu : public QWidget {
 
   double scale_ = 1;
   QPoint shift_ = QPoint(0, 0);
+  AbstractGameController* game_controller_ = nullptr;
 
  protected:
   void resizeEvent(QResizeEvent*) override;
   void paintEvent(QPaintEvent*) override;
 
-  QRect PositionRectangle(int x, int y, int width, int height);
-
-  AbstractGameController* game_controller_ = nullptr;
+  QRect PositionRectangle(int x, int y, int width, int height) const;
+  void MakeEqualFontSize(const std::vector<Button*>& buttons) const;
 
  private:
   // Ширина и Высота основной части меню

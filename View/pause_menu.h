@@ -1,8 +1,8 @@
 #ifndef VIEW_PAUSE_MENU_H_
 #define VIEW_PAUSE_MENU_H_
 
-#include <algorithm>
 #include <memory>
+#include <vector>
 
 #include "menu.h"
 #include "movie.h"
@@ -21,6 +21,8 @@ class PauseMenu : public Menu {
   Button* restart_button_;
   Button* choose_level_button_;
   Button* main_menu_button_;
+
+  std::vector<Button*> main_button_group_;
 
   std::shared_ptr<Movie> burdock_;
 };

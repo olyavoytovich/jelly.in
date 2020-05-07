@@ -21,6 +21,9 @@ VictoryMenu::VictoryMenu(AbstractGameController* game_controller,
   connect(choose_level_button_, &QPushButton::clicked, this, [&]() {
     game_controller_->OpenChooseLevelMenu();
   });
+
+  main_button_group_.push_back(choose_level_button_);
+  main_button_group_.push_back(main_menu_button_);
 }
 
 void VictoryMenu::resizeEvent(QResizeEvent* event) {
@@ -30,14 +33,5 @@ void VictoryMenu::resizeEvent(QResizeEvent* event) {
   choose_level_button_->SetRectangle(PositionRectangle(2, 4, 3, 2));
   main_menu_button_->SetRectangle(PositionRectangle(6, 4, 3, 2));
 
-  int font_size = height();
-  if (choose_level_button_->GetFontSize() > 0) {
-    font_size = std::min(font_size, choose_level_button_->GetFontSize());
-  }
-  if (main_menu_button_->GetFontSize() > 0) {
-    font_size = std::min(font_size, main_menu_button_->GetFontSize());
-  }
-
-  choose_level_button_->SetFontSize(font_size);
-  main_menu_button_->SetFontSize(font_size);
+  MakeEqualFontSize(main_button_group_);
 }
