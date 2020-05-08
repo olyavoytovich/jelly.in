@@ -9,6 +9,7 @@
 #include "animator.h"
 #include "game_object.h"
 #include "map.h"
+#include "sound_manager.h"
 
 struct PolygonShape {
   PolygonShape(QPolygon polygon, const QPoint& position)

@@ -34,6 +34,14 @@ Player::Player(std::shared_ptr<Map> map,
   right_sensor_->SetSensor(true);
 
   SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
+
+  // Add sound
+  jump_sound_.AddMedia("qrc:/sound/player/jump.mp3");
+  landing_sound_.AddMedia("qrc:/sound/player/landing.mp3");
+  taking_damage_sound_.AddMedia("qrc:/sound/player/taking_damage.mp3");
+  separation_sound_.AddMedia("qrc:/sound/player/separation.mp3");
+  walking_sound_.AddMedia("qrc:/sound/player/walking.mp3");
+  walking_sound_.SetPlayBackMode(QMediaPlaylist::CurrentItemInLoop);
 }
 
 void Player::Update(int time) {
@@ -43,6 +51,7 @@ void Player::Update(int time) {
   }
 
   if (map_->IsKeyPressed(Key::kSpace) && player_part_ == nullptr) {
+    separation_sound_.Replay();
     player_part_ = std::make_shared<Entity>(map_,
                                             b2_dynamicBody,
                                             GetPositionInPixels(),
@@ -62,12 +71,18 @@ void Player::Update(int time) {
   }
 
   if (map_->IsKeyPressed(Key::kUp) && jumps_remaining_ > 0) {
+    jump_sound_.Replay();
     jumps_remaining_--;
     body_->SetLinearVelocity(b2Vec2(body_->GetLinearVelocity().x, 0));
     body_->ApplyLinearImpulseToCenter(
         b2Vec2(0, -kPlayerJumpSpeed * body_->GetMass()), true);
   }
   float target_speed = -body_->GetLinearVelocity().x;
+  if (map_->IsKeyClamped(Key::kLeft) || map_->IsKeyClamped(Key::kRight)) {
+    walking_sound_.Play();
+  } else {
+    walking_sound_.Stop();
+  }
   if (map_->IsKeyClamped(Key::kLeft) && left_collisions_ == 0) {
     target_speed -= kPlayerSpeed;
   } else if (map_->IsKeyClamped(Key::kRight) && right_collisions_ == 0) {
@@ -86,6 +101,7 @@ void Player::BeginCollision(b2Fixture* fixture,
   }
 
   if (fixture == bottom_sensor_) {
+    landing_sound_.Replay();
     jumps_remaining_ = kPlayerJumpCount;
   } else if (fixture == left_sensor_) {
     left_collisions_++;
@@ -110,6 +126,7 @@ void Player::TakeDamage() {
   if (no_damage_time_left_ > 0) {
     return;
   }
+  taking_damage_sound_.Replay();
   animator_->Play();
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;

@@ -6,9 +6,14 @@ Map::Map(const QImage& map_image)
       map_image_(map_image),
       scaled_map_image_(map_image),
       is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
-      is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false) {}
+      is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false) {
+  background_.AddMedia("qrc:/sound/background.mp3");
+  background_.SetVolume(20);
+  background_.SetPlayBackMode(QMediaPlaylist::CurrentItemInLoop);
+}
 
 void Map::Update(int time) {
+  background_.Play();
   if (player_->IsDeleted()) {
     return;
   }

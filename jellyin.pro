@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -12,6 +12,7 @@ QMAKE_CXXFLAGS += -std=c++17
 
 SOURCES += \
         Controller/game_controller.cpp \
+        Model/sound_manager.cpp \
         View/button.cpp \
         View/choose_level_menu.cpp \
         View/main_menu.cpp \
@@ -88,6 +89,7 @@ HEADERS += \
     Model/patroller.h \
     Model/player.h \
     Model/shooter.h \
+    Model/sound_manager.h \
     View/abstract_view.h \
     View/button.h \
     View/choose_level_menu.h \

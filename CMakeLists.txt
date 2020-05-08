@@ -13,6 +13,7 @@ set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.13.0/5.13.0/mingw73_64/lib/cmake")  # Windows
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Multimedia REQUIRED)
 
 file(GLOB box2d
         box2d/*/*.cpp)
@@ -29,6 +30,7 @@ add_executable(jellyin main.cpp
         Model/patroller.cpp
         Model/player.cpp
         Model/shooter.cpp
+        Model/sound_manager.cpp
         resources.qrc
         View/view.cpp
         View/button.cpp
@@ -39,5 +41,6 @@ add_executable(jellyin main.cpp
 
 target_link_libraries(jellyin Qt5::Core)
 target_link_libraries(jellyin Qt5::Widgets)
+target_link_libraries(jellyin Qt5::Multimedia)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=memory -fPIE -pie -fno-omit-frame-pointer -g")

@@ -1,5 +1,5 @@
 <RCC>
-    <qresource>
+    <qresource prefix="/">
         <file>data/level_1.json</file>
         <file>images/level_1.png</file>
         <file>images/animation/player0.png</file>
@@ -65,5 +65,11 @@
         <file>images/animation/thorn0.png</file>
         <file>images/level_2.png</file>
         <file>data/level_2.json</file>
+        <file>sound/player/jump.mp3</file>
+        <file>sound/player/landing.mp3</file>
+        <file>sound/background.mp3</file>
+        <file>sound/player/taking_damage.mp3</file>
+        <file>sound/player/walking.mp3</file>
+        <file>sound/player/separation.mp3</file>
     </qresource>
 </RCC>

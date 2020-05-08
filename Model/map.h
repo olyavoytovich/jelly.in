@@ -9,6 +9,7 @@
 #include "Controller/abstract_game_controller.h"
 #include "box2d/box2d.h"
 #include "game_object.h"
+#include "sound_manager.h"
 
 enum class EntityType {
   kPlayer = 1,
@@ -83,6 +84,9 @@ class Map {
 
   std::vector<bool> is_key_pressed_;
   std::vector<bool> is_key_clamped_;
+
+  // Sound
+  SoundManager background_;
 };
 
 #endif  // MODEL_MAP_H_
