@@ -32,13 +32,14 @@ add_executable(jellyin main.cpp
         View/button.cpp
         View/choose_level_menu.cpp
         View/game_interface.cpp
+        View/intermediate_menu.cpp
         View/label.cpp
         View/main_menu.cpp
         View/menu.cpp
         View/movie.cpp
         View/view.cpp
         resources.qrc
-        ${box2d} View/pause_menu.cpp View/pause_menu.h View/victory_menu.cpp View/victory_menu.h View/fail_menu.cpp View/fail_menu.h)
+        ${box2d})
 
 target_link_libraries(jellyin Qt5::Core)
 target_link_libraries(jellyin Qt5::Widgets)

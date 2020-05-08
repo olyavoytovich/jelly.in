@@ -13,12 +13,10 @@
 #include "Model/shooter.h"
 #include "View/abstract_view.h"
 #include "View/choose_level_menu.h"
-#include "View/fail_menu.h"
 #include "View/game_interface.h"
+#include "View/intermediate_menu.h"
 #include "View/main_menu.h"
 #include "View/menu.h"
-#include "View/pause_menu.h"
-#include "View/victory_menu.h"
 #include "View/view.h"
 #include "abstract_game_controller.h"
 
@@ -47,6 +45,7 @@ class GameController : public AbstractGameController {
 
  private:
   Key GetKeyFromCode(int key_code);
+  void CloseCurrentLevel();
 
  private:
   int level_number_ = 0;

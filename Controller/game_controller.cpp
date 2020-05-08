@@ -73,36 +73,34 @@ Key GameController::GetKeyFromCode(int key_code) {
   return Key::kAnyKey;
 }
 
-void GameController::OpenChooseLevelMenu() {
-  OpenMenu(std::make_shared<ChooseLevelMenu>(this));
+void GameController::CloseCurrentLevel() {
   interface_ = nullptr;
   map_ = nullptr;
   player_ = nullptr;
+}
+
+void GameController::OpenChooseLevelMenu() {
+  OpenMenu(std::make_shared<ChooseLevelMenu>(this));
+  CloseCurrentLevel();
 }
 
 void GameController::OpenMainMenu() {
   OpenMenu(std::make_shared<MainMenu>(this));
-  interface_ = nullptr;
-  map_ = nullptr;
-  player_ = nullptr;
+  CloseCurrentLevel();
 }
 
 void GameController::OpenPauseMenu() {
-  OpenMenu(std::make_shared<PauseMenu>(this));
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kPause));
 }
 
 void GameController::OpenVictoryMenu() {
-  OpenMenu(std::make_shared<VictoryMenu>(this));
-  interface_ = nullptr;
-  map_ = nullptr;
-  player_ = nullptr;
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory));
+  CloseCurrentLevel();
 }
 
 void GameController::OpenFailMenu() {
-  OpenMenu(std::make_shared<FailMenu>(this));
-  interface_ = nullptr;
-  map_ = nullptr;
-  player_ = nullptr;
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kFail));
+  CloseCurrentLevel();
 }
 
 void GameController::ResumeGame() {
@@ -129,8 +127,6 @@ void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
 void GameController::StartLevel(int level_number) {
   map_ = MapLoader::LoadMap("level_" + QString::number(level_number));
   if (map_ == nullptr) {
-    interface_ = nullptr;
-    player_ = nullptr;
     return;
   }
   level_number_ = level_number;

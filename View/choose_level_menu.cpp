@@ -39,5 +39,4 @@ void ChooseLevelMenu::resizeEvent(QResizeEvent* event) {
   MakeEqualFontSize(level_buttons_);
 
   back_button_->SetRectangle(PositionRectangle(1, 1, 1, 1));
-  repaint();
 }
