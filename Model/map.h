@@ -20,6 +20,7 @@ enum class EntityType {
   kGround = 64,
   kPlayerPart = 128,
   kSpikes = 256,
+  kExit = 512,
   kDefault
 };
 
@@ -32,6 +33,7 @@ class Map {
   void Draw(QPainter* painter);
 
   double GetScale() const;
+  std::shared_ptr<GameObject> GetPlayer() const;
 
   void AddGameObject(std::shared_ptr<GameObject> object);
   void SetPlayerObject(std::shared_ptr<GameObject> player);
@@ -62,9 +64,9 @@ class Map {
   const int kPositionAccuracy = 2;
 
   // Ширина и Высота камеры
-  const QPoint kVisibleSize = QPoint(800, 600);
+  const QPoint kVisibleSize = QPoint(1600, 900);
   // Ширина и Высота прямоугольника игрока (из центра камеры)
-  const QPoint kPlayerBoundary = QPoint(200, 150);
+  const QPoint kPlayerBoundary = QPoint(400, 225);
 
  private:
   std::shared_ptr<b2World> world_;

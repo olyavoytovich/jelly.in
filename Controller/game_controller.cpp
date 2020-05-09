@@ -8,11 +8,17 @@ GameController::GameController()
 }
 
 void GameController::Update(int time) {
-  if (map_ == nullptr) {
+  if (view_->centralWidget() != interface_.get()) {
     return;
   }
   view_->repaint();
   map_->Update(time);
+  if (player_->ReachedExit()) {
+    OpenVictoryMenu();
+  }
+  if (interface_ != nullptr) {
+    interface_->SetHealth(player_->GetCurrentHealth());
+  }
 }
 
 void GameController::Draw(QPainter* painter) const {
@@ -23,6 +29,12 @@ void GameController::Draw(QPainter* painter) const {
 }
 
 void GameController::PressKey(int key_code) {
+  if (key_code == Qt::Key_Escape) {
+    if (view_->centralWidget() == interface_.get()) {
+      OpenPauseMenu();
+    }
+  }
+
   if (map_ == nullptr) {
     return;
   }
@@ -61,23 +73,65 @@ Key GameController::GetKeyFromCode(int key_code) {
   return Key::kAnyKey;
 }
 
+void GameController::CloseCurrentLevel() {
+  interface_ = nullptr;
+  map_ = nullptr;
+  player_ = nullptr;
+}
+
 void GameController::OpenChooseLevelMenu() {
   OpenMenu(std::make_shared<ChooseLevelMenu>(this));
+  CloseCurrentLevel();
 }
 
 void GameController::OpenMainMenu() {
   OpenMenu(std::make_shared<MainMenu>(this));
+  CloseCurrentLevel();
+}
+
+void GameController::OpenPauseMenu() {
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kPause));
+}
+
+void GameController::OpenVictoryMenu() {
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory));
+  CloseCurrentLevel();
+}
+
+void GameController::OpenFailMenu() {
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kFail));
+  CloseCurrentLevel();
+}
+
+void GameController::ResumeGame() {
+  view_->takeCentralWidget();
+  view_->setCentralWidget(interface_.get());
+}
+
+void GameController::RestartGame() {
+  StartLevel(level_number_);
+}
+
+void GameController::StartNextLevel() {
+  StartLevel(level_number_ + 1);
 }
 
 void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
   menu_ = std::move(menu);
   if (menu_ != nullptr) {
+    view_->takeCentralWidget();
     view_->setCentralWidget(menu_.get());
   }
 }
 
-void GameController::StartLevel(const QString& level_number) {
-  level_number_ = level_number.toInt();
-  map_ = MapLoader::LoadMap("level_" + level_number);
-  menu_ = nullptr;
+void GameController::StartLevel(int level_number) {
+  map_ = MapLoader::LoadMap("level_" + QString::number(level_number));
+  if (map_ == nullptr) {
+    return;
+  }
+  level_number_ = level_number;
+  player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
+  interface_ = std::make_shared<GameInterface>(this);
+  view_->takeCentralWidget();
+  view_->setCentralWidget(interface_.get());
 }

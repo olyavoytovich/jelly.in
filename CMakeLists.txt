@@ -18,9 +18,9 @@ file(GLOB box2d
         box2d/*/*.cpp)
 
 add_executable(jellyin main.cpp
+        Controller/game_controller.cpp
         Model/animation.cpp
         Model/animator.cpp
-        Controller/game_controller.cpp
         Model/contact_listener.cpp
         Model/entity.cpp
         Model/game_object.cpp
@@ -29,12 +29,16 @@ add_executable(jellyin main.cpp
         Model/patroller.cpp
         Model/player.cpp
         Model/shooter.cpp
-        resources.qrc
-        View/view.cpp
         View/button.cpp
         View/choose_level_menu.cpp
+        View/game_interface.cpp
+        View/intermediate_menu.cpp
+        View/label.cpp
         View/main_menu.cpp
         View/menu.cpp
+        View/movie.cpp
+        View/view.cpp
+        resources.qrc
         ${box2d})
 
 target_link_libraries(jellyin Qt5::Core)

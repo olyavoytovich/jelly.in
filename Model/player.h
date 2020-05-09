@@ -22,22 +22,27 @@ class Player : public Entity {
                       EntityType other_type) override;
   void EndCollision(b2Fixture* my_fixture) override;
 
+  int GetCurrentHealth() const;
+  bool ReachedExit() const;
+
  public:
-  static const int kPlayerWidth = 30;
-  static const int kPlayerHeight = 30;
+  static const int kPlayerWidth = 64;
+  static const int kPlayerHeight = 64;
 
  private:
   void TakeDamage();
 
  private:
-  const float kPlayerSpeed = 3;
-  const float kPlayerJumpSpeed = 4;
-  const float kCloneSpeed = 5;
+  const float kPlayerSpeed = 6;
+  const float kPlayerJumpSpeed = 8;
+  const float kCloneSpeed = 10;
   const int kPlayerJumpCount = 2;
   const int kNoDamageTime = 1000;
   const int kMaxHealth = 3;
 
  private:
+  bool reached_exit_ = false;
+
   int current_health_ = kMaxHealth;
   int no_damage_time_left_ = 0;
 

@@ -20,6 +20,11 @@
         <file>images/menu/play_second.png</file>
         <file>images/menu/play_third.png</file>
         <file>images/menu/big_background.png</file>
+        <file>images/menu/big_background_yellow.png</file>
+        <file>images/menu/big_background_pink.png</file>
+        <file>images/menu/blue_first.png</file>
+        <file>images/menu/blue_second.png</file>
+        <file>images/menu/blue_third.png</file>
         <file>images/menu/exit_first.png</file>
         <file>images/menu/exit_second.png</file>
         <file>images/menu/exit_third.png</file>
@@ -32,10 +37,19 @@
         <file>images/menu/back_arrow_second.png</file>
         <file>images/menu/back_arrow_third.png</file>
         <file>images/menu/choose_level_menu.png</file>
+        <file>images/menu/pause_menu.png</file>
+        <file>images/menu/fail_menu.png</file>
+        <file>images/menu/victory_menu.png</file>
         <file>images/menu/shoose_level_menu_background.png</file>
-        <file>images/menu/level_button_first.png</file>
-        <file>images/menu/level_button_second.png</file>
-        <file>images/menu/level_button_third.png</file>
+        <file>images/menu/yellow_first.png</file>
+        <file>images/menu/yellow_second.png</file>
+        <file>images/menu/yellow_third.png</file>
+        <file>images/menu/malinovij_first.png</file>
+        <file>images/menu/malinovij_second.png</file>
+        <file>images/menu/malinovij_third.png</file>
+        <file>images/menu/orange_first.png</file>
+        <file>images/menu/orange_second.png</file>
+        <file>images/menu/orange_third.png</file>
         <file>images/animation/burdock0.png</file>
         <file>images/animation/burdock1.png</file>
         <file>images/animation/burdock2.png</file>
@@ -65,5 +79,9 @@
         <file>images/animation/thorn0.png</file>
         <file>images/level_2.png</file>
         <file>data/level_2.json</file>
+        <file>images/level_3.png</file>
+        <file>data/level_3.json</file>
+        <file>images/gifs/heart.gif</file>
+        <file>images/gifs/pause_menu.gif</file>
     </qresource>
 </RCC>

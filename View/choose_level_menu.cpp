@@ -13,14 +13,15 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
     game_controller_->OpenMainMenu();
   });
 
-  auto level_image_set = std::make_shared<ImageSet>("level_button");
+  auto level_image_set = std::make_shared<ImageSet>("yellow");
   for (int i = 0; i < 12; i++) {
-    level_buttons_.emplace_back(new Button(level_image_set, this));
+    level_buttons_.emplace_back(new Button(level_image_set, this,
+                                           QString::number(i + 1)));
   }
 
-  for (int i = 0; i < 2; i++) {
+  for (int i = 0; i < 3; i++) {
     connect(level_buttons_[i], &QPushButton::clicked, this, [&, i]() {
-      game_controller_->StartLevel(QString::number(i + 1));
+      game_controller_->StartLevel(i + 1);
     });
   }
 }
@@ -31,11 +32,11 @@ void ChooseLevelMenu::resizeEvent(QResizeEvent* event) {
   int i = 0;
   for (int pos_y = 1; pos_y <= 5; pos_y += 2) {
     for (int pos_x = 3; pos_x <= 12; pos_x += 3) {
-      level_buttons_[i]->setGeometry(PositionRectangle(pos_x, pos_y, 2, 1));
+      level_buttons_[i]->SetRectangle(PositionRectangle(pos_x, pos_y, 2, 1));
       i++;
     }
   }
+  MakeEqualFontSize(level_buttons_);
 
-  back_button_->setGeometry(PositionRectangle(1, 1, 1, 1));
-  repaint();
+  back_button_->SetRectangle(PositionRectangle(1, 1, 1, 1));
 }
