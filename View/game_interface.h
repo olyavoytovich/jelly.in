@@ -19,7 +19,7 @@ class GameInterface : public Menu {
   void resizeEvent(QResizeEvent* event) override;
 
  private:
-  bool player_loosed_ = false;
+  bool player_lost_ = false;
   int current_health_ = 0;
 
   std::vector<std::shared_ptr<Movie>> health_;

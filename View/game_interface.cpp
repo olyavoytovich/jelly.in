@@ -18,11 +18,11 @@ void GameInterface::SetHealth(int health) {
     health_[current_health_]->SetSpeed(200);
     health_[current_health_]->Play();
     if (current_health_ == 0) {
-      player_loosed_ = true;
+      player_lost_ = true;
     }
   }
 
-  if (player_loosed_ && health_[0]->IsFinished()) {
+  if (player_lost_ && health_[0]->IsFinished()) {
     game_controller_->OpenFailMenu();
   }
 }
