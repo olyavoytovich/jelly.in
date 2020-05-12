@@ -38,6 +38,11 @@ void SoundManager::SetVolume(int volume) {
   player_->setVolume(parent_volume_ * pure_volume_ / 100);
 }
 
+void SoundManager::SetVolumeByDistance(int distance) {
+  Q_UNUSED(distance);
+  this->SetVolume(100);
+}
+
 void SoundManager::SetPlayBackMode(
         QMediaPlaylist::PlaybackMode play_back_mode) {
   playlist_->setPlaybackMode(play_back_mode);

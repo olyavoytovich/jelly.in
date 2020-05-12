@@ -23,6 +23,12 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetAnimator(std::move(animator));
   animator_->RepeatInReverseOrder();
   SetWayPoints(way_points);
+  if (entity_type == EntityType::kBurdock) {
+    bullet_sound_.AddMedia("qrc:/sound/enemy/burdock_bullet.mp3");
+  }
+  if (entity_type == EntityType::kCloud) {
+    permanent_sound_.AddMedia("qrc:/sound/enemy/cloud.mp3");
+  }
 }
 
 Shooter::Shooter(std::shared_ptr<Map> map,
@@ -47,6 +53,12 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetSpeed(speed);
   SetAnimator(std::move(animator));
   SetWayPoints(way_points);
+  if (entity_type == EntityType::kBurdock) {
+    bullet_sound_.AddMedia("qrc:/sound/enemy/burdock_bullet.mp3");
+  }
+  if (entity_type == EntityType::kCloud) {
+    permanent_sound_.AddMedia("qrc:/sound/enemy/cloud.mp3");
+  }
 }
 
 Shooter::Shooter(std::shared_ptr<Map> map,
@@ -73,9 +85,17 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetSpeed(speed);
   SetAnimator(std::move(animator));
   SetWayPoints(way_points);
+  if (entity_type == EntityType::kBurdock) {
+    bullet_sound_.AddMedia("qrc:/sound/enemy/burdock_bullet.mp3");
+  }
+  if (entity_type == EntityType::kCloud) {
+    permanent_sound_.AddMedia("qrc:/sound/enemy/cloud.mp3");
+  }
 }
 
 void Shooter::Update(int time) {
+  permanent_sound_.SetVolumeByDistance(100);
+  permanent_sound_.Play();
   Entity::Update(time);
   last_shoot_time_ += time;
   if (last_shoot_time_ < shoot_period_) {
@@ -113,6 +133,8 @@ void Shooter::Update(int time) {
 }
 
 std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
+  bullet_sound_.SetVolumeByDistance(CountDistance());
+  bullet_sound_.Play();
   auto bullet = std::make_shared<Entity>(map_,
                                          b2_dynamicBody,
                                          bullet_position +
@@ -123,4 +145,10 @@ std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
   map_->AddGameObject(bullet);
   animator_->Play();
   return bullet;
+}
+
+int Shooter::CountDistance() {
+  if (player_ == nullptr) {
+    map_->GetPlayer();
+  }
 }

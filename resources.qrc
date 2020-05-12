@@ -71,5 +71,7 @@
         <file>sound/player/taking_damage.mp3</file>
         <file>sound/player/walking.mp3</file>
         <file>sound/player/separation.mp3</file>
+        <file>sound/enemy/burdock_bullet.mp3</file>
+        <file>sound/enemy/cloud.mp3</file>
     </qresource>
 </RCC>

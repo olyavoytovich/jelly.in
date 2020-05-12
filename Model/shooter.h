@@ -66,6 +66,8 @@ class Shooter : public Entity {
  private:
   std::shared_ptr<Entity> CreateBullet(const QPoint& bullet_position);
 
+  int CountDistance();
+
  private:
   BulletDirection bullet_direction_;
 
@@ -81,6 +83,11 @@ class Shooter : public Entity {
   int bullet_radius_;
 
   std::shared_ptr<Animator> bullet_animator_;
+
+  std::shared_ptr<GameObject> player_ = nullptr;
+  // Sound
+  SoundManager bullet_sound_;
+  SoundManager permanent_sound_;
 };
 
 #endif  // MODEL_SHOOTER_H_

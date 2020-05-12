@@ -47,4 +47,8 @@ Patroller::Patroller(std::shared_ptr<Map> map,
   animator_->LoopAnimation();
   animator_->Play();
   SetWayPoints(way_points);
+
+  // Sound
+  SoundManager shooter_sound_;
+  SoundManager bullet_sound_;
 }

@@ -146,3 +146,6 @@ HEADERS += \
 
 RESOURCES += \
     resources.qrc
+
+DISTFILES += \
+    sound/enemy/burdock_bullet.mp3

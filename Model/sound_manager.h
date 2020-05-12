@@ -20,6 +20,7 @@ class SoundManager {
 
   void ChangeVolume(int volume);
   void SetVolume(int volume);
+  void SetVolumeByDistance(int distance);
 
   void SetPlayBackMode(QMediaPlaylist::PlaybackMode play_back_mode);
 
