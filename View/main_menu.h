@@ -2,10 +2,8 @@
 #define VIEW_MAIN_MENU_H_
 
 #include <QApplication>
-#include <QHBoxLayout>
 #include <memory>
 
-#include "choose_level_menu.h"
 #include "menu.h"
 
 class MainMenu : public Menu {

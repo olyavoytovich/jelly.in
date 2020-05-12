@@ -23,7 +23,7 @@ MainMenu::MainMenu(AbstractGameController* game_controller, QWidget* parent)
 void MainMenu::resizeEvent(QResizeEvent* event) {
   Menu::resizeEvent(event);
 
-  play_button_->setGeometry(PositionRectangle(7, 4, 2, 2));
-  exit_button_->setGeometry(PositionRectangle(13, 5, 1, 1));
-  settings_button_->setGeometry(PositionRectangle(2, 4, 1, 1));
+  play_button_->SetRectangle(PositionRectangle(7, 4, 2, 2));
+  exit_button_->SetRectangle(PositionRectangle(13, 5, 1, 1));
+  settings_button_->SetRectangle(PositionRectangle(2, 4, 1, 1));
 }

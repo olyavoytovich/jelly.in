@@ -1,7 +1,7 @@
 #include "map.h"
 
 Map::Map(const QImage& map_image)
-    : world_(std::make_shared<b2World>(b2Vec2(0, 10))),
+    : world_(std::make_shared<b2World>(b2Vec2(0, 20))),
       current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()),
       map_image_(map_image),
       scaled_map_image_(map_image),
@@ -81,6 +81,10 @@ void Map::Draw(QPainter* painter) {
 
 double Map::GetScale() const {
   return scale_;
+}
+
+std::shared_ptr<GameObject> Map::GetPlayer() const {
+  return player_;
 }
 
 void Map::AddGameObject(std::shared_ptr<GameObject> object) {

@@ -46,6 +46,10 @@ Player::Player(std::shared_ptr<Map> map,
 
 void Player::Update(int time) {
   Entity::Update(time);
+  if (current_health_ == 0) {
+    return;
+  }
+
   if (no_damage_time_left_ > 0) {
     no_damage_time_left_ -= time;
   }
@@ -99,6 +103,9 @@ void Player::BeginCollision(b2Fixture* fixture,
     player_part_->MarkAsDeleted();
     player_part_ = nullptr;
   }
+  if (other_type == EntityType::kExit) {
+    reached_exit_ = true;
+  }
 
   if (fixture == bottom_sensor_) {
     landing_sound_.Replay();
@@ -122,6 +129,14 @@ void Player::EndCollision(b2Fixture* my_fixture) {
   }
 }
 
+int Player::GetCurrentHealth() const {
+  return current_health_;
+}
+
+bool Player::ReachedExit() const {
+  return reached_exit_;
+}
+
 void Player::TakeDamage() {
   if (no_damage_time_left_ > 0) {
     return;
@@ -130,7 +145,4 @@ void Player::TakeDamage() {
   animator_->Play();
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;
-  if (current_health_ <= 0) {
-    MarkAsDeleted();
-  }
 }
