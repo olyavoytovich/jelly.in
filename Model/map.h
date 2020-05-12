@@ -21,6 +21,7 @@ enum class EntityType {
   kPlayerPart = 128,
   kSpikes = 256,
   kExit = 512,
+  kPlate = 1024,
   kDefault
 };
 

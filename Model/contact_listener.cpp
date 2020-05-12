@@ -44,6 +44,9 @@ Entity* ContactListener::GetEntityFromFixture(b2Fixture* fixture,
     case EntityType::kCloud: {
       return static_cast<Shooter*>(fixture->GetBody()->GetUserData());
     }
+    case EntityType::kPlate: {
+      return static_cast<PressurePlate*>(fixture->GetBody()->GetUserData());
+    }
     default: {
       return static_cast<Entity*>(fixture->GetBody()->GetUserData());
     }

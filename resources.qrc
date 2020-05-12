@@ -1,13 +1,67 @@
 <RCC>
     <qresource>
-        <file>data/level_1.json</file>
-        <file>images/level_1.png</file>
-        <file>images/animation/player0.png</file>
-        <file>images/animation/player1.png</file>
-        <file>images/animation/player2.png</file>
-        <file>images/animation/player3.png</file>
-        <file>images/animation/player4.png</file>
-        <file>images/animation/player5.png</file>
+        <file>images/animation/plate0.png</file>
+        <file>images/animation/pressed0.png</file>
+        <file>images/animation/pressed1.png</file>
+        <file>images/animation/pressed2.png</file>
+        <file>images/animation/pressed3.png</file>
+        <file>images/animation/pressed4.png</file>
+        <file>images/animation/pressed5.png</file>
+        <file>images/animation/pressed6.png</file>
+        <file>images/animation/pressed7.png</file>
+        <file>images/animation/pressed8.png</file>
+        <file>images/animation/pressed9.png</file>
+        <file>images/animation/pressed10.png</file>
+        <file>images/animation/released0.png</file>
+        <file>images/animation/released1.png</file>
+        <file>images/animation/released2.png</file>
+        <file>images/animation/released3.png</file>
+        <file>images/animation/released4.png</file>
+        <file>images/animation/released5.png</file>
+        <file>images/animation/released6.png</file>
+        <file>images/animation/released7.png</file>
+        <file>images/animation/released8.png</file>
+        <file>images/animation/released9.png</file>
+        <file>images/animation/released10.png</file>
+        <file>images/animation/platform0.png</file>
+        <file>images/animation/damage0.png</file>
+        <file>images/animation/damage1.png</file>
+        <file>images/animation/damage2.png</file>
+        <file>images/animation/damage3.png</file>
+        <file>images/animation/damage4.png</file>
+        <file>images/animation/damage5.png</file>
+        <file>images/animation/damage6.png</file>
+        <file>images/animation/damage7.png</file>
+        <file>images/animation/damage8.png</file>
+        <file>images/animation/damage9.png</file>
+        <file>images/animation/damage10.png</file>
+        <file>images/animation/damage11.png</file>
+        <file>images/animation/damage12.png</file>
+        <file>images/animation/damage13.png</file>
+        <file>images/animation/damage14.png</file>
+        <file>images/animation/damage15.png</file>
+        <file>images/animation/damage16.png</file>
+        <file>images/animation/damage17.png</file>
+        <file>images/animation/damage18.png</file>
+        <file>images/animation/damage19.png</file>
+        <file>images/animation/damage20.png</file>
+        <file>images/animation/jump0.png</file>
+        <file>images/animation/jump1.png</file>
+        <file>images/animation/jump2.png</file>
+        <file>images/animation/jump3.png</file>
+        <file>images/animation/jump4.png</file>
+        <file>images/animation/jump5.png</file>
+        <file>images/animation/jump6.png</file>
+        <file>images/animation/jump7.png</file>
+        <file>images/animation/jump8.png</file>
+        <file>images/animation/jump9.png</file>
+        <file>images/animation/jump10.png</file>
+        <file>images/animation/jump11.png</file>
+        <file>images/animation/jump12.png</file>
+        <file>images/animation/jump13.png</file>
+        <file>images/animation/jump14.png</file>
+        <file>images/animation/jump15.png</file>
+        <file>images/animation/jump16.png</file>
         <file>images/animation/sunflower0.png</file>
         <file>images/animation/sunflower1.png</file>
         <file>images/animation/sunflower2.png</file>
@@ -75,7 +129,6 @@
         <file>images/animation/cloud8.png</file>
         <file>images/animation/cloud9.png</file>
         <file>images/animation/drop0.png</file>
-        <file>images/animation/player0.png</file>
         <file>images/animation/thorn0.png</file>
         <file>images/level_2.png</file>
         <file>data/level_2.json</file>

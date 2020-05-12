@@ -100,8 +100,11 @@ void Player::BeginCollision(b2Fixture* fixture,
     right_collisions_++;
   } else if (other_type == EntityType::kBullet
       || other_type == EntityType::kChestnut
-      || other_type == EntityType::kSpikes) {
+      || other_type == EntityType::kSpikes
+      || other_type == EntityType::kBurdock) {
     TakeDamage();
+    animator_->SetCurrentAnimation("damage");
+    animator_->Play();
   }
 }
 
@@ -111,6 +114,8 @@ void Player::EndCollision(b2Fixture* my_fixture) {
   } else if (my_fixture == right_sensor_) {
     right_collisions_--;
   }
+  animator_->SetCurrentAnimation("jump");
+  animator_->Play();
 }
 
 int Player::GetCurrentHealth() const {

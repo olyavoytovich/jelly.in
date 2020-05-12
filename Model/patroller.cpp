@@ -10,6 +10,7 @@ Patroller::Patroller(std::shared_ptr<Map> map,
     : Entity(std::move(map), type, body_position, polygon,
              EntityType::kChestnut) {
   SetSpeed(speed);
+  Activate();
   SetAnimator(std::move(animator));
   animator_->LoopAnimation();
   animator_->Play();
@@ -26,6 +27,7 @@ Patroller::Patroller(std::shared_ptr<Map> map,
     : Entity(std::move(map), type, body_position, radius,
              EntityType::kChestnut) {
   SetSpeed(speed);
+  Activate();
   SetAnimator(std::move(animator));
   animator_->LoopAnimation();
   animator_->Play();
@@ -43,6 +45,7 @@ Patroller::Patroller(std::shared_ptr<Map> map,
     : Entity(std::move(map), body_type, body_position, circles, polygons,
              EntityType::kChestnut) {
   SetSpeed(speed);
+  Activate();
   SetAnimator(std::move(animator));
   animator_->LoopAnimation();
   animator_->Play();

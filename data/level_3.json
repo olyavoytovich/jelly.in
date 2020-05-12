@@ -338,6 +338,18 @@
       "width": 256,
       "height": 32,
       "type": "spikes"
+    },
+    {
+      "x": 6384,
+      "y": 2560,
+      "width": 16,
+      "height": 2528
+    },
+    {
+      "x": 0,
+      "y": 2560,
+      "width": 16,
+      "height": 2240
     }
   ],
   "dynamic_objects": [
@@ -347,9 +359,19 @@
       "y": 4736,
       "width": 0,
       "height": 0,
-      "animation_duration": 500,
-      "animation_name": "player",
-      "frames_count": 6
+      "animation_count": 2,
+      "animations": [
+        {
+          "name": "damage",
+          "duration": 300,
+          "frames_count": 21
+        },
+        {
+          "name": "jump",
+          "duration": 200,
+          "frames_count": 17
+        }
+      ]
     },
     {
       "name": "exit",
@@ -364,12 +386,17 @@
       "y": 3392,
       "width": 128,
       "height": 128,
-      "animation_duration": 600,
-      "animation_name": "chestnut",
-      "frames_count": 7,
-      "speed": 100,
+      "animation_count": 1,
+      "speed": 500,
       "type": "patroller",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
+        }
+      ],
       "way_points": [
         {
           "x": 320,
@@ -387,19 +414,29 @@
       "y": 4192,
       "width": 256,
       "height": 64,
-      "animation_duration": 200,
-      "animation_name": "cloud",
-      "bullet_animation_duration": 1000,
-      "bullet_animation_name": "drop",
-      "bullet_frames_count": 1,
+      "animation_count": 1,
       "bullet_radius": 5,
       "bullet_speed": 300,
-      "frames_count": 10,
       "shoot_direction": "down",
       "shoot_period": 1000,
-      "speed": 100,
+      "speed": 500,
       "type": "shooter",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "cloud",
+          "duration": 200,
+          "frames_count": 10
+        }
+      ],
+      "bullet_animation_count": 1,
+      "bullet_animations": [
+        {
+          "name": "drop",
+          "duration": 1000,
+          "frames_count": 1
+        }
+      ],
       "way_points": [
         {
           "x": 1216,
@@ -417,19 +454,29 @@
       "y": 4476,
       "width": 192,
       "height": 64,
-      "animation_duration": 200,
-      "animation_name": "cloud",
-      "bullet_animation_duration": 1000,
-      "bullet_animation_name": "drop",
-      "bullet_frames_count": 1,
+      "animation_count": 1,
       "bullet_radius": 5,
       "bullet_speed": 300,
-      "frames_count": 10,
       "shoot_direction": "down",
       "shoot_period": 2000,
-      "speed": 50,
+      "speed": 400,
       "type": "shooter",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "cloud",
+          "duration": 200,
+          "frames_count": 10
+        }
+      ],
+      "bullet_animation_count": 1,
+      "bullet_animations": [
+        {
+          "name": "drop",
+          "duration": 1000,
+          "frames_count": 1
+        }
+      ],
       "way_points": [
         {
           "x": 4608,
@@ -447,19 +494,29 @@
       "y": 3536,
       "width": 96,
       "height": 96,
-      "animation_duration": 300,
-      "animation_name": "burdock",
-      "bullet_animation_duration": 100,
-      "bullet_animation_name": "thorn",
-      "bullet_frames_count": 1,
+      "animation_count": 1,
       "bullet_radius": 5,
       "bullet_speed": 500,
-      "frames_count": 7,
       "shoot_direction": "left_right",
       "shoot_period": 1000,
-      "speed": 50,
+      "speed": 400,
       "type": "shooter",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "burdock",
+          "duration": 300,
+          "frames_count": 7
+        }
+      ],
+      "bullet_animation_count": 1,
+      "bullet_animations": [
+        {
+          "name": "thorn",
+          "duration": 100,
+          "frames_count": 1
+        }
+      ],
       "way_points": [
         {
           "x": 4352,

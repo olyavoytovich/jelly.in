@@ -22,6 +22,7 @@ SOURCES += \
         Model/map_loader.cpp \
         Model/patroller.cpp \
         Model/player.cpp \
+        Model/pressure_plate.cpp \
         Model/shooter.cpp \
         View/button.cpp \
         View/choose_level_menu.cpp \
@@ -91,6 +92,7 @@ HEADERS += \
     Model/map_loader.h \
     Model/patroller.h \
     Model/player.h \
+    Model/pressure_plate.h \
     Model/shooter.h \
     View/abstract_view.h \
     View/button.h \

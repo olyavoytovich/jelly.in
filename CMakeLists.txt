@@ -28,6 +28,7 @@ add_executable(jellyin main.cpp
         Model/map_loader.cpp
         Model/patroller.cpp
         Model/player.cpp
+        Model/pressure_plate.cpp
         Model/shooter.cpp
         View/button.cpp
         View/choose_level_menu.cpp

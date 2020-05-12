@@ -76,6 +76,9 @@ class Entity : public GameObject {
 
   void Update(int time) override;
 
+  void Activate();
+  void Stop();
+
   b2Body* GetB2Body() const override;
   QPoint GetPositionInPixels() const override;
   QRect GetBoundings() const;
@@ -140,6 +143,7 @@ class Entity : public GameObject {
 
  private:
   b2Vec2 target_velocity = {0, 0};
+  bool is_active_;
   EntityType entity_type_;
 };
 

@@ -19,6 +19,7 @@ Entity::Entity(std::shared_ptr<Map> map,
   InitializeBody(body_type, body_position);
   b2PolygonShape shape = CreatePolygonShape(polygon);
   CreateFixture(shape);
+  is_active_ = false;
   InitializeBoundaryRectangle();
 }
 
@@ -31,6 +32,7 @@ Entity::Entity(std::shared_ptr<Map> map,
   InitializeBody(body_type, body_position);
   b2CircleShape shape = CreateCircleShape(radius);
   CreateFixture(shape);
+  is_active_ = false;
   InitializeBoundaryRectangle();
 }
 
@@ -52,6 +54,7 @@ Entity::Entity(std::shared_ptr<Map> map,
     b2PolygonShape shape = CreatePolygonShape(polygon, shape_position);
     CreateFixture(shape);
   }
+  is_active_ = false;
   InitializeBoundaryRectangle();
 }
 
@@ -72,44 +75,6 @@ void Entity::Draw(QPainter* painter) const {
     painter->drawImage(rectangle_for_image.topLeft() * map_->GetScale(),
                        *(animator_->GetCurrentImage(width, height)));
   }
-}
-
-void Entity::DrawShape(QPainter* painter, b2Fixture* shape) const {
-  if (shape->IsSensor()) {
-    return;
-  }
-  painter->save();
-
-  switch (shape->GetShape()->GetType()) {
-    case b2Shape::e_polygon: {
-      QPolygon polygon;
-      auto polygon_shape = dynamic_cast<b2PolygonShape*>(shape->GetShape());
-      for (int i = 0; i < polygon_shape->m_count; i++) {
-        b2Vec2 point = body_->GetWorldPoint(polygon_shape->m_vertices[i]);
-        polygon.putPoints(i, 1,
-                          MetersToPixels(point.x),
-                          MetersToPixels(point.y));
-      }
-      painter->drawPolygon(polygon);
-      break;
-    }
-
-    case b2Shape::e_circle: {
-      auto circle = dynamic_cast<b2CircleShape*>(shape->GetShape());
-      int radius = MetersToPixels(circle->m_radius);
-      QPoint center = MetersToPixels(body_->GetWorldCenter());
-      painter->drawEllipse(center.x() - radius,
-                           center.y() - radius,
-                           2 * radius,
-                           2 * radius);
-      break;
-    }
-
-    default: {
-      break;
-    }
-  }
-  painter->restore();
 }
 
 b2PolygonShape Entity::CreatePolygonShape(const QPolygon& polygon,
@@ -200,16 +165,32 @@ void Entity::Update(int time) {
   if (way_points_.size() <= 1) {
     return;
   }
+  if (!is_active_) {
+    return;
+  }
   ApplyImpulse();
 
   b2Vec2 body_position = body_->GetWorldCenter();
-  if ((body_position - way_points_[way_point_index_]).Length() <= 0.02) {
+  if ((body_position - way_points_[way_point_index_]).Length() <= 0.05) {
     way_point_index_ += direction_;
     if (way_point_index_ == way_points_.size() - 1 || way_point_index_ == 0) {
       direction_ *= -1;
     }
     SetVelocity(way_points_[way_point_index_], body_position, speed_);
   }
+}
+
+void Entity::Activate() {
+  is_active_ = true;
+  if (way_points_.size() <= 1) {
+    return;
+  }
+  SetVelocity(way_points_[way_point_index_], body_->GetWorldCenter(), speed_);
+}
+
+void Entity::Stop() {
+  is_active_ = false;
+  SetVelocity(b2Vec2(0, 0));
 }
 
 void Entity::InitializeBody(b2BodyType body_type, const QPoint& body_position) {
@@ -308,8 +289,8 @@ QRect Entity::GetBoundings() const {
 
 void Entity::BeginCollision(b2Fixture*,
                             EntityType my_type,
-                            EntityType other_type) {
-  if (my_type == EntityType::kBullet && other_type == EntityType::kGround) {
+                            EntityType) {
+  if (my_type == EntityType::kBullet) {
     MarkAsDeleted();
   }
 }

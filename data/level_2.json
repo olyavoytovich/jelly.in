@@ -1,4 +1,27 @@
 {
+  "plates": [
+    {
+      "name": "plate1",
+      "x": 672,
+      "y": 1976,
+      "width": 64,
+      "height": 16,
+      "animation_count": 2,
+      "type": "plate",
+      "animations": [
+        {
+          "name": "pressed",
+          "duration": 200,
+          "frames_count": 11
+        },
+        {
+          "name": "released",
+          "duration": 200,
+          "frames_count": 11
+        }
+      ]
+    }
+  ],
   "solids": [
     {
       "x": 0,
@@ -159,6 +182,31 @@
       "width": 192,
       "height": 32,
       "type": "spikes"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "width": 16,
+      "height": 2304
+    },
+    {
+      "x": 3824,
+      "y": 0,
+      "width": 16,
+      "height": 1600
+    },
+    {
+      "x": 3824,
+      "y": 1632,
+      "width": 16,
+      "height": 736
+    },
+    {
+      "x": 960,
+      "y": 2528,
+      "width": 832,
+      "height": 32,
+      "type": "spikes"
     }
   ],
   "dynamic_objects": [
@@ -168,9 +216,19 @@
       "y": 2208,
       "width": 0,
       "height": 0,
-      "animation_duration": 500,
-      "animation_name": "player",
-      "frames_count": 6
+      "animation_count": 2,
+      "animations": [
+        {
+          "name": "damage",
+          "duration": 500,
+          "frames_count": 21
+        },
+        {
+          "name": "jump",
+          "duration": 500,
+          "frames_count": 17
+        }
+      ]
     },
     {
       "name": "exit",
@@ -186,12 +244,17 @@
       "width": 128,
       "height": 128,
       "ellipse": true,
-      "animation_duration": 600,
-      "animation_name": "chestnut",
-      "frames_count": 7,
-      "speed": 100,
+      "animation_count": 1,
+      "speed": 300,
       "type": "patroller",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
+        }
+      ],
       "way_points": [
         {
           "x": 3456,
@@ -205,25 +268,59 @@
     },
     {
       "name": "patroller2",
-      "x": 3776,
+      "x": 3712,
       "y": 2304,
       "width": 128,
       "height": 128,
       "ellipse": true,
-      "animation_duration": 600,
-      "animation_name": "chestnut",
-      "frames_count": 7,
-      "speed": 100,
+      "animation_count": 1,
+      "speed": 200,
       "type": "patroller",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
+        }
+      ],
       "way_points": [
         {
-          "x": 3776,
+          "x": 3712,
           "y": 2304
         },
         {
           "x": 3456,
           "y": 2304
+        }
+      ]
+    },
+    {
+      "name": "platform1",
+      "x": 1504,
+      "y": 1680,
+      "width": 192,
+      "height": 32,
+      "animation_count": 1,
+      "plate_name": "plate1",
+      "speed": 300,
+      "type": "platform",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "platform",
+          "duration": 1000,
+          "frames_count": 1
+        }
+      ],
+      "way_points": [
+        {
+          "x": 1504,
+          "y": 1680
+        },
+        {
+          "x": 992,
+          "y": 1888
         }
       ]
     }
