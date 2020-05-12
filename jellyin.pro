@@ -156,4 +156,5 @@ RESOURCES += \
     resources.qrc
 
 DISTFILES += \
-    sound/enemy/burdock_bullet.mp3
+    sound/enemy/burdock_bullet.mp3 \
+    sound/menu/click.mp3

@@ -7,6 +7,10 @@ SoundManager::SoundManager() : pure_volume_(100), parent_volume_(100),
   player_->setVolume(pure_volume_);
 }
 
+void SoundManager::AddSon(std::shared_ptr<SoundManager> son) {
+  sons_.push_back(std::move(son));
+}
+
 void SoundManager::AddMedia(QString path) {
   playlist_->addMedia(QUrl(path));
 }
@@ -28,6 +32,13 @@ void SoundManager::Stop() {
   player_->stop();
 }
 
+void SoundManager::StopAll() {
+  player_->stop();
+  for (auto son : sons_) {
+    son->StopAll();
+  }
+}
+
 void SoundManager::ChangeVolume(int volume) {
   parent_volume_ = volume;
   player_->setVolume(parent_volume_ * pure_volume_ / 100);
@@ -39,8 +50,11 @@ void SoundManager::SetVolume(int volume) {
 }
 
 void SoundManager::SetVolumeByDistance(int distance) {
-  Q_UNUSED(distance);
-  this->SetVolume(100);
+  qDebug() << distance;
+  distance = (1500 - distance) / 15;
+  distance = std::min(100, distance);
+  distance = std::max(0, distance);
+  this->SetVolume(distance);
 }
 
 void SoundManager::SetPlayBackMode(

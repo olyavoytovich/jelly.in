@@ -91,5 +91,6 @@
         <file>data/level_3.json</file>
         <file>images/gifs/heart.gif</file>
         <file>images/gifs/pause_menu.gif</file>
+        <file>sound/menu/click.mp3</file>
     </qresource>
 </RCC>

@@ -6,6 +6,7 @@
 #include <utility>
 
 #include "box2d/box2d.h"
+#include "sound_manager.h"
 
 class GameObject {
  public:
@@ -21,8 +22,12 @@ class GameObject {
   virtual b2Body* GetB2Body() const;
   virtual QPoint GetPositionInPixels() const = 0;
 
+
+
  private:
   bool is_object_deleted_ = false;
 };
+
+extern SoundManager sounds_;
 
 #endif  // MODEL_GAME_OBJECT_H_

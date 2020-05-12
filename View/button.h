@@ -9,6 +9,7 @@
 #include <utility>
 
 #include "label.h"
+#include "Model/sound_manager.h"
 
 struct ImageSet {
   explicit ImageSet(const QString& name);
@@ -56,6 +57,7 @@ class Button : public QPushButton {
 
   std::shared_ptr<ImageSet> image_set_;
 
+  SoundManager click_sound_;
   Label* text_ = nullptr;
 };
 

@@ -42,6 +42,11 @@ Player::Player(std::shared_ptr<Map> map,
   separation_sound_.AddMedia("qrc:/sound/player/separation.mp3");
   walking_sound_.AddMedia("qrc:/sound/player/walking.mp3");
   walking_sound_.SetPlayBackMode(QMediaPlaylist::CurrentItemInLoop);
+  sounds_.AddSon(std::make_shared<SoundManager>(jump_sound_));
+  sounds_.AddSon(std::make_shared<SoundManager>(landing_sound_));
+  sounds_.AddSon(std::make_shared<SoundManager>(taking_damage_sound_));
+  sounds_.AddSon(std::make_shared<SoundManager>(separation_sound_));
+  sounds_.AddSon(std::make_shared<SoundManager>(walking_sound_));
 }
 
 void Player::Update(int time) {

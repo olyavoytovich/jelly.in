@@ -3,9 +3,10 @@
 
 #include <memory>
 #include <vector>
-
 #include "menu.h"
 #include "movie.h"
+#include "Model/sound_manager.h"
+#include "Model/game_object.h"
 
 enum class MenuType {
   kFail,

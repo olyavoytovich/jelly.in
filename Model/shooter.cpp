@@ -25,9 +25,11 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
   if (entity_type == EntityType::kBurdock) {
     bullet_sound_.AddMedia("qrc:/sound/enemy/burdock_bullet.mp3");
+    sounds_.AddSon(std::make_shared<SoundManager>(bullet_sound_));
   }
   if (entity_type == EntityType::kCloud) {
     permanent_sound_.AddMedia("qrc:/sound/enemy/cloud.mp3");
+    sounds_.AddSon(std::make_shared<SoundManager>(permanent_sound_));
   }
 }
 
@@ -55,9 +57,11 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
   if (entity_type == EntityType::kBurdock) {
     bullet_sound_.AddMedia("qrc:/sound/enemy/burdock_bullet.mp3");
+    sounds_.AddSon(std::make_shared<SoundManager>(bullet_sound_));
   }
   if (entity_type == EntityType::kCloud) {
     permanent_sound_.AddMedia("qrc:/sound/enemy/cloud.mp3");
+    sounds_.AddSon(std::make_shared<SoundManager>(permanent_sound_));
   }
 }
 
@@ -87,14 +91,16 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
   if (entity_type == EntityType::kBurdock) {
     bullet_sound_.AddMedia("qrc:/sound/enemy/burdock_bullet.mp3");
+    sounds_.AddSon(std::make_shared<SoundManager>(bullet_sound_));
   }
   if (entity_type == EntityType::kCloud) {
     permanent_sound_.AddMedia("qrc:/sound/enemy/cloud.mp3");
+    sounds_.AddSon(std::make_shared<SoundManager>(permanent_sound_));
   }
 }
 
 void Shooter::Update(int time) {
-  permanent_sound_.SetVolumeByDistance(100);
+  permanent_sound_.SetVolumeByDistance(CountDistance());
   permanent_sound_.Play();
   Entity::Update(time);
   last_shoot_time_ += time;
@@ -149,6 +155,13 @@ std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
 
 int Shooter::CountDistance() {
   if (player_ == nullptr) {
-    map_->GetPlayer();
+    player_ = map_->GetPlayer();
   }
+  if (player_ == nullptr) {
+      return 100000000;
+  }
+  QPoint begin = player_->GetPositionInPixels();
+  QPoint end = this->GetPositionInPixels();
+  return static_cast<int>(sqrt((begin.x() - end.x()) * (begin.x() - end.x()) +
+                               (begin.y() - end.y()) * (begin.y() - end.y())));
 }

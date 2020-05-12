@@ -10,6 +10,7 @@ Map::Map(const QImage& map_image)
   background_.AddMedia("qrc:/sound/background.mp3");
   background_.SetVolume(20);
   background_.SetPlayBackMode(QMediaPlaylist::CurrentItemInLoop);
+  sounds_.AddSon(std::make_shared<SoundManager>(background_));
 }
 
 void Map::Update(int time) {
