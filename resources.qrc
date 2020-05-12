@@ -75,7 +75,6 @@
         <file>images/animation/cloud8.png</file>
         <file>images/animation/cloud9.png</file>
         <file>images/animation/drop0.png</file>
-        <file>images/animation/player0.png</file>
         <file>images/animation/thorn0.png</file>
         <file>images/level_2.png</file>
         <file>data/level_2.json</file>
@@ -83,5 +82,8 @@
         <file>data/level_3.json</file>
         <file>images/gifs/heart.gif</file>
         <file>images/gifs/pause_menu.gif</file>
+        <file>images/gifs/player_red_move.gif</file>
+        <file>images/gifs/player_orange_move.gif</file>
+        <file>images/gifs/player_yellow_move.gif</file>
     </qresource>
 </RCC>
