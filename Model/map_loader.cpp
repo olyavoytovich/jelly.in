@@ -27,6 +27,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
 
     QPolygon object_points;
     QPoint object_position = QPoint(object["x"].toInt(), object["y"].toInt());
+
     if (!object["polygon"].isNull()) {
       // Добавляет полигон
       for (const auto& point : object["polygon"].toArray()) {
@@ -35,9 +36,12 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       }
     } else {
       // Добавляет прямоугольник
-      object_points =
-          QRect(0, 0, object["width"].toInt(), object["height"].toInt());
+      object_points = QRect(-object["width"].toInt() / 2,
+                            -object["height"].toInt() / 2,
+                            object["width"].toInt(),
+                            object["height"].toInt());
     }
+
     EntityType entity_type = EntityType::kGround;
     if (!object["type"].isNull()) {
       entity_type = EntityType::kSpikes;
@@ -50,6 +54,33 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   }
 
   std::map<QString, std::shared_ptr<Animation>> name_to_animation;
+  std::map<QString, std::shared_ptr<PressurePlate>> name_to_plate;
+
+  if (!json_main["plates"].isNull()) {
+    QJsonArray plates = json_main["plates"].toArray();
+    for (const auto& plate : plates) {
+      object = plate.toObject();
+      QPoint position(object["x"].toInt(), object["y"].toInt());
+      QPolygon object_points = QRect(-object["width"].toInt() / 2,
+                                     -object["height"].toInt() / 2,
+                                     object["width"].toInt(),
+                                     object["height"].toInt());
+
+      QJsonArray animations = object["animations"].toArray();
+
+      std::shared_ptr<Animator>
+          animator = CreateAnimator(&name_to_animation, animations);
+
+      auto pressure_plate =
+          std::make_shared<PressurePlate>(map,
+                                          b2_staticBody,
+                                          position,
+                                          QPolygon(object_points),
+                                          animator);
+      name_to_plate[object["name"].toString()] = pressure_plate;
+      map->AddGameObject(pressure_plate);
+    }
+  }
 
   QJsonArray dynamic_objects = json_main["dynamic_objects"].toArray();
   for (const auto& dynamic_object : dynamic_objects) {
@@ -66,16 +97,13 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       continue;
     }
 
-    if (object["animation_name"].isNull()) {
+    if (object["animation_count"].isNull()) {
       continue;
     }
-    QString animation_name = object["animation_name"].toString();
-    CreateAnimation(&name_to_animation,
-                    object["frames_count"].toInt(),
-                    object["animation_duration"].toInt(),
-                    animation_name);
-    auto animator =
-        std::make_shared<Animator>(name_to_animation[animation_name]);
+
+    QJsonArray animations = object["animations"].toArray();
+    std::shared_ptr<Animator>
+        animator = CreateAnimator(&name_to_animation, animations);
 
     if (object["name"].toString() == "player") {
       QPoint position(object["x"].toInt(), object["y"].toInt());
@@ -107,6 +135,19 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                    object["height"].toInt());
     int object_speed = object["speed"].toInt();
 
+    if (object["type"].toString() == "platform") {
+      auto game_object = std::make_shared<Entity>(map,
+                                                  b2_kinematicBody,
+                                                  object_position,
+                                                  object_points,
+                                                  EntityType::kGround);
+      game_object->SetAnimator(animator);
+      game_object->SetWayPoints(way_points);
+      game_object->SetSpeed(object["speed"].toInt());
+      name_to_plate[object["plate_name"].toString()]->AddPlatform(game_object);
+      map->AddGameObject(game_object);
+    }
+
     if (object["type"].toString() == "patroller") {
       if (!object["ellipse"].isNull()) {
         int radius = object["width"].toInt() / 2;
@@ -127,16 +168,11 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                                        object_speed));
       }
     }
-    if (object["type"].toString() == "shooter") {
-      QString
-          bullet_animation_name = object["bullet_animation_name"].toString();
-      CreateAnimation(&name_to_animation,
-                      object["bullet_frames_count"].toInt(),
-                      object["bullet_animation_duration"].toInt(),
-                      bullet_animation_name);
 
-      auto bullet_animator =
-          std::make_shared<Animator>(name_to_animation[bullet_animation_name]);
+    if (object["type"].toString() == "shooter") {
+      QJsonArray bullet_animations = object["bullet_animations"].toArray();
+      std::shared_ptr<Animator> bullet_animator =
+          CreateAnimator(&name_to_animation, bullet_animations);
 
       BulletDirection bullet_direction = BulletDirection::kLeftRight;
       b2BodyType body_type = b2_dynamicBody;
@@ -149,6 +185,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       int bullet_radius = object["bullet_radius"].toInt();
 
       EntityType shooter_type = EntityType::kDefault;
+      QString animation_name = animations[0].toObject()["name"].toString();
       if (animation_name == "sunflower") {
         shooter_type = EntityType::kSunflower;
       } else if (animation_name == "cloud") {
@@ -178,6 +215,26 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
     }
   }
   return map;
+}
+
+std::shared_ptr<Animator> MapLoader::CreateAnimator(
+    std::map<QString, std::shared_ptr<Animation>>* name_to_animation,
+    const QJsonArray& animations) {
+  std::map<QString, std::shared_ptr<Animation>> name_to_object_animation;
+  for (const auto& animation : animations) {
+    QJsonObject current_animation = animation.toObject();
+    QString animation_name = current_animation["name"].toString();
+    CreateAnimation(name_to_animation,
+                    current_animation["frames_count"].toInt(),
+                    current_animation["duration"].toInt(),
+                    animation_name);
+    name_to_object_animation[animation_name] =
+        (*name_to_animation)[animation_name];
+  }
+  auto animator = std::make_shared<Animator>(
+      name_to_object_animation,
+      animations[0].toObject()["name"].toString());
+  return animator;
 }
 
 void MapLoader::CreateAnimation(

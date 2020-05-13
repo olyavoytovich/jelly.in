@@ -20,6 +20,7 @@
 #include "map.h"
 #include "patroller.h"
 #include "player.h"
+#include "pressure_plate.h"
 #include "shooter.h"
 
 class MapLoader {
@@ -28,6 +29,10 @@ class MapLoader {
   static std::shared_ptr<Map> LoadMap(const QString& map_name);
 
  private:
+  static std::shared_ptr<Animator> CreateAnimator(
+      std::map<QString, std::shared_ptr<Animation>>* name_to_animation,
+      const QJsonArray& animations);
+
   static void CreateAnimation(
       std::map<QString, std::shared_ptr<Animation>>* name_to_animation,
       int frames_count,
