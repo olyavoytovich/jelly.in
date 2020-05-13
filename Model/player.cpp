@@ -119,7 +119,7 @@ void Player::EndCollision(b2Fixture* my_fixture, EntityType other_type) {
   } else if (my_fixture == right_sensor_) {
     right_collisions_--;
   } else if (other_type == EntityType::kGround) {
-    animator_->SetCurrentAnimation("jump");
+    animator_->SetCurrentAnimation(kJump);
     animator_->Play();
   } else if (other_type == EntityType::kChestnut
       || other_type == EntityType::kBurdock
@@ -141,7 +141,7 @@ void Player::TakeDamage() {
   if (no_damage_time_left_ > 0) {
     return;
   }
-  animator_->SetCurrentAnimation("damage");
+  animator_->SetCurrentAnimation(kDamage);
   animator_->Play();
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;

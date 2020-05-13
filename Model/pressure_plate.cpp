@@ -34,7 +34,7 @@ void PressurePlate::BeginCollision(b2Fixture*,
     collisions_count_++;
     ActivatePlatforms();
     if (collisions_count_ == 1) {
-      animator_->SetCurrentAnimation("pressed");
+      animator_->SetCurrentAnimation(kPressed);
       animator_->Play();
     }
   }
@@ -44,7 +44,7 @@ void PressurePlate::EndCollision(b2Fixture*, EntityType) {
   collisions_count_--;
   if (collisions_count_ == 0) {
     StopPlatforms();
-    animator_->SetCurrentAnimation("released");
+    animator_->SetCurrentAnimation(kReleased);
     animator_->Play();
   }
 }

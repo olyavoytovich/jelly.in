@@ -85,6 +85,7 @@ HEADERS += \
     Controller/game_controller.h \
     Model/animation.h \
     Model/animator.h \
+    Model/constants.h \
     Model/contact_listener.h \
     Model/entity.h \
     Model/game_object.h \

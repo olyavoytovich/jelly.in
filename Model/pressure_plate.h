@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "animator.h"
+#include "constants.h"
 #include "entity.h"
 
 class PressurePlate : public Entity {

@@ -21,6 +21,7 @@ add_executable(jellyin main.cpp
         Controller/game_controller.cpp
         Model/animation.cpp
         Model/animator.cpp
+        Model/constants.h
         Model/contact_listener.cpp
         Model/entity.cpp
         Model/game_object.cpp

@@ -5,6 +5,7 @@
 #include <utility>
 
 #include "animator.h"
+#include "constants.h"
 #include "entity.h"
 
 class Player : public Entity {
