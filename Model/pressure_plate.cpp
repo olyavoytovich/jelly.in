@@ -25,26 +25,28 @@ void PressurePlate::StopPlatforms() {
     platform->Stop();
   }
 }
+
 void PressurePlate::BeginCollision(b2Fixture*,
                                    EntityType,
                                    EntityType other_type) {
   if (other_type == EntityType::kPlayerPart
       || other_type == EntityType::kPlayer) {
-    animator_->Play();
     collisions_count_++;
     ActivatePlatforms();
     if (collisions_count_ == 1) {
       animator_->SetCurrentAnimation(kPressed);
-      animator_->Play();
     }
   }
 }
 
-void PressurePlate::EndCollision(b2Fixture*, EntityType) {
+void PressurePlate::EndCollision(b2Fixture*, EntityType other_type) {
+  if (other_type != EntityType::kPlayer
+      && other_type != EntityType::kPlayerPart) {
+    return;
+  }
   collisions_count_--;
   if (collisions_count_ == 0) {
     StopPlatforms();
     animator_->SetCurrentAnimation(kReleased);
-    animator_->Play();
   }
 }

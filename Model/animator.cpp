@@ -29,6 +29,7 @@ void Animator::SetCurrentAnimation(const QString& current_animation_name) {
   current_animation_ = name_to_animation_[current_animation_name];
   frame_duration_ = current_animation_->GetFrameDuration(is_repeated_back_);
   Reset();
+  Play();
 }
 
 void Animator::Update(int time) {

@@ -22,10 +22,8 @@ class PressurePlate : public Entity {
   void ActivatePlatforms();
   void StopPlatforms();
 
-  void BeginCollision(b2Fixture* my_fixture,
-                      EntityType my_type,
-                      EntityType other_type) override;
-  void EndCollision(b2Fixture* my_fixture, EntityType other_type) override;
+  void BeginCollision(b2Fixture*, EntityType, EntityType other_type) override;
+  void EndCollision(b2Fixture*, EntityType other_type) override;
 
  private:
   std::vector<std::shared_ptr<Entity>> platforms_;
