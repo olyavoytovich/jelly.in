@@ -28,6 +28,4 @@ class GameObject {
   bool is_object_deleted_ = false;
 };
 
-extern SoundManager sounds_;
-
 #endif  // MODEL_GAME_OBJECT_H_

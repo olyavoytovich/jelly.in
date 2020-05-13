@@ -6,6 +6,7 @@
 #include "menu.h"
 #include "movie.h"
 #include "Model/sound_manager.h"
+#include "Controller/abstract_game_controller.h"
 #include "Model/game_object.h"
 
 enum class MenuType {
@@ -18,6 +19,7 @@ class IntermediateMenu : public Menu {
  public:
   explicit IntermediateMenu(AbstractGameController* game_controller,
                             MenuType menu_type,
+                            std::shared_ptr<SoundManager> sounds,
                             QWidget* parent = nullptr);
   ~IntermediateMenu() override = default;
 
@@ -35,6 +37,7 @@ class IntermediateMenu : public Menu {
   std::shared_ptr<Movie> menu_animation_;
 
   std::vector<Button*> main_button_group_;
+  std::shared_ptr<SoundManager> sounds_;
 };
 
 #endif  // VIEW_INTERMEDIATE_MENU_H_

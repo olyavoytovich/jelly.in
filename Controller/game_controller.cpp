@@ -2,7 +2,8 @@
 
 GameController::GameController()
     : view_(std::make_shared<View>(this)),
-      menu_(std::make_shared<MainMenu>(this)) {
+      menu_(std::make_shared<MainMenu>(this)),
+      sounds_(std::make_shared<SoundManager>()) {
   view_->show();
   view_->setCentralWidget(menu_.get());
 }
@@ -90,16 +91,16 @@ void GameController::OpenMainMenu() {
 }
 
 void GameController::OpenPauseMenu() {
-  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kPause));
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kPause, sounds_));
 }
 
 void GameController::OpenVictoryMenu() {
-  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory));
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory, sounds_));
   CloseCurrentLevel();
 }
 
 void GameController::OpenFailMenu() {
-  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kFail));
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kFail, sounds_));
   CloseCurrentLevel();
 }
 
@@ -125,10 +126,11 @@ void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
 }
 
 void GameController::StartLevel(int level_number) {
-  map_ = MapLoader::LoadMap("level_" + QString::number(level_number));
+  map_ = MapLoader::LoadMap("level_" + QString::number(level_number), sounds_);
   if (map_ == nullptr) {
     return;
   }
+ // map_->SetSoundManager(sounds_);
   level_number_ = level_number;
   player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
   interface_ = std::make_shared<GameInterface>(this);

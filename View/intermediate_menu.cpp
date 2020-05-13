@@ -2,9 +2,11 @@
 
 IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
                                    MenuType menu_type,
+                                   std::shared_ptr<SoundManager> sounds,
                                    QWidget* parent)
-    : Menu(game_controller, parent), menu_type_(menu_type) {
-  sounds_.StopAll();
+    : Menu(game_controller, parent), menu_type_(menu_type),
+      sounds_(sounds) {
+  sounds_->StopAll();
   background_ = QImage(":/images/menu/big_background.png");
   scaled_background_ = background_;
 

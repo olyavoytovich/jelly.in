@@ -8,6 +8,7 @@
 #include <utility>
 
 #include "entity.h"
+#include "Controller/abstract_game_controller.h"
 
 enum class BulletDirection {
   kBottom,

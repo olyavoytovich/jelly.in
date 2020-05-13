@@ -36,17 +36,23 @@ Player::Player(std::shared_ptr<Map> map,
   SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
 
   // Add sound
-  jump_sound_.AddMedia("qrc:/sound/player/jump.mp3");
-  landing_sound_.AddMedia("qrc:/sound/player/landing.mp3");
-  taking_damage_sound_.AddMedia("qrc:/sound/player/taking_damage.mp3");
-  separation_sound_.AddMedia("qrc:/sound/player/separation.mp3");
-  walking_sound_.AddMedia("qrc:/sound/player/walking.mp3");
+  jump_sound_.AddMedia(*map_->jump_sound);
+  landing_sound_.AddMedia(*map_->landing_sound);
+  taking_damage_sound_.AddMedia(*map_->taking_damage_sound);
+  separation_sound_.AddMedia(*map_->separation_sound);
+  walking_sound_.AddMedia(*map_->walking_sound);
   walking_sound_.SetPlayBackMode(QMediaPlaylist::CurrentItemInLoop);
-  sounds_.AddSon(std::make_shared<SoundManager>(jump_sound_));
-  sounds_.AddSon(std::make_shared<SoundManager>(landing_sound_));
-  sounds_.AddSon(std::make_shared<SoundManager>(taking_damage_sound_));
-  sounds_.AddSon(std::make_shared<SoundManager>(separation_sound_));
-  sounds_.AddSon(std::make_shared<SoundManager>(walking_sound_));
+//  sounds_.AddSon(std::make_shared<SoundManager>(jump_sound_));
+//  sounds_.AddSon(std::make_shared<SoundManager>(landing_sound_));
+//  sounds_.AddSon(std::make_shared<SoundManager>(taking_damage_sound_));
+//  sounds_.AddSon(std::make_shared<SoundManager>(separation_sound_));
+//  sounds_.AddSon(std::make_shared<SoundManager>(walking_sound_));
+
+  map_->GetSoundManager()->AddSon(&jump_sound_);
+  map_->GetSoundManager()->AddSon(&landing_sound_);
+  map_->GetSoundManager()->AddSon(&taking_damage_sound_);
+  map_->GetSoundManager()->AddSon(&separation_sound_);
+  map_->GetSoundManager()->AddSon(&walking_sound_);
 }
 
 void Player::Update(int time) {

@@ -11,6 +11,7 @@
 #include "Model/map_loader.h"
 #include "Model/patroller.h"
 #include "Model/shooter.h"
+#include "Model/sound_manager.h"
 #include "View/abstract_view.h"
 #include "View/choose_level_menu.h"
 #include "View/game_interface.h"
@@ -43,6 +44,7 @@ class GameController : public AbstractGameController {
   void StartLevel(int level_number) override;
   void OpenMenu(std::shared_ptr<Menu> menu);
 
+
  private:
   Key GetKeyFromCode(int key_code);
   void CloseCurrentLevel();
@@ -58,6 +60,7 @@ class GameController : public AbstractGameController {
 
   std::shared_ptr<Map> map_ = nullptr;
   std::shared_ptr<Player> player_ = nullptr;
+  std::shared_ptr<SoundManager> sounds_;
 };
 
 #endif  // CONTROLLER_GAME_CONTROLLER_H_

@@ -20,7 +20,8 @@ Button::Button(std::shared_ptr<ImageSet> image_set,
   if (!button_text.isEmpty()) {
     SetText(button_text);
   }
-  click_sound_.AddMedia("qrc:/sound/menu/click.mp3");
+  click = std::make_shared<QMediaContent>(QUrl("qrc:/sound/menu/click.mp3"));
+  click_sound_.AddMedia(*click);
 }
 
 void Button::paintEvent(QPaintEvent*) {

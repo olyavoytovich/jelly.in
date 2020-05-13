@@ -1,16 +1,26 @@
 #include "map.h"
 
-Map::Map(const QImage& map_image)
+Map::Map(const QImage& map_image, std::shared_ptr<SoundManager> sounds)
     : world_(std::make_shared<b2World>(b2Vec2(0, 20))),
       current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()),
       map_image_(map_image),
       scaled_map_image_(map_image),
       is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
-      is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false) {
-  background_.AddMedia("qrc:/sound/background.mp3");
+      is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false),
+      sounds_(sounds) {
+
+  background_sound_ = std::make_shared<QMediaContent>(QUrl("qrc:/sound/background.mp3"));
+  jump_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/player/jump.mp3"));
+  landing_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/player/landing.mp3"));
+  taking_damage_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/player/taking_damage.mp3"));
+  separation_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/player/separation.mp3"));
+  walking_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/player/walking.mp3"));
+  bullet_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/enemy/burdock_bullet.mp3"));
+  permanent_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/enemy/cloud.mp3"));
+  background_.AddMedia(*background_sound_);
   background_.SetVolume(20);
   background_.SetPlayBackMode(QMediaPlaylist::CurrentItemInLoop);
-  sounds_.AddSon(std::make_shared<SoundManager>(background_));
+  sounds_->AddSon(&background_);
 }
 
 void Map::Update(int time) {
@@ -161,4 +171,12 @@ void Map::UpdateCameraPosition() {
   if (current_camera_.bottom() > map_image_.height() - shift_.y()) {
     current_camera_.moveBottom(map_image_.height() - shift_.y());
   }
+}
+
+void Map::SetSoundManager(std::shared_ptr<SoundManager> sounds) {
+  sounds_ = std::move(sounds);
+}
+
+std::shared_ptr<SoundManager> Map::GetSoundManager() {
+  return sounds_;
 }

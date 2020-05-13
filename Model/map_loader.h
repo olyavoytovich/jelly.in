@@ -13,6 +13,7 @@
 #include <vector>
 
 #include "Controller/abstract_game_controller.h"
+#include "Model/sound_manager.h"
 #include "animation.h"
 #include "animator.h"
 #include "contact_listener.h"
@@ -25,7 +26,7 @@
 class MapLoader {
  public:
   // Returns a pointer to the loaded map, or nullptr if loading failed
-  static std::shared_ptr<Map> LoadMap(const QString& map_name);
+  static std::shared_ptr<Map> LoadMap(const QString& map_name, std::shared_ptr<SoundManager> sounds);
 
  private:
   static void CreateAnimation(

@@ -57,6 +57,7 @@ class Button : public QPushButton {
 
   std::shared_ptr<ImageSet> image_set_;
 
+  std::shared_ptr<QMediaContent> click;
   SoundManager click_sound_;
   Label* text_ = nullptr;
 };
