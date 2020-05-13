@@ -36,9 +36,12 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       }
     } else {
       // Добавляет прямоугольник
-      object_points =
-          QRect(0, 0, object["width"].toInt(), object["height"].toInt());
+      object_points = QRect(-object["width"].toInt() / 2,
+                            -object["height"].toInt() / 2,
+                            object["width"].toInt(),
+                            object["height"].toInt());
     }
+
     EntityType entity_type = EntityType::kGround;
     if (!object["type"].isNull()) {
       entity_type = EntityType::kSpikes;
