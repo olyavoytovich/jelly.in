@@ -9,14 +9,22 @@ Map::Map(const QImage& map_image, std::shared_ptr<SoundManager> sounds)
       is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false),
       sounds_(sounds) {
 
-  background_sound_ = std::make_shared<QMediaContent>(QUrl("qrc:/sound/background.mp3"));
-  jump_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/player/jump.mp3"));
-  landing_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/player/landing.mp3"));
-  taking_damage_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/player/taking_damage.mp3"));
-  separation_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/player/separation.mp3"));
-  walking_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/player/walking.mp3"));
-  bullet_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/enemy/burdock_bullet.mp3"));
-  permanent_sound = std::make_shared<QMediaContent>(QUrl("qrc:/sound/enemy/cloud.mp3"));
+  background_sound_ = std::make_shared<QMediaContent>(
+              QUrl("qrc:/sound/background.mp3"));
+  jump_sound = std::make_shared<QMediaContent>(
+              QUrl("qrc:/sound/player/jump.mp3"));
+  landing_sound = std::make_shared<QMediaContent>(
+              QUrl("qrc:/sound/player/landing.mp3"));
+  taking_damage_sound = std::make_shared<QMediaContent>(
+              QUrl("qrc:/sound/player/taking_damage.mp3"));
+  separation_sound = std::make_shared<QMediaContent>(
+              QUrl("qrc:/sound/player/separation.mp3"));
+  walking_sound = std::make_shared<QMediaContent>(
+              QUrl("qrc:/sound/player/walking.mp3"));
+  bullet_sound = std::make_shared<QMediaContent>(
+              QUrl("qrc:/sound/enemy/burdock_bullet.mp3"));
+  permanent_sound = std::make_shared<QMediaContent>(
+              QUrl("qrc:/sound/enemy/cloud.mp3"));
   background_.AddMedia(*background_sound_);
   background_.SetVolume(20);
   background_.SetPlayBackMode(QMediaPlaylist::CurrentItemInLoop);

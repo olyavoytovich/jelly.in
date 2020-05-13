@@ -7,9 +7,6 @@ SoundManager::SoundManager() : pure_volume_(100), parent_volume_(100),
   player_->setVolume(pure_volume_);
 }
 
-//void SoundManager::AddSon(std::shared_ptr<SoundManager> son) {
-//  sons_.push_back(std::move(son));
-//}
 void SoundManager::AddSon(SoundManager* son) {
   sons_.push_back(son);
 }

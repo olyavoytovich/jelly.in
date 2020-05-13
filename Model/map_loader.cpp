@@ -1,6 +1,7 @@
 #include "map_loader.h"
 
-std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name, std::shared_ptr<SoundManager> sounds) {
+std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name,
+                                        std::shared_ptr<SoundManager> sounds) {
   QFile input_file(":/data/" + map_name + ".json");
 
   if (!input_file.open(QIODevice::ReadOnly)) {

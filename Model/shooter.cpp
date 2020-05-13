@@ -25,12 +25,10 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
   if (entity_type == EntityType::kBurdock) {
     bullet_sound_.AddMedia(*map_->bullet_sound);
-    //sounds_.AddSon(std::make_shared<SoundManager>(bullet_sound_));
     map_->GetSoundManager()->AddSon(&bullet_sound_);
   }
   if (entity_type == EntityType::kCloud) {
     permanent_sound_.AddMedia(*map_->permanent_sound);
-    //sounds_.AddSon(std::make_shared<SoundManager>(permanent_sound_));
     map_->GetSoundManager()->AddSon(&permanent_sound_);
   }
 }
@@ -59,13 +57,11 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
   if (entity_type == EntityType::kBurdock) {
     bullet_sound_.AddMedia(*map_->bullet_sound);
-    //sounds_.AddSon(std::make_shared<SoundManager>(bullet_sound_));
-   map_->GetSoundManager()->AddSon(&bullet_sound_);
+    map_->GetSoundManager()->AddSon(&bullet_sound_);
   }
   if (entity_type == EntityType::kCloud) {
    permanent_sound_.AddMedia(*map_->permanent_sound);
-    //sounds_.AddSon(std::make_shared<SoundManager>(permanent_sound_));
-    map_->GetSoundManager()->AddSon(&permanent_sound_);
+   map_->GetSoundManager()->AddSon(&permanent_sound_);
   }
 }
 
@@ -95,13 +91,11 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
   if (entity_type == EntityType::kBurdock) {
     bullet_sound_.AddMedia(*map_->bullet_sound);
-    //sounds_.AddSon(std::make_shared<SoundManager>(bullet_sound_));
     map_->GetSoundManager()->AddSon(&bullet_sound_);
   }
   if (entity_type == EntityType::kCloud) {
    permanent_sound_.AddMedia(*map_->permanent_sound);
-    //sounds_.AddSon(std::make_shared<SoundManager>(permanent_sound_));
-    map_->GetSoundManager()->AddSon(&permanent_sound_);
+   map_->GetSoundManager()->AddSon(&permanent_sound_);
   }
 }
 

@@ -21,14 +21,14 @@ class Menu : public QWidget {
 
   void SetSoundManager(std::shared_ptr<SoundManager> sounds);
 
-protected:
- void resizeEvent(QResizeEvent*) override;
- void paintEvent(QPaintEvent*) override;
+ protected:
+  void resizeEvent(QResizeEvent*) override;
+  void paintEvent(QPaintEvent*) override;
 
- QRect PositionRectangle(int x, int y, int width, int height) const;
- void MakeEqualFontSize(const std::vector<Button*>& buttons) const;
+  QRect PositionRectangle(int x, int y, int width, int height) const;
+  void MakeEqualFontSize(const std::vector<Button*>& buttons) const;
 
-protected:
+ protected:
   QImage background_;
   QImage scaled_background_;
   QImage main_part_;

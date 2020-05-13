@@ -95,7 +95,8 @@ void GameController::OpenPauseMenu() {
 }
 
 void GameController::OpenVictoryMenu() {
-  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory, sounds_));
+  OpenMenu(std::make_shared<IntermediateMenu>(this,
+                                              MenuType::kVictory, sounds_));
   CloseCurrentLevel();
 }
 
@@ -130,7 +131,6 @@ void GameController::StartLevel(int level_number) {
   if (map_ == nullptr) {
     return;
   }
- // map_->SetSoundManager(sounds_);
   level_number_ = level_number;
   player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
   interface_ = std::make_shared<GameInterface>(this);

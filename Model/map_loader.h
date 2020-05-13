@@ -26,7 +26,8 @@
 class MapLoader {
  public:
   // Returns a pointer to the loaded map, or nullptr if loading failed
-  static std::shared_ptr<Map> LoadMap(const QString& map_name, std::shared_ptr<SoundManager> sounds);
+  static std::shared_ptr<Map> LoadMap(const QString& map_name,
+                                      std::shared_ptr<SoundManager> sounds);
 
  private:
   static void CreateAnimation(
