@@ -19,7 +19,6 @@ Entity::Entity(std::shared_ptr<Map> map,
   InitializeBody(body_type, body_position);
   b2PolygonShape shape = CreatePolygonShape(polygon);
   CreateFixture(shape);
-  is_active_ = false;
   InitializeBoundaryRectangle();
 }
 
@@ -32,7 +31,6 @@ Entity::Entity(std::shared_ptr<Map> map,
   InitializeBody(body_type, body_position);
   b2CircleShape shape = CreateCircleShape(radius);
   CreateFixture(shape);
-  is_active_ = false;
   InitializeBoundaryRectangle();
 }
 
@@ -54,7 +52,6 @@ Entity::Entity(std::shared_ptr<Map> map,
     b2PolygonShape shape = CreatePolygonShape(polygon, shape_position);
     CreateFixture(shape);
   }
-  is_active_ = false;
   InitializeBoundaryRectangle();
 }
 
@@ -295,4 +292,4 @@ void Entity::BeginCollision(b2Fixture*,
   }
 }
 
-void Entity::EndCollision(b2Fixture*) {}
+void Entity::EndCollision(b2Fixture*, EntityType) {}

@@ -14,8 +14,7 @@ class PressurePlate : public Entity {
                 b2BodyType type,
                 const QPoint& body_position,
                 const QPolygon& polygon,
-                std::shared_ptr<Animator> animator,
-                EntityType entity_type);
+                std::shared_ptr<Animator> animator);
 
   void AddPlatform(const std::shared_ptr<Entity>& platform);
 
@@ -25,7 +24,7 @@ class PressurePlate : public Entity {
   void BeginCollision(b2Fixture* my_fixture,
                       EntityType my_type,
                       EntityType other_type) override;
-  void EndCollision(b2Fixture* my_fixture) override;
+  void EndCollision(b2Fixture* my_fixture, EntityType other_type) override;
 
  private:
   std::vector<std::shared_ptr<Entity>> platforms_;

@@ -20,7 +20,7 @@ class Player : public Entity {
   void BeginCollision(b2Fixture* fixture,
                       EntityType my_type,
                       EntityType other_type) override;
-  void EndCollision(b2Fixture* my_fixture) override;
+  void EndCollision(b2Fixture* my_fixture, EntityType other_type) override;
 
   int GetCurrentHealth() const;
   bool ReachedExit() const;
@@ -49,6 +49,7 @@ class Player : public Entity {
   int jumps_remaining_ = 0;
   int left_collisions_ = 0;
   int right_collisions_ = 0;
+  int monsters_count_ = 0;
 
   b2Fixture* bottom_sensor_ = nullptr;
   b2Fixture* left_sensor_ = nullptr;

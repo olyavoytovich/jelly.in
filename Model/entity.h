@@ -86,7 +86,7 @@ class Entity : public GameObject {
   virtual void BeginCollision(b2Fixture* my_fixture,
                               EntityType my_type,
                               EntityType other_type);
-  virtual void EndCollision(b2Fixture* my_fixture);
+  virtual void EndCollision(b2Fixture* my_fixture, EntityType other_type);
 
  protected:
   int MetersToPixels(float value) const;
@@ -122,10 +122,6 @@ class Entity : public GameObject {
   std::shared_ptr<Animator> animator_ = nullptr;
 
  private:
-  // Рисует формы в зависимости от типа их фигуры. Вторым параметром передается
-  // форму, которую будет отрисовывать эта функция.
-  void DrawShape(QPainter* painter, b2Fixture* shape) const;
-
   void InitializeBody(b2BodyType body_type, const QPoint& body_position);
 
   void ApplyImpulse();
@@ -143,7 +139,7 @@ class Entity : public GameObject {
 
  private:
   b2Vec2 target_velocity = {0, 0};
-  bool is_active_;
+  bool is_active_ = true;
   EntityType entity_type_;
 };
 

@@ -68,15 +68,14 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       std::shared_ptr<Animator>
           animator = CreateAnimator(&name_to_animation, animations);
 
-      std::shared_ptr<PressurePlate>
-          game_object = std::make_shared<PressurePlate>(map,
-                                                        b2_staticBody,
-                                                        position,
-                                                        QPolygon(object_points),
-                                                        animator,
-                                                        EntityType::kPlate);
-      name_to_plate[object["name"].toString()] = game_object;
-      map->AddGameObject(game_object);
+      auto pressure_plate =
+          std::make_shared<PressurePlate>(map,
+                                          b2_staticBody,
+                                          position,
+                                          QPolygon(object_points),
+                                          animator);
+      name_to_plate[object["name"].toString()] = pressure_plate;
+      map->AddGameObject(pressure_plate);
     }
   }
 

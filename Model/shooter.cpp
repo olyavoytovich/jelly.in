@@ -20,7 +20,6 @@ Shooter::Shooter(std::shared_ptr<Map> map,
       bullet_radius_(bullet_radius),
       bullet_animator_(std::move(bullet_animator)) {
   SetSpeed(speed);
-  Activate();
   SetAnimator(std::move(animator));
   animator_->RepeatInReverseOrder();
   SetWayPoints(way_points);
@@ -46,7 +45,6 @@ Shooter::Shooter(std::shared_ptr<Map> map,
       bullet_radius_(bullet_radius),
       bullet_animator_(std::move(bullet_animator)) {
   SetSpeed(speed);
-  Activate();
   SetAnimator(std::move(animator));
   SetWayPoints(way_points);
 }
@@ -73,7 +71,6 @@ Shooter::Shooter(std::shared_ptr<Map> map,
       bullet_radius_(bullet_radius),
       bullet_animator_(std::move(bullet_animator)) {
   SetSpeed(speed);
-  Activate();
   SetAnimator(std::move(animator));
   SetWayPoints(way_points);
 }

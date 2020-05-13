@@ -25,8 +25,8 @@ void ContactListener::ProcessContact(b2Contact* contact, bool contact_begin) {
     entity_a->BeginCollision(fixture_a, type_a, type_b);
     entity_b->BeginCollision(fixture_b, type_b, type_a);
   } else {
-    entity_a->EndCollision(fixture_a);
-    entity_b->EndCollision(fixture_b);
+    entity_a->EndCollision(fixture_a, type_b);
+    entity_b->EndCollision(fixture_b, type_a);
   }
 }
 
