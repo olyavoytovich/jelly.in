@@ -60,8 +60,8 @@ Shooter::Shooter(std::shared_ptr<Map> map,
     map_->GetSoundManager()->AddSon(&bullet_sound_);
   }
   if (entity_type == EntityType::kCloud) {
-   permanent_sound_.AddMedia(*map_->permanent_sound);
-   map_->GetSoundManager()->AddSon(&permanent_sound_);
+    permanent_sound_.AddMedia(*map_->permanent_sound);
+    map_->GetSoundManager()->AddSon(&permanent_sound_);
   }
 }
 
@@ -94,8 +94,8 @@ Shooter::Shooter(std::shared_ptr<Map> map,
     map_->GetSoundManager()->AddSon(&bullet_sound_);
   }
   if (entity_type == EntityType::kCloud) {
-   permanent_sound_.AddMedia(*map_->permanent_sound);
-   map_->GetSoundManager()->AddSon(&permanent_sound_);
+    permanent_sound_.AddMedia(*map_->permanent_sound);
+    map_->GetSoundManager()->AddSon(&permanent_sound_);
   }
 }
 
