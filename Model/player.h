@@ -19,7 +19,7 @@ class Player : public Entity {
 
   void Update(int time) override;
   void BeginCollision(b2Fixture* fixture,
-                      EntityType my_type,
+                      EntityType,
                       EntityType other_type) override;
   void EndCollision(b2Fixture* my_fixture, EntityType other_type) override;
 
