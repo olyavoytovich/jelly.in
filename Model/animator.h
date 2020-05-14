@@ -2,6 +2,7 @@
 #define MODEL_ANIMATOR_H_
 
 #include <QImage>
+#include <map>
 #include <memory>
 #include <utility>
 
@@ -9,7 +10,8 @@
 
 class Animator {
  public:
-  explicit Animator(std::shared_ptr<Animation> animation_);
+  Animator(std::map<QString, std::shared_ptr<Animation>> name_to_animation,
+           const QString& current_animation);
 
   ~Animator() = default;
 
@@ -17,21 +19,26 @@ class Animator {
   void LoopAnimation();
   void Play();
 
+  void SetCurrentAnimation(const QString& current_animation_name);
+
   void Update(int time);
   std::shared_ptr<QImage> GetCurrentImage(int width, int height);
 
  private:
-  void Finish();
+  void Reset();
 
  private:
-  std::shared_ptr<Animation> animation_;
+  std::map<QString, std::shared_ptr<Animation>> name_to_animation_;
+  std::shared_ptr<Animation> current_animation_;
+
   bool is_repeated_back_ = false;
+  bool is_looped_ = false;
+  bool is_playing_ = false;
+
   int current_frame_ = 0;
   int frame_duration_;
   int direction_ = 1;
   int time_since_last_frame_ = 0;
-  bool is_looped_ = false;
-  bool is_playing_ = false;
 };
 
 #endif  // MODEL_ANIMATOR_H_

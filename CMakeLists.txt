@@ -21,6 +21,7 @@ add_executable(jellyin main.cpp
         Controller/game_controller.cpp
         Model/animation.cpp
         Model/animator.cpp
+        Model/constants.h
         Model/contact_listener.cpp
         Model/entity.cpp
         Model/game_object.cpp
@@ -28,6 +29,7 @@ add_executable(jellyin main.cpp
         Model/map_loader.cpp
         Model/patroller.cpp
         Model/player.cpp
+        Model/pressure_plate.cpp
         Model/shooter.cpp
         View/button.cpp
         View/choose_level_menu.cpp

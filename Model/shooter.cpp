@@ -89,13 +89,15 @@ void Shooter::Update(int time) {
 
     if (way_points_[way_point_index_].x - body_->GetPosition().x >= 0) {
       std::shared_ptr<Entity> bullet =
-          CreateBullet(QPoint(bounding_rectangle_.right() + bullet_radius_, 0));
+          CreateBullet(QPoint(bounding_rectangle_.right() + 2 * bullet_radius_,
+                              0));
       bullet->SetVelocity(way_points_[way_point_index_],
                           body_->GetPosition(),
                           bullet_speed_, true);
     } else {
       std::shared_ptr<Entity> bullet =
-          CreateBullet(QPoint(bounding_rectangle_.left() - bullet_radius_, 0));
+          CreateBullet(QPoint(bounding_rectangle_.left() - 2 * bullet_radius_,
+                              0));
       bullet->SetVelocity(way_points_[way_point_index_],
                           body_->GetPosition(),
                           bullet_speed_, true);
@@ -105,7 +107,7 @@ void Shooter::Update(int time) {
     for (int i = 0; i <= bullets_amount; i++) {
       QPoint bullet_position
           (bounding_rectangle_.left() + bullet_radius_ * i * 3,
-           bounding_rectangle_.bottom() + bullet_radius_);
+           bounding_rectangle_.bottom() + 2 * bullet_radius_);
       std::shared_ptr<Entity> bullet = CreateBullet(bullet_position);
       bullet->SetVelocity(b2Vec2(0, bullet_speed_), true);
     }

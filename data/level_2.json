@@ -1,162 +1,209 @@
 {
+  "plates": [
+    {
+      "name": "plate1",
+      "x": 672,
+      "y": 1976,
+      "width": 64,
+      "height": 16,
+      "animation_count": 2,
+      "animations": [
+        {
+          "name": "pressed",
+          "duration": 200,
+          "frames_count": 11
+        },
+        {
+          "name": "released",
+          "duration": 200,
+          "frames_count": 11
+        }
+      ]
+    }
+  ],
   "solids": [
     {
-      "x": 0,
-      "y": 2304,
+      "x": 96,
+      "y": 2432,
       "width": 192,
       "height": 256
     },
     {
-      "x": 192,
-      "y": 2176,
+      "x": 224,
+      "y": 2368,
       "width": 64,
       "height": 384
     },
     {
-      "x": 256,
-      "y": 2112,
+      "x": 384,
+      "y": 2336,
       "width": 256,
       "height": 448
     },
     {
-      "x": 512,
-      "y": 2048,
+      "x": 544,
+      "y": 2304,
       "width": 64,
       "height": 512
     },
     {
-      "x": 576,
-      "y": 1984,
+      "x": 672,
+      "y": 2272,
       "width": 192,
       "height": 576
     },
     {
-      "x": 768,
-      "y": 2368,
+      "x": 864,
+      "y": 2464,
       "width": 192,
       "height": 192
     },
     {
-      "x": 1792,
-      "y": 2304,
+      "x": 2048,
+      "y": 2432,
       "width": 512,
       "height": 256
     },
     {
-      "x": 2304,
-      "y": 2496,
+      "x": 2784,
+      "y": 2528,
       "width": 960,
       "height": 64
     },
     {
-      "x": 3264,
-      "y": 2304,
+      "x": 3328,
+      "y": 2432,
       "width": 128,
       "height": 256
     },
     {
-      "x": 3392,
-      "y": 2368,
+      "x": 3616,
+      "y": 2464,
       "width": 448,
       "height": 192
     },
     {
-      "x": 3200,
-      "y": 1728,
+      "x": 3360,
+      "y": 1760,
       "width": 320,
       "height": 64
     },
     {
-      "x": 2752,
-      "y": 1280,
+      "x": 3200,
+      "y": 1344,
       "width": 896,
       "height": 128
     },
     {
-      "x": 1024,
-      "y": 2176,
+      "x": 1120,
+      "y": 2192,
       "width": 192,
       "height": 32
     },
     {
-      "x": 1280,
-      "y": 2048,
+      "x": 1376,
+      "y": 2064,
       "width": 192,
       "height": 32
     },
     {
-      "x": 1536,
-      "y": 2176,
+      "x": 1632,
+      "y": 2192,
       "width": 192,
       "height": 32
     },
     {
-      "x": 2496,
-      "y": 2176,
+      "x": 2592,
+      "y": 2192,
       "width": 192,
       "height": 32
     },
     {
-      "x": 2816,
-      "y": 2048,
+      "x": 2912,
+      "y": 2064,
       "width": 192,
       "height": 32
     },
     {
-      "x": 2496,
-      "y": 1920,
+      "x": 2592,
+      "y": 1936,
       "width": 192,
       "height": 32
     },
     {
-      "x": 2176,
-      "y": 1792,
+      "x": 2272,
+      "y": 1808,
       "width": 192,
       "height": 32
     },
     {
-      "x": 1856,
-      "y": 1664,
+      "x": 1952,
+      "y": 1680,
       "width": 192,
       "height": 32
     },
     {
-      "x": 2176,
-      "y": 1536,
+      "x": 2208,
+      "y": 1552,
       "width": 64,
       "height": 32
     },
     {
-      "x": 2368,
-      "y": 1472,
+      "x": 2400,
+      "y": 1488,
       "width": 64,
       "height": 32
     },
     {
-      "x": 2560,
-      "y": 1408,
+      "x": 2592,
+      "y": 1424,
       "width": 64,
       "height": 32
     },
     {
-      "x": 3648,
-      "y": 1600,
+      "x": 3744,
+      "y": 1616,
       "width": 192,
       "height": 32
     },
     {
       "name": "spikes1",
-      "x": 2304,
-      "y": 2464,
+      "x": 2784,
+      "y": 2480,
       "width": 960,
       "height": 32,
       "type": "spikes"
     },
     {
       "name": "spikes2",
-      "x": 768,
-      "y": 2336,
+      "x": 864,
+      "y": 2352,
       "width": 192,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": -8,
+      "y": 1152,
+      "width": 16,
+      "height": 2304
+    },
+    {
+      "x": 3832,
+      "y": 800,
+      "width": 16,
+      "height": 1600
+    },
+    {
+      "x": 3848,
+      "y": 2000,
+      "width": 16,
+      "height": 736
+    },
+    {
+      "x": 1376,
+      "y": 2544,
+      "width": 832,
       "height": 32,
       "type": "spikes"
     }
@@ -168,9 +215,19 @@
       "y": 2208,
       "width": 0,
       "height": 0,
-      "animation_duration": 500,
-      "animation_name": "player",
-      "frames_count": 6
+      "animation_count": 2,
+      "animations": [
+        {
+          "name": "damage",
+          "duration": 500,
+          "frames_count": 21
+        },
+        {
+          "name": "jump",
+          "duration": 500,
+          "frames_count": 17
+        }
+      ]
     },
     {
       "name": "exit",
@@ -186,12 +243,17 @@
       "width": 128,
       "height": 128,
       "ellipse": true,
-      "animation_duration": 600,
-      "animation_name": "chestnut",
-      "frames_count": 7,
-      "speed": 100,
+      "animation_count": 1,
+      "speed": 200,
       "type": "patroller",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
+        }
+      ],
       "way_points": [
         {
           "x": 3456,
@@ -205,25 +267,59 @@
     },
     {
       "name": "patroller2",
-      "x": 3776,
+      "x": 3712,
       "y": 2304,
       "width": 128,
       "height": 128,
       "ellipse": true,
-      "animation_duration": 600,
-      "animation_name": "chestnut",
-      "frames_count": 7,
-      "speed": 100,
+      "animation_count": 1,
+      "speed": 200,
       "type": "patroller",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
+        }
+      ],
       "way_points": [
         {
-          "x": 3776,
+          "x": 3712,
           "y": 2304
         },
         {
           "x": 3456,
           "y": 2304
+        }
+      ]
+    },
+    {
+      "name": "platform1",
+      "x": 1504,
+      "y": 1680,
+      "width": 192,
+      "height": 32,
+      "animation_count": 1,
+      "plate_name": "plate1",
+      "speed": 200,
+      "type": "platform",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "platform",
+          "duration": 1000,
+          "frames_count": 1
+        }
+      ],
+      "way_points": [
+        {
+          "x": 1504,
+          "y": 1680
+        },
+        {
+          "x": 992,
+          "y": 1888
         }
       ]
     }
