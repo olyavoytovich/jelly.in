@@ -32,6 +32,9 @@ class AbstractGameController {
   virtual void RestartGame() = 0;
   virtual void StartNextLevel() = 0;
 
+  virtual QString GetPlayerAnimation() const = 0;
+  virtual void SetPlayerAnimation(const QString& animation_name) = 0;
+
   virtual void StartLevel(int level_number) = 0;
 };
 

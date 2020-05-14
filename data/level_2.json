@@ -184,21 +184,15 @@
     },
     {
       "x": -8,
-      "y": 1152,
+      "y": 1280,
       "width": 16,
-      "height": 2304
-    },
-    {
-      "x": 3832,
-      "y": 800,
-      "width": 16,
-      "height": 1600
+      "height": 2560
     },
     {
       "x": 3848,
-      "y": 2000,
+      "y": 1280,
       "width": 16,
-      "height": 736
+      "height": 2560
     },
     {
       "x": 1376,
@@ -220,12 +214,12 @@
         {
           "name": "damage",
           "duration": 500,
-          "frames_count": 21
+          "frames_count": 19
         },
         {
           "name": "jump",
-          "duration": 500,
-          "frames_count": 17
+          "duration": 300,
+          "frames_count": 8
         }
       ]
     },

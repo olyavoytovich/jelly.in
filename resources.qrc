@@ -23,44 +23,90 @@
         <file>images/animation/released9.png</file>
         <file>images/animation/released10.png</file>
         <file>images/animation/platform0.png</file>
-        <file>images/animation/damage0.png</file>
-        <file>images/animation/damage1.png</file>
-        <file>images/animation/damage2.png</file>
-        <file>images/animation/damage3.png</file>
-        <file>images/animation/damage4.png</file>
-        <file>images/animation/damage5.png</file>
-        <file>images/animation/damage6.png</file>
-        <file>images/animation/damage7.png</file>
-        <file>images/animation/damage8.png</file>
-        <file>images/animation/damage9.png</file>
-        <file>images/animation/damage10.png</file>
-        <file>images/animation/damage11.png</file>
-        <file>images/animation/damage12.png</file>
-        <file>images/animation/damage13.png</file>
-        <file>images/animation/damage14.png</file>
-        <file>images/animation/damage15.png</file>
-        <file>images/animation/damage16.png</file>
-        <file>images/animation/damage17.png</file>
-        <file>images/animation/damage18.png</file>
-        <file>images/animation/damage19.png</file>
-        <file>images/animation/damage20.png</file>
-        <file>images/animation/jump0.png</file>
-        <file>images/animation/jump1.png</file>
-        <file>images/animation/jump2.png</file>
-        <file>images/animation/jump3.png</file>
-        <file>images/animation/jump4.png</file>
-        <file>images/animation/jump5.png</file>
-        <file>images/animation/jump6.png</file>
-        <file>images/animation/jump7.png</file>
-        <file>images/animation/jump8.png</file>
-        <file>images/animation/jump9.png</file>
-        <file>images/animation/jump10.png</file>
-        <file>images/animation/jump11.png</file>
-        <file>images/animation/jump12.png</file>
-        <file>images/animation/jump13.png</file>
-        <file>images/animation/jump14.png</file>
-        <file>images/animation/jump15.png</file>
-        <file>images/animation/jump16.png</file>
+        <file>images/animation/red0.png</file>
+        <file>images/animation/yellow0.png</file>
+        <file>images/animation/orange0.png</file>
+        <file>images/animation/damage_red0.png</file>
+        <file>images/animation/damage_red1.png</file>
+        <file>images/animation/damage_red2.png</file>
+        <file>images/animation/damage_red3.png</file>
+        <file>images/animation/damage_red4.png</file>
+        <file>images/animation/damage_red5.png</file>
+        <file>images/animation/damage_red6.png</file>
+        <file>images/animation/damage_red7.png</file>
+        <file>images/animation/damage_red8.png</file>
+        <file>images/animation/damage_red9.png</file>
+        <file>images/animation/damage_red10.png</file>
+        <file>images/animation/damage_red11.png</file>
+        <file>images/animation/damage_red12.png</file>
+        <file>images/animation/damage_red13.png</file>
+        <file>images/animation/damage_red14.png</file>
+        <file>images/animation/damage_red15.png</file>
+        <file>images/animation/damage_red16.png</file>
+        <file>images/animation/damage_red17.png</file>
+        <file>images/animation/damage_red18.png</file>
+        <file>images/animation/damage_yellow0.png</file>
+        <file>images/animation/damage_yellow1.png</file>
+        <file>images/animation/damage_yellow2.png</file>
+        <file>images/animation/damage_yellow3.png</file>
+        <file>images/animation/damage_yellow4.png</file>
+        <file>images/animation/damage_yellow5.png</file>
+        <file>images/animation/damage_yellow6.png</file>
+        <file>images/animation/damage_yellow7.png</file>
+        <file>images/animation/damage_yellow8.png</file>
+        <file>images/animation/damage_yellow9.png</file>
+        <file>images/animation/damage_yellow10.png</file>
+        <file>images/animation/damage_yellow11.png</file>
+        <file>images/animation/damage_yellow12.png</file>
+        <file>images/animation/damage_yellow13.png</file>
+        <file>images/animation/damage_yellow14.png</file>
+        <file>images/animation/damage_yellow15.png</file>
+        <file>images/animation/damage_yellow16.png</file>
+        <file>images/animation/damage_yellow17.png</file>
+        <file>images/animation/damage_yellow18.png</file>
+        <file>images/animation/damage_orange0.png</file>
+        <file>images/animation/damage_orange1.png</file>
+        <file>images/animation/damage_orange2.png</file>
+        <file>images/animation/damage_orange3.png</file>
+        <file>images/animation/damage_orange4.png</file>
+        <file>images/animation/damage_orange5.png</file>
+        <file>images/animation/damage_orange6.png</file>
+        <file>images/animation/damage_orange7.png</file>
+        <file>images/animation/damage_orange8.png</file>
+        <file>images/animation/damage_orange9.png</file>
+        <file>images/animation/damage_orange10.png</file>
+        <file>images/animation/damage_orange11.png</file>
+        <file>images/animation/damage_orange12.png</file>
+        <file>images/animation/damage_orange13.png</file>
+        <file>images/animation/damage_orange14.png</file>
+        <file>images/animation/damage_orange15.png</file>
+        <file>images/animation/damage_orange16.png</file>
+        <file>images/animation/damage_orange17.png</file>
+        <file>images/animation/damage_orange18.png</file>
+        <file>images/animation/jump_red0.png</file>
+        <file>images/animation/jump_red1.png</file>
+        <file>images/animation/jump_red2.png</file>
+        <file>images/animation/jump_red3.png</file>
+        <file>images/animation/jump_red4.png</file>
+        <file>images/animation/jump_red5.png</file>
+        <file>images/animation/jump_red6.png</file>
+        <file>images/animation/jump_red7.png</file>
+        <file>images/animation/jump_yellow0.png</file>
+        <file>images/animation/jump_yellow1.png</file>
+        <file>images/animation/jump_yellow2.png</file>
+        <file>images/animation/jump_yellow3.png</file>
+        <file>images/animation/jump_yellow4.png</file>
+        <file>images/animation/jump_yellow5.png</file>
+        <file>images/animation/jump_yellow6.png</file>
+        <file>images/animation/jump_yellow7.png</file>
+        <file>images/animation/jump_orange0.png</file>
+        <file>images/animation/jump_orange1.png</file>
+        <file>images/animation/jump_orange2.png</file>
+        <file>images/animation/jump_orange3.png</file>
+        <file>images/animation/jump_orange4.png</file>
+        <file>images/animation/jump_orange5.png</file>
+        <file>images/animation/jump_orange6.png</file>
+        <file>images/animation/jump_orange7.png</file>
         <file>images/animation/sunflower0.png</file>
         <file>images/animation/sunflower1.png</file>
         <file>images/animation/sunflower2.png</file>
@@ -135,5 +181,8 @@
         <file>data/level_3.json</file>
         <file>images/gifs/heart.gif</file>
         <file>images/gifs/pause_menu.gif</file>
+        <file>images/gifs/player_red_move.gif</file>
+        <file>images/gifs/player_orange_move.gif</file>
+        <file>images/gifs/player_yellow_move.gif</file>
     </qresource>
 </RCC>

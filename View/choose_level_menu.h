@@ -5,7 +5,9 @@
 #include <memory>
 #include <vector>
 
+#include "Model/constants.h"
 #include "menu.h"
+#include "movie.h"
 
 class ChooseLevelMenu : public Menu {
  public:
@@ -15,8 +17,13 @@ class ChooseLevelMenu : public Menu {
 
  private:
   void resizeEvent(QResizeEvent* event) override;
+  void SetPlayerAnimation();
+  void SetNextAnimation();
 
  private:
+  std::shared_ptr<Movie> player_ = nullptr;
+  int player_animation_index_ = 0;
+
   Button* back_button_;
   std::vector<Button*> level_buttons_;
 };
