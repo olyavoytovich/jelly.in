@@ -70,7 +70,7 @@ void Player::Update(int time) {
   }
 
   if (map_->IsKeyPressed(Key::kUp) && jumps_remaining_ > 0) {
-    animator_->SetCurrentAnimation(kJump + "_" + animation_name_);
+    animator_->SetCurrentAnimation(kJump + "_" + animation_name_, false);
     jumps_remaining_--;
     body_->SetLinearVelocity(b2Vec2(body_->GetLinearVelocity().x, 0));
     body_->ApplyLinearImpulseToCenter(
