@@ -22,6 +22,7 @@ SOURCES += \
         Model/map_loader.cpp \
         Model/patroller.cpp \
         Model/player.cpp \
+        Model/pressure_plate.cpp \
         Model/shooter.cpp \
         Model/sound_manager.cpp \
         View/button.cpp \
@@ -85,6 +86,7 @@ HEADERS += \
     Controller/game_controller.h \
     Model/animation.h \
     Model/animator.h \
+    Model/constants.h \
     Model/contact_listener.h \
     Model/entity.h \
     Model/game_object.h \
@@ -92,6 +94,7 @@ HEADERS += \
     Model/map_loader.h \
     Model/patroller.h \
     Model/player.h \
+    Model/pressure_plate.h \
     Model/shooter.h \
     Model/sound_manager.h \
     View/abstract_view.h \

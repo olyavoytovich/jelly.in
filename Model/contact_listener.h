@@ -6,6 +6,7 @@
 #include "map.h"
 #include "patroller.h"
 #include "player.h"
+#include "pressure_plate.h"
 #include "shooter.h"
 
 class ContactListener : public b2ContactListener {
