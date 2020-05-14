@@ -26,6 +26,8 @@ class Player : public Entity {
   int GetCurrentHealth() const;
   bool ReachedExit() const;
 
+  void SetAnimationName(const QString& animation_name);
+
  public:
   static const int kPlayerWidth = 64;
   static const int kPlayerHeight = 64;
@@ -51,6 +53,8 @@ class Player : public Entity {
   int left_collisions_ = 0;
   int right_collisions_ = 0;
   int monsters_count_ = 0;
+
+  QString animation_name_;
 
   b2Fixture* bottom_sensor_ = nullptr;
   b2Fixture* left_sensor_ = nullptr;

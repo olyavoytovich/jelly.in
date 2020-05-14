@@ -102,8 +102,6 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
     }
 
     QJsonArray animations = object["animations"].toArray();
-    std::shared_ptr<Animator>
-        animator = CreateAnimator(&name_to_animation, animations);
 
     if (object["name"].toString() == "player") {
       QPoint position(object["x"].toInt(), object["y"].toInt());
@@ -111,11 +109,29 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                           -Player::kPlayerHeight / 2,
                           Player::kPlayerWidth,
                           Player::kPlayerHeight);
+
+      std::map<QString, std::shared_ptr<Animation>> name_to_player_animation;
+      for (const auto& animation_name : kPlayerAnimations) {
+        CreateAnimation(&name_to_player_animation, 1, 100, animation_name);
+        for (const auto& current_animation : animations) {
+          QJsonObject animation = current_animation.toObject();
+          CreateAnimation(&name_to_player_animation,
+                          animation["frames_count"].toInt(),
+                          animation["duration"].toInt(),
+                          animation["name"].toString() + "_" + animation_name);
+        }
+      }
+      auto animator = std::make_shared<Animator>(name_to_player_animation,
+                                                 kPlayerAnimations[0]);
+
       map->SetPlayerObject(std::make_shared<Player>(map,
                                                     position,
                                                     object_points,
                                                     animator));
+      continue;
     }
+    std::shared_ptr<Animator>
+        animator = CreateAnimator(&name_to_animation, animations);
 
     if (object["type"].isNull()) {
       continue;

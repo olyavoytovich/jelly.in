@@ -29,6 +29,14 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
   connect(player_.get(), &QPushButton::clicked, this, [&]() {
     SetNextAnimation();
   });
+
+  if (!game_controller_->GetPlayerAnimation().isEmpty()) {
+    QString animation_name = game_controller_->GetPlayerAnimation();
+    while (animation_name != kPlayerAnimations[player_animation_index_]) {
+      player_animation_index_++;
+    }
+  }
+
   SetPlayerAnimation();
 }
 
@@ -51,6 +59,7 @@ void ChooseLevelMenu::resizeEvent(QResizeEvent* event) {
 
 void ChooseLevelMenu::SetPlayerAnimation() {
   QString animation_name = kPlayerAnimations[player_animation_index_];
+  game_controller_->SetPlayerAnimation(animation_name);
   player_->SetAnimation("player_" + animation_name + "_move");
   player_->SetSpeed(300);
   player_->Play(true);
