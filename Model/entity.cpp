@@ -20,6 +20,12 @@ Entity::Entity(std::weak_ptr<Map> map,
   b2PolygonShape shape = CreatePolygonShape(polygon);
   CreateFixture(shape);
   InitializeBoundaryRectangle();
+
+  if (entity_type == EntityType::kMushroom) {
+    // Грибы сталкиваются только с игроком или его частью
+    SetNoCollisionMask(~(static_cast<uint16>(EntityType::kPlayer)
+        + static_cast<uint16>(EntityType::kPlayerPart)));
+  }
 }
 
 Entity::Entity(std::weak_ptr<Map> map,
@@ -286,8 +292,13 @@ QRect Entity::GetBoundings() const {
 
 void Entity::BeginCollision(b2Fixture*,
                             EntityType my_type,
-                            EntityType) {
+                            EntityType other_type) {
   if (my_type == EntityType::kBullet) {
+    MarkAsDeleted();
+  }
+  if (my_type == EntityType::kMushroom && (other_type == EntityType::kPlayer
+      || other_type == EntityType::kPlayerPart)) {
+    map_.lock()->PickUpMushroom();
     MarkAsDeleted();
   }
 }

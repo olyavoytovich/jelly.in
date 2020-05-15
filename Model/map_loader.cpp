@@ -229,6 +229,16 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                                    shooter_type,
                                                    object_speed));
     }
+
+    if (object["type"].toString() == "mushroom") {
+      auto mushroom = std::make_shared<Entity>(map,
+                                               b2_staticBody,
+                                               object_position,
+                                               object_points,
+                                               EntityType::kMushroom);
+      mushroom->SetAnimator(animator);
+      map->AddGameObject(mushroom);
+    }
   }
   return map;
 }

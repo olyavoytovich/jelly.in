@@ -175,6 +175,7 @@
         <file>images/animation/cloud9.png</file>
         <file>images/animation/drop0.png</file>
         <file>images/animation/thorn0.png</file>
+        <file>images/animation/mushroom0.png</file>
         <file>images/level_2.png</file>
         <file>data/level_2.json</file>
         <file>images/level_3.png</file>
@@ -184,5 +185,6 @@
         <file>images/gifs/player_red_move.gif</file>
         <file>images/gifs/player_orange_move.gif</file>
         <file>images/gifs/player_yellow_move.gif</file>
+        <file>images/gifs/mushroom.gif</file>
     </qresource>
 </RCC>

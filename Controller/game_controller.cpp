@@ -17,6 +17,7 @@ void GameController::Update(int time) {
     OpenVictoryMenu();
   }
   if (interface_ != nullptr) {
+    interface_->SetMushrooms(map_->GetPickedMushroomsCount());
     interface_->SetHealth(player_->GetCurrentHealth());
   }
 }
