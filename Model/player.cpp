@@ -46,6 +46,10 @@ void Player::Update(int time) {
     no_damage_time_left_ -= time;
   }
 
+  if (monsters_count_ != 0) {
+    TakeDamage();
+  }
+
   if (map_->IsKeyPressed(Key::kSpace) && player_part_ == nullptr) {
     player_part_ = std::make_shared<Entity>(map_,
                                             b2_dynamicBody,
@@ -66,6 +70,7 @@ void Player::Update(int time) {
   }
 
   if (map_->IsKeyPressed(Key::kUp) && jumps_remaining_ > 0) {
+    animator_->SetCurrentAnimation(kJump + "_" + animation_name_, false);
     jumps_remaining_--;
     body_->SetLinearVelocity(b2Vec2(body_->GetLinearVelocity().x, 0));
     body_->ApplyLinearImpulseToCenter(
@@ -100,16 +105,25 @@ void Player::BeginCollision(b2Fixture* fixture,
     right_collisions_++;
   } else if (other_type == EntityType::kBullet
       || other_type == EntityType::kChestnut
-      || other_type == EntityType::kSpikes) {
-    TakeDamage();
+      || other_type == EntityType::kSpikes
+      || other_type == EntityType::kBurdock) {
+    monsters_count_++;
   }
 }
 
-void Player::EndCollision(b2Fixture* my_fixture) {
+void Player::EndCollision(b2Fixture* my_fixture, EntityType other_type) {
+  if (my_fixture == bottom_sensor_) {
+    return;
+  }
   if (my_fixture == left_sensor_) {
     left_collisions_--;
   } else if (my_fixture == right_sensor_) {
     right_collisions_--;
+  } else if (other_type == EntityType::kChestnut
+      || other_type == EntityType::kBurdock
+      || other_type == EntityType::kBullet
+      || other_type == EntityType::kSpikes) {
+    monsters_count_--;
   }
 }
 
@@ -125,7 +139,12 @@ void Player::TakeDamage() {
   if (no_damage_time_left_ > 0) {
     return;
   }
-  animator_->Play();
+  animator_->SetCurrentAnimation(kDamage + "_" + animation_name_);
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;
+}
+
+void Player::SetAnimationName(const QString& animation_name) {
+  animation_name_ = animation_name;
+  animator_->SetCurrentAnimation(animation_name_);
 }

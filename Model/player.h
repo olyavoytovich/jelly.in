@@ -5,6 +5,7 @@
 #include <utility>
 
 #include "animator.h"
+#include "constants.h"
 #include "entity.h"
 
 class Player : public Entity {
@@ -18,12 +19,14 @@ class Player : public Entity {
 
   void Update(int time) override;
   void BeginCollision(b2Fixture* fixture,
-                      EntityType my_type,
+                      EntityType,
                       EntityType other_type) override;
-  void EndCollision(b2Fixture* my_fixture) override;
+  void EndCollision(b2Fixture* my_fixture, EntityType other_type) override;
 
   int GetCurrentHealth() const;
   bool ReachedExit() const;
+
+  void SetAnimationName(const QString& animation_name);
 
  public:
   static const int kPlayerWidth = 64;
@@ -49,6 +52,9 @@ class Player : public Entity {
   int jumps_remaining_ = 0;
   int left_collisions_ = 0;
   int right_collisions_ = 0;
+  int monsters_count_ = 0;
+
+  QString animation_name_;
 
   b2Fixture* bottom_sensor_ = nullptr;
   b2Fixture* left_sensor_ = nullptr;

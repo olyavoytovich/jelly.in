@@ -147,7 +147,16 @@ void GameController::StartLevel(int level_number) {
   }
   level_number_ = level_number;
   player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
+  player_->SetAnimationName(player_animation_name_);
   interface_ = std::make_shared<GameInterface>(this);
   view_->takeCentralWidget();
   view_->setCentralWidget(interface_.get());
+}
+
+QString GameController::GetPlayerAnimation() const {
+  return player_animation_name_;
+}
+
+void GameController::SetPlayerAnimation(const QString& animation_name) {
+  player_animation_name_ = animation_name;
 }

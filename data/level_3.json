@@ -1,14 +1,14 @@
 {
   "solids": [
     {
-      "x": 0,
-      "y": 4800,
+      "x": 192,
+      "y": 4960,
       "width": 384,
       "height": 320
     },
     {
-      "x": 384,
-      "y": 4736,
+      "x": 640,
+      "y": 4928,
       "width": 512,
       "height": 384
     },
@@ -93,116 +93,116 @@
       ]
     },
     {
-      "x": 3072,
-      "y": 4672,
+      "x": 3328,
+      "y": 4896,
       "width": 512,
       "height": 448
     },
     {
-      "x": 3584,
-      "y": 4608,
+      "x": 3872,
+      "y": 4864,
       "width": 576,
       "height": 512
     },
     {
-      "x": 4480,
-      "y": 4864,
+      "x": 4864,
+      "y": 4992,
       "width": 768,
       "height": 256
     },
     {
-      "x": 5440,
-      "y": 4864,
+      "x": 5888,
+      "y": 4882,
       "width": 896,
       "height": 36
     },
     {
-      "x": 6208,
-      "y": 4608,
+      "x": 6272,
+      "y": 4626,
       "width": 128,
       "height": 36
     },
     {
-      "x": 5824,
-      "y": 4416,
+      "x": 5888,
+      "y": 4434,
       "width": 128,
       "height": 36
     },
     {
-      "x": 5312,
-      "y": 4288,
+      "x": 5376,
+      "y": 4306,
       "width": 128,
       "height": 36
     },
     {
-      "x": 4800,
-      "y": 4096,
+      "x": 4864,
+      "y": 4114,
       "width": 128,
       "height": 36
     },
     {
-      "x": 5312,
-      "y": 3904,
+      "x": 5376,
+      "y": 3922,
       "width": 128,
       "height": 36
     },
     {
-      "x": 5696,
-      "y": 3648,
+      "x": 6016,
+      "y": 3666,
       "width": 640,
       "height": 36
     },
     {
-      "x": 3136,
-      "y": 4288,
+      "x": 3360,
+      "y": 4306,
       "width": 448,
       "height": 36
     },
     {
-      "x": 2304,
-      "y": 4032,
+      "x": 2528,
+      "y": 4050,
       "width": 448,
       "height": 36
     },
     {
-      "x": 1792,
-      "y": 3904,
+      "x": 1888,
+      "y": 3922,
       "width": 192,
       "height": 36
     },
     {
-      "x": 1408,
-      "y": 3648,
+      "x": 1504,
+      "y": 3666,
       "width": 192,
       "height": 36
     },
     {
-      "x": 192,
-      "y": 3456,
+      "x": 640,
+      "y": 3474,
       "width": 896,
       "height": 36
     },
     {
-      "x": 1984,
-      "y": 3392,
+      "x": 2080,
+      "y": 3410,
       "width": 192,
       "height": 36
     },
     {
-      "x": 3072,
-      "y": 3392,
+      "x": 3360,
+      "y": 3410,
       "width": 576,
       "height": 36
     },
     {
-      "x": 3776,
-      "y": 3136,
+      "x": 3872,
+      "y": 3154,
       "width": 192,
       "height": 36
     },
     {
-      "x": 4160,
-      "y": 2880,
+      "x": 4256,
+      "y": 2898,
       "width": 192,
       "height": 36
     },
@@ -271,73 +271,85 @@
       ]
     },
     {
-      "x": 4288,
-      "y": 3584,
+      "x": 4480,
+      "y": 3648,
       "width": 384,
       "height": 128
     },
     {
-      "x": 896,
-      "y": 5088,
+      "x": 1984,
+      "y": 5104,
       "width": 2176,
       "height": 32,
       "type": "spikes"
     },
     {
-      "x": 4160,
-      "y": 5088,
+      "x": 4320,
+      "y": 5104,
       "width": 320,
       "height": 32,
       "type": "spikes"
     },
     {
-      "x": 5248,
-      "y": 5092,
+      "x": 5824,
+      "y": 5106,
       "width": 1152,
       "height": 28,
       "type": "spikes"
     },
     {
-      "x": 5696,
-      "y": 4832,
+      "x": 5824,
+      "y": 4848,
       "width": 256,
       "height": 32,
       "type": "spikes"
     },
     {
-      "x": 3328,
-      "y": 4640,
+      "x": 3456,
+      "y": 4656,
       "width": 256,
       "height": 32,
       "type": "spikes"
     },
     {
-      "x": 3264,
-      "y": 3360,
+      "x": 3360,
+      "y": 3376,
       "width": 192,
       "height": 32,
       "type": "spikes"
     },
     {
-      "x": 4160,
-      "y": 3616,
+      "x": 4224,
+      "y": 3632,
       "width": 128,
       "height": 32,
       "type": "spikes"
     },
     {
-      "x": 4672,
-      "y": 3616,
+      "x": 4736,
+      "y": 3632,
       "width": 128,
       "height": 32,
       "type": "spikes"
     },
     {
-      "x": 5952,
-      "y": 3616,
+      "x": 6080,
+      "y": 3632,
       "width": 256,
       "height": 32,
       "type": "spikes"
+    },
+    {
+      "x": 6408,
+      "y": 3824,
+      "width": 16,
+      "height": 2528
+    },
+    {
+      "x": -8,
+      "y": 3680,
+      "width": 16,
+      "height": 2240
     }
   ],
   "dynamic_objects": [
@@ -347,9 +359,19 @@
       "y": 4736,
       "width": 0,
       "height": 0,
-      "animation_duration": 500,
-      "animation_name": "player",
-      "frames_count": 6
+      "animation_count": 2,
+      "animations": [
+        {
+          "name": "damage",
+          "duration": 500,
+          "frames_count": 19
+        },
+        {
+          "name": "jump",
+          "duration": 300,
+          "frames_count": 8
+        }
+      ]
     },
     {
       "name": "exit",
@@ -364,12 +386,17 @@
       "y": 3392,
       "width": 128,
       "height": 128,
-      "animation_duration": 600,
-      "animation_name": "chestnut",
-      "frames_count": 7,
+      "animation_count": 1,
       "speed": 100,
       "type": "patroller",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
+        }
+      ],
       "way_points": [
         {
           "x": 320,
@@ -387,19 +414,29 @@
       "y": 4192,
       "width": 256,
       "height": 64,
-      "animation_duration": 200,
-      "animation_name": "cloud",
-      "bullet_animation_duration": 1000,
-      "bullet_animation_name": "drop",
-      "bullet_frames_count": 1,
+      "animation_count": 1,
       "bullet_radius": 5,
       "bullet_speed": 300,
-      "frames_count": 10,
       "shoot_direction": "down",
       "shoot_period": 1000,
       "speed": 100,
       "type": "shooter",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "cloud",
+          "duration": 200,
+          "frames_count": 10
+        }
+      ],
+      "bullet_animation_count": 1,
+      "bullet_animations": [
+        {
+          "name": "drop",
+          "duration": 1000,
+          "frames_count": 1
+        }
+      ],
       "way_points": [
         {
           "x": 1216,
@@ -417,19 +454,29 @@
       "y": 4476,
       "width": 192,
       "height": 64,
-      "animation_duration": 200,
-      "animation_name": "cloud",
-      "bullet_animation_duration": 1000,
-      "bullet_animation_name": "drop",
-      "bullet_frames_count": 1,
+      "animation_count": 1,
       "bullet_radius": 5,
       "bullet_speed": 300,
-      "frames_count": 10,
       "shoot_direction": "down",
       "shoot_period": 2000,
-      "speed": 50,
+      "speed": 100,
       "type": "shooter",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "cloud",
+          "duration": 200,
+          "frames_count": 10
+        }
+      ],
+      "bullet_animation_count": 1,
+      "bullet_animations": [
+        {
+          "name": "drop",
+          "duration": 1000,
+          "frames_count": 1
+        }
+      ],
       "way_points": [
         {
           "x": 4608,
@@ -447,19 +494,29 @@
       "y": 3536,
       "width": 96,
       "height": 96,
-      "animation_duration": 300,
-      "animation_name": "burdock",
-      "bullet_animation_duration": 100,
-      "bullet_animation_name": "thorn",
-      "bullet_frames_count": 1,
+      "animation_count": 1,
       "bullet_radius": 5,
       "bullet_speed": 500,
-      "frames_count": 7,
       "shoot_direction": "left_right",
       "shoot_period": 1000,
-      "speed": 50,
+      "speed": 100,
       "type": "shooter",
       "way_point_size": 2,
+      "animations": [
+        {
+          "name": "burdock",
+          "duration": 300,
+          "frames_count": 7
+        }
+      ],
+      "bullet_animation_count": 1,
+      "bullet_animations": [
+        {
+          "name": "thorn",
+          "duration": 100,
+          "frames_count": 1
+        }
+      ],
       "way_points": [
         {
           "x": 4352,
