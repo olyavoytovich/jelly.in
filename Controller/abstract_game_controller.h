@@ -35,6 +35,8 @@ class AbstractGameController {
   virtual QString GetPlayerAnimation() const = 0;
   virtual void SetPlayerAnimation(const QString& animation_name) = 0;
 
+  virtual int GetLastLevelMushrooms() const = 0;
+
   virtual void StartLevel(int level_number) = 0;
 };
 

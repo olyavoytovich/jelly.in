@@ -290,14 +290,11 @@ QRect Entity::GetBoundings() const {
   return bounding_rectangle_.translated(GetPositionInPixels());
 }
 
-void Entity::BeginCollision(b2Fixture*,
-                            EntityType my_type,
-                            EntityType other_type) {
+void Entity::BeginCollision(b2Fixture*, EntityType my_type, EntityType) {
   if (my_type == EntityType::kBullet) {
     MarkAsDeleted();
   }
-  if (my_type == EntityType::kMushroom && (other_type == EntityType::kPlayer
-      || other_type == EntityType::kPlayerPart)) {
+  if (my_type == EntityType::kMushroom && !IsDeleted()) {
     map_.lock()->PickUpMushroom();
     MarkAsDeleted();
   }

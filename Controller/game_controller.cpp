@@ -17,7 +17,8 @@ void GameController::Update(int time) {
     OpenVictoryMenu();
   }
   if (interface_ != nullptr) {
-    interface_->SetMushrooms(map_->GetPickedMushroomsCount());
+    last_level_mushrooms_ = map_->GetPickedMushroomsCount();
+    interface_->SetMushrooms(last_level_mushrooms_);
     interface_->SetHealth(player_->GetCurrentHealth());
   }
 }
@@ -144,4 +145,8 @@ QString GameController::GetPlayerAnimation() const {
 
 void GameController::SetPlayerAnimation(const QString& animation_name) {
   player_animation_name_ = animation_name;
+}
+
+int GameController::GetLastLevelMushrooms() const {
+  return last_level_mushrooms_;
 }
