@@ -4,31 +4,51 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
                                    MenuType menu_type,
                                    QWidget* parent)
     : Menu(game_controller, parent), menu_type_(menu_type) {
-  background_ = QImage(":/images/menu/big_background.png");
-  scaled_background_ = background_;
 
   std::shared_ptr<ImageSet> image_set = nullptr;
   switch (menu_type_) {
     case MenuType::kFail: {
-      main_part_ = QImage(":/images/menu/fail_menu.png");
+      background_ = QImage(":/images/menu/big_background_pink.png");
+      main_part_ = QImage(":/images/menu/fail_menu1.png");
       image_set = std::make_shared<ImageSet>("malinovij");
       break;
     }
     case MenuType::kPause: {
-      main_part_ = QImage(":/images/menu/pause_menu.png");
+      background_ = QImage(":/images/menu/big_background.png");
+      main_part_ = QImage(":/images/menu/pause_menu2.png");
       image_set = std::make_shared<ImageSet>("blue");
-      menu_animation_ = std::make_shared<Movie>("pause_menu", this);
-      menu_animation_->SetSpeed(200);
+      menu_animation_ = std::make_shared<Movie>("burdock_loop", this);
+      menu_animation_->SetSpeed(100);
       menu_animation_->Play();
       break;
     }
     case MenuType::kVictory: {
+      background_ = QImage(":/images/menu/big_background_yellow.png");
       main_part_ = QImage(":/images/menu/victory_menu.png");
       image_set = std::make_shared<ImageSet>("orange");
+      menu_animation_ = std::make_shared<Movie>("sunflower_anim", this);
+      menu_animation_->SetSpeed(160);
+      menu_animation_->Play();
+      break;
+    }
+    case MenuType::kControls: {
+      background_ = QImage(":/images/menu/big_background.png");
+      main_part_ = QImage(":/images/menu/controls.png");
+      image_set = std::make_shared<ImageSet>("back_arrow");
       break;
     }
   }
+  scaled_background_ = background_;
   scaled_main_part_ = main_part_;
+
+  if (menu_type_ == MenuType::kControls) {
+    back_arrow_ = new Button(image_set, this);
+
+    connect(back_arrow_, &QPushButton::clicked, this, [&]() {
+      game_controller_->OpenSettingsMenu();
+    });
+    return;
+  }
 
   restart_button_ = new Button(image_set, this, "Restart");
   choose_level_button_ = new Button(image_set, this, "Choose Level");
@@ -90,6 +110,12 @@ void IntermediateMenu::resizeEvent(QResizeEvent* event) {
       restart_button_->SetRectangle(PositionRectangle(6, 1, 3, 2));
       choose_level_button_->SetRectangle(PositionRectangle(2, 4, 3, 2));
       main_menu_button_->SetRectangle(PositionRectangle(6, 4, 3, 2));
+
+      menu_animation_->setGeometry(PositionRectangle(11, 1, 4, 5));
+      break;
+    }
+    case MenuType::kControls: {
+      back_arrow_->SetRectangle(PositionRectangle(1, 1, 1, 1));
       break;
     }
   }

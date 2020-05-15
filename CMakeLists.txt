@@ -39,7 +39,7 @@ add_executable(jellyin main.cpp
         View/movie.cpp
         View/view.cpp
         resources.qrc
-        ${box2d})
+        ${box2d} View/settings_menu.cpp View/settings_menu.h View/settings_volume.cpp View/settings_volume.h)
 
 target_link_libraries(jellyin Qt5::Core)
 target_link_libraries(jellyin Qt5::Widgets)

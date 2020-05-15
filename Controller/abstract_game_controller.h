@@ -28,6 +28,9 @@ class AbstractGameController {
   virtual void OpenPauseMenu() = 0;
   virtual void OpenVictoryMenu() = 0;
   virtual void OpenFailMenu() = 0;
+  virtual void OpenSettingsMenu() = 0;
+  virtual void OpenSettingsVolume() = 0;
+  virtual void OpenSettingsControls() = 0;
   virtual void ResumeGame() = 0;
   virtual void RestartGame() = 0;
   virtual void StartNextLevel() = 0;

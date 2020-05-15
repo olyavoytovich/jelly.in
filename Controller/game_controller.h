@@ -17,6 +17,8 @@
 #include "View/intermediate_menu.h"
 #include "View/main_menu.h"
 #include "View/menu.h"
+#include "View/settings_menu.h"
+#include "View/settings_volume.h"
 #include "View/view.h"
 #include "abstract_game_controller.h"
 
@@ -36,6 +38,9 @@ class GameController : public AbstractGameController {
   void OpenPauseMenu() override;
   void OpenVictoryMenu() override;
   void OpenFailMenu() override;
+  void OpenSettingsMenu() override;
+  void OpenSettingsVolume() override;
+  void OpenSettingsControls() override;
   void ResumeGame() override;
   void RestartGame() override;
   void StartNextLevel() override;

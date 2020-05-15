@@ -15,6 +15,10 @@ MainMenu::MainMenu(AbstractGameController* game_controller, QWidget* parent)
     game_controller_->OpenChooseLevelMenu();
   });
 
+  connect(settings_button_, &QPushButton::clicked, this, [&]() {
+    game_controller_->OpenSettingsMenu();
+  });
+
   connect(exit_button_, &QPushButton::clicked, this, [&]() {
     qApp->exit();
   });

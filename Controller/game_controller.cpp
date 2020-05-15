@@ -1,5 +1,6 @@
 #include "game_controller.h"
 
+#include <QDebug>
 GameController::GameController()
     : view_(std::make_shared<View>(this)),
       menu_(std::make_shared<MainMenu>(this)) {
@@ -100,6 +101,21 @@ void GameController::OpenVictoryMenu() {
 
 void GameController::OpenFailMenu() {
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kFail));
+  CloseCurrentLevel();
+}
+
+void GameController::OpenSettingsControls() {
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kControls));
+  CloseCurrentLevel();
+}
+
+void GameController::OpenSettingsMenu() {
+  OpenMenu(std::make_shared<SettingsMenu>(this));
+  CloseCurrentLevel();
+}
+
+void GameController::OpenSettingsVolume() {
+  OpenMenu(std::make_shared<SettingsVolume>(this));
   CloseCurrentLevel();
 }
 

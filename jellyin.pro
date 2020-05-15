@@ -12,6 +12,8 @@ QMAKE_CXXFLAGS += -std=c++17
 
 SOURCES += \
         Controller/game_controller.cpp \
+        View/settings_menu.cpp \
+        View/settings_volume.cpp \
         main.cpp \
         Model/animation.cpp \
         Model/animator.cpp \
@@ -101,6 +103,8 @@ HEADERS += \
     View/main_menu.h \
     View/menu.h \
     View/movie.h \
+    View/settings_menu.h \
+    View/settings_volume.h \
     View/view.h \
     box2d/b2_block_allocator.h \
     box2d/b2_body.h \

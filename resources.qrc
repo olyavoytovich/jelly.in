@@ -33,12 +33,24 @@
         <file>images/menu/settings_first.png</file>
         <file>images/menu/settings_second.png</file>
         <file>images/menu/settings_third.png</file>
+        <file>images/menu/left_arrow_first.png</file>
+        <file>images/menu/left_arrow_second.png</file>
+        <file>images/menu/left_arrow_third.png</file>
+        <file>images/menu/right_arrow_first.png</file>
+        <file>images/menu/right_arrow_second.png</file>
+        <file>images/menu/right_arrow_third.png</file>
         <file>images/menu/back_arrow_first.png</file>
         <file>images/menu/back_arrow_second.png</file>
         <file>images/menu/back_arrow_third.png</file>
         <file>images/menu/choose_level_menu.png</file>
+        <file>images/menu/volume_menu.png</file>
         <file>images/menu/pause_menu.png</file>
+        <file>images/menu/pause_menu1.png</file>
+        <file>images/menu/pause_menu2.png</file>
+        <file>images/menu/settings_menu.png</file>
+        <file>images/menu/controls.png</file>
         <file>images/menu/fail_menu.png</file>
+        <file>images/menu/fail_menu1.png</file>
         <file>images/menu/victory_menu.png</file>
         <file>images/menu/shoose_level_menu_background.png</file>
         <file>images/menu/yellow_first.png</file>
@@ -47,9 +59,18 @@
         <file>images/menu/malinovij_first.png</file>
         <file>images/menu/malinovij_second.png</file>
         <file>images/menu/malinovij_third.png</file>
+        <file>images/menu/controls_first.png</file>
+        <file>images/menu/controls_second.png</file>
+        <file>images/menu/controls_third.png</file>
+        <file>images/menu/volume_first.png</file>
+        <file>images/menu/volume_second.png</file>
+        <file>images/menu/volume_third.png</file>
         <file>images/menu/orange_first.png</file>
         <file>images/menu/orange_second.png</file>
         <file>images/menu/orange_third.png</file>
+        <file>images/menu/square_first.png</file>
+        <file>images/menu/square_second.png</file>
+        <file>images/menu/square_third.png</file>
         <file>images/animation/burdock0.png</file>
         <file>images/animation/burdock1.png</file>
         <file>images/animation/burdock2.png</file>
@@ -83,5 +104,10 @@
         <file>data/level_3.json</file>
         <file>images/gifs/heart.gif</file>
         <file>images/gifs/pause_menu.gif</file>
+        <file>images/gifs/victory_menu.gif</file>
+        <file>images/gifs/burdock.gif</file>
+        <file>images/gifs/burdock_loop.gif</file>
+        <file>images/gifs/chestnut.gif</file>
+        <file>images/gifs/sunflower_anim.gif</file>
     </qresource>
 </RCC>
