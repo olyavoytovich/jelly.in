@@ -1,11 +1,12 @@
 #include "game_controller.h"
 
-#include <QDebug>
 GameController::GameController()
     : view_(std::make_shared<View>(this)),
       menu_(std::make_shared<MainMenu>(this)) {
   view_->show();
   view_->setCentralWidget(menu_.get());
+  settings_ = new QSettings("View, Controller and Models", "Jelly.in");
+  player_animation_name_ = settings_->value("animation_name").toString();
 }
 
 void GameController::Update(int time) {
@@ -159,4 +160,5 @@ QString GameController::GetPlayerAnimation() const {
 
 void GameController::SetPlayerAnimation(const QString& animation_name) {
   player_animation_name_ = animation_name;
+  settings_->setValue("animation_name", player_animation_name_);
 }
