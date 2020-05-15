@@ -1,6 +1,6 @@
 #include "shooter.h"
 
-Shooter::Shooter(std::shared_ptr<Map> map,
+Shooter::Shooter(std::weak_ptr<Map> map,
                  b2BodyType type,
                  const QPoint& body_position,
                  const QPolygon& polygon,
@@ -25,7 +25,7 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
 }
 
-Shooter::Shooter(std::shared_ptr<Map> map,
+Shooter::Shooter(std::weak_ptr<Map> map,
                  b2BodyType type,
                  const QPoint& body_position,
                  int radius,
@@ -49,7 +49,7 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
 }
 
-Shooter::Shooter(std::shared_ptr<Map> map,
+Shooter::Shooter(std::weak_ptr<Map> map,
                  b2BodyType body_type,
                  const QPoint& body_position,
                  const std::vector<CircleShape>& circles,
@@ -122,7 +122,7 @@ std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
                                          bullet_radius_,
                                          EntityType::kBullet);
   bullet->SetAnimator(bullet_animator_);
-  map_->AddGameObject(bullet);
+  map_.lock()->AddGameObject(bullet);
   animator_->Play();
   return bullet;
 }

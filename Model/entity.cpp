@@ -10,7 +10,7 @@
 // локальными координатами, и если нужно создать тело из нескольких форм,
 // то каждой форме можно задавать свои координаты (shape_position).
 
-Entity::Entity(std::shared_ptr<Map> map,
+Entity::Entity(std::weak_ptr<Map> map,
                b2BodyType body_type,
                const QPoint& body_position,
                const QPolygon& polygon,
@@ -22,7 +22,7 @@ Entity::Entity(std::shared_ptr<Map> map,
   InitializeBoundaryRectangle();
 }
 
-Entity::Entity(std::shared_ptr<Map> map,
+Entity::Entity(std::weak_ptr<Map> map,
                b2BodyType body_type,
                const QPoint& body_position,
                int radius,
@@ -34,7 +34,7 @@ Entity::Entity(std::shared_ptr<Map> map,
   InitializeBoundaryRectangle();
 }
 
-Entity::Entity(std::shared_ptr<Map> map,
+Entity::Entity(std::weak_ptr<Map> map,
                b2BodyType body_type,
                const QPoint& body_position,
                const std::vector<CircleShape>& circles,
@@ -62,14 +62,14 @@ void Entity::Draw(QPainter* painter) const {
   if (animator_ != nullptr) {
     QRect rectangle_for_image = GetBoundings();
     int width =
-        static_cast<int>(bounding_rectangle_.width() * map_->GetScale());
-    int height =
-        static_cast<int>(bounding_rectangle_.height() * map_->GetScale());
+        static_cast<int>(bounding_rectangle_.width() * map_.lock()->GetScale());
+    int height = static_cast<int>(bounding_rectangle_.height()
+        * map_.lock()->GetScale());
     if (entity_type_ == EntityType::kSunflower) {
       width = static_cast<int>(width * kSunflowerWidthPercent);
       height = static_cast<int>(height * kSunflowerHeightPercent);
     }
-    painter->drawImage(rectangle_for_image.topLeft() * map_->GetScale(),
+    painter->drawImage(rectangle_for_image.topLeft() * map_.lock()->GetScale(),
                        *(animator_->GetCurrentImage(width, height)));
   }
 }
@@ -196,7 +196,7 @@ void Entity::InitializeBody(b2BodyType body_type, const QPoint& body_position) {
   body_definition.type = body_type;
   body_definition.fixedRotation = true;
   body_definition.userData = static_cast<void*>(this);
-  body_ = map_->CreateBody(&body_definition);
+  body_ = map_.lock()->CreateBody(&body_definition);
 }
 
 int Entity::MetersToPixels(float value) const {
