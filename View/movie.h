@@ -3,11 +3,11 @@
 
 #include <QMovie>
 #include <QPainter>
-#include <QWidget>
+#include <QPushButton>
 #include <memory>
 #include <vector>
 
-class Movie : public QWidget {
+class Movie : public QPushButton {
  public:
   explicit Movie(const QString& name, QWidget* parent = nullptr);
   ~Movie() override = default;
@@ -16,6 +16,7 @@ class Movie : public QWidget {
   void Pause();
   void Stop();
   void SetSpeed(int percents = 100);
+  void SetAnimation(const QString& name);
 
   bool IsFinished() const;
 

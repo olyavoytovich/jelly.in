@@ -25,16 +25,21 @@ void Animator::Play() {
   is_playing_ = true;
 }
 
-void Animator::SetCurrentAnimation(const QString& current_animation_name) {
-  current_animation_ = name_to_animation_[current_animation_name];
-  frame_duration_ = current_animation_->GetFrameDuration(is_repeated_back_);
-  Reset();
-  Play();
+void Animator::SetCurrentAnimation(const QString& current_animation_name,
+                                   bool stop_current_animation) {
+  next_animation_ = current_animation_name;
+  if (stop_current_animation) {
+    StartNextAnimation();
+  }
 }
 
 void Animator::Update(int time) {
   if (!is_playing_) {
-    return;
+    if (!next_animation_.isEmpty()) {
+      StartNextAnimation();
+    } else {
+      return;
+    }
   }
   time_since_last_frame_ += time;
   if (time_since_last_frame_ > frame_duration_) {
@@ -42,6 +47,7 @@ void Animator::Update(int time) {
     if (current_frame_ + direction_ == current_animation_->GetFramesCount()) {
       if (!is_repeated_back_) {
         if (!is_looped_) {
+          is_playing_ = false;
           return;
         }
         direction_ = 1;
@@ -67,4 +73,12 @@ void Animator::Reset() {
   current_frame_ = 0;
   time_since_last_frame_ = 0;
   direction_ = 1;
+}
+
+void Animator::StartNextAnimation() {
+  current_animation_ = name_to_animation_[next_animation_];
+  frame_duration_ = current_animation_->GetFrameDuration(is_repeated_back_);
+  next_animation_ = "";
+  Reset();
+  Play();
 }

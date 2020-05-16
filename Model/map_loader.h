@@ -15,6 +15,7 @@
 #include "Controller/abstract_game_controller.h"
 #include "animation.h"
 #include "animator.h"
+#include "constants.h"
 #include "contact_listener.h"
 #include "entity.h"
 #include "map.h"

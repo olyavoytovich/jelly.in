@@ -41,6 +41,9 @@ class GameController : public AbstractGameController {
   void RestartGame() override;
   void StartNextLevel() override;
 
+  QString GetPlayerAnimation() const override;
+  void SetPlayerAnimation(const QString& animation_name) override;
+
   void StartLevel(int level_number) override;
   void OpenMenu(std::shared_ptr<Menu> menu);
 
@@ -50,6 +53,7 @@ class GameController : public AbstractGameController {
 
  private:
   int level_number_ = 0;
+  QString player_animation_name_ = "";
 
   std::shared_ptr<View> view_;
 

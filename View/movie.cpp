@@ -1,17 +1,9 @@
 #include "movie.h"
 
-Movie::Movie(const QString& name, QWidget* parent)
-    : QWidget(parent),
-      movie_(std::make_shared<QMovie>(":/images/gifs/" + name + ".gif")) {
-  movie_->setCacheMode(QMovie::CacheMode::CacheAll);
-
-  connect(movie_.get(), &QMovie::frameChanged, this, [&]() {
-    UpdateScale();
-  });
-  connect(movie_.get(), &QMovie::finished, this, [&]() {
-    Finished();
-  });
-  movie_->jumpToFrame(0);
+Movie::Movie(const QString& name, QWidget* parent) : QPushButton(parent) {
+  if (!name.isEmpty()) {
+    SetAnimation(name);
+  }
 }
 
 void Movie::Play(bool is_looped) {
@@ -60,6 +52,19 @@ void Movie::UpdateScale() {
     scaled_frames_[current_frame] = movie_->currentImage().scaled(size());
   }
   repaint();
+}
+
+void Movie::SetAnimation(const QString& name) {
+  scaled_frames_.clear();
+  movie_ = std::make_shared<QMovie>(":/images/gifs/" + name + ".gif");
+  movie_->setCacheMode(QMovie::CacheMode::CacheAll);
+  connect(movie_.get(), &QMovie::frameChanged, this, [&]() {
+    UpdateScale();
+  });
+  connect(movie_.get(), &QMovie::finished, this, [&]() {
+    Finished();
+  });
+  movie_->jumpToFrame(0);
 }
 
 void Movie::Finished() {

@@ -81,6 +81,7 @@ void Player::Update(int time) {
   }
 
   if (map_->IsKeyPressed(Key::kUp) && jumps_remaining_ > 0) {
+    animator_->SetCurrentAnimation(kJump + "_" + animation_name_, false);
     jumps_remaining_--;
     body_->SetLinearVelocity(b2Vec2(body_->GetLinearVelocity().x, 0));
     body_->ApplyLinearImpulseToCenter(
@@ -133,8 +134,6 @@ void Player::EndCollision(b2Fixture* my_fixture, EntityType other_type) {
     left_collisions_--;
   } else if (my_fixture == right_sensor_) {
     right_collisions_--;
-  } else if (other_type == EntityType::kGround) {
-    animator_->SetCurrentAnimation(kJump);
   } else if (other_type == EntityType::kChestnut
       || other_type == EntityType::kBurdock
       || other_type == EntityType::kBullet
@@ -155,9 +154,14 @@ void Player::TakeDamage() {
   if (no_damage_time_left_ > 0) {
     return;
   }
-  animator_->SetCurrentAnimation(kDamage);
+  animator_->SetCurrentAnimation(kDamage + "_" + animation_name_);
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;
 
   map_->GetAudioManager()->PlayAudioPlayer(player_receive_damage_audio_key_);
+}
+
+void Player::SetAnimationName(const QString& animation_name) {
+  animation_name_ = animation_name;
+  animator_->SetCurrentAnimation(animation_name_);
 }

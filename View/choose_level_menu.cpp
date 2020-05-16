@@ -32,6 +32,20 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
       audio_manager_->PlayAudio(AudioName::kButtonClick);
     });
   }
+
+  player_ = std::make_shared<Movie>("", this);
+  connect(player_.get(), &QPushButton::clicked, this, [&]() {
+    SetNextAnimation();
+  });
+
+  if (!game_controller_->GetPlayerAnimation().isEmpty()) {
+    QString animation_name = game_controller_->GetPlayerAnimation();
+    while (animation_name != kPlayerAnimations[player_animation_index_]) {
+      player_animation_index_++;
+    }
+  }
+
+  SetPlayerAnimation();
 }
 
 void ChooseLevelMenu::resizeEvent(QResizeEvent* event) {
@@ -47,4 +61,22 @@ void ChooseLevelMenu::resizeEvent(QResizeEvent* event) {
   MakeEqualFontSize(level_buttons_);
 
   back_button_->SetRectangle(PositionRectangle(1, 1, 1, 1));
+
+  player_->setGeometry(PositionRectangle(11, 7, 1, 1));
+}
+
+void ChooseLevelMenu::SetPlayerAnimation() {
+  QString animation_name = kPlayerAnimations[player_animation_index_];
+  game_controller_->SetPlayerAnimation(animation_name);
+  player_->SetAnimation("player_" + animation_name + "_move");
+  player_->SetSpeed(300);
+  player_->Play(true);
+}
+
+void ChooseLevelMenu::SetNextAnimation() {
+  player_animation_index_++;
+  if (player_animation_index_ == kPlayerAnimations.size()) {
+    player_animation_index_ = 0;
+  }
+  SetPlayerAnimation();
 }
