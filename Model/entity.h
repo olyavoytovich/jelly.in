@@ -100,6 +100,8 @@ class Entity : public GameObject {
   b2Fixture* CreateFixture(const b2Shape& shape);
   void SetNoCollisionMask(uint16_t mask);
 
+  int CountVolumeFromDistance();  // выбирает громкость в зависимости от расстояния до игрока
+
  protected:
   const float kEpsilon = 1e-5;
 

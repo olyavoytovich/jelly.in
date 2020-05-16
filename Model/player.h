@@ -58,6 +58,11 @@ class Player : public Entity {
   b2Fixture* right_sensor_ = nullptr;
 
   std::shared_ptr<Entity> player_part_ = nullptr;
+
+  int playerjump;
+  int playerlanding;
+  int playerseparation;
+  int playertakingamage;
 };
 
 #endif  // MODEL_PLAYER_H_

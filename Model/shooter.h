@@ -84,6 +84,9 @@ class Shooter : public Entity {
   std::shared_ptr<Animator> bullet_animator_;
 
   std::shared_ptr<GameObject> player_ = nullptr;
+
+  int burdockbullet;
+  std::vector<int> cloudbullets;
 };
 
 #endif  // MODEL_SHOOTER_H_

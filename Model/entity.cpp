@@ -297,3 +297,15 @@ void Entity::EndCollision(b2Fixture*, EntityType) {}
 EntityType Entity::GetEntityType() const {
   return entity_type_;
 }
+
+int Entity::CountVolumeFromDistance() {
+   QPoint begin = map_->GetPlayer()->GetPositionInPixels();
+   QPoint end = this->GetPositionInPixels();
+   int distance = static_cast<int>(hypot(begin.x() - end.x(), begin.y() - end.y()));
+
+  // Magic count
+  distance = (1500 - distance) / 15;
+  distance = std::min(100, distance);
+  distance = std::max(0, distance);
+  return distance;
+}

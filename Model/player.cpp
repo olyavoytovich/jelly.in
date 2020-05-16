@@ -34,6 +34,11 @@ Player::Player(std::shared_ptr<Map> map,
   right_sensor_->SetSensor(true);
 
   SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
+
+  playerjump = map_->GetAudioManager()->CreatePlayer(AudioName::kPlayerJump);
+  playerlanding = map_->GetAudioManager()->CreatePlayer(AudioName::kPlayerLanding);
+  playerseparation = map_->GetAudioManager()->CreatePlayer(AudioName::kPlayerSeparation);
+  playertakingamage = map_->GetAudioManager()->CreatePlayer(AudioName::kPlayerTakingDamage);
 }
 
 void Player::Update(int time) {
@@ -63,7 +68,7 @@ void Player::Update(int time) {
     player_part_->SetAnimator(std::make_shared<Animator>(*animator_));
     map_->AddGameObject(player_part_);
 
-    map_->GetAudioManager()->PlayAudio(AudioName::kPlayerSeparation);
+    map_->GetAudioManager()->PlayPlayer(playerseparation);
   }
 
   if (player_part_ != nullptr
@@ -77,7 +82,7 @@ void Player::Update(int time) {
     body_->ApplyLinearImpulseToCenter(
         b2Vec2(0, -kPlayerJumpSpeed * body_->GetMass()), true);
 
-    map_->GetAudioManager()->PlayAudio(AudioName::kPlayerJump);
+    map_->GetAudioManager()->ReplayPlayer(playerjump);
   }
   float target_speed = -body_->GetLinearVelocity().x;
   if (map_->IsKeyClamped(Key::kLeft) && left_collisions_ == 0) {
@@ -103,7 +108,7 @@ void Player::BeginCollision(b2Fixture* fixture,
   if (fixture == bottom_sensor_) {
     jumps_remaining_ = kPlayerJumpCount;
 
-    map_->GetAudioManager()->PlayAudio(AudioName::kPlayerLanding);
+    map_->GetAudioManager()->ReplayPlayer(playerlanding);
   } else if (fixture == left_sensor_) {
     left_collisions_++;
   } else if (fixture == right_sensor_) {
@@ -150,5 +155,5 @@ void Player::TakeDamage() {
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;
 
-  map_->GetAudioManager()->PlayAudio(AudioName::kPlayerTakingDamage);
+  map_->GetAudioManager()->PlayPlayer(playertakingamage);
 }
