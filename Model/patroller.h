@@ -9,7 +9,7 @@
 
 class Patroller : public Entity {
  public:
-  Patroller(std::shared_ptr<Map> map,
+  Patroller(std::weak_ptr<Map> map,
             b2BodyType type,
             const QPoint& body_position,
             const QPolygon& polygon,
@@ -17,7 +17,7 @@ class Patroller : public Entity {
             std::shared_ptr<Animator> animator,
             int speed);
 
-  Patroller(std::shared_ptr<Map> map,
+  Patroller(std::weak_ptr<Map> map,
             b2BodyType type,
             const QPoint& body_position,
             int radius,
@@ -25,7 +25,7 @@ class Patroller : public Entity {
             std::shared_ptr<Animator> animator,
             int speed);
 
-  Patroller(std::shared_ptr<Map> map,
+  Patroller(std::weak_ptr<Map> map,
             b2BodyType body_type,
             const QPoint& body_position,
             const std::vector<CircleShape>& circles,

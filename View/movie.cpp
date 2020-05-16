@@ -4,6 +4,7 @@ Movie::Movie(const QString& name, QWidget* parent) : QPushButton(parent) {
   if (!name.isEmpty()) {
     SetAnimation(name);
   }
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
 }
 
 void Movie::Play(bool is_looped) {

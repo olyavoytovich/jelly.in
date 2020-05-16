@@ -1,11 +1,15 @@
 #include "game_controller.h"
 
 GameController::GameController()
-    : view_(std::make_shared<View>(this)),
+    : level_mushrooms_(12, -1),
+      view_(std::make_shared<View>(this)),
       menu_(std::make_shared<MainMenu>(this)),
       audio_manager_(std::make_shared<AudioManager>()) {
   view_->show();
   view_->setCentralWidget(menu_.get());
+  if (level_mushrooms_[1] == -1) {
+    level_mushrooms_[1] = 0;
+  }
 
   level_audio_key_ = audio_manager_->CreateAudioPlayerByPlayList(AudioName::kBackground);
   audio_manager_->SetPlayBackMode(level_audio_key_, QMediaPlaylist::Loop);
@@ -24,6 +28,8 @@ void GameController::Update(int time) {
     OpenVictoryMenu();
   }
   if (interface_ != nullptr) {
+    last_level_mushrooms_ = map_->GetPickedMushroomsCount();
+    interface_->SetMushrooms(last_level_mushrooms_);
     interface_->SetHealth(player_->GetCurrentHealth());
   }
 }
@@ -81,6 +87,16 @@ Key GameController::GetKeyFromCode(int key_code) {
 }
 
 void GameController::CloseCurrentLevel() {
+  if (map_ != nullptr) {
+    level_mushrooms_[level_number_] = std::max(level_mushrooms_[level_number_],
+                                               map_->GetPickedMushroomsCount());
+    // Если собрали не меньше 2х грибов, то открываем следующий уровень
+    if (level_number_ + 1 != level_mushrooms_.size()
+        && level_mushrooms_[level_number_] >= 2
+        && level_mushrooms_[level_number_ + 1] == -1) {
+      level_mushrooms_[level_number_ + 1] = 0;
+    }
+  }
   interface_ = nullptr;
   map_ = nullptr;
   player_ = nullptr;
@@ -139,7 +155,12 @@ void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
 }
 
 void GameController::StartLevel(int level_number) {
-  map_ = MapLoader::LoadMap("level_" + QString::number(level_number));
+  if (level_mushrooms_[level_number] == -1) {
+    // Уровень заблокирован, нельзя его загружать. Уходим
+    return;
+  }
+
+  map_ = MapLoader::LoadMap("level_" + QString::number(level_number + 1));
   if (map_ == nullptr) {
     return;
   }
@@ -159,4 +180,12 @@ QString GameController::GetPlayerAnimation() const {
 
 void GameController::SetPlayerAnimation(const QString& animation_name) {
   player_animation_name_ = animation_name;
+}
+
+int GameController::GetLastLevelMushrooms() const {
+  return last_level_mushrooms_;
+}
+
+int GameController::GetLevelMushrooms(int level_number) const {
+  return level_mushrooms_[level_number];
 }

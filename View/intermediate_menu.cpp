@@ -25,6 +25,12 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
     case MenuType::kVictory: {
       main_part_ = QImage(":/images/menu/victory_menu.png");
       image_set = std::make_shared<ImageSet>("orange");
+      int mushrooms_count = game_controller_->GetLastLevelMushrooms();
+      for (int i = 0; i < mushrooms_count; i++) {
+        mushrooms_.emplace_back(std::make_shared<Movie>("mushroom", this));
+        mushrooms_.back()->SetSpeed(300 - i * 75);
+        mushrooms_.back()->Play();
+      }
       break;
     }
   }
@@ -107,6 +113,11 @@ void IntermediateMenu::resizeEvent(QResizeEvent* event) {
       restart_button_->SetRectangle(PositionRectangle(6, 1, 3, 2));
       choose_level_button_->SetRectangle(PositionRectangle(2, 4, 3, 2));
       main_menu_button_->SetRectangle(PositionRectangle(6, 4, 3, 2));
+
+      int mushrooms_count = mushrooms_.size();
+      for (int i = 0; i < mushrooms_count; i++) {
+        mushrooms_[i]->setGeometry(PositionRectangle(10 + i, 5, 1, 1));
+      }
       break;
     }
   }

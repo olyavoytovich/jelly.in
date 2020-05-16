@@ -17,15 +17,27 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
     audio_manager_->PlayAudio(AudioName::kButtonClick);
   });
 
-  auto level_image_set = std::make_shared<ImageSet>("yellow");
+  std::vector<std::shared_ptr<ImageSet>>
+      level_images = {std::make_shared<ImageSet>("level_0"),
+                      std::make_shared<ImageSet>("level_1"),
+                      std::make_shared<ImageSet>("level_2"),
+                      std::make_shared<ImageSet>("level_3")};
+  auto locked_level_image = std::make_shared<ImageSet>("level_locked");
+
   for (int i = 0; i < 12; i++) {
-    level_buttons_.emplace_back(new Button(level_image_set, this,
-                                           QString::number(i + 1)));
+    int level_mushrooms = game_controller->GetLevelMushrooms(i);
+    if (level_mushrooms == -1) {
+      level_buttons_.emplace_back(new Button(locked_level_image,
+                                             this, QString::number(i + 1)));
+    } else {
+      level_buttons_.emplace_back(new Button(level_images[level_mushrooms],
+                                             this, QString::number(i + 1)));
+    }
   }
 
   for (int i = 0; i < 3; i++) {
     connect(level_buttons_[i], &QPushButton::clicked, this, [&, i]() {
-      game_controller_->StartLevel(i + 1);
+      game_controller_->StartLevel(i);
     });
 
     connect(level_buttons_[i], &QPushButton::pressed, this, [&]() {

@@ -16,7 +16,7 @@ enum class BulletDirection {
 
 class Shooter : public Entity {
  public:
-  Shooter(std::shared_ptr<Map> map,
+  Shooter(std::weak_ptr<Map> map,
           b2BodyType type,
           const QPoint& body_position,
           const QPolygon& polygon,
@@ -30,7 +30,7 @@ class Shooter : public Entity {
           EntityType entity_type,
           int speed = 0);
 
-  Shooter(std::shared_ptr<Map> map,
+  Shooter(std::weak_ptr<Map> map,
           b2BodyType type,
           const QPoint& body_position,
           int radius,
@@ -44,7 +44,7 @@ class Shooter : public Entity {
           EntityType entity_type,
           int speed = 0);
 
-  Shooter(std::shared_ptr<Map> map,
+  Shooter(std::weak_ptr<Map> map,
           b2BodyType body_type,
           const QPoint& body_position,
           const std::vector<CircleShape>& circles,

@@ -1,6 +1,6 @@
 #include "shooter.h"
 
-Shooter::Shooter(std::shared_ptr<Map> map,
+Shooter::Shooter(std::weak_ptr<Map> map,
                  b2BodyType type,
                  const QPoint& body_position,
                  const QPolygon& polygon,
@@ -26,7 +26,7 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   InitializeAudio();
 }
 
-Shooter::Shooter(std::shared_ptr<Map> map,
+Shooter::Shooter(std::weak_ptr<Map> map,
                  b2BodyType type,
                  const QPoint& body_position,
                  int radius,
@@ -51,7 +51,7 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   InitializeAudio();
 }
 
-Shooter::Shooter(std::shared_ptr<Map> map,
+Shooter::Shooter(std::weak_ptr<Map> map,
                  b2BodyType body_type,
                  const QPoint& body_position,
                  const std::vector<CircleShape>& circles,
@@ -95,9 +95,9 @@ void Shooter::Update(int time) {
           CreateBullet(QPoint(bounding_rectangle_.right() + 2 * bullet_radius_,
                               0));
       if (GetEntityType() == EntityType::kBurdock) {
-          map_->GetAudioManager()->SetVolume(
+          map_.lock()->GetAudioManager()->SetVolume(
                       thorn_audio_key_, CountVolumeFromDistance());
-          map_->GetAudioManager()->PlayAudioPlayer(thorn_audio_key_);
+          map_.lock()->GetAudioManager()->PlayAudioPlayer(thorn_audio_key_);
       }
       bullet->SetVelocity(way_points_[way_point_index_],
                           body_->GetPosition(),
@@ -107,9 +107,9 @@ void Shooter::Update(int time) {
           CreateBullet(QPoint(bounding_rectangle_.left() - 2 * bullet_radius_,
                               0));
       if (GetEntityType() == EntityType::kBurdock) {
-          map_->GetAudioManager()->SetVolume(
+          map_.lock()->GetAudioManager()->SetVolume(
                       thorn_audio_key_, CountVolumeFromDistance());
-          map_->GetAudioManager()->PlayAudioPlayer(thorn_audio_key_);
+          map_.lock()->GetAudioManager()->PlayAudioPlayer(thorn_audio_key_);
       }
       bullet->SetVelocity(way_points_[way_point_index_],
                           body_->GetPosition(),
@@ -123,9 +123,9 @@ void Shooter::Update(int time) {
            bounding_rectangle_.bottom() + 2 * bullet_radius_);
       std::shared_ptr<Entity> bullet = CreateBullet(bullet_position);
       if (GetEntityType() == EntityType::kCloud) {
-          map_->GetAudioManager()->SetVolume(
+          map_.lock()->GetAudioManager()->SetVolume(
                       drop_audio_keys_[i], CountVolumeFromDistance());
-          map_->GetAudioManager()->PlayAudioPlayer(drop_audio_keys_[i]);
+          map_.lock()->GetAudioManager()->PlayAudioPlayer(drop_audio_keys_[i]);
       }
       bullet->SetVelocity(b2Vec2(0, bullet_speed_), true);
     }
@@ -140,7 +140,7 @@ std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
                                          bullet_radius_,
                                          EntityType::kBullet);
   bullet->SetAnimator(bullet_animator_);
-  map_->AddGameObject(bullet);
+  map_.lock()->AddGameObject(bullet);
   animator_->Play();
   return bullet;
 }
@@ -148,13 +148,13 @@ std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
 void Shooter::InitializeAudio() {
   if (GetEntityType() == EntityType::kBurdock) {
     thorn_audio_key_ =
-            map_->GetAudioManager()->CreateAudioPlayer(AudioName::kThorn);
+            map_.lock()->GetAudioManager()->CreateAudioPlayer(AudioName::kThorn);
   }
   if (GetEntityType() == EntityType::kCloud) {
     drop_audio_keys_.resize(bounding_rectangle_.width() / 3 / bullet_radius_+1);
     for (auto& drop_audio_key : drop_audio_keys_) {
       drop_audio_key =
-              map_->GetAudioManager()->CreateAudioPlayer(AudioName::kDrop);
+              map_.lock()->GetAudioManager()->CreateAudioPlayer(AudioName::kDrop);
     }
   }
 }

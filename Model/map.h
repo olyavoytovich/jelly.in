@@ -23,6 +23,7 @@ enum class EntityType {
   kSpikes = 256,
   kExit = 512,
   kPlate = 1024,
+  kMushroom = 2048,
   kDefault
 };
 
@@ -36,6 +37,7 @@ class Map {
 
   double GetScale() const;
   std::shared_ptr<GameObject> GetPlayer() const;
+  int GetPickedMushroomsCount() const;
 
   void AddGameObject(std::shared_ptr<GameObject> object);
   void SetPlayerObject(std::shared_ptr<GameObject> player);
@@ -50,6 +52,8 @@ class Map {
   bool IsKeyClamped(Key key);
 
   std::shared_ptr<AudioManager> GetAudioManager() const;
+
+  void PickUpMushroom();
 
  private:
   void UpdateImageScale(int width, int height);
@@ -86,6 +90,8 @@ class Map {
 
   double scale_ = 1;
   QPoint shift_ = QPoint();
+
+  int picked_mushrooms_ = 0;
 
   std::vector<bool> is_key_pressed_;
   std::vector<bool> is_key_clamped_;

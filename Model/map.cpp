@@ -83,6 +83,10 @@ std::shared_ptr<GameObject> Map::GetPlayer() const {
   return player_;
 }
 
+int Map::GetPickedMushroomsCount() const {
+  return picked_mushrooms_;
+}
+
 void Map::AddGameObject(std::shared_ptr<GameObject> object) {
   game_objects_to_add_.push_back(std::move(object));
 }
@@ -116,6 +120,10 @@ bool Map::IsKeyPressed(Key key) {
 
 bool Map::IsKeyClamped(Key key) {
   return is_key_clamped_[static_cast<int>(key)];
+}
+
+void Map::PickUpMushroom() {
+  picked_mushrooms_++;
 }
 
 void Map::UpdateImageScale(int width, int height) {
