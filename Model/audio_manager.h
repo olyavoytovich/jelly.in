@@ -39,7 +39,14 @@ class AudioManager {
 
   void SetPlayBackMode(int key, QMediaPlaylist::PlaybackMode mode);
 
+  void ReVolume();
+  void SetCurrentVolume(int volume);
+  void SetGeneralVolume(int volume);
+
  private:
+  int general_volume_ = 100;
+  int current_volume_ = 100;
+
   std::vector<std::shared_ptr<QMediaContent>> audio_files_;
   std::unordered_map<int, std::shared_ptr<QMediaPlayer>> audio_players_;
 

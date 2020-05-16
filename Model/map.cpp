@@ -7,8 +7,7 @@ Map::Map(const QImage& map_image)
       scaled_map_image_(map_image),
       is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
       is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false),
-      audio_manager_(std::make_shared<AudioManager>()) {
-}
+      audio_manager_(std::make_shared<AudioManager>()) {}
 
 void Map::Update(int time) {
   if (player_->IsDeleted()) {

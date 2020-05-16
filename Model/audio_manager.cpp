@@ -41,7 +41,7 @@ int AudioManager::CreateAudioPlayer(AudioName audio_name) {
     playlist->addMedia(*audio_files_[static_cast<int>(audio_name)]);
     audio_players_[key]->setAudioRole(QAudio::GameRole);
     audio_players_[key]->setPlaylist(playlist);
-    audio_players_[key]->setVolume(100);
+    audio_players_[key]->setVolume(general_volume_ * current_volume_ / 100);
 
     audio_players_[key]->play();
     audio_players_[key]->stop();
@@ -68,7 +68,8 @@ void AudioManager::StopAudioPlayer(int key) {
 void AudioManager::PlayAudio(AudioName audio_name, int volume) {
   QMediaPlayer* audio_player = new QMediaPlayer;
   audio_player->setMedia(*audio_files_[static_cast<int>(audio_name)]);
-  audio_player->setVolume(volume);
+  audio_player->setVolume(
+              volume * general_volume_ * current_volume_ / 10000);
   audio_player->play();
   QObject::connect(audio_player,
            &QMediaPlayer::mediaStatusChanged,
@@ -81,9 +82,26 @@ void AudioManager::PlayAudio(AudioName audio_name, int volume) {
 }
 
 void AudioManager::SetVolume(int key, int volume) {
-  audio_players_[key]->setVolume(volume);
+  audio_players_[key]->setVolume(
+              volume * general_volume_ * current_volume_ / 10000);
 }
 
 void AudioManager::SetPlayBackMode(int key, QMediaPlaylist::PlaybackMode mode) {
   audio_players_[key]->playlist()->setPlaybackMode(mode);
+}
+
+void AudioManager::ReVolume() {
+  for (auto& audio_player : audio_players_) {
+    audio_player.second->setVolume(general_volume_ * current_volume_ / 100);
+  }
+}
+
+void AudioManager::SetGeneralVolume(int volume) {
+  general_volume_ = volume;
+  ReVolume();
+}
+
+void AudioManager::SetCurrentVolume(int volume) {
+  current_volume_ = volume;
+  ReVolume();
 }

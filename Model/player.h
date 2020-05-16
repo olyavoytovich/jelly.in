@@ -7,7 +7,6 @@
 #include "animator.h"
 #include "constants.h"
 #include "entity.h"
-#include "Controller/abstract_game_controller.h"
 
 class Player : public Entity {
  public:
