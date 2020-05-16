@@ -10,7 +10,7 @@
 
 class Player : public Entity {
  public:
-  Player(std::shared_ptr<Map> map,
+  Player(std::weak_ptr<Map> map,
          const QPoint& body_position,
          const QRect& rectangle,
          std::shared_ptr<Animator> animator);

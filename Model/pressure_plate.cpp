@@ -1,6 +1,6 @@
 #include "pressure_plate.h"
 
-PressurePlate::PressurePlate(std::shared_ptr<Map> map,
+PressurePlate::PressurePlate(std::weak_ptr<Map> map,
                              b2BodyType type,
                              const QPoint& body_position,
                              const QPolygon& polygon,
