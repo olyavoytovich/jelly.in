@@ -23,8 +23,8 @@ Entity::Entity(std::weak_ptr<Map> map,
 
   if (entity_type == EntityType::kMushroom) {
     // Грибы сталкиваются только с игроком или его частью
-    SetNoCollisionMask(~(static_cast<uint16>(EntityType::kPlayer)
-        + static_cast<uint16>(EntityType::kPlayerPart)));
+    SetNoCollisionMask(~(static_cast<uint16_t>(EntityType::kPlayer)
+        + static_cast<uint16_t>(EntityType::kPlayerPart)));
   }
 }
 
