@@ -7,9 +7,9 @@ GameController::GameController()
   view_->show();
   view_->setCentralWidget(menu_.get());
 
-  level_audio_key_ = audio_manager_->CreateAudioPlayer(AudioName::kBackground);
+  level_audio_key_ = audio_manager_->CreateAudioPlayerByPlayList(AudioName::kBackground);
   audio_manager_->SetPlayBackMode(level_audio_key_, QMediaPlaylist::Loop);
-  menu_audio_key_ = audio_manager_->CreateAudioPlayer(AudioName::kMenuAudio);
+  menu_audio_key_ = audio_manager_->CreateAudioPlayerByPlayList(AudioName::kMenuAudio);
   audio_manager_->SetPlayBackMode(menu_audio_key_, QMediaPlaylist::Loop);
   audio_manager_->PlayAudioPlayer(menu_audio_key_);
 }

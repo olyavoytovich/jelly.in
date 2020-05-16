@@ -31,6 +31,7 @@ class AudioManager {
   void SetVolume(int key, int volume);
 
   int CreateAudioPlayer(AudioName audio_name);
+  int CreateAudioPlayerByPlayList(AudioName audio_name);
   void PlayAudioPlayer(int key);
   void ReplayAudioPlayer(int key);
   void PauseAudioPlayer(int key);
