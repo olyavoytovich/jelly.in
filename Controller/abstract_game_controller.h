@@ -4,8 +4,6 @@
 #include <QKeyEvent>
 #include <QPainter>
 
-#include "Model/audio_manager.h"
-
 // kAnyKey должен быть в enum последним
 enum class Key {
   kLeft,

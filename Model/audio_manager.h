@@ -25,8 +25,6 @@ class AudioManager {
   AudioManager();
   ~AudioManager() = default;
 
-  void LoadAudio(AudioName audio_name, const QString& path);
-
   void SetVolume(int key, int volume);
 
   int CreateAudioPlayer(AudioName audio_name);
@@ -40,8 +38,7 @@ class AudioManager {
   std::vector<std::shared_ptr<QMediaContent>> audio_files_;
   std::unordered_map<int, std::shared_ptr<QMediaPlayer>> audio_players_;
 
-  std::mt19937 random_generator_ = std::mt19937(
-              std::chrono::system_clock::now().time_since_epoch().count());
+  std::mt19937 random_generator_;
   std::uniform_int_distribution<> range_;
 };
 

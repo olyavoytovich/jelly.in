@@ -7,13 +7,7 @@ Map::Map(const QImage& map_image)
       scaled_map_image_(map_image),
       is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
       is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false),
-      audio_manager_(std::make_shared<AudioManager>()){
-  audio_manager_->LoadAudio(AudioName::kThorn, "qrc:/audio/enemy/burdock_bullet.mp3");
-  audio_manager_->LoadAudio(AudioName::kDrop, "qrc:/audio/enemy/cloud_bullet.mp3");
-  audio_manager_->LoadAudio(AudioName::kPlayerJump, "qrc:/audio/player/jump.mp3");
-  audio_manager_->LoadAudio(AudioName::kPlayerLanding, "qrc:/audio/player/landing.mp3");
-  audio_manager_->LoadAudio(AudioName::kPlayerSeparation, "qrc:/audio/player/separation.mp3");
-  audio_manager_->LoadAudio(AudioName::kPlayerTakingDamage, "qrc:/audio/player/taking_damage.mp3");
+      audio_manager_(std::make_shared<AudioManager>()) {
 }
 
 void Map::Update(int time) {

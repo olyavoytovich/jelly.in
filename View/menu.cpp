@@ -2,10 +2,7 @@
 
 Menu::Menu(AbstractGameController* game_controller, QWidget* parent)
     : QWidget(parent), game_controller_(game_controller),
-      audio_manager_(std::make_shared<AudioManager>()) {
-  audio_manager_->LoadAudio(AudioName::kButtonClick,
-                           "qrc:/audio/menu/button_click.mp3");
-}
+      audio_manager_(std::make_shared<AudioManager>()) {}
 
 void Menu::resizeEvent(QResizeEvent* event) {
   QWidget::resizeEvent(event);

@@ -148,8 +148,8 @@ void Shooter::InitializeAudio() {
   }
   if (GetEntityType() == EntityType::kCloud) {
     drop_audio_keys_.resize(bounding_rectangle_.width() / 3 / bullet_radius_+1);
-    for (int  i = 0; i < drop_audio_keys_.size(); i++) {
-      drop_audio_keys_[i] = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kDrop);
+    for (auto& drop_audio_key : drop_audio_keys_) {
+      drop_audio_key = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kDrop);
     }
   }
 }

@@ -7,7 +7,6 @@
 #include <vector>
 #include <utility>
 
-#include "Controller/abstract_game_controller.h"
 #include "entity.h"
 
 enum class BulletDirection {
