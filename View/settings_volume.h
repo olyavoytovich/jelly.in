@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "menu.h"
+#include "movie.h"
 
 class SettingsVolume : public Menu {
  public:
@@ -21,6 +22,8 @@ class SettingsVolume : public Menu {
   std::vector<Button*> right_arrows_;
   std::vector<Button*> left_arrows_;
   std::vector<Button*> squares_;
+
+  std::shared_ptr<Movie> menu_animation_;
 };
 
 #endif  // VIEW_SETTINGS_VOLUME_H_

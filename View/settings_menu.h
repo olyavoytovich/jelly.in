@@ -19,6 +19,8 @@ class SettingsMenu : public Menu {
   Button* back_arrow_;
   Button* controls_;
   Button* volume_;
+
+  std::shared_ptr<Movie> menu_animation_;
 };
 
 #endif  // VIEW_SETTINGS_MENU_H_

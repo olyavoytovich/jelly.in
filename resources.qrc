@@ -144,12 +144,9 @@
         <file>images/menu/choose_level_menu.png</file>
         <file>images/menu/volume_menu.png</file>
         <file>images/menu/pause_menu.png</file>
-        <file>images/menu/pause_menu1.png</file>
-        <file>images/menu/pause_menu2.png</file>
         <file>images/menu/settings_menu.png</file>
         <file>images/menu/controls.png</file>
         <file>images/menu/fail_menu.png</file>
-        <file>images/menu/fail_menu1.png</file>
         <file>images/menu/victory_menu.png</file>
         <file>images/menu/shoose_level_menu_background.png</file>
         <file>images/menu/yellow_first.png</file>
@@ -201,12 +198,12 @@
         <file>images/level_3.png</file>
         <file>data/level_3.json</file>
         <file>images/gifs/heart.gif</file>
-        <file>images/gifs/pause_menu.gif</file>
-        <file>images/gifs/victory_menu.gif</file>
         <file>images/gifs/burdock.gif</file>
-        <file>images/gifs/burdock_loop.gif</file>
         <file>images/gifs/chestnut.gif</file>
-        <file>images/gifs/sunflower_anim.gif</file>
+        <file>images/gifs/cloud.gif</file>
+        <file>images/gifs/bush.gif</file>
+        <file>images/gifs/tree.gif</file>
+        <file>images/gifs/sunflower.gif</file>
         <file>images/gifs/player_red_move.gif</file>
         <file>images/gifs/player_orange_move.gif</file>
         <file>images/gifs/player_yellow_move.gif</file>

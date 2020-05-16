@@ -9,6 +9,10 @@ SettingsVolume::SettingsVolume(AbstractGameController* game_controller,
   scaled_background_ = background_;
   scaled_main_part_ = main_part_;
 
+  menu_animation_ = std::make_shared<Movie>("tree", this);
+  menu_animation_->SetSpeed(100);
+  menu_animation_->Play();
+
   auto right_arrows = std::make_shared<ImageSet>("right_arrow");
   auto left_arrows = std::make_shared<ImageSet>("left_arrow");
   auto square = std::make_shared<ImageSet>("square");
@@ -42,10 +46,11 @@ void SettingsVolume::resizeEvent(QResizeEvent* event) {
     left_arrows_[i]->SetRectangle(PositionRectangle(6, k, 1, 1));
     right_arrows_[i]->SetRectangle(PositionRectangle(8, k, 1, 1));
     squares_[i]->SetRectangle(PositionRectangle(7, k, 1, 1));
+    squares_[i]->SetLabelColor(QColor(45, 49, 56));
     k += 2;
   }
 
   back_arrow_->SetRectangle(PositionRectangle(1, 1, 1, 1));
-
+  menu_animation_->setGeometry(PositionRectangle(3, 3, 1, 3));
   MakeEqualFontSize(squares_);
 }

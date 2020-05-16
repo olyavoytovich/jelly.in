@@ -115,3 +115,7 @@ void Button::SetRectangle(const QRect& rectangle) {
     text_->setGeometry(0, 0, width(), height());
   }
 }
+
+void Button::SetLabelColor(const QColor& color) {
+  text_->SetFontColor(color);
+}

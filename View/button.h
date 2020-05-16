@@ -34,6 +34,7 @@ class Button : public QPushButton {
   void SetText(const QString& text);
   void SetFontSize(int text_size);
   void SetRectangle(const QRect& rectangle);
+  void SetLabelColor(const QColor& color);
 
  private:
   void paintEvent(QPaintEvent* event) override;

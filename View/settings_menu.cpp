@@ -11,6 +11,10 @@ SettingsMenu::SettingsMenu(AbstractGameController* game_controller,
   scaled_background_ = background_;
   scaled_main_part_ = main_part_;
 
+  menu_animation_ = std::make_shared<Movie>("bush", this);
+  menu_animation_->SetSpeed(100);
+  menu_animation_->Play();
+
   connect(back_arrow_, &QPushButton::clicked, this, [&]() {
     game_controller_->OpenMainMenu();
   });
@@ -30,4 +34,6 @@ void SettingsMenu::resizeEvent(QResizeEvent* event) {
   back_arrow_->SetRectangle(PositionRectangle(1, 1, 1, 1));
   controls_->SetRectangle(PositionRectangle(1, 3, 5, 3));
   volume_->SetRectangle(PositionRectangle(10, 2, 5, 3));
+
+  menu_animation_->setGeometry(PositionRectangle(2, 7, 2, 1));
 }
