@@ -9,7 +9,7 @@ GameController::GameController()
 
   audio_manager_->LoadAudio(
               AudioName::kBackground, "qrc:/audio/music/background.mp3");
-  key_to_level_music_ = audio_manager_->CreatePlayer(AudioName::kBackground);
+  key_to_level_music_ = audio_manager_->CreateAudioPlayer(AudioName::kBackground);
 }
 
 void GameController::Update(int time) {
@@ -95,19 +95,18 @@ void GameController::OpenMainMenu() {
 }
 
 void GameController::OpenPauseMenu() {
-  audio_manager_->PausePlayer(key_to_level_music_);
+  audio_manager_->PauseAudioPlayer(key_to_level_music_);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kPause));
 }
 
 void GameController::OpenVictoryMenu() {
-  audio_manager_->StopPlayer(key_to_level_music_);
-  OpenMenu(std::make_shared<IntermediateMenu>(this,
-                                              MenuType::kVictory));
+  audio_manager_->StopAudioPlayer(key_to_level_music_);
+  OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory));
   CloseCurrentLevel();
 }
 
 void GameController::OpenFailMenu() {
-  audio_manager_->StopPlayer(key_to_level_music_);
+  audio_manager_->StopAudioPlayer(key_to_level_music_);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kFail));
   CloseCurrentLevel();
 }
@@ -116,18 +115,14 @@ void GameController::ResumeGame() {
   view_->takeCentralWidget();
   view_->setCentralWidget(interface_.get());
 
-  audio_manager_->PlayPlayer(key_to_level_music_);
+  audio_manager_->PlayAudioPlayer(key_to_level_music_);
 }
 
 void GameController::RestartGame() {
-  audio_manager_->StopPlayer(key_to_level_music_);
-  audio_manager_->PlayPlayer(key_to_level_music_);
-
   StartLevel(level_number_);
 }
 
 void GameController::StartNextLevel() {
-
   StartLevel(level_number_ + 1);
 }
 
@@ -144,8 +139,7 @@ void GameController::StartLevel(int level_number) {
   if (map_ == nullptr) {
     return;
   }
-  audio_manager_->StopPlayer(key_to_level_music_);
-  audio_manager_->PlayPlayer(key_to_level_music_);
+  audio_manager_->ReplayAudioPlayer(key_to_level_music_);
   level_number_ = level_number;
   player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
   interface_ = std::make_shared<GameInterface>(this);

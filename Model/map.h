@@ -7,9 +7,9 @@
 #include <vector>
 
 #include "Controller/abstract_game_controller.h"
+#include "audio_manager.h"
 #include "box2d/box2d.h"
 #include "game_object.h"
-#include "audio_manager.h"
 
 enum class EntityType {
   kPlayer = 1,
@@ -49,9 +49,7 @@ class Map {
   bool IsKeyPressed(Key key);
   bool IsKeyClamped(Key key);
 
-  std::shared_ptr<AudioManager> GetAudioManager() {
-    return audio_manager_;
-  }
+  std::shared_ptr<AudioManager> GetAudioManager() const;
 
  private:
   void UpdateImageScale(int width, int height);

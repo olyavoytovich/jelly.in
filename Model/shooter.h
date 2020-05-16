@@ -7,8 +7,8 @@
 #include <vector>
 #include <utility>
 
-#include "entity.h"
 #include "Controller/abstract_game_controller.h"
+#include "entity.h"
 
 enum class BulletDirection {
   kBottom,
@@ -67,6 +67,8 @@ class Shooter : public Entity {
  private:
   std::shared_ptr<Entity> CreateBullet(const QPoint& bullet_position);
 
+  void InitializeAudio();
+
  private:
   BulletDirection bullet_direction_;
 
@@ -85,8 +87,8 @@ class Shooter : public Entity {
 
   std::shared_ptr<GameObject> player_ = nullptr;
 
-  int burdockbullet;
-  std::vector<int> cloudbullets;
+  int thorn_audio_key_;
+  std::vector<int> drop_audio_keys_;
 };
 
 #endif  // MODEL_SHOOTER_H_

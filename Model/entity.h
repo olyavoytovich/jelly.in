@@ -7,9 +7,9 @@
 #include <vector>
 
 #include "animator.h"
+#include "audio_manager.h"
 #include "game_object.h"
 #include "map.h"
-#include "audio_manager.h"
 
 struct PolygonShape {
   PolygonShape(QPolygon polygon, const QPoint& position)
@@ -100,7 +100,8 @@ class Entity : public GameObject {
   b2Fixture* CreateFixture(const b2Shape& shape);
   void SetNoCollisionMask(uint16_t mask);
 
-  int CountVolumeFromDistance();  // выбирает громкость в зависимости от расстояния до игрока
+  // Выбирает громкость в зависимости от расстояния до игрока
+  int CountVolumeFromDistance();
 
  protected:
   const float kEpsilon = 1e-5;

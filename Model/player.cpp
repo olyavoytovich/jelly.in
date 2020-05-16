@@ -35,10 +35,10 @@ Player::Player(std::shared_ptr<Map> map,
 
   SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
 
-  playerjump = map_->GetAudioManager()->CreatePlayer(AudioName::kPlayerJump);
-  playerlanding = map_->GetAudioManager()->CreatePlayer(AudioName::kPlayerLanding);
-  playerseparation = map_->GetAudioManager()->CreatePlayer(AudioName::kPlayerSeparation);
-  playertakingamage = map_->GetAudioManager()->CreatePlayer(AudioName::kPlayerTakingDamage);
+  player_jump_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kPlayerJump);
+  player_landing_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kPlayerLanding);
+  player_separation_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kPlayerSeparation);
+  player_receive_damage_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kPlayerTakingDamage);
 }
 
 void Player::Update(int time) {
@@ -68,7 +68,7 @@ void Player::Update(int time) {
     player_part_->SetAnimator(std::make_shared<Animator>(*animator_));
     map_->AddGameObject(player_part_);
 
-    map_->GetAudioManager()->PlayPlayer(playerseparation);
+    map_->GetAudioManager()->PlayAudioPlayer(player_separation_audio_key_);
   }
 
   if (player_part_ != nullptr
@@ -82,7 +82,7 @@ void Player::Update(int time) {
     body_->ApplyLinearImpulseToCenter(
         b2Vec2(0, -kPlayerJumpSpeed * body_->GetMass()), true);
 
-    map_->GetAudioManager()->ReplayPlayer(playerjump);
+    map_->GetAudioManager()->ReplayAudioPlayer(player_jump_audio_key_);
   }
   float target_speed = -body_->GetLinearVelocity().x;
   if (map_->IsKeyClamped(Key::kLeft) && left_collisions_ == 0) {
@@ -108,7 +108,7 @@ void Player::BeginCollision(b2Fixture* fixture,
   if (fixture == bottom_sensor_) {
     jumps_remaining_ = kPlayerJumpCount;
 
-    map_->GetAudioManager()->ReplayPlayer(playerlanding);
+    map_->GetAudioManager()->ReplayAudioPlayer(player_landing_audio_key_);
   } else if (fixture == left_sensor_) {
     left_collisions_++;
   } else if (fixture == right_sensor_) {
@@ -155,5 +155,5 @@ void Player::TakeDamage() {
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;
 
-  map_->GetAudioManager()->PlayPlayer(playertakingamage);
+  map_->GetAudioManager()->PlayAudioPlayer(player_receive_damage_audio_key_);
 }

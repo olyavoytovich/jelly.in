@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/">
+    <qresource>
         <file>images/animation/pressed0.png</file>
         <file>images/animation/pressed1.png</file>
         <file>images/animation/pressed2.png</file>

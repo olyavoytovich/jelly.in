@@ -35,8 +35,6 @@ class AbstractGameController {
   virtual void StartNextLevel() = 0;
 
   virtual void StartLevel(int level_number) = 0;
-
-  virtual std::shared_ptr<AudioManager> GetAudioManager() = 0;
 };
 
 #endif  // CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_

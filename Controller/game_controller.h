@@ -5,13 +5,13 @@
 #include <utility>
 #include <vector>
 
+#include "Model/audio_manager.h"
 #include "Model/entity.h"
 #include "Model/game_object.h"
 #include "Model/map.h"
 #include "Model/map_loader.h"
 #include "Model/patroller.h"
 #include "Model/shooter.h"
-#include "Model/audio_manager.h"
 #include "View/abstract_view.h"
 #include "View/choose_level_menu.h"
 #include "View/game_interface.h"
@@ -43,9 +43,6 @@ class GameController : public AbstractGameController {
 
   void StartLevel(int level_number) override;
   void OpenMenu(std::shared_ptr<Menu> menu);
-  std::shared_ptr<AudioManager> GetAudioManager() override {
-    return audio_manager_;
-  }
 
  private:
   Key GetKeyFromCode(int key_code);

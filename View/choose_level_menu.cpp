@@ -28,7 +28,7 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
       game_controller_->StartLevel(i + 1);
     });
 
-    connect(level_buttons_[i], &QPushButton::pressed, this, [&, i]() {
+    connect(level_buttons_[i], &QPushButton::pressed, this, [&]() {
       audio_manager_->PlayAudio(AudioName::kButtonClick);
     });
   }

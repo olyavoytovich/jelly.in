@@ -1,18 +1,17 @@
 #include "audio_manager.h"
-#include <QMediaPlaylist>
 
 AudioManager::AudioManager()
     : audio_files_(static_cast<int>(AudioName::kAnyAudio)),
-      gen(rd()), dis(1, 1000000) {
+      range_(1, 1000000) {
 }
 
-void AudioManager::LoadAudio(AudioName audio_name, QString path) {
+void AudioManager::LoadAudio(AudioName audio_name, const QString& path) {
   audio_files_[static_cast<int>(audio_name)] =
       std::make_shared<QMediaContent>(QUrl(path));
 }
 
-int AudioManager::CreatePlayer(AudioName audio_name) {
-    int key = dis(gen);
+int AudioManager::CreateAudioPlayer(AudioName audio_name) {
+    int key = range_(random_generator_);
     audio_players_[key] = std::make_shared<QMediaPlayer>();
     audio_players_[key]->setMedia(*audio_files_[static_cast<int>(audio_name)]);
     audio_players_[key]->setVolume(100);
@@ -21,49 +20,21 @@ int AudioManager::CreatePlayer(AudioName audio_name) {
     return key;
 }
 
-void AudioManager::PlayPlayer(int key) {
+void AudioManager::PlayAudioPlayer(int key) {
     audio_players_[key]->play();
 }
 
-void AudioManager::ReplayPlayer(int key) {
-    audio_players_[key]->stop();
-    audio_players_[key]->play();
+void AudioManager::ReplayAudioPlayer(int key) {
+    StopAudioPlayer(key);
+    PlayAudioPlayer(key);
 }
 
-void AudioManager::PausePlayer(int key) {
+void AudioManager::PauseAudioPlayer(int key) {
     audio_players_[key]->pause();
 }
 
-void AudioManager::StopPlayer(int key) {
+void AudioManager::StopAudioPlayer(int key) {
     audio_players_[key]->stop();
-}
-
-void AudioManager::DeletePlayer(int key) {
-    audio_players_[key]->deleteLater();
-    audio_players_.erase(key);
-}
-
-void AudioManager::PlayAllPlayers() {
-    for (const auto& player : audio_players_) {
-        player.second->play();
-    }
-}
-
-void AudioManager::RestartAllPlayers() {
-    StopAllPlayers();
-    PlayAllPlayers();
-}
-
-void AudioManager::PauseAllPlayers() {
-    for (const auto& player : audio_players_) {
-        player.second->pause();
-    }
-}
-
-void AudioManager::StopAllPlayers() {
-    for (const auto& player : audio_players_) {
-        player.second->stop();
-    }
 }
 
 void AudioManager::PlayAudio(AudioName audio_name, int volume) {

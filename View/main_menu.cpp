@@ -1,4 +1,4 @@
- #include "main_menu.h"
+#include "main_menu.h"
 
 MainMenu::MainMenu(AbstractGameController* game_controller, QWidget* parent)
     : Menu(game_controller, parent),

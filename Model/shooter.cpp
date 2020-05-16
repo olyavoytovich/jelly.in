@@ -23,15 +23,7 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetAnimator(std::move(animator));
   animator_->RepeatInReverseOrder();
   SetWayPoints(way_points);
-  if (entity_type == EntityType::kBurdock) {
-    burdockbullet = map_->GetAudioManager()->CreatePlayer(AudioName::kBurdockBullet);
-  }
-  if (entity_type == EntityType::kCloud) {
-      cloudbullets.resize(bounding_rectangle_.width() / 3 / bullet_radius_+1);
-      for (int  i = 0; i < cloudbullets.size(); i++) {
-    cloudbullets[i] = map_->GetAudioManager()->CreatePlayer(AudioName::kCloudBullet);
-      }
-  }
+  InitializeAudio();
 }
 
 Shooter::Shooter(std::shared_ptr<Map> map,
@@ -56,15 +48,7 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetSpeed(speed);
   SetAnimator(std::move(animator));
   SetWayPoints(way_points);
-  if (entity_type == EntityType::kBurdock) {
-    burdockbullet = map_->GetAudioManager()->CreatePlayer(AudioName::kBurdockBullet);
-  }
-  if (entity_type == EntityType::kCloud) {
-      cloudbullets.resize(bounding_rectangle_.width() / 3 / bullet_radius_);
-      for (int  i = 0; i < cloudbullets.size(); i++) {
-    cloudbullets[i] = map_->GetAudioManager()->CreatePlayer(AudioName::kCloudBullet);
-      }
-  }
+  InitializeAudio();
 }
 
 Shooter::Shooter(std::shared_ptr<Map> map,
@@ -91,15 +75,7 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetSpeed(speed);
   SetAnimator(std::move(animator));
   SetWayPoints(way_points);
-  if (entity_type == EntityType::kBurdock) {
-    burdockbullet = map_->GetAudioManager()->CreatePlayer(AudioName::kBurdockBullet);
-  }
-  if (entity_type == EntityType::kCloud) {
-      cloudbullets.resize(bounding_rectangle_.width() / 3 / bullet_radius_);
-      for (int  i = 0; i < cloudbullets.size(); i++) {
-    cloudbullets[i] = map_->GetAudioManager()->CreatePlayer(AudioName::kCloudBullet);
-      }
-  }
+  InitializeAudio();
 }
 
 void Shooter::Update(int time) {
@@ -119,7 +95,8 @@ void Shooter::Update(int time) {
           CreateBullet(QPoint(bounding_rectangle_.right() + 2 * bullet_radius_,
                               0));
       if (GetEntityType() == EntityType::kBurdock) {
-          map_->GetAudioManager()->PlayPlayer(burdockbullet);
+          map_->GetAudioManager()->SetVolume(thorn_audio_key_, CountVolumeFromDistance());
+          map_->GetAudioManager()->PlayAudioPlayer(thorn_audio_key_);
       }
       bullet->SetVelocity(way_points_[way_point_index_],
                           body_->GetPosition(),
@@ -129,7 +106,8 @@ void Shooter::Update(int time) {
           CreateBullet(QPoint(bounding_rectangle_.left() - 2 * bullet_radius_,
                               0));
       if (GetEntityType() == EntityType::kBurdock) {
-          map_->GetAudioManager()->PlayPlayer(burdockbullet);
+          map_->GetAudioManager()->SetVolume(thorn_audio_key_, CountVolumeFromDistance());
+          map_->GetAudioManager()->PlayAudioPlayer(thorn_audio_key_);
       }
       bullet->SetVelocity(way_points_[way_point_index_],
                           body_->GetPosition(),
@@ -143,8 +121,8 @@ void Shooter::Update(int time) {
            bounding_rectangle_.bottom() + 2 * bullet_radius_);
       std::shared_ptr<Entity> bullet = CreateBullet(bullet_position);
       if (GetEntityType() == EntityType::kCloud) {
-          map_->GetAudioManager()->SetVolume(cloudbullets[i], CountVolumeFromDistance());
-          map_->GetAudioManager()->PlayPlayer(cloudbullets[i]);
+          map_->GetAudioManager()->SetVolume(drop_audio_keys_[i], CountVolumeFromDistance());
+          map_->GetAudioManager()->PlayAudioPlayer(drop_audio_keys_[i]);
       }
       bullet->SetVelocity(b2Vec2(0, bullet_speed_), true);
     }
@@ -162,4 +140,16 @@ std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
   map_->AddGameObject(bullet);
   animator_->Play();
   return bullet;
+}
+
+void Shooter::InitializeAudio() {
+  if (GetEntityType() == EntityType::kBurdock) {
+    thorn_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kThorn);
+  }
+  if (GetEntityType() == EntityType::kCloud) {
+    drop_audio_keys_.resize(bounding_rectangle_.width() / 3 / bullet_radius_+1);
+    for (int  i = 0; i < drop_audio_keys_.size(); i++) {
+      drop_audio_keys_[i] = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kDrop);
+    }
+  }
 }

@@ -8,8 +8,8 @@ Map::Map(const QImage& map_image)
       is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
       is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false),
       audio_manager_(std::make_shared<AudioManager>()){
-  audio_manager_->LoadAudio(AudioName::kBurdockBullet, "qrc:/audio/enemy/burdock_bullet.mp3");
-  audio_manager_->LoadAudio(AudioName::kCloudBullet, "qrc:/audio/enemy/cloud_bullet.mp3");
+  audio_manager_->LoadAudio(AudioName::kThorn, "qrc:/audio/enemy/burdock_bullet.mp3");
+  audio_manager_->LoadAudio(AudioName::kDrop, "qrc:/audio/enemy/cloud_bullet.mp3");
   audio_manager_->LoadAudio(AudioName::kPlayerJump, "qrc:/audio/player/jump.mp3");
   audio_manager_->LoadAudio(AudioName::kPlayerLanding, "qrc:/audio/player/landing.mp3");
   audio_manager_->LoadAudio(AudioName::kPlayerSeparation, "qrc:/audio/player/separation.mp3");
@@ -163,4 +163,8 @@ void Map::UpdateCameraPosition() {
   if (current_camera_.bottom() > map_image_.height() - shift_.y()) {
     current_camera_.moveBottom(map_image_.height() - shift_.y());
   }
+}
+
+std::shared_ptr<AudioManager> Map::GetAudioManager() const {
+    return audio_manager_;
 }
