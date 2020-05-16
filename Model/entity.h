@@ -9,7 +9,7 @@
 #include "animator.h"
 #include "game_object.h"
 #include "map.h"
-#include "sound_manager.h"
+#include "audio_manager.h"
 
 struct PolygonShape {
   PolygonShape(QPolygon polygon, const QPoint& position)
@@ -88,6 +88,8 @@ class Entity : public GameObject {
                               EntityType my_type,
                               EntityType other_type);
   virtual void EndCollision(b2Fixture* my_fixture, EntityType other_type);
+
+  EntityType GetEntityType() const;
 
  protected:
   int MetersToPixels(float value) const;

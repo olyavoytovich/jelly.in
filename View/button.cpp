@@ -20,8 +20,6 @@ Button::Button(std::shared_ptr<ImageSet> image_set,
   if (!button_text.isEmpty()) {
     SetText(button_text);
   }
-  click = std::make_shared<QMediaContent>(QUrl("qrc:/sound/menu/click.mp3"));
-  click_sound_.AddMedia(*click);
 }
 
 void Button::paintEvent(QPaintEvent*) {
@@ -49,7 +47,6 @@ void Button::paintEvent(QPaintEvent*) {
 }
 
 void Button::mousePressEvent(QMouseEvent* event) {
-  click_sound_.Replay();
   status_ = Status::kClicked;
   repaint();
   QPushButton::mousePressEvent(event);

@@ -293,3 +293,7 @@ void Entity::BeginCollision(b2Fixture*,
 }
 
 void Entity::EndCollision(b2Fixture*, EntityType) {}
+
+EntityType Entity::GetEntityType() const {
+  return entity_type_;
+}

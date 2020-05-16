@@ -34,25 +34,6 @@ Player::Player(std::shared_ptr<Map> map,
   right_sensor_->SetSensor(true);
 
   SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
-
-  // Add sound
-  jump_sound_.AddMedia(*map_->jump_sound);
-  landing_sound_.AddMedia(*map_->landing_sound);
-  taking_damage_sound_.AddMedia(*map_->taking_damage_sound);
-  separation_sound_.AddMedia(*map_->separation_sound);
-  walking_sound_.AddMedia(*map_->walking_sound);
-  walking_sound_.SetPlayBackMode(QMediaPlaylist::CurrentItemInLoop);
-//  sounds_.AddSon(std::make_shared<SoundManager>(jump_sound_));
-//  sounds_.AddSon(std::make_shared<SoundManager>(landing_sound_));
-//  sounds_.AddSon(std::make_shared<SoundManager>(taking_damage_sound_));
-//  sounds_.AddSon(std::make_shared<SoundManager>(separation_sound_));
-//  sounds_.AddSon(std::make_shared<SoundManager>(walking_sound_));
-
-  map_->GetSoundManager()->AddSon(&jump_sound_);
-  map_->GetSoundManager()->AddSon(&landing_sound_);
-  map_->GetSoundManager()->AddSon(&taking_damage_sound_);
-  map_->GetSoundManager()->AddSon(&separation_sound_);
-  map_->GetSoundManager()->AddSon(&walking_sound_);
 }
 
 void Player::Update(int time) {
@@ -70,7 +51,6 @@ void Player::Update(int time) {
   }
 
   if (map_->IsKeyPressed(Key::kSpace) && player_part_ == nullptr) {
-    separation_sound_.Replay();
     player_part_ = std::make_shared<Entity>(map_,
                                             b2_dynamicBody,
                                             GetPositionInPixels(),
@@ -82,6 +62,8 @@ void Player::Update(int time) {
     player_part_->SetVelocity(clone_velocity, true);
     player_part_->SetAnimator(std::make_shared<Animator>(*animator_));
     map_->AddGameObject(player_part_);
+
+    map_->GetAudioManager()->PlayAudio(AudioName::kPlayerSeparation);
   }
 
   if (player_part_ != nullptr
@@ -90,18 +72,14 @@ void Player::Update(int time) {
   }
 
   if (map_->IsKeyPressed(Key::kUp) && jumps_remaining_ > 0) {
-    jump_sound_.Replay();
     jumps_remaining_--;
     body_->SetLinearVelocity(b2Vec2(body_->GetLinearVelocity().x, 0));
     body_->ApplyLinearImpulseToCenter(
         b2Vec2(0, -kPlayerJumpSpeed * body_->GetMass()), true);
+
+    map_->GetAudioManager()->PlayAudio(AudioName::kPlayerJump);
   }
   float target_speed = -body_->GetLinearVelocity().x;
-  if (map_->IsKeyClamped(Key::kLeft) || map_->IsKeyClamped(Key::kRight)) {
-    walking_sound_.Play();
-  } else {
-    walking_sound_.Stop();
-  }
   if (map_->IsKeyClamped(Key::kLeft) && left_collisions_ == 0) {
     target_speed -= kPlayerSpeed;
   } else if (map_->IsKeyClamped(Key::kRight) && right_collisions_ == 0) {
@@ -123,8 +101,9 @@ void Player::BeginCollision(b2Fixture* fixture,
   }
 
   if (fixture == bottom_sensor_) {
-    landing_sound_.Replay();
     jumps_remaining_ = kPlayerJumpCount;
+
+    map_->GetAudioManager()->PlayAudio(AudioName::kPlayerLanding);
   } else if (fixture == left_sensor_) {
     left_collisions_++;
   } else if (fixture == right_sensor_) {
@@ -167,8 +146,9 @@ void Player::TakeDamage() {
   if (no_damage_time_left_ > 0) {
     return;
   }
-  taking_damage_sound_.Replay();
   animator_->SetCurrentAnimation(kDamage);
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;
+
+  map_->GetAudioManager()->PlayAudio(AudioName::kPlayerTakingDamage);
 }

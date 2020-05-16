@@ -9,7 +9,7 @@
 #include "Controller/abstract_game_controller.h"
 #include "box2d/box2d.h"
 #include "game_object.h"
-#include "sound_manager.h"
+#include "audio_manager.h"
 
 enum class EntityType {
   kPlayer = 1,
@@ -28,7 +28,7 @@ enum class EntityType {
 
 class Map {
  public:
-  explicit Map(const QImage& map_image, std::shared_ptr<SoundManager> sounds_);
+  explicit Map(const QImage& map_image);
   ~Map() = default;
 
   void Update(int time);
@@ -49,17 +49,9 @@ class Map {
   bool IsKeyPressed(Key key);
   bool IsKeyClamped(Key key);
 
-  void SetSoundManager(std::shared_ptr<SoundManager> sounds);
-  std::shared_ptr<SoundManager> GetSoundManager();
-
- public:
-  std::shared_ptr<QMediaContent> jump_sound;
-  std::shared_ptr<QMediaContent> landing_sound;
-  std::shared_ptr<QMediaContent> taking_damage_sound;
-  std::shared_ptr<QMediaContent>walking_sound;
-  std::shared_ptr<QMediaContent> separation_sound;
-  std::shared_ptr<QMediaContent> bullet_sound;
-  std::shared_ptr<QMediaContent> permanent_sound;
+  std::shared_ptr<AudioManager> GetAudioManager() {
+    return audio_manager_;
+  }
 
  private:
   void UpdateImageScale(int width, int height);
@@ -100,10 +92,7 @@ class Map {
   std::vector<bool> is_key_pressed_;
   std::vector<bool> is_key_clamped_;
 
-  // Sound
-  std::shared_ptr<SoundManager> sounds_;
-  std::shared_ptr<QMediaContent> background_sound_;
-  SoundManager background_;
+  std::shared_ptr<AudioManager> audio_manager_;
 };
 
 #endif  // MODEL_MAP_H_

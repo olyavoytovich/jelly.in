@@ -13,6 +13,10 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
     game_controller_->OpenMainMenu();
   });
 
+  connect(back_button_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->PlayAudio(AudioName::kButtonClick);
+  });
+
   auto level_image_set = std::make_shared<ImageSet>("yellow");
   for (int i = 0; i < 12; i++) {
     level_buttons_.emplace_back(new Button(level_image_set, this,
@@ -22,6 +26,10 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
   for (int i = 0; i < 3; i++) {
     connect(level_buttons_[i], &QPushButton::clicked, this, [&, i]() {
       game_controller_->StartLevel(i + 1);
+    });
+
+    connect(level_buttons_[i], &QPushButton::pressed, this, [&, i]() {
+      audio_manager_->PlayAudio(AudioName::kButtonClick);
     });
   }
 }

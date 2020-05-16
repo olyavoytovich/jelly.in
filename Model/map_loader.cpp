@@ -1,7 +1,6 @@
 #include "map_loader.h"
 
-std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name,
-                                        std::shared_ptr<SoundManager> sounds) {
+std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QFile input_file(":/data/" + map_name + ".json");
 
   if (!input_file.open(QIODevice::ReadOnly)) {
@@ -21,7 +20,7 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name,
 
   QJsonObject object, point_obj;
 
-  auto map = std::make_shared<Map>(map_image, sounds);
+  auto map = std::make_shared<Map>(map_image);
   map->SetContactListener(std::make_shared<ContactListener>());
   for (const auto& solid_object : solids) {
     object = solid_object.toObject();

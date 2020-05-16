@@ -32,7 +32,7 @@ add_executable(jellyin main.cpp
         Model/player.cpp
         Model/pressure_plate.cpp
         Model/shooter.cpp
-        Model/sound_manager.cpp
+        Model/audio_manager.cpp
         View/button.cpp
         View/choose_level_menu.cpp
         View/game_interface.cpp

@@ -1,4 +1,4 @@
-#include "main_menu.h"
+ #include "main_menu.h"
 
 MainMenu::MainMenu(AbstractGameController* game_controller, QWidget* parent)
     : Menu(game_controller, parent),
@@ -17,6 +17,16 @@ MainMenu::MainMenu(AbstractGameController* game_controller, QWidget* parent)
 
   connect(exit_button_, &QPushButton::clicked, this, [&]() {
     qApp->exit();
+  });
+
+  connect(play_button_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->PlayAudio(AudioName::kButtonClick);
+  });
+  connect(settings_button_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->PlayAudio(AudioName::kButtonClick);
+  });
+  connect(exit_button_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->PlayAudio(AudioName::kButtonClick);
   });
 }
 

@@ -15,6 +15,7 @@ SOURCES += \
         main.cpp \
         Model/animation.cpp \
         Model/animator.cpp \
+        Model/audio_manager.cpp \
         Model/contact_listener.cpp \
         Model/entity.cpp \
         Model/game_object.cpp \
@@ -24,7 +25,6 @@ SOURCES += \
         Model/player.cpp \
         Model/pressure_plate.cpp \
         Model/shooter.cpp \
-        Model/sound_manager.cpp \
         View/button.cpp \
         View/choose_level_menu.cpp \
         View/game_interface.cpp \
@@ -86,6 +86,7 @@ HEADERS += \
     Controller/game_controller.h \
     Model/animation.h \
     Model/animator.h \
+    Model/audio_manager.h \
     Model/constants.h \
     Model/contact_listener.h \
     Model/entity.h \
@@ -96,7 +97,6 @@ HEADERS += \
     Model/player.h \
     Model/pressure_plate.h \
     Model/shooter.h \
-    Model/sound_manager.h \
     View/abstract_view.h \
     View/button.h \
     View/choose_level_menu.h \

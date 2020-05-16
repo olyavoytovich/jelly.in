@@ -58,13 +58,6 @@ class Player : public Entity {
   b2Fixture* right_sensor_ = nullptr;
 
   std::shared_ptr<Entity> player_part_ = nullptr;
-
-  // Sound
-  SoundManager jump_sound_;
-  SoundManager landing_sound_;
-  SoundManager taking_damage_sound_;
-  SoundManager walking_sound_;
-  SoundManager separation_sound_;
 };
 
 #endif  // MODEL_PLAYER_H_

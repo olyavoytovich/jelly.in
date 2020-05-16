@@ -6,7 +6,7 @@
 #include <utility>
 
 #include "box2d/box2d.h"
-#include "sound_manager.h"
+#include "audio_manager.h"
 
 class GameObject {
  public:

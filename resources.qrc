@@ -1,5 +1,5 @@
 <RCC>
-    <qresource>
+    <qresource prefix="/">
         <file>images/animation/pressed0.png</file>
         <file>images/animation/pressed1.png</file>
         <file>images/animation/pressed2.png</file>
@@ -135,12 +135,13 @@
         <file>data/level_3.json</file>
         <file>images/gifs/heart.gif</file>
         <file>images/gifs/pause_menu.gif</file>
-        <file>sound/menu/click.mp3</file>
-        <file>sound/background.mp3</file>
-        <file>sound/player/jump.mp3</file>
-        <file>sound/player/landing.mp3</file>
-        <file>sound/player/taking_damage.mp3</file>
-        <file>sound/player/separation.mp3</file>
-        <file>sound/enemy/burdock_bullet.mp3</file>
+        <file>audio/menu/button_click.mp3</file>
+        <file>audio/enemy/burdock_bullet.mp3</file>
+        <file>audio/player/jump.mp3</file>
+        <file>audio/player/landing.mp3</file>
+        <file>audio/player/separation.mp3</file>
+        <file>audio/player/taking_damage.mp3</file>
+        <file>audio/player/walking.mp3</file>
+        <file>audio/music/background.mp3</file>
     </qresource>
 </RCC>

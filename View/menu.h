@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "Controller/abstract_game_controller.h"
+#include "Model/audio_manager.h"
 #include "button.h"
 
 class Menu : public QWidget {
@@ -18,8 +19,6 @@ class Menu : public QWidget {
   explicit Menu(AbstractGameController* game_controller,
                 QWidget* parent = nullptr);
   ~Menu() override = default;
-
-  void SetSoundManager(std::shared_ptr<SoundManager> sounds);
 
  protected:
   void resizeEvent(QResizeEvent*) override;
@@ -37,6 +36,8 @@ class Menu : public QWidget {
   double scale_ = 1;
   QPoint shift_ = QPoint(0, 0);
   AbstractGameController* game_controller_ = nullptr;
+
+  std::shared_ptr<AudioManager> audio_manager_;
 
  private:
   // Ширина и Высота основной части меню

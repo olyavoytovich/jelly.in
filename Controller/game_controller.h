@@ -5,13 +5,14 @@
 #include <utility>
 #include <vector>
 
+#include "Model/audio_manager.h"
 #include "Model/entity.h"
 #include "Model/game_object.h"
 #include "Model/map.h"
 #include "Model/map_loader.h"
 #include "Model/patroller.h"
 #include "Model/shooter.h"
-#include "Model/sound_manager.h"
+#include "Model/audio_manager.h"
 #include "View/abstract_view.h"
 #include "View/choose_level_menu.h"
 #include "View/game_interface.h"
@@ -60,7 +61,8 @@ class GameController : public AbstractGameController {
 
   std::shared_ptr<Map> map_ = nullptr;
   std::shared_ptr<Player> player_ = nullptr;
-  std::shared_ptr<SoundManager> sounds_;
+
+  std::shared_ptr<AudioManager> audio_manager_;
 };
 
 #endif  // CONTROLLER_GAME_CONTROLLER_H_

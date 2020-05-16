@@ -23,14 +23,6 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetAnimator(std::move(animator));
   animator_->RepeatInReverseOrder();
   SetWayPoints(way_points);
-  if (entity_type == EntityType::kBurdock) {
-    bullet_sound_.AddMedia(*map_->bullet_sound);
-    map_->GetSoundManager()->AddSon(&bullet_sound_);
-  }
-  if (entity_type == EntityType::kCloud) {
-    permanent_sound_.AddMedia(*map_->permanent_sound);
-    map_->GetSoundManager()->AddSon(&permanent_sound_);
-  }
 }
 
 Shooter::Shooter(std::shared_ptr<Map> map,
@@ -55,14 +47,6 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetSpeed(speed);
   SetAnimator(std::move(animator));
   SetWayPoints(way_points);
-  if (entity_type == EntityType::kBurdock) {
-    bullet_sound_.AddMedia(*map_->bullet_sound);
-    map_->GetSoundManager()->AddSon(&bullet_sound_);
-  }
-  if (entity_type == EntityType::kCloud) {
-    permanent_sound_.AddMedia(*map_->permanent_sound);
-    map_->GetSoundManager()->AddSon(&permanent_sound_);
-  }
 }
 
 Shooter::Shooter(std::shared_ptr<Map> map,
@@ -89,19 +73,9 @@ Shooter::Shooter(std::shared_ptr<Map> map,
   SetSpeed(speed);
   SetAnimator(std::move(animator));
   SetWayPoints(way_points);
-  if (entity_type == EntityType::kBurdock) {
-    bullet_sound_.AddMedia(*map_->bullet_sound);
-    map_->GetSoundManager()->AddSon(&bullet_sound_);
-  }
-  if (entity_type == EntityType::kCloud) {
-    permanent_sound_.AddMedia(*map_->permanent_sound);
-    map_->GetSoundManager()->AddSon(&permanent_sound_);
-  }
 }
 
 void Shooter::Update(int time) {
-  permanent_sound_.SetVolumeByDistance(CountDistance());
-  permanent_sound_.Play();
   Entity::Update(time);
   last_shoot_time_ += time;
   if (last_shoot_time_ < shoot_period_) {
@@ -141,8 +115,6 @@ void Shooter::Update(int time) {
 }
 
 std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
-  bullet_sound_.SetVolumeByDistance(CountDistance());
-  bullet_sound_.Play();
   auto bullet = std::make_shared<Entity>(map_,
                                          b2_dynamicBody,
                                          bullet_position +
@@ -152,18 +124,9 @@ std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
   bullet->SetAnimator(bullet_animator_);
   map_->AddGameObject(bullet);
   animator_->Play();
-  return bullet;
-}
 
-int Shooter::CountDistance() {
-  if (player_ == nullptr) {
-    player_ = map_->GetPlayer();
+  if (GetEntityType() == EntityType::kBurdock) {
+    map_->GetAudioManager()->PlayAudio(AudioName::kBurdockBullet);
   }
-  if (player_ == nullptr) {
-      return 100000000;
-  }
-  QPoint begin = player_->GetPositionInPixels();
-  QPoint end = this->GetPositionInPixels();
-  return static_cast<int>(sqrt((begin.x() - end.x()) * (begin.x() - end.x()) +
-                               (begin.y() - end.y()) * (begin.y() - end.y())));
+  return bullet;
 }
