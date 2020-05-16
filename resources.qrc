@@ -142,6 +142,7 @@
         <file>audio/player/separation.mp3</file>
         <file>audio/player/taking_damage.mp3</file>
         <file>audio/music/background.mp3</file>
+        <file>audio/music/menu.mp3</file>
         <file>audio/enemy/cloud_bullet.mp3</file>
     </qresource>
 </RCC>

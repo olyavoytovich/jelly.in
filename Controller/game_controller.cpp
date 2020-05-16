@@ -8,6 +8,10 @@ GameController::GameController()
   view_->setCentralWidget(menu_.get());
 
   level_audio_key_ = audio_manager_->CreateAudioPlayer(AudioName::kBackground);
+  audio_manager_->SetPlayBackMode(level_audio_key_, QMediaPlaylist::Loop);
+  menu_audio_key_ = audio_manager_->CreateAudioPlayer(AudioName::kMenuAudio);
+  audio_manager_->SetPlayBackMode(menu_audio_key_, QMediaPlaylist::Loop);
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
 }
 
 void GameController::Update(int time) {
@@ -84,11 +88,13 @@ void GameController::CloseCurrentLevel() {
 
 void GameController::OpenChooseLevelMenu() {
   OpenMenu(std::make_shared<ChooseLevelMenu>(this));
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
   CloseCurrentLevel();
 }
 
 void GameController::OpenMainMenu() {
   OpenMenu(std::make_shared<MainMenu>(this));
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
   CloseCurrentLevel();
 }
 
@@ -137,6 +143,7 @@ void GameController::StartLevel(int level_number) {
   if (map_ == nullptr) {
     return;
   }
+  audio_manager_->StopAudioPlayer(menu_audio_key_);
   audio_manager_->ReplayAudioPlayer(level_audio_key_);
   level_number_ = level_number;
   player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());

@@ -3,6 +3,7 @@
 
 #include <QMediaContent>
 #include <QMediaPlayer>
+#include <QMediaPlaylist>
 #include <algorithm>
 #include <memory>
 #include <random>
@@ -18,6 +19,7 @@ enum class AudioName {
   kPlayerSeparation,
   kPlayerTakingDamage,
   kBackground,
+  kMenuAudio,
   kAnyAudio
 };
 
@@ -34,6 +36,8 @@ class AudioManager {
   void PauseAudioPlayer(int key);
   void StopAudioPlayer(int key);
   void PlayAudio(AudioName audio_name, int volume = 100);
+
+  void SetPlayBackMode(int key, QMediaPlaylist::PlaybackMode mode);
 
  private:
   std::vector<std::shared_ptr<QMediaContent>> audio_files_;

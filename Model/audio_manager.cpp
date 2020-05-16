@@ -29,12 +29,18 @@ AudioManager::AudioManager()
   audio_files_[static_cast<int>(AudioName::kBackground)] =
         std::make_shared<QMediaContent>(
               QUrl("qrc:/audio/music/background.mp3"));
+  audio_files_[static_cast<int>(AudioName::kMenuAudio)] =
+        std::make_shared<QMediaContent>(
+              QUrl("qrc:/audio/music/menu.mp3"));
 }
 
 int AudioManager::CreateAudioPlayer(AudioName audio_name) {
     int key = range_(random_generator_);
     audio_players_[key] = std::make_shared<QMediaPlayer>();
-    audio_players_[key]->setMedia(*audio_files_[static_cast<int>(audio_name)]);
+    QMediaPlaylist* playlist = new QMediaPlaylist;
+    playlist->addMedia(*audio_files_[static_cast<int>(audio_name)]);
+    audio_players_[key]->setAudioRole(QAudio::GameRole);
+    audio_players_[key]->setPlaylist(playlist);
     audio_players_[key]->setVolume(100);
 
     audio_players_[key]->play();
@@ -75,5 +81,9 @@ void AudioManager::PlayAudio(AudioName audio_name, int volume) {
 }
 
 void AudioManager::SetVolume(int key, int volume) {
-    audio_players_[key]->setVolume(volume);
+  audio_players_[key]->setVolume(volume);
+}
+
+void AudioManager::SetPlayBackMode(int key, QMediaPlaylist::PlaybackMode mode) {
+  audio_players_[key]->playlist()->setPlaybackMode(mode);
 }
