@@ -44,6 +44,7 @@ class GameController : public AbstractGameController {
   void SetPlayerAnimation(const QString& animation_name) override;
 
   int GetLastLevelMushrooms() const override;
+  int GetLevelMushrooms(int level_number) const override;
 
   void StartLevel(int level_number) override;
   void OpenMenu(std::shared_ptr<Menu> menu);
@@ -55,6 +56,8 @@ class GameController : public AbstractGameController {
  private:
   int level_number_ = 0;
   int last_level_mushrooms_ = 0;
+  std::vector<int> level_mushrooms_;
+
   QString player_animation_name_ = "";
 
   std::shared_ptr<View> view_;
