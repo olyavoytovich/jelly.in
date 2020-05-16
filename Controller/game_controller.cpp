@@ -11,9 +11,11 @@ GameController::GameController()
     level_mushrooms_[1] = 0;
   }
 
-  level_audio_key_ = audio_manager_->CreateAudioPlayerByPlayList(AudioName::kBackground);
+  level_audio_key_ = audio_manager_->
+          CreateAudioPlayerByPlayList(AudioName::kBackground);
   audio_manager_->SetPlayBackMode(level_audio_key_, QMediaPlaylist::Loop);
-  menu_audio_key_ = audio_manager_->CreateAudioPlayerByPlayList(AudioName::kMenuAudio);
+  menu_audio_key_ = audio_manager_->
+          CreateAudioPlayerByPlayList(AudioName::kMenuAudio);
   audio_manager_->SetPlayBackMode(menu_audio_key_, QMediaPlaylist::Loop);
   audio_manager_->PlayAudioPlayer(menu_audio_key_);
 }

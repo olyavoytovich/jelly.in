@@ -35,14 +35,14 @@ Player::Player(std::weak_ptr<Map> map,
 
   SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
 
-  player_jump_audio_key_ = map_.lock()->GetAudioManager()->CreateAudioPlayer(
-              AudioName::kPlayerJump);
-  player_landing_audio_key_ = map_.lock()->GetAudioManager()->CreateAudioPlayer(
-              AudioName::kPlayerLanding);
-  player_separation_audio_key_ = map_.lock()->GetAudioManager()->CreateAudioPlayer(
-              AudioName::kPlayerSeparation);
-  player_receive_damage_audio_key_ = map_.lock()->GetAudioManager()->CreateAudioPlayer(
-              AudioName::kPlayerTakingDamage);
+  player_jump_audio_key_ = map_.lock()->GetAudioManager()->
+          CreateAudioPlayer(AudioName::kPlayerJump);
+  player_landing_audio_key_ = map_.lock()->GetAudioManager()->
+          CreateAudioPlayer(AudioName::kPlayerLanding);
+  player_separation_audio_key_ = map_.lock()->GetAudioManager()->
+          CreateAudioPlayer(AudioName::kPlayerSeparation);
+  player_receive_damage_audio_key_ = map_.lock()->GetAudioManager()->
+          CreateAudioPlayer(AudioName::kPlayerTakingDamage);
 }
 
 void Player::Update(int time) {
@@ -72,7 +72,8 @@ void Player::Update(int time) {
     player_part_->SetAnimator(std::make_shared<Animator>(*animator_));
     map_.lock()->AddGameObject(player_part_);
 
-    map_.lock()->GetAudioManager()->PlayAudioPlayer(player_separation_audio_key_);
+    map_.lock()->GetAudioManager()->
+            PlayAudioPlayer(player_separation_audio_key_);
   }
 
   if (player_part_ != nullptr
@@ -113,7 +114,8 @@ void Player::BeginCollision(b2Fixture* fixture,
   if (fixture == bottom_sensor_) {
     jumps_remaining_ = kPlayerJumpCount;
 
-    map_.lock()->GetAudioManager()->ReplayAudioPlayer(player_landing_audio_key_);
+    map_.lock()->GetAudioManager()->
+            ReplayAudioPlayer(player_landing_audio_key_);
   } else if (fixture == left_sensor_) {
     left_collisions_++;
   } else if (fixture == right_sensor_) {
@@ -158,7 +160,8 @@ void Player::TakeDamage() {
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;
 
-  map_.lock()->GetAudioManager()->PlayAudioPlayer(player_receive_damage_audio_key_);
+  map_.lock()->GetAudioManager()->
+          PlayAudioPlayer(player_receive_damage_audio_key_);
 }
 
 void Player::SetAnimationName(const QString& animation_name) {

@@ -147,14 +147,14 @@ std::shared_ptr<Entity> Shooter::CreateBullet(const QPoint& bullet_position) {
 
 void Shooter::InitializeAudio() {
   if (GetEntityType() == EntityType::kBurdock) {
-    thorn_audio_key_ =
-            map_.lock()->GetAudioManager()->CreateAudioPlayer(AudioName::kThorn);
+    thorn_audio_key_ = map_.lock()->GetAudioManager()->
+            CreateAudioPlayer(AudioName::kThorn);
   }
   if (GetEntityType() == EntityType::kCloud) {
     drop_audio_keys_.resize(bounding_rectangle_.width() / 3 / bullet_radius_+1);
     for (auto& drop_audio_key : drop_audio_keys_) {
-      drop_audio_key =
-              map_.lock()->GetAudioManager()->CreateAudioPlayer(AudioName::kDrop);
+      drop_audio_key = map_.lock()->GetAudioManager()->
+              CreateAudioPlayer(AudioName::kDrop);
     }
   }
 }
