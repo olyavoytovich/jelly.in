@@ -115,6 +115,7 @@
         <file>images/animation/sunflower5.png</file>
         <file>images/animation/sunflower6.png</file>
         <file>images/animation/seed0.png</file>
+        <file>images/menu/icon.png</file>
         <file>images/menu/play_first.png</file>
         <file>images/menu/play_second.png</file>
         <file>images/menu/play_third.png</file>
@@ -128,7 +129,6 @@
         <file>images/menu/exit_second.png</file>
         <file>images/menu/exit_third.png</file>
         <file>images/menu/main_menu.png</file>
-        <file>images/menu/main_menu_backgrond.png</file>
         <file>images/menu/settings_first.png</file>
         <file>images/menu/settings_second.png</file>
         <file>images/menu/settings_third.png</file>

@@ -5,6 +5,7 @@ GameController::GameController()
       menu_(std::make_shared<MainMenu>(this)) {
   view_->show();
   view_->setCentralWidget(menu_.get());
+  view_->setWindowIcon(QIcon(":/images/menu/icon.png"));
   settings_ = new QSettings("View, Controller and Models", "Jelly.in");
   player_animation_name_ = settings_->value("animation_name").toString();
 }
