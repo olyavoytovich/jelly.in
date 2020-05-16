@@ -1,6 +1,7 @@
 #ifndef CONTROLLER_GAME_CONTROLLER_H_
 #define CONTROLLER_GAME_CONTROLLER_H_
 
+#include <algorithm>
 #include <memory>
 #include <utility>
 #include <vector>
