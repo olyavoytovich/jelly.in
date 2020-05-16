@@ -16,6 +16,8 @@ int AudioManager::CreatePlayer(AudioName audio_name) {
     audio_players_[key] = std::make_shared<QMediaPlayer>();
     audio_players_[key]->setMedia(*audio_files_[static_cast<int>(audio_name)]);
     audio_players_[key]->setVolume(100);
+    audio_players_[key]->play();
+    audio_players_[key]->stop();
     return key;
 }
 
