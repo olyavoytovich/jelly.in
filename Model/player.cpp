@@ -35,10 +35,14 @@ Player::Player(std::shared_ptr<Map> map,
 
   SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
 
-  player_jump_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kPlayerJump);
-  player_landing_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kPlayerLanding);
-  player_separation_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kPlayerSeparation);
-  player_receive_damage_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(AudioName::kPlayerTakingDamage);
+  player_jump_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(
+              AudioName::kPlayerJump);
+  player_landing_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(
+              AudioName::kPlayerLanding);
+  player_separation_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(
+              AudioName::kPlayerSeparation);
+  player_receive_damage_audio_key_ = map_->GetAudioManager()->CreateAudioPlayer(
+              AudioName::kPlayerTakingDamage);
 }
 
 void Player::Update(int time) {

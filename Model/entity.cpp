@@ -299,9 +299,10 @@ EntityType Entity::GetEntityType() const {
 }
 
 int Entity::CountVolumeFromDistance() {
-   QPoint begin = map_->GetPlayer()->GetPositionInPixels();
-   QPoint end = GetPositionInPixels();
-   int distance = static_cast<int>(hypot(begin.x() - end.x(), begin.y() - end.y()));
+  QPoint begin = map_->GetPlayer()->GetPositionInPixels();
+  QPoint end = GetPositionInPixels();
+  int distance = static_cast<int>(
+              hypot(begin.x() - end.x(), begin.y() - end.y()));
 
   // Magic count
   distance = (1500 - distance) / 15;

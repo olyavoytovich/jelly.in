@@ -1,5 +1,5 @@
-#ifndef MODEL_SOUND_MANAGER_H_
-#define MODEL_SOUND_MANAGER_H_
+#ifndef MODEL_AUDIO_MANAGER_H_
+#define MODEL_AUDIO_MANAGER_H_
 
 #include <QMediaContent>
 #include <QMediaPlayer>
@@ -7,12 +7,13 @@
 #include <memory>
 #include <random>
 #include <vector>
+#include <unordered_map>
 
 enum class AudioName {
   kButtonClick,  // menu
-  kThorn, // enemy
+  kThorn,  // enemy
   kDrop,
-  kPlayerJump, // player
+  kPlayerJump,  // player
   kPlayerLanding,
   kPlayerSeparation,
   kPlayerTakingDamage,
@@ -42,4 +43,4 @@ class AudioManager {
   std::uniform_int_distribution<> range_;
 };
 
-#endif  // MODEL_SOUND_MANAGER_H_
+#endif  // MODEL_AUDIO_MANAGER_H_
