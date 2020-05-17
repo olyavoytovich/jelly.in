@@ -6,6 +6,7 @@ Label::Label(const QString& text, QWidget* parent)
       bounding_rectangle_(rect()) {
   current_font_.setPixelSize(height());
   setFont(current_font_);
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
 }
 
 int Label::GetFontSize() const {

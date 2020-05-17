@@ -11,6 +11,7 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
       background_ = QImage(":/images/menu/big_background_pink.png");
       main_part_ = QImage(":/images/menu/fail_menu.png");
       image_set = std::make_shared<ImageSet>("malinovij");
+
       menu_animation_ = std::make_shared<Movie>("cloud", this);
       menu_animation_->SetSpeed(30);
       menu_animation_->Play();
@@ -20,7 +21,8 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
       background_ = QImage(":/images/menu/big_background.png");
       main_part_ = QImage(":/images/menu/pause_menu.png");
       image_set = std::make_shared<ImageSet>("blue");
-      menu_animation_ = std::make_shared<Movie>("burdock", this);
+      menu_animation_ = std::make_shared<Movie>("burdoc"
+                                                "k", this);
       menu_animation_->SetSpeed(100);
       menu_animation_->Play();
       break;
@@ -29,9 +31,17 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
       background_ = QImage(":/images/menu/big_background_yellow.png");
       main_part_ = QImage(":/images/menu/victory_menu.png");
       image_set = std::make_shared<ImageSet>("orange");
+
       menu_animation_ = std::make_shared<Movie>("sunflower", this);
       menu_animation_->SetSpeed(160);
       menu_animation_->Play();
+
+      int mushrooms_count = game_controller_->GetLastLevelMushrooms();
+      for (int i = 0; i < mushrooms_count; i++) {
+        mushrooms_.emplace_back(std::make_shared<Movie>("mushroom", this));
+        mushrooms_.back()->SetSpeed(300 - i * 75);
+        mushrooms_.back()->Play();
+      }
       break;
     }
     case MenuType::kControls: {
@@ -121,6 +131,10 @@ void IntermediateMenu::resizeEvent(QResizeEvent* event) {
       main_menu_button_->SetRectangle(PositionRectangle(6, 5, 3, 2));
 
       menu_animation_->setGeometry(PositionRectangle(11, 2, 4, 5));
+      int mushrooms_count = mushrooms_.size();
+      for (int i = 0; i < mushrooms_count; i++) {
+        mushrooms_[i]->setGeometry(PositionRectangle(10 + i, 6, 1, 1));
+      }
       break;
     }
     case MenuType::kControls: {

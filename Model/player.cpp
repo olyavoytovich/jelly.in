@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(std::shared_ptr<Map> map,
+Player::Player(std::weak_ptr<Map> map,
                const QPoint& body_position,
                const QRect& rectangle,
                std::shared_ptr<Animator> animator)
@@ -50,7 +50,7 @@ void Player::Update(int time) {
     TakeDamage();
   }
 
-  if (map_->IsKeyPressed(Key::kSpace) && player_part_ == nullptr) {
+  if (map_.lock()->IsKeyPressed(Key::kSpace) && player_part_ == nullptr) {
     player_part_ = std::make_shared<Entity>(map_,
                                             b2_dynamicBody,
                                             GetPositionInPixels(),
@@ -61,7 +61,7 @@ void Player::Update(int time) {
     clone_velocity *= kCloneSpeed;
     player_part_->SetVelocity(clone_velocity, true);
     player_part_->SetAnimator(std::make_shared<Animator>(*animator_));
-    map_->AddGameObject(player_part_);
+    map_.lock()->AddGameObject(player_part_);
   }
 
   if (player_part_ != nullptr
@@ -69,7 +69,7 @@ void Player::Update(int time) {
     player_part_->SetEntityType(EntityType::kPlayerPart);
   }
 
-  if (map_->IsKeyPressed(Key::kUp) && jumps_remaining_ > 0) {
+  if (map_.lock()->IsKeyPressed(Key::kUp) && jumps_remaining_ > 0) {
     animator_->SetCurrentAnimation(kJump + "_" + animation_name_, false);
     jumps_remaining_--;
     body_->SetLinearVelocity(b2Vec2(body_->GetLinearVelocity().x, 0));
@@ -77,9 +77,9 @@ void Player::Update(int time) {
         b2Vec2(0, -kPlayerJumpSpeed * body_->GetMass()), true);
   }
   float target_speed = -body_->GetLinearVelocity().x;
-  if (map_->IsKeyClamped(Key::kLeft) && left_collisions_ == 0) {
+  if (map_.lock()->IsKeyClamped(Key::kLeft) && left_collisions_ == 0) {
     target_speed -= kPlayerSpeed;
-  } else if (map_->IsKeyClamped(Key::kRight) && right_collisions_ == 0) {
+  } else if (map_.lock()->IsKeyClamped(Key::kRight) && right_collisions_ == 0) {
     target_speed += kPlayerSpeed;
   }
   body_->ApplyLinearImpulseToCenter(b2Vec2(target_speed * body_->GetMass(), 0),

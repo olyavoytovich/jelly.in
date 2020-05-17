@@ -29,14 +29,14 @@ struct CircleShape {
 class Entity : public GameObject {
  public:
   // Конструктор, создающий тело из одной формы - полигон.
-  Entity(std::shared_ptr<Map> map,
+  Entity(std::weak_ptr<Map> map,
          b2BodyType type,
          const QPoint& body_position,
          const QPolygon& polygon,
          EntityType entity_type);
 
   // Конструктор, создающий тело из одной формы - круг.
-  Entity(std::shared_ptr<Map> map,
+  Entity(std::weak_ptr<Map> map,
          b2BodyType type,
          const QPoint& body_position,
          int radius,
@@ -48,7 +48,7 @@ class Entity : public GameObject {
   // В каждой структуре хранятся данные о радиусе и о локальных координатах
   // данного круга. Пятый параметр так же вектор структур. В одной структуре
   // PolygonShape хранятся данные о форме QPolygon и о локальных координатах.
-  Entity(std::shared_ptr<Map> map,
+  Entity(std::weak_ptr<Map> map,
          b2BodyType body_type,
          const QPoint& body_position,
          const std::vector<CircleShape>& circles,
@@ -117,7 +117,7 @@ class Entity : public GameObject {
 
   QRect bounding_rectangle_;
 
-  std::shared_ptr<Map> map_;
+  std::weak_ptr<Map> map_;
 
   std::shared_ptr<Animator> animator_ = nullptr;
 

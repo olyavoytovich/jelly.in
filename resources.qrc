@@ -152,6 +152,21 @@
         <file>images/menu/yellow_first.png</file>
         <file>images/menu/yellow_second.png</file>
         <file>images/menu/yellow_third.png</file>
+        <file>images/menu/level_0_first.png</file>
+        <file>images/menu/level_0_second.png</file>
+        <file>images/menu/level_0_third.png</file>
+        <file>images/menu/level_1_first.png</file>
+        <file>images/menu/level_1_second.png</file>
+        <file>images/menu/level_1_third.png</file>
+        <file>images/menu/level_2_first.png</file>
+        <file>images/menu/level_2_second.png</file>
+        <file>images/menu/level_2_third.png</file>
+        <file>images/menu/level_3_first.png</file>
+        <file>images/menu/level_3_second.png</file>
+        <file>images/menu/level_3_third.png</file>
+        <file>images/menu/level_locked_first.png</file>
+        <file>images/menu/level_locked_second.png</file>
+        <file>images/menu/level_locked_third.png</file>
         <file>images/menu/malinovij_first.png</file>
         <file>images/menu/malinovij_second.png</file>
         <file>images/menu/malinovij_third.png</file>
@@ -193,6 +208,7 @@
         <file>images/animation/cloud9.png</file>
         <file>images/animation/drop0.png</file>
         <file>images/animation/thorn0.png</file>
+        <file>images/animation/mushroom0.png</file>
         <file>images/level_2.png</file>
         <file>data/level_2.json</file>
         <file>images/level_3.png</file>
@@ -207,5 +223,6 @@
         <file>images/gifs/player_red_move.gif</file>
         <file>images/gifs/player_orange_move.gif</file>
         <file>images/gifs/player_yellow_move.gif</file>
+        <file>images/gifs/mushroom.gif</file>
     </qresource>
 </RCC>

@@ -1,6 +1,6 @@
 #include "patroller.h"
 
-Patroller::Patroller(std::shared_ptr<Map> map,
+Patroller::Patroller(std::weak_ptr<Map> map,
                      b2BodyType type,
                      const QPoint& body_position,
                      const QPolygon& polygon,
@@ -16,7 +16,7 @@ Patroller::Patroller(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
 }
 
-Patroller::Patroller(std::shared_ptr<Map> map,
+Patroller::Patroller(std::weak_ptr<Map> map,
                      b2BodyType type,
                      const QPoint& body_position,
                      int radius,
@@ -32,7 +32,7 @@ Patroller::Patroller(std::shared_ptr<Map> map,
   SetWayPoints(way_points);
 }
 
-Patroller::Patroller(std::shared_ptr<Map> map,
+Patroller::Patroller(std::weak_ptr<Map> map,
                      b2BodyType body_type,
                      const QPoint& body_position,
                      const std::vector<CircleShape>& circles,

@@ -11,7 +11,7 @@
 
 class PressurePlate : public Entity {
  public:
-  PressurePlate(std::shared_ptr<Map> map,
+  PressurePlate(std::weak_ptr<Map> map,
                 b2BodyType type,
                 const QPoint& body_position,
                 const QPolygon& polygon,

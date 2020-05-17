@@ -34,6 +34,7 @@ class IntermediateMenu : public Menu {
   Button* back_arrow_ = nullptr;
 
   std::shared_ptr<Movie> menu_animation_;
+  std::vector<std::shared_ptr<Movie>> mushrooms_;
 
   std::vector<Button*> main_button_group_;
 };

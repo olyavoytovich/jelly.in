@@ -20,6 +20,7 @@ Button::Button(std::shared_ptr<ImageSet> image_set,
   if (!button_text.isEmpty()) {
     SetText(button_text);
   }
+  setFocusPolicy(Qt::FocusPolicy::NoFocus);
 }
 
 void Button::paintEvent(QPaintEvent*) {
