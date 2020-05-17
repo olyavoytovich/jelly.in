@@ -37,8 +37,6 @@ Player::Player(std::weak_ptr<Map> map,
 
   player_jump_audio_key_ = map_.lock()->GetAudioManager()->
           CreateAudioPlayer(AudioName::kPlayerJump);
-  player_landing_audio_key_ = map_.lock()->GetAudioManager()->
-          CreateAudioPlayer(AudioName::kPlayerLanding);
   player_separation_audio_key_ = map_.lock()->GetAudioManager()->
           CreateAudioPlayer(AudioName::kPlayerSeparation);
   player_receive_damage_audio_key_ = map_.lock()->GetAudioManager()->
@@ -113,9 +111,6 @@ void Player::BeginCollision(b2Fixture* fixture,
 
   if (fixture == bottom_sensor_) {
     jumps_remaining_ = kPlayerJumpCount;
-
-    map_.lock()->GetAudioManager()->
-            ReplayAudioPlayer(player_landing_audio_key_);
   } else if (fixture == left_sensor_) {
     left_collisions_++;
   } else if (fixture == right_sensor_) {

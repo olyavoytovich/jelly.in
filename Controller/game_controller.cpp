@@ -118,17 +118,20 @@ void GameController::OpenMainMenu() {
 
 void GameController::OpenPauseMenu() {
   audio_manager_->PauseAudioPlayer(level_audio_key_);
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kPause));
 }
 
 void GameController::OpenVictoryMenu() {
   audio_manager_->StopAudioPlayer(level_audio_key_);
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory));
   CloseCurrentLevel();
 }
 
 void GameController::OpenFailMenu() {
   audio_manager_->StopAudioPlayer(level_audio_key_);
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kFail));
   CloseCurrentLevel();
 }
@@ -136,7 +139,7 @@ void GameController::OpenFailMenu() {
 void GameController::ResumeGame() {
   view_->takeCentralWidget();
   view_->setCentralWidget(interface_.get());
-
+  audio_manager_->StopAudioPlayer(menu_audio_key_);
   audio_manager_->PlayAudioPlayer(level_audio_key_);
 }
 

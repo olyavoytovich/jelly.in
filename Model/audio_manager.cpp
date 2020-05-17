@@ -17,9 +17,6 @@ AudioManager::AudioManager()
   audio_files_[static_cast<int>(AudioName::kPlayerJump)] =
         std::make_shared<QMediaContent>(
               QUrl("qrc:/audio/player/jump.mp3"));
-  audio_files_[static_cast<int>(AudioName::kPlayerLanding)] =
-        std::make_shared<QMediaContent>(
-              QUrl("qrc:/audio/player/landing.mp3"));
   audio_files_[static_cast<int>(AudioName::kPlayerSeparation)] =
         std::make_shared<QMediaContent>(
               QUrl("qrc:/audio/player/separation.mp3"));

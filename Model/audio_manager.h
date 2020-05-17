@@ -15,7 +15,6 @@ enum class AudioName {
   kThorn,
   kDrop,
   kPlayerJump,
-  kPlayerLanding,
   kPlayerSeparation,
   kPlayerTakingDamage,
   kBackground,

@@ -63,7 +63,6 @@ class Player : public Entity {
   std::shared_ptr<Entity> player_part_ = nullptr;
 
   int player_jump_audio_key_;
-  int player_landing_audio_key_;
   int player_separation_audio_key_;
   int player_receive_damage_audio_key_;
 };
