@@ -28,6 +28,9 @@ SettingsVolume::SettingsVolume(AbstractGameController* game_controller,
   connect(back_arrow_, &QPushButton::clicked, this, [&]() {
     game_controller_->OpenSettingsMenu();
   });
+  connect(back_arrow_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->PlayAudio(AudioName::kButtonClick);
+  });
 
   for (int i = 0; i < 3; i++) {
     connect(right_arrows_[i], &QPushButton::clicked, this, [&, i]() {
@@ -40,6 +43,10 @@ SettingsVolume::SettingsVolume(AbstractGameController* game_controller,
       squares_[i]->SetText(QString::number(power));
       game_controller_->SetVolume(volume, power);
     });
+    connect(right_arrows_[i], &QPushButton::pressed, this, [&]() {
+      audio_manager_->PlayAudio(AudioName::kButtonClick);
+    });
+
     connect(left_arrows_[i], &QPushButton::clicked, this, [&, i]() {
       auto volume = static_cast<Volume>(i);
       int power = game_controller_->GetVolume(volume);
@@ -49,6 +56,9 @@ SettingsVolume::SettingsVolume(AbstractGameController* game_controller,
       power -= 10;
       squares_[i]->SetText(QString::number(power));
       game_controller_->SetVolume(volume, power);
+    });
+    connect(left_arrows_[i], &QPushButton::pressed, this, [&]() {
+      audio_manager_->PlayAudio(AudioName::kButtonClick);
     });
   }
 }

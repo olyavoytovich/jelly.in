@@ -21,8 +21,7 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
       background_ = QImage(":/images/menu/big_background.png");
       main_part_ = QImage(":/images/menu/pause_menu.png");
       image_set = std::make_shared<ImageSet>("blue");
-      menu_animation_ = std::make_shared<Movie>("burdoc"
-                                                "k", this);
+      menu_animation_ = std::make_shared<Movie>("burdock", this);
       menu_animation_->SetSpeed(100);
       menu_animation_->Play();
       break;
@@ -63,6 +62,9 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
 
     connect(back_arrow_, &QPushButton::clicked, this, [&]() {
       game_controller_->OpenSettingsMenu();
+    });
+    connect(back_arrow_, &QPushButton::pressed, this, [&]() {
+      audio_manager_->PlayAudio(AudioName::kButtonClick);
     });
     return;
   }

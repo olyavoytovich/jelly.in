@@ -12,8 +12,6 @@ QMAKE_CXXFLAGS += -std=c++17
 
 SOURCES += \
         Controller/game_controller.cpp \
-        View/settings_menu.cpp \
-        View/settings_volume.cpp \
         main.cpp \
         Model/animation.cpp \
         Model/animator.cpp \
@@ -35,6 +33,8 @@ SOURCES += \
         View/main_menu.cpp \
         View/menu.cpp \
         View/movie.cpp \
+        View/settings_menu.cpp \
+        View/settings_volume.cpp \
         View/view.cpp \
         box2d/collision/b2_broad_phase.cpp \
         box2d/collision/b2_chain_shape.cpp \
