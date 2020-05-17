@@ -222,12 +222,12 @@
         {
           "name": "damage",
           "duration": 500,
-          "frames_count": 6
+          "frames_count": 19
         },
         {
           "name": "jump",
           "duration": 500,
-          "frames_count": 10
+          "frames_count": 8
         }
       ]
     },
@@ -337,7 +337,7 @@
         {
           "name": "mushroom",
           "duration": 100,
-          "frames_count": 0
+          "frames_count": 1
         }
       ]
     },
@@ -353,7 +353,7 @@
         {
           "name": "mushroom",
           "duration": 100,
-          "frames_count": 0
+          "frames_count": 1
         }
       ]
     },
@@ -369,7 +369,7 @@
         {
           "name": "mushroom",
           "duration": 100,
-          "frames_count": 0
+          "frames_count": 1
         }
       ]
     }

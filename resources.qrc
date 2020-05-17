@@ -191,12 +191,16 @@
         <file>images/animation/drop0.png</file>
         <file>images/animation/thorn0.png</file>
         <file>images/animation/mushroom0.png</file>
+        <file>images/level_1.png</file>
+        <file>data/level_1.json</file>
         <file>images/level_2.png</file>
         <file>data/level_2.json</file>
         <file>images/level_3.png</file>
         <file>data/level_3.json</file>
         <file>images/level_4.png</file>
         <file>data/level_4.json</file>
+        <file>images/level_5.png</file>
+        <file>data/level_5.json</file>
         <file>images/gifs/heart.gif</file>
         <file>images/gifs/pause_menu.gif</file>
         <file>images/gifs/player_red_move.gif</file>

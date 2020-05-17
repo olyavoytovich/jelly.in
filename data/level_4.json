@@ -625,7 +625,7 @@
         {
           "name": "damage",
           "duration": 500,
-          "frames_count": 6
+          "frames_count": 19
         },
         {
           "name": "jump",

@@ -6,10 +6,8 @@ GameController::GameController()
       menu_(std::make_shared<MainMenu>(this)) {
   view_->show();
   view_->setCentralWidget(menu_.get());
-  if (level_mushrooms_[1] == -1) {
-    level_mushrooms_[1] = 0;
-    level_mushrooms_[2] = 0;
-    level_mushrooms_[3] = 0;
+  if (level_mushrooms_[0] == -1) {
+    level_mushrooms_[0] = 0;
   }
 }
 
