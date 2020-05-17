@@ -13,6 +13,10 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
     game_controller_->OpenMainMenu();
   });
 
+  connect(back_button_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->PlayAudio(AudioName::kButtonClick);
+  });
+
   std::vector<std::shared_ptr<ImageSet>>
       level_images = {std::make_shared<ImageSet>("level_0"),
                       std::make_shared<ImageSet>("level_1"),
@@ -34,6 +38,10 @@ ChooseLevelMenu::ChooseLevelMenu(AbstractGameController* game_controller,
   for (int i = 0; i < 3; i++) {
     connect(level_buttons_[i], &QPushButton::clicked, this, [&, i]() {
       game_controller_->StartLevel(i);
+    });
+
+    connect(level_buttons_[i], &QPushButton::pressed, this, [&]() {
+      audio_manager_->PlayAudio(AudioName::kButtonClick);
     });
   }
 

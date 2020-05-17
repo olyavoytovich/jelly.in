@@ -227,5 +227,15 @@
         <file>images/gifs/player_orange_move.gif</file>
         <file>images/gifs/player_yellow_move.gif</file>
         <file>images/gifs/mushroom.gif</file>
+        <file>audio/menu/button_click.mp3</file>
+        <file>audio/enemy/burdock_bullet.mp3</file>
+        <file>audio/enemy/cloud_bullet.mp3</file>
+        <file>audio/enemy/chestnut.mp3</file>
+        <file>audio/player/jump.mp3</file>
+        <file>audio/player/mushroom.mp3</file>
+        <file>audio/player/separation.mp3</file>
+        <file>audio/player/taking_damage.mp3</file>
+        <file>audio/music/background.mp3</file>
+        <file>audio/music/menu.mp3</file>
     </qresource>
 </RCC>

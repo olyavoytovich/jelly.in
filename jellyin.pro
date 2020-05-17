@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -17,6 +17,7 @@ SOURCES += \
         main.cpp \
         Model/animation.cpp \
         Model/animator.cpp \
+        Model/audio_manager.cpp \
         Model/contact_listener.cpp \
         Model/entity.cpp \
         Model/game_object.cpp \
@@ -87,6 +88,7 @@ HEADERS += \
     Controller/game_controller.h \
     Model/animation.h \
     Model/animator.h \
+    Model/audio_manager.h \
     Model/constants.h \
     Model/contact_listener.h \
     Model/entity.h \
