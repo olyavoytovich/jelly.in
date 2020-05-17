@@ -92,7 +92,7 @@ class GameController : public AbstractGameController {
   int music_volume_ = 40;
   int sound_volume_ = 40;
 
-  QSettings* settings_;
+  QSettings settings_;
 };
 
 #endif  // CONTROLLER_GAME_CONTROLLER_H_

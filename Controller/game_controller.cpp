@@ -8,14 +8,12 @@ GameController::GameController()
   view_->show();
   view_->setCentralWidget(menu_.get());
   view_->setWindowIcon(QIcon(":/images/menu/icon.png"));
+  player_animation_name_ = settings_.value("animation_name").toString();
 
-  settings_ = new QSettings("View, Controller and Models", "Jelly.in");
-  player_animation_name_ = settings_->value("animation_name").toString();
-
-  level_mushrooms_[1] = settings_->value("level_2", 0).toInt();
+  level_mushrooms_[1] = settings_.value("level_2", 0).toInt();
   for (int i = 2; i <= 11; i++) {
     level_mushrooms_[i] =
-        settings_->value("level_" + QString::number(i + 1), -1).toInt();
+        settings_.value("level_" + QString::number(i + 1), -1).toInt();
   }
 
   LoadVolume();
@@ -106,11 +104,11 @@ void GameController::CloseCurrentLevel() {
         && level_mushrooms_[level_number_] >= 2
         && level_mushrooms_[level_number_ + 1] == -1) {
       level_mushrooms_[level_number_ + 1] = 0;
-      settings_->setValue("level_" + QString::number(level_number_ + 2), 0);
+      settings_.setValue("level_" + QString::number(level_number_ + 2), 0);
     }
   }
-  settings_->setValue("level_" + QString::number(level_number_ + 1),
-                      level_mushrooms_[level_number_]);
+  settings_.setValue("level_" + QString::number(level_number_ + 1),
+                     level_mushrooms_[level_number_]);
   interface_ = nullptr;
   map_ = nullptr;
   player_ = nullptr;
@@ -179,11 +177,10 @@ void GameController::StartNextLevel() {
 }
 
 void GameController::Reset() {
-  level_mushrooms_.assign(12, -1);
-  level_mushrooms_[1] = 0;
-  settings_->setValue("level_2", 0);
+  std::fill(level_mushrooms_.begin(), level_mushrooms_.end(), -1);
+  settings_.setValue("level_2", 0);
   for (int i = 2; i <= 11; i++) {
-    settings_->setValue("level_" + QString::number(i + 1), -1);
+    settings_.setValue("level_" + QString::number(i + 1), -1);
   }
 }
 
@@ -225,7 +222,7 @@ QString GameController::GetPlayerAnimation() const {
 
 void GameController::SetPlayerAnimation(const QString& animation_name) {
   player_animation_name_ = animation_name;
-  settings_->setValue("animation_name", player_animation_name_);
+  settings_.setValue("animation_name", player_animation_name_);
 }
 
 int GameController::GetLastLevelMushrooms() const {
@@ -237,9 +234,9 @@ int GameController::GetLevelMushrooms(int level_number) const {
 }
 
 void GameController::LoadVolume() {
-  general_volume_ = settings_->value("volume/general", 40).toInt();
-  music_volume_ = settings_->value("volume/music", 40).toInt();
-  sound_volume_ = settings_->value("volume/sound", 40).toInt();
+  general_volume_ = settings_.value("volume/general", 40).toInt();
+  music_volume_ = settings_.value("volume/music", 40).toInt();
+  sound_volume_ = settings_.value("volume/sound", 40).toInt();
   SetVolume(Volume::kGeneral, general_volume_);
   SetVolume(Volume::kMusic, music_volume_);
   SetVolume(Volume::kSound, sound_volume_);
@@ -251,19 +248,19 @@ void GameController::SetVolume(Volume volume, int power) {
       general_volume_ = power;
       audio_manager_->SetGeneralVolume(general_volume_);
       menu_->SetGeneralVolume(general_volume_);
-      settings_->setValue("volume/general", general_volume_);
+      settings_.setValue("volume/general", general_volume_);
       break;
     }
     case Volume::kMusic: {
       music_volume_ = power;
       audio_manager_->SetCurrentVolume(music_volume_);
-      settings_->setValue("volume/music", music_volume_);
+      settings_.setValue("volume/music", music_volume_);
       break;
     }
     case Volume::kSound: {
       sound_volume_ = power;
       menu_->SetCurrentVolume(sound_volume_);
-      settings_->setValue("volume/sound", sound_volume_);
+      settings_.setValue("volume/sound", sound_volume_);
       break;
     }
   }

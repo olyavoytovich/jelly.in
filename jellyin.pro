@@ -7,6 +7,7 @@ TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+CONFIG += resources_big
 CONFIG += c++17
 QMAKE_CXXFLAGS += -std=c++17
 

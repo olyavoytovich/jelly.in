@@ -15,10 +15,9 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Multimedia REQUIRED)
 
-file(GLOB box2d
-        box2d/*/*.cpp)
+file(GLOB box2d box2d/*/*.cpp)
 
-add_executable(jellyin main.cpp
+set(SOURCES main.cpp
         Controller/game_controller.cpp
         Model/animation.cpp
         Model/animator.cpp
@@ -44,8 +43,10 @@ add_executable(jellyin main.cpp
         View/settings_menu.cpp
         View/settings_volume.cpp
         View/view.cpp
-        resources.qrc
         ${box2d})
+
+qt5_add_big_resources(SOURCES resources.qrc)
+add_executable(jellyin ${SOURCES})
 
 target_link_libraries(jellyin Qt5::Core)
 target_link_libraries(jellyin Qt5::Widgets)
