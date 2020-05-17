@@ -47,6 +47,8 @@ class GameController : public AbstractGameController {
   void RestartGame() override;
   void StartNextLevel() override;
 
+  void Reset() override;
+
   QString GetPlayerAnimation() const override;
   void SetPlayerAnimation(const QString& animation_name) override;
 

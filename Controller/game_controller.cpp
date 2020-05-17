@@ -8,11 +8,13 @@ GameController::GameController()
   view_->setCentralWidget(menu_.get());
   view_->setWindowIcon(QIcon(":/images/menu/icon.png"));
 
-  settings_ = new QSettings("View, Controller and Models", "Jelly.in");
+  settings_ = new QSettings("View, Controller and Models", "Jelly.inl");
   player_animation_name_ = settings_->value("animation_name").toString();
 
-  if (level_mushrooms_[1] == -1) {
-    level_mushrooms_[1] = 0;
+  level_mushrooms_[1] = settings_->value("level_2", 0).toInt();
+  for (int i = 2; i <= 11; i++) {
+    level_mushrooms_[i] =
+        settings_->value("level_" + QString::number(i + 1), -1).toInt();
   }
 }
 
@@ -69,13 +71,13 @@ void GameController::ReleaseKey(int key_code) {
 }
 
 Key GameController::GetKeyFromCode(int key_code) {
-  if (key_code == Qt::Key_Left) {
+  if (key_code == Qt::Key_Left || key_code == Qt::Key_A || key_code == 1060) {
     return Key::kLeft;
   }
-  if (key_code == Qt::Key_Right) {
+  if (key_code == Qt::Key_Right || key_code == Qt::Key_D || key_code == 1042) {
     return Key::kRight;
   }
-  if (key_code == Qt::Key_Up) {
+  if (key_code == Qt::Key_Up || key_code == Qt::Key_W || key_code == 1062) {
     return Key::kUp;
   }
   if (key_code == Qt::Key_Space) {
@@ -93,8 +95,11 @@ void GameController::CloseCurrentLevel() {
         && level_mushrooms_[level_number_] >= 2
         && level_mushrooms_[level_number_ + 1] == -1) {
       level_mushrooms_[level_number_ + 1] = 0;
+      settings_->setValue("level_" + QString::number(level_number_ + 2), 0);
     }
   }
+  settings_->setValue("level_" + QString::number(level_number_ + 1),
+                      level_mushrooms_[level_number_]);
   interface_ = nullptr;
   map_ = nullptr;
   player_ = nullptr;
@@ -150,6 +155,15 @@ void GameController::RestartGame() {
 
 void GameController::StartNextLevel() {
   StartLevel(level_number_ + 1);
+}
+
+void GameController::Reset() {
+  level_mushrooms_.assign(12, -1);
+  level_mushrooms_[1] = 0;
+  settings_->setValue("level_2", 0);
+  for (int i = 2; i <= 11; i++) {
+    settings_->setValue("level_" + QString::number(i + 1), -1);
+  }
 }
 
 void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
