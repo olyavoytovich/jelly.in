@@ -11,10 +11,10 @@
 #include <unordered_map>
 
 enum class AudioName {
-  kButtonClick,  // menu
-  kThorn,  // enemy
+  kButtonClick,
+  kThorn,
   kDrop,
-  kPlayerJump,  // player
+  kPlayerJump,
   kPlayerLanding,
   kPlayerSeparation,
   kPlayerTakingDamage,
