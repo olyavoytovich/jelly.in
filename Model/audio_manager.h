@@ -14,9 +14,11 @@ enum class AudioName {
   kButtonClick,
   kThorn,
   kDrop,
+  kChestnut,
   kPlayerJump,
   kPlayerSeparation,
   kPlayerTakingDamage,
+  kPlayerGettingMushroom,
   kBackground,
   kMenuAudio,
   kAnyAudio

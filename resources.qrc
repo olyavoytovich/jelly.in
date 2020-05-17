@@ -204,8 +204,9 @@
         <file>audio/menu/button_click.mp3</file>
         <file>audio/enemy/burdock_bullet.mp3</file>
         <file>audio/enemy/cloud_bullet.mp3</file>
+        <file>audio/enemy/chestnut.mp3</file>
         <file>audio/player/jump.mp3</file>
-        <file>audio/player/landing.mp3</file>
+        <file>audio/player/mushroom.mp3</file>
         <file>audio/player/separation.mp3</file>
         <file>audio/player/taking_damage.mp3</file>
         <file>audio/music/background.mp3</file>

@@ -147,6 +147,8 @@ class Entity : public GameObject {
   b2Vec2 target_velocity = {0, 0};
   bool is_active_ = true;
   EntityType entity_type_;
+  int player_get_mushroom_audio_key_;
+  int chestnut_audio_key_;
 };
 
 #endif  // MODEL_ENTITY_H_

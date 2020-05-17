@@ -26,6 +26,14 @@ Entity::Entity(std::weak_ptr<Map> map,
     SetNoCollisionMask(~(static_cast<uint16_t>(EntityType::kPlayer)
         + static_cast<uint16_t>(EntityType::kPlayerPart)));
   }
+  if (entity_type_ == EntityType::kMushroom) {
+    player_get_mushroom_audio_key_ = map_.lock()->GetAudioManager()->
+        CreateAudioPlayer(AudioName::kPlayerGettingMushroom);
+  }
+  if (entity_type_ == EntityType::kChestnut) {
+    chestnut_audio_key_ = map_.lock()->GetAudioManager()->
+        CreateAudioPlayer(AudioName::kChestnut);
+  }
 }
 
 Entity::Entity(std::weak_ptr<Map> map,
@@ -38,6 +46,14 @@ Entity::Entity(std::weak_ptr<Map> map,
   b2CircleShape shape = CreateCircleShape(radius);
   CreateFixture(shape);
   InitializeBoundaryRectangle();
+  if (entity_type_ == EntityType::kMushroom) {
+    player_get_mushroom_audio_key_ = map_.lock()->GetAudioManager()->
+        CreateAudioPlayer(AudioName::kPlayerGettingMushroom);
+  }
+  if (entity_type_ == EntityType::kChestnut) {
+    chestnut_audio_key_ = map_.lock()->GetAudioManager()->
+        CreateAudioPlayer(AudioName::kChestnut);
+  }
 }
 
 Entity::Entity(std::weak_ptr<Map> map,
@@ -59,6 +75,14 @@ Entity::Entity(std::weak_ptr<Map> map,
     CreateFixture(shape);
   }
   InitializeBoundaryRectangle();
+  if (entity_type_ == EntityType::kMushroom) {
+    player_get_mushroom_audio_key_ = map_.lock()->GetAudioManager()->
+        CreateAudioPlayer(AudioName::kPlayerGettingMushroom);
+  }
+  if (entity_type_ == EntityType::kChestnut) {
+    chestnut_audio_key_ = map_.lock()->GetAudioManager()->
+        CreateAudioPlayer(AudioName::kChestnut);
+  }
 }
 
 void Entity::Draw(QPainter* painter) const {
@@ -181,6 +205,12 @@ void Entity::Update(int time) {
     }
     SetVelocity(way_points_[way_point_index_], body_position, speed_);
   }
+  if (entity_type_ == EntityType::kChestnut) {
+    map_.lock()->GetAudioManager()->
+        SetVolume(chestnut_audio_key_, CountVolumeFromDistance());
+    map_.lock()->GetAudioManager()->PlayAudioPlayer(chestnut_audio_key_);
+
+  }
 }
 
 void Entity::Activate() {
@@ -296,6 +326,8 @@ void Entity::BeginCollision(b2Fixture*, EntityType my_type, EntityType) {
   }
   if (my_type == EntityType::kMushroom && !IsDeleted()) {
     map_.lock()->PickUpMushroom();
+    map_.lock()->GetAudioManager()->
+        PlayAudioPlayer(player_get_mushroom_audio_key_);
     MarkAsDeleted();
   }
 }
@@ -310,7 +342,7 @@ int Entity::CountVolumeFromDistance() {
   QPoint begin = map_.lock()->GetPlayer()->GetPositionInPixels();
   QPoint end = GetPositionInPixels();
   int distance = static_cast<int>(
-              hypot(begin.x() - end.x(), begin.y() - end.y()));
+      hypot(begin.x() - end.x(), begin.y() - end.y()));
 
   // Magic count
   distance = (1500 - distance) / 15;
