@@ -209,7 +209,6 @@ void Entity::Update(int time) {
     map_.lock()->GetAudioManager()->
         SetVolume(chestnut_audio_key_, CountVolumeFromDistance());
     map_.lock()->GetAudioManager()->PlayAudioPlayer(chestnut_audio_key_);
-
   }
 }
 
