@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "animator.h"
+#include "audio_manager.h"
 #include "game_object.h"
 #include "map.h"
 
@@ -88,6 +89,8 @@ class Entity : public GameObject {
                               EntityType other_type);
   virtual void EndCollision(b2Fixture* my_fixture, EntityType other_type);
 
+  EntityType GetEntityType() const;
+
  protected:
   int MetersToPixels(float value) const;
   QPoint MetersToPixels(b2Vec2 vector) const;
@@ -96,6 +99,9 @@ class Entity : public GameObject {
 
   b2Fixture* CreateFixture(const b2Shape& shape);
   void SetNoCollisionMask(uint16_t mask);
+
+  // Выбирает громкость в зависимости от расстояния до игрока
+  int CountVolumeFromDistance();
 
  protected:
   const float kEpsilon = 1e-5;
@@ -141,6 +147,8 @@ class Entity : public GameObject {
   b2Vec2 target_velocity = {0, 0};
   bool is_active_ = true;
   EntityType entity_type_;
+  int player_get_mushroom_audio_key_;
+  int chestnut_audio_key_;
 };
 
 #endif  // MODEL_ENTITY_H_

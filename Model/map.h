@@ -7,6 +7,7 @@
 #include <vector>
 
 #include "Controller/abstract_game_controller.h"
+#include "audio_manager.h"
 #include "box2d/box2d.h"
 #include "game_object.h"
 
@@ -50,6 +51,8 @@ class Map {
   bool IsKeyPressed(Key key);
   bool IsKeyClamped(Key key);
 
+  std::shared_ptr<AudioManager> GetAudioManager() const;
+
   void PickUpMushroom();
 
  private:
@@ -92,6 +95,8 @@ class Map {
 
   std::vector<bool> is_key_pressed_;
   std::vector<bool> is_key_clamped_;
+
+  std::shared_ptr<AudioManager> audio_manager_;
 };
 
 #endif  // MODEL_MAP_H_

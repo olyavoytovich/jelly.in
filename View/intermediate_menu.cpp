@@ -52,15 +52,33 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
     game_controller_->RestartGame();
   });
 
+  connect(main_menu_button_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->PlayAudio(AudioName::kButtonClick);
+  });
+  connect(choose_level_button_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->PlayAudio(AudioName::kButtonClick);
+  });
+  connect(restart_button_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->PlayAudio(AudioName::kButtonClick);
+  });
+
   if (menu_type_ == MenuType::kPause) {
     resume_button_ = new Button(image_set, this, "Resume");
     connect(resume_button_, &QPushButton::clicked, this, [&]() {
       game_controller_->ResumeGame();
     });
+
+    connect(resume_button_, &QPushButton::pressed, this, [&]() {
+      audio_manager_->PlayAudio(AudioName::kButtonClick);
+    });
   } else if (menu_type == MenuType::kVictory) {
     resume_button_ = new Button(image_set, this, "Next Level");
     connect(resume_button_, &QPushButton::clicked, this, [&]() {
       game_controller_->StartNextLevel();
+    });
+
+    connect(resume_button_, &QPushButton::pressed, this, [&]() {
+      audio_manager_->PlayAudio(AudioName::kButtonClick);
     });
   }
 
@@ -87,7 +105,6 @@ void IntermediateMenu::resizeEvent(QResizeEvent* event) {
       restart_button_->SetRectangle(PositionRectangle(11, 1, 3, 2));
       choose_level_button_->SetRectangle(PositionRectangle(7, 4, 3, 2));
       main_menu_button_->SetRectangle(PositionRectangle(11, 4, 3, 2));
-
       menu_animation_->setGeometry(PositionRectangle(1, 1, 4, 5));
       break;
     }

@@ -6,7 +6,8 @@ Map::Map(const QImage& map_image)
       map_image_(map_image),
       scaled_map_image_(map_image),
       is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
-      is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false) {}
+      is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false),
+      audio_manager_(std::make_shared<AudioManager>()) {}
 
 void Map::Update(int time) {
   if (player_->IsDeleted()) {
@@ -163,4 +164,8 @@ void Map::UpdateCameraPosition() {
   if (current_camera_.bottom() > map_image_.height() - shift_.y()) {
     current_camera_.moveBottom(map_image_.height() - shift_.y());
   }
+}
+
+std::shared_ptr<AudioManager> Map::GetAudioManager() const {
+    return audio_manager_;
 }

@@ -1,7 +1,8 @@
 #include "menu.h"
 
 Menu::Menu(AbstractGameController* game_controller, QWidget* parent)
-    : QWidget(parent), game_controller_(game_controller) {}
+    : QWidget(parent), game_controller_(game_controller),
+      audio_manager_(std::make_shared<AudioManager>()) {}
 
 void Menu::resizeEvent(QResizeEvent* event) {
   QWidget::resizeEvent(event);

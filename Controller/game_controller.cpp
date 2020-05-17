@@ -3,12 +3,21 @@
 GameController::GameController()
     : level_mushrooms_(12, -1),
       view_(std::make_shared<View>(this)),
-      menu_(std::make_shared<MainMenu>(this)) {
+      menu_(std::make_shared<MainMenu>(this)),
+      audio_manager_(std::make_shared<AudioManager>()) {
   view_->show();
   view_->setCentralWidget(menu_.get());
   if (level_mushrooms_[1] == -1) {
     level_mushrooms_[1] = 0;
   }
+
+  level_audio_key_ = audio_manager_->
+          CreateAudioPlayerByPlayList(AudioName::kBackground);
+  audio_manager_->SetPlayBackMode(level_audio_key_, QMediaPlaylist::Loop);
+  menu_audio_key_ = audio_manager_->
+          CreateAudioPlayerByPlayList(AudioName::kMenuAudio);
+  audio_manager_->SetPlayBackMode(menu_audio_key_, QMediaPlaylist::Loop);
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
 }
 
 void GameController::Update(int time) {
@@ -97,24 +106,32 @@ void GameController::CloseCurrentLevel() {
 
 void GameController::OpenChooseLevelMenu() {
   OpenMenu(std::make_shared<ChooseLevelMenu>(this));
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
   CloseCurrentLevel();
 }
 
 void GameController::OpenMainMenu() {
   OpenMenu(std::make_shared<MainMenu>(this));
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
   CloseCurrentLevel();
 }
 
 void GameController::OpenPauseMenu() {
+  audio_manager_->PauseAudioPlayer(level_audio_key_);
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kPause));
 }
 
 void GameController::OpenVictoryMenu() {
+  audio_manager_->StopAudioPlayer(level_audio_key_);
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory));
   CloseCurrentLevel();
 }
 
 void GameController::OpenFailMenu() {
+  audio_manager_->StopAudioPlayer(level_audio_key_);
+  audio_manager_->PlayAudioPlayer(menu_audio_key_);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kFail));
   CloseCurrentLevel();
 }
@@ -122,6 +139,8 @@ void GameController::OpenFailMenu() {
 void GameController::ResumeGame() {
   view_->takeCentralWidget();
   view_->setCentralWidget(interface_.get());
+  audio_manager_->StopAudioPlayer(menu_audio_key_);
+  audio_manager_->PlayAudioPlayer(level_audio_key_);
 }
 
 void GameController::RestartGame() {
@@ -150,6 +169,8 @@ void GameController::StartLevel(int level_number) {
   if (map_ == nullptr) {
     return;
   }
+  audio_manager_->StopAudioPlayer(menu_audio_key_);
+  audio_manager_->ReplayAudioPlayer(level_audio_key_);
   level_number_ = level_number;
   player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
   player_->SetAnimationName(player_animation_name_);
