@@ -13,6 +13,12 @@ enum class Key {
   kAnyKey
 };
 
+enum class Volume {
+  kGeneral,
+  kMusic,
+  kSound
+};
+
 class AbstractGameController {
  public:
   virtual ~AbstractGameController() = default;
@@ -42,6 +48,10 @@ class AbstractGameController {
 
   virtual int GetLastLevelMushrooms() const = 0;
   virtual int GetLevelMushrooms(int level_number) const = 0;
+
+  virtual void LoadVolume() = 0;
+  virtual int GetVolume(Volume volume) = 0;
+  virtual void SetVolume(Volume volume, int power) = 0;
 
   virtual void StartLevel(int level_number) = 0;
 };

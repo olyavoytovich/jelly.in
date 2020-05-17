@@ -46,7 +46,7 @@ class Button : public QPushButton {
 
  private:
   // Размер отступа текста от краев кнопок в процентах от её ширины и высоты
-  const double kTextPadding = 0.05;
+  const double kTextPadding = 0.1;
 
  private:
   enum class Status {

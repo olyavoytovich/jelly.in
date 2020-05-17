@@ -42,6 +42,7 @@ class AudioManager {
   void SetPlayBackMode(int key, QMediaPlaylist::PlaybackMode mode);
 
   void ReVolume();
+
   void SetCurrentVolume(int volume);
   void SetGeneralVolume(int volume);
 

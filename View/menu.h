@@ -20,6 +20,9 @@ class Menu : public QWidget {
                 QWidget* parent = nullptr);
   ~Menu() override = default;
 
+  void SetGeneralVolume(int general_volume);
+  void SetCurrentVolume(int current_volume);
+
  protected:
   void resizeEvent(QResizeEvent*) override;
   void paintEvent(QPaintEvent*) override;

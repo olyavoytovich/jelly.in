@@ -4,6 +4,14 @@ Menu::Menu(AbstractGameController* game_controller, QWidget* parent)
     : QWidget(parent), game_controller_(game_controller),
       audio_manager_(std::make_shared<AudioManager>()) {}
 
+void Menu::SetGeneralVolume(int general_volume) {
+  audio_manager_->SetGeneralVolume(general_volume);
+}
+
+void Menu::SetCurrentVolume(int current_volume) {
+  audio_manager_->SetCurrentVolume(current_volume);
+}
+
 void Menu::resizeEvent(QResizeEvent* event) {
   QWidget::resizeEvent(event);
 

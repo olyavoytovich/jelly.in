@@ -20,7 +20,9 @@ SettingsVolume::SettingsVolume(AbstractGameController* game_controller,
   for (int i = 0; i < 3; i++) {
     right_arrows_.emplace_back(new Button(right_arrows, this));
     left_arrows_.emplace_back(new Button(left_arrows, this));
-    squares_.emplace_back(new Button(square, this, "22"));
+    int power = game_controller_->GetVolume(static_cast<Volume>(i));
+    squares_.emplace_back(new Button(square, this, QString::number(power)));
+    squares_[i]->SetLabelColor(QColor(0, 0, 0));
   }
 
   connect(back_arrow_, &QPushButton::clicked, this, [&]() {
@@ -29,11 +31,24 @@ SettingsVolume::SettingsVolume(AbstractGameController* game_controller,
 
   for (int i = 0; i < 3; i++) {
     connect(right_arrows_[i], &QPushButton::clicked, this, [&, i]() {
-      squares_[i]->SetText("12");
+      auto volume = static_cast<Volume>(i);
+      int power = game_controller_->GetVolume(volume);
+      if (power >= 100) {
+        return;
+      }
+      power += 10;
+      squares_[i]->SetText(QString::number(power));
+      game_controller_->SetVolume(volume, power);
     });
-
     connect(left_arrows_[i], &QPushButton::clicked, this, [&, i]() {
-      squares_[i]->SetText("2");
+      auto volume = static_cast<Volume>(i);
+      int power = game_controller_->GetVolume(volume);
+      if (power <= 0) {
+        return;
+      }
+      power -= 10;
+      squares_[i]->SetText(QString::number(power));
+      game_controller_->SetVolume(volume, power);
     });
   }
 }
@@ -46,7 +61,6 @@ void SettingsVolume::resizeEvent(QResizeEvent* event) {
     left_arrows_[i]->SetRectangle(PositionRectangle(6, k, 1, 1));
     right_arrows_[i]->SetRectangle(PositionRectangle(8, k, 1, 1));
     squares_[i]->SetRectangle(PositionRectangle(7, k, 1, 1));
-    squares_[i]->SetLabelColor(QColor(45, 49, 56));
     k += 2;
   }
 

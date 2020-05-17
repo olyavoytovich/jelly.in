@@ -9,7 +9,7 @@ GameController::GameController()
   view_->setCentralWidget(menu_.get());
   view_->setWindowIcon(QIcon(":/images/menu/icon.png"));
 
-  settings_ = new QSettings("View, Controller and Models", "Jelly.inl");
+  settings_ = new QSettings("View, Controller and Models", "Jelly.in");
   player_animation_name_ = settings_->value("animation_name").toString();
 
   level_mushrooms_[1] = settings_->value("level_2", 0).toInt();
@@ -18,11 +18,13 @@ GameController::GameController()
         settings_->value("level_" + QString::number(i + 1), -1).toInt();
   }
 
+  LoadVolume();
+
   level_audio_key_ = audio_manager_->
-          CreateAudioPlayerByPlayList(AudioName::kBackground);
+      CreateAudioPlayerByPlayList(AudioName::kBackground);
   audio_manager_->SetPlayBackMode(level_audio_key_, QMediaPlaylist::Loop);
   menu_audio_key_ = audio_manager_->
-          CreateAudioPlayerByPlayList(AudioName::kMenuAudio);
+      CreateAudioPlayerByPlayList(AudioName::kMenuAudio);
   audio_manager_->SetPlayBackMode(menu_audio_key_, QMediaPlaylist::Loop);
   audio_manager_->PlayAudioPlayer(menu_audio_key_);
 }
@@ -188,6 +190,8 @@ void GameController::Reset() {
 void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
   menu_ = std::move(menu);
   if (menu_ != nullptr) {
+    menu_->SetGeneralVolume(general_volume_);
+    menu_->SetCurrentVolume(sound_volume_);
     view_->takeCentralWidget();
     view_->setCentralWidget(menu_.get());
   }
@@ -203,6 +207,8 @@ void GameController::StartLevel(int level_number) {
   if (map_ == nullptr) {
     return;
   }
+  map_->SetGeneralVolume(general_volume_);
+  map_->SetCurrentVolume(sound_volume_);
   audio_manager_->StopAudioPlayer(menu_audio_key_);
   audio_manager_->ReplayAudioPlayer(level_audio_key_);
   level_number_ = level_number;
@@ -228,4 +234,51 @@ int GameController::GetLastLevelMushrooms() const {
 
 int GameController::GetLevelMushrooms(int level_number) const {
   return level_mushrooms_[level_number];
+}
+
+void GameController::LoadVolume() {
+  general_volume_ = settings_->value("volume/general", 40).toInt();
+  music_volume_ = settings_->value("volume/music", 40).toInt();
+  sound_volume_ = settings_->value("volume/sound", 40).toInt();
+  SetVolume(Volume::kGeneral, general_volume_);
+  SetVolume(Volume::kMusic, music_volume_);
+  SetVolume(Volume::kSound, sound_volume_);
+}
+
+void GameController::SetVolume(Volume volume, int power) {
+  switch (volume) {
+    case Volume::kGeneral: {
+      general_volume_ = power;
+      audio_manager_->SetGeneralVolume(general_volume_);
+      menu_->SetGeneralVolume(general_volume_);
+      settings_->setValue("volume/general", general_volume_);
+      break;
+    }
+    case Volume::kMusic: {
+      music_volume_ = power;
+      audio_manager_->SetCurrentVolume(music_volume_);
+      settings_->setValue("volume/music", music_volume_);
+      break;
+    }
+    case Volume::kSound: {
+      sound_volume_ = power;
+      menu_->SetCurrentVolume(sound_volume_);
+      settings_->setValue("volume/sound", sound_volume_);
+      break;
+    }
+  }
+}
+
+int GameController::GetVolume(Volume volume) {
+  switch (volume) {
+    case Volume::kGeneral: {
+      return general_volume_;
+    }
+    case Volume::kMusic: {
+      return music_volume_;
+    }
+    case Volume::kSound: {
+      return sound_volume_;
+    }
+  }
 }

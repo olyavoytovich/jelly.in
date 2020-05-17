@@ -1,11 +1,11 @@
 #ifndef CONTROLLER_GAME_CONTROLLER_H_
 #define CONTROLLER_GAME_CONTROLLER_H_
 
+#include <QSettings>
 #include <algorithm>
 #include <memory>
 #include <utility>
 #include <vector>
-#include <QSettings>
 
 #include "Model/audio_manager.h"
 #include "Model/entity.h"
@@ -56,6 +56,11 @@ class GameController : public AbstractGameController {
   int GetLastLevelMushrooms() const override;
   int GetLevelMushrooms(int level_number) const override;
 
+  void LoadVolume() override;
+
+  int GetVolume(Volume volume) override;
+  void SetVolume(Volume volume, int power) override;
+
   void StartLevel(int level_number) override;
   void OpenMenu(std::shared_ptr<Menu> menu);
 
@@ -82,6 +87,10 @@ class GameController : public AbstractGameController {
   std::shared_ptr<AudioManager> audio_manager_;
   int level_audio_key_;
   int menu_audio_key_;
+
+  int general_volume_ = 40;
+  int music_volume_ = 40;
+  int sound_volume_ = 40;
 
   QSettings* settings_;
 };

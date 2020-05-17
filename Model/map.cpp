@@ -100,6 +100,10 @@ void Map::SetContactListener(std::shared_ptr<b2ContactListener> listener) {
   world_->SetContactListener(contact_listener_.get());
 }
 
+b2Body* Map::CreateBody(b2BodyDef* body_definition) {
+  return world_->CreateBody(body_definition);
+}
+
 void Map::SetPressedKeyStatus(Key key, bool is_pressed) {
   is_key_pressed_[static_cast<int>(key)] = is_pressed;
 }
@@ -126,15 +130,23 @@ void Map::PickUpMushroom() {
   picked_mushrooms_++;
 }
 
+std::shared_ptr<AudioManager> Map::GetAudioManager() const {
+  return audio_manager_;
+}
+
+void Map::SetGeneralVolume(int general_volume) {
+  audio_manager_->SetGeneralVolume(general_volume);
+}
+
+void Map::SetCurrentVolume(int current_volume) {
+  audio_manager_->SetCurrentVolume(current_volume);
+}
+
 void Map::UpdateImageScale(int width, int height) {
   if (scaled_map_image_.width() != width
       && scaled_map_image_.height() != height) {
     scaled_map_image_ = map_image_.scaled(width, height, Qt::KeepAspectRatio);
   }
-}
-
-b2Body* Map::CreateBody(b2BodyDef* body_definition) {
-  return world_->CreateBody(body_definition);
 }
 
 void Map::UpdateCameraPosition() {
@@ -164,8 +176,4 @@ void Map::UpdateCameraPosition() {
   if (current_camera_.bottom() > map_image_.height() - shift_.y()) {
     current_camera_.moveBottom(map_image_.height() - shift_.y());
   }
-}
-
-std::shared_ptr<AudioManager> Map::GetAudioManager() const {
-    return audio_manager_;
 }
