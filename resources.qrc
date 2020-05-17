@@ -201,6 +201,10 @@
         <file>data/level_4.json</file>
         <file>images/level_5.png</file>
         <file>data/level_5.json</file>
+        <file>images/level_6.png</file>
+        <file>data/level_6.json</file>
+        <file>images/level_7.png</file>
+        <file>data/level_7.json</file>
         <file>images/gifs/heart.gif</file>
         <file>images/gifs/pause_menu.gif</file>
         <file>images/gifs/player_red_move.gif</file>
