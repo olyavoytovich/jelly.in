@@ -65,6 +65,9 @@ void Movie::SetAnimation(const QString& name) {
   connect(movie_.get(), &QMovie::finished, this, [&]() {
     Finished();
   });
+  for (int i = 0; i < movie_->frameCount(); i++) {
+    movie_->jumpToFrame(i);
+  }
   movie_->jumpToFrame(0);
 }
 

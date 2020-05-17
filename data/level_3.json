@@ -350,6 +350,12 @@
       "y": 3680,
       "width": 16,
       "height": 2240
+    },
+    {
+      "x": 3200,
+      "y": 2552,
+      "width": 6400,
+      "height": 16
     }
   ],
   "dynamic_objects": [
@@ -364,12 +370,12 @@
         {
           "name": "damage",
           "duration": 500,
-          "frames_count": 19
+          "frames_count": 6
         },
         {
           "name": "jump",
-          "duration": 300,
-          "frames_count": 8
+          "duration": 500,
+          "frames_count": 5
         }
       ]
     },
@@ -459,7 +465,7 @@
       "bullet_speed": 300,
       "shoot_direction": "down",
       "shoot_period": 2000,
-      "speed": 100,
+      "speed": 50,
       "type": "shooter",
       "way_point_size": 2,
       "animations": [
@@ -499,7 +505,7 @@
       "bullet_speed": 500,
       "shoot_direction": "left_right",
       "shoot_period": 1000,
-      "speed": 100,
+      "speed": 50,
       "type": "shooter",
       "way_point_size": 2,
       "animations": [
@@ -525,51 +531,6 @@
         {
           "x": 4608,
           "y": 3536
-        }
-      ]
-    },
-    {
-      "x": 608,
-      "y": 3424,
-      "width": 64,
-      "height": 64,
-      "animation_count": 1,
-      "type": "mushroom",
-      "animations": [
-        {
-          "name": "mushroom",
-          "duration": 100,
-          "frames_count": 1
-        }
-      ]
-    },
-    {
-      "x": 5856,
-      "y": 4384,
-      "width": 64,
-      "height": 64,
-      "animation_count": 1,
-      "type": "mushroom",
-      "animations": [
-        {
-          "name": "mushroom",
-          "duration": 100,
-          "frames_count": 1
-        }
-      ]
-    },
-    {
-      "x": 3616,
-      "y": 3360,
-      "width": 64,
-      "height": 64,
-      "animation_count": 1,
-      "type": "mushroom",
-      "animations": [
-        {
-          "name": "mushroom",
-          "duration": 100,
-          "frames_count": 1
         }
       ]
     }

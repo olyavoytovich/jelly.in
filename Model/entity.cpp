@@ -26,6 +26,9 @@ Entity::Entity(std::weak_ptr<Map> map,
     SetNoCollisionMask(~(static_cast<uint16_t>(EntityType::kPlayer)
         + static_cast<uint16_t>(EntityType::kPlayerPart)));
   }
+  if (entity_type == EntityType::kExit) {
+    SetNoCollisionMask(~static_cast<uint16_t>(EntityType::kPlayer));
+  }
 }
 
 Entity::Entity(std::weak_ptr<Map> map,

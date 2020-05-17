@@ -8,6 +8,8 @@ GameController::GameController()
   view_->setCentralWidget(menu_.get());
   if (level_mushrooms_[1] == -1) {
     level_mushrooms_[1] = 0;
+    level_mushrooms_[2] = 0;
+    level_mushrooms_[3] = 0;
   }
 }
 

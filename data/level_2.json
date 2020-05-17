@@ -1,26 +1,4 @@
 {
-  "plates": [
-    {
-      "name": "plate1",
-      "x": 672,
-      "y": 1976,
-      "width": 64,
-      "height": 16,
-      "animation_count": 2,
-      "animations": [
-        {
-          "name": "pressed",
-          "duration": 200,
-          "frames_count": 11
-        },
-        {
-          "name": "released",
-          "duration": 200,
-          "frames_count": 11
-        }
-      ]
-    }
-  ],
   "solids": [
     {
       "x": 96,
@@ -184,15 +162,21 @@
     },
     {
       "x": -8,
-      "y": 1280,
+      "y": 1152,
       "width": 16,
-      "height": 2560
+      "height": 2304
+    },
+    {
+      "x": 3832,
+      "y": 800,
+      "width": 16,
+      "height": 1600
     },
     {
       "x": 3848,
-      "y": 1280,
+      "y": 2000,
       "width": 16,
-      "height": 2560
+      "height": 736
     },
     {
       "x": 1376,
@@ -200,6 +184,30 @@
       "width": 832,
       "height": 32,
       "type": "spikes"
+    },
+    {
+      "x": 1312,
+      "y": 1600,
+      "width": 960,
+      "height": 128
+    },
+    {
+      "x": 544,
+      "y": 1424,
+      "width": 320,
+      "height": 32
+    },
+    {
+      "x": 544,
+      "y": 1232,
+      "width": 64,
+      "height": 32
+    },
+    {
+      "x": 1912,
+      "y": -8,
+      "width": 3824,
+      "height": 16
     }
   ],
   "dynamic_objects": [
@@ -214,12 +222,12 @@
         {
           "name": "damage",
           "duration": 500,
-          "frames_count": 19
+          "frames_count": 6
         },
         {
           "name": "jump",
-          "duration": 300,
-          "frames_count": 8
+          "duration": 500,
+          "frames_count": 10
         }
       ]
     },
@@ -238,7 +246,7 @@
       "height": 128,
       "ellipse": true,
       "animation_count": 1,
-      "speed": 200,
+      "speed": 100,
       "type": "patroller",
       "way_point_size": 2,
       "animations": [
@@ -267,7 +275,7 @@
       "height": 128,
       "ellipse": true,
       "animation_count": 1,
-      "speed": 200,
+      "speed": 100,
       "type": "patroller",
       "way_point_size": 2,
       "animations": [
@@ -289,37 +297,38 @@
       ]
     },
     {
-      "name": "platform1",
-      "x": 1504,
-      "y": 1680,
-      "width": 192,
-      "height": 32,
+      "name": "patroller3",
+      "x": 1664,
+      "y": 1472,
+      "width": 128,
+      "height": 128,
+      "ellipse": true,
       "animation_count": 1,
-      "plate_name": "plate1",
-      "speed": 200,
-      "type": "platform",
+      "speed": 100,
+      "type": "patroller",
       "way_point_size": 2,
       "animations": [
         {
-          "name": "platform",
-          "duration": 1000,
-          "frames_count": 1
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
         }
       ],
       "way_points": [
         {
-          "x": 1504,
-          "y": 1680
+          "x": 1664,
+          "y": 1472
         },
         {
-          "x": 992,
-          "y": 1888
+          "x": 1024,
+          "y": 1472
         }
       ]
     },
     {
-      "x": 2592,
-      "y": 1376,
+      "name": "mushroom1",
+      "x": 544,
+      "y": 1184,
       "width": 64,
       "height": 64,
       "animation_count": 1,
@@ -328,13 +337,14 @@
         {
           "name": "mushroom",
           "duration": 100,
-          "frames_count": 1
+          "frames_count": 0
         }
       ]
     },
     {
-      "x": 3360,
-      "y": 2272,
+      "name": "mushroom3",
+      "x": 1376,
+      "y": 2016,
       "width": 64,
       "height": 64,
       "animation_count": 1,
@@ -343,13 +353,14 @@
         {
           "name": "mushroom",
           "duration": 100,
-          "frames_count": 1
+          "frames_count": 0
         }
       ]
     },
     {
-      "x": 1888,
-      "y": 1632,
+      "name": "mushroom2",
+      "x": 3104,
+      "y": 1248,
       "width": 64,
       "height": 64,
       "animation_count": 1,
@@ -358,7 +369,7 @@
         {
           "name": "mushroom",
           "duration": 100,
-          "frames_count": 1
+          "frames_count": 0
         }
       ]
     }
