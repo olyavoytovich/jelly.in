@@ -13,6 +13,12 @@ enum class Key {
   kAnyKey
 };
 
+enum class Volume {
+  kGeneral,
+  kMusic,
+  kSound
+};
+
 class AbstractGameController {
  public:
   virtual ~AbstractGameController() = default;
@@ -28,15 +34,24 @@ class AbstractGameController {
   virtual void OpenPauseMenu() = 0;
   virtual void OpenVictoryMenu() = 0;
   virtual void OpenFailMenu() = 0;
+  virtual void OpenSettingsMenu() = 0;
+  virtual void OpenSettingsVolume() = 0;
+  virtual void OpenSettingsControls() = 0;
   virtual void ResumeGame() = 0;
   virtual void RestartGame() = 0;
   virtual void StartNextLevel() = 0;
+
+  virtual void Reset() = 0;
 
   virtual QString GetPlayerAnimation() const = 0;
   virtual void SetPlayerAnimation(const QString& animation_name) = 0;
 
   virtual int GetLastLevelMushrooms() const = 0;
   virtual int GetLevelMushrooms(int level_number) const = 0;
+
+  virtual void LoadVolume() = 0;
+  virtual int GetVolume(Volume volume) = 0;
+  virtual void SetVolume(Volume volume, int power) = 0;
 
   virtual void StartLevel(int level_number) = 0;
 };

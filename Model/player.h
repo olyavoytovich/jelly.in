@@ -64,6 +64,10 @@ class Player : public Entity {
   b2Fixture* right_sensor_ = nullptr;
 
   std::shared_ptr<Entity> player_part_ = nullptr;
+
+  int player_jump_audio_key_;
+  int player_separation_audio_key_;
+  int player_receive_damage_audio_key_;
 };
 
 #endif  // MODEL_PLAYER_H_

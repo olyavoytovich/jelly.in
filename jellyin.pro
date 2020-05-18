@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -7,6 +7,7 @@ TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+CONFIG += resources_big
 CONFIG += c++17
 QMAKE_CXXFLAGS += -std=c++17
 
@@ -15,6 +16,7 @@ SOURCES += \
         main.cpp \
         Model/animation.cpp \
         Model/animator.cpp \
+        Model/audio_manager.cpp \
         Model/contact_listener.cpp \
         Model/entity.cpp \
         Model/game_object.cpp \
@@ -32,6 +34,8 @@ SOURCES += \
         View/main_menu.cpp \
         View/menu.cpp \
         View/movie.cpp \
+        View/settings_menu.cpp \
+        View/settings_volume.cpp \
         View/view.cpp \
         box2d/collision/b2_broad_phase.cpp \
         box2d/collision/b2_chain_shape.cpp \
@@ -85,6 +89,7 @@ HEADERS += \
     Controller/game_controller.h \
     Model/animation.h \
     Model/animator.h \
+    Model/audio_manager.h \
     Model/constants.h \
     Model/contact_listener.h \
     Model/entity.h \
@@ -104,6 +109,8 @@ HEADERS += \
     View/main_menu.h \
     View/menu.h \
     View/movie.h \
+    View/settings_menu.h \
+    View/settings_volume.h \
     View/view.h \
     box2d/b2_block_allocator.h \
     box2d/b2_body.h \

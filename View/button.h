@@ -34,6 +34,7 @@ class Button : public QPushButton {
   void SetText(const QString& text);
   void SetFontSize(int text_size);
   void SetRectangle(const QRect& rectangle);
+  void SetLabelColor(const QColor& color);
 
  private:
   void paintEvent(QPaintEvent* event) override;
@@ -45,7 +46,7 @@ class Button : public QPushButton {
 
  private:
   // Размер отступа текста от краев кнопок в процентах от её ширины и высоты
-  const double kTextPadding = 0.05;
+  const double kTextPadding = 0.1;
 
  private:
   enum class Status {
