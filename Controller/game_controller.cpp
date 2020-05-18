@@ -80,16 +80,6 @@ Key GameController::GetKeyFromCode(int key_code) {
 }
 
 void GameController::CloseCurrentLevel() {
-  if (map_ != nullptr) {
-    level_mushrooms_[level_number_] = std::max(level_mushrooms_[level_number_],
-                                               map_->GetPickedMushroomsCount());
-    // Если собрали не меньше 2х грибов, то открываем следующий уровень
-    if (level_number_ + 1 != level_mushrooms_.size()
-        && level_mushrooms_[level_number_] >= 2
-        && level_mushrooms_[level_number_ + 1] == -1) {
-      level_mushrooms_[level_number_ + 1] = 0;
-    }
-  }
   interface_ = nullptr;
   map_ = nullptr;
   player_ = nullptr;
@@ -110,6 +100,16 @@ void GameController::OpenPauseMenu() {
 }
 
 void GameController::OpenVictoryMenu() {
+  if (map_ != nullptr) {
+    level_mushrooms_[level_number_] = std::max(level_mushrooms_[level_number_],
+                                               map_->GetPickedMushroomsCount());
+    // Если собрали не меньше 2х грибов, то открываем следующий уровень
+    if (level_number_ + 1 != level_mushrooms_.size()
+        && level_mushrooms_[level_number_] >= 2
+        && level_mushrooms_[level_number_ + 1] == -1) {
+      level_mushrooms_[level_number_ + 1] = 0;
+    }
+  }
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory));
   CloseCurrentLevel();
 }
@@ -153,6 +153,7 @@ void GameController::StartLevel(int level_number) {
   level_number_ = level_number;
   player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
   player_->SetAnimationName(player_animation_name_);
+  player_->SetCurrentLevel(level_number + 1);
   interface_ = std::make_shared<GameInterface>(this);
   view_->takeCentralWidget();
   view_->setCentralWidget(interface_.get());
