@@ -51,9 +51,11 @@ class Map {
   bool IsKeyPressed(Key key);
   bool IsKeyClamped(Key key);
 
-  std::shared_ptr<AudioManager> GetAudioManager() const;
-
   void PickUpMushroom();
+
+  std::shared_ptr<AudioManager> GetAudioManager() const;
+  void SetGeneralVolume(int general_volume);
+  void SetCurrentVolume(int current_volume);
 
  private:
   void UpdateImageScale(int width, int height);

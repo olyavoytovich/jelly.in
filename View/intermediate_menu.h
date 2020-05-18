@@ -10,7 +10,8 @@
 enum class MenuType {
   kFail,
   kPause,
-  kVictory
+  kVictory,
+  kControls
 };
 
 class IntermediateMenu : public Menu {
@@ -30,6 +31,7 @@ class IntermediateMenu : public Menu {
   Button* restart_button_ = nullptr;
   Button* choose_level_button_ = nullptr;
   Button* main_menu_button_ = nullptr;
+  Button* back_arrow_ = nullptr;
 
   std::shared_ptr<Movie> menu_animation_;
   std::vector<std::shared_ptr<Movie>> mushrooms_;

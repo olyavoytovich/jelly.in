@@ -4,27 +4,37 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
                                    MenuType menu_type,
                                    QWidget* parent)
     : Menu(game_controller, parent), menu_type_(menu_type) {
-  background_ = QImage(":/images/menu/big_background.png");
-  scaled_background_ = background_;
 
   std::shared_ptr<ImageSet> image_set = nullptr;
   switch (menu_type_) {
     case MenuType::kFail: {
+      background_ = QImage(":/images/menu/big_background_pink.png");
       main_part_ = QImage(":/images/menu/fail_menu.png");
       image_set = std::make_shared<ImageSet>("malinovij");
+
+      menu_animation_ = std::make_shared<Movie>("cloud", this);
+      menu_animation_->SetSpeed(30);
+      menu_animation_->Play();
       break;
     }
     case MenuType::kPause: {
+      background_ = QImage(":/images/menu/big_background.png");
       main_part_ = QImage(":/images/menu/pause_menu.png");
       image_set = std::make_shared<ImageSet>("blue");
-      menu_animation_ = std::make_shared<Movie>("pause_menu", this);
-      menu_animation_->SetSpeed(200);
+      menu_animation_ = std::make_shared<Movie>("burdock", this);
+      menu_animation_->SetSpeed(100);
       menu_animation_->Play();
       break;
     }
     case MenuType::kVictory: {
+      background_ = QImage(":/images/menu/big_background_yellow.png");
       main_part_ = QImage(":/images/menu/victory_menu.png");
       image_set = std::make_shared<ImageSet>("orange");
+
+      menu_animation_ = std::make_shared<Movie>("sunflower", this);
+      menu_animation_->SetSpeed(160);
+      menu_animation_->Play();
+
       int mushrooms_count = game_controller_->GetLastLevelMushrooms();
       for (int i = 0; i < mushrooms_count; i++) {
         mushrooms_.emplace_back(std::make_shared<Movie>("mushroom", this));
@@ -33,8 +43,31 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
       }
       break;
     }
+    case MenuType::kControls: {
+      background_ = QImage(":/images/menu/big_background.png");
+      main_part_ = QImage(":/images/menu/controls.png");
+      image_set = std::make_shared<ImageSet>("back_arrow");
+
+      menu_animation_ = std::make_shared<Movie>("chestnut", this);
+      menu_animation_->SetSpeed(100);
+      menu_animation_->Play();
+      break;
+    }
   }
+  scaled_background_ = background_;
   scaled_main_part_ = main_part_;
+
+  if (menu_type_ == MenuType::kControls) {
+    back_arrow_ = new Button(image_set, this);
+
+    connect(back_arrow_, &QPushButton::clicked, this, [&]() {
+      game_controller_->OpenSettingsMenu();
+    });
+    connect(back_arrow_, &QPushButton::pressed, this, [&]() {
+      audio_manager_->PlayAudio(AudioName::kButtonClick);
+    });
+    return;
+  }
 
   restart_button_ = new Button(image_set, this, "Restart");
   choose_level_button_ = new Button(image_set, this, "Choose Level");
@@ -98,6 +131,8 @@ void IntermediateMenu::resizeEvent(QResizeEvent* event) {
       restart_button_->SetRectangle(PositionRectangle(1, 1, 3, 2));
       choose_level_button_->SetRectangle(PositionRectangle(12, 1, 3, 2));
       main_menu_button_->SetRectangle(PositionRectangle(12, 4, 3, 2));
+
+      menu_animation_->setGeometry(PositionRectangle(6, 1, 4, 4));
       break;
     }
     case MenuType::kPause: {
@@ -109,15 +144,22 @@ void IntermediateMenu::resizeEvent(QResizeEvent* event) {
       break;
     }
     case MenuType::kVictory: {
-      resume_button_->SetRectangle(PositionRectangle(2, 1, 3, 2));
-      restart_button_->SetRectangle(PositionRectangle(6, 1, 3, 2));
-      choose_level_button_->SetRectangle(PositionRectangle(2, 4, 3, 2));
-      main_menu_button_->SetRectangle(PositionRectangle(6, 4, 3, 2));
+      resume_button_->SetRectangle(PositionRectangle(2, 2, 3, 2));
+      restart_button_->SetRectangle(PositionRectangle(6, 2, 3, 2));
+      choose_level_button_->SetRectangle(PositionRectangle(2, 5, 3, 2));
+      main_menu_button_->SetRectangle(PositionRectangle(6, 5, 3, 2));
 
+      menu_animation_->setGeometry(PositionRectangle(11, 2, 4, 5));
       int mushrooms_count = mushrooms_.size();
       for (int i = 0; i < mushrooms_count; i++) {
-        mushrooms_[i]->setGeometry(PositionRectangle(10 + i, 5, 1, 1));
+        mushrooms_[i]->setGeometry(PositionRectangle(10 + i, 6, 1, 1));
       }
+      break;
+    }
+    case MenuType::kControls: {
+      back_arrow_->SetRectangle(PositionRectangle(1, 1, 1, 1));
+
+      menu_animation_->setGeometry(PositionRectangle(8, 5, 6, 2));
       break;
     }
   }

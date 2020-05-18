@@ -7,6 +7,7 @@ TEMPLATE = app
 
 DEFINES += QT_DEPRECATED_WARNINGS
 
+CONFIG += resources_big
 CONFIG += c++17
 QMAKE_CXXFLAGS += -std=c++17
 
@@ -33,6 +34,8 @@ SOURCES += \
         View/main_menu.cpp \
         View/menu.cpp \
         View/movie.cpp \
+        View/settings_menu.cpp \
+        View/settings_volume.cpp \
         View/view.cpp \
         box2d/collision/b2_broad_phase.cpp \
         box2d/collision/b2_chain_shape.cpp \
@@ -106,6 +109,8 @@ HEADERS += \
     View/main_menu.h \
     View/menu.h \
     View/movie.h \
+    View/settings_menu.h \
+    View/settings_volume.h \
     View/view.h \
     box2d/b2_block_allocator.h \
     box2d/b2_body.h \
