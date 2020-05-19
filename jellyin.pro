@@ -162,3 +162,5 @@ HEADERS += \
 
 RESOURCES += \
     resources.qrc
+
+VERSION = 0.18
