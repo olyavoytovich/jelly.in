@@ -425,7 +425,7 @@
       "bullet_speed": 300,
       "shoot_direction": "down",
       "shoot_period": 1000,
-      "speed": 100,
+      "speed": 150,
       "type": "shooter",
       "way_point_size": 2,
       "animations": [
@@ -465,7 +465,7 @@
       "bullet_speed": 300,
       "shoot_direction": "down",
       "shoot_period": 2000,
-      "speed": 50,
+      "speed": 150,
       "type": "shooter",
       "way_point_size": 2,
       "animations": [
@@ -505,7 +505,7 @@
       "bullet_speed": 500,
       "shoot_direction": "left_right",
       "shoot_period": 1000,
-      "speed": 50,
+      "speed": 150,
       "type": "shooter",
       "way_point_size": 2,
       "animations": [
@@ -531,6 +531,54 @@
         {
           "x": 4608,
           "y": 3536
+        }
+      ]
+    },
+    {
+      "name": "mushroom3",
+      "x": 5152,
+      "y": 4832,
+      "width": 64,
+      "height": 64,
+      "animation_count": 1,
+      "type": "mushroom",
+      "animations": [
+        {
+          "name": "mushroom",
+          "duration": 100,
+          "frames_count": 1
+        }
+      ]
+    },
+    {
+      "name": "mushroom2",
+      "x": 4892,
+      "y": 3616,
+      "width": 64,
+      "height": 64,
+      "animation_count": 1,
+      "type": "mushroom",
+      "animations": [
+        {
+          "name": "mushroom",
+          "duration": 100,
+          "frames_count": 1
+        }
+      ]
+    },
+    {
+      "name": "mushroom1",
+      "x": 2080,
+      "y": 3360,
+      "width": 64,
+      "height": 64,
+      "animation_count": 1,
+      "type": "mushroom",
+      "animations": [
+        {
+          "name": "mushroom",
+          "duration": 100,
+          "frames_count": 1
         }
       ]
     }

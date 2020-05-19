@@ -280,5 +280,9 @@ int GameController::GetVolume(Volume volume) {
     case Volume::kSound: {
       return sound_volume_;
     }
+
+    default: {
+      return 0;
+    }
   }
 }
