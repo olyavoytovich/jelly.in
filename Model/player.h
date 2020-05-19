@@ -27,6 +27,7 @@ class Player : public Entity {
   bool ReachedExit() const;
 
   void SetAnimationName(const QString& animation_name);
+  void SetCurrentLevel(int level_number);
 
  public:
   static const int kPlayerWidth = 64;
@@ -39,7 +40,6 @@ class Player : public Entity {
   const float kPlayerSpeed = 6;
   const float kPlayerJumpSpeed = 8;
   const float kCloneSpeed = 10;
-  const int kPlayerJumpCount = 2;
   const int kNoDamageTime = 1000;
   const int kMaxHealth = 3;
 
@@ -53,6 +53,9 @@ class Player : public Entity {
   int left_collisions_ = 0;
   int right_collisions_ = 0;
   int monsters_count_ = 0;
+  int jump_count_ = 1;
+
+  int level_number_;
 
   QString animation_name_;
 

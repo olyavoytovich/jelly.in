@@ -50,7 +50,7 @@ void GameInterface::resizeEvent(QResizeEvent* event) {
     health_position.translate(static_cast<int>(220 * scale_), 0);
   }
 
-  QRect mushroom_position(static_cast<int>(3506 * scale_),
+  QRect mushroom_position(static_cast<int>(width() - 790 * scale_),
                           static_cast<int>(150 * scale_),
                           static_cast<int>(200 * scale_),
                           static_cast<int>(200 * scale_));

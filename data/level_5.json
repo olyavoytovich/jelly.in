@@ -1,0 +1,1034 @@
+{
+  "plates": [
+    {
+      "name": "plate1",
+      "x": 2976,
+      "y": 1776,
+      "width": 192,
+      "height": 32,
+      "animation_count": 2,
+      "animations": [
+        {
+          "name": "pressed",
+          "duration": 200,
+          "frames_count": 11
+        },
+        {
+          "name": "released",
+          "duration": 200,
+          "frames_count": 11
+        }
+      ]
+    }
+  ],
+  "solids": [
+    {
+      "x": 6408,
+      "y": 1280,
+      "width": 16,
+      "height": 2560
+    },
+    {
+      "x": -8,
+      "y": 1280,
+      "width": 16,
+      "height": 2560
+    },
+    {
+      "x": 6368,
+      "y": 1952,
+      "width": 64,
+      "height": 1216
+    },
+    {
+      "x": 6272,
+      "y": 2192,
+      "width": 128,
+      "height": 32
+    },
+    {
+      "x": 6240,
+      "y": 1808,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 6144,
+      "y": 2480,
+      "width": 384,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 5088,
+      "y": 2496,
+      "width": 1728,
+      "height": 128
+    },
+    {
+      "x": 6144,
+      "y": 2528,
+      "width": 384,
+      "height": 64
+    },
+    {
+      "x": 3104,
+      "y": 2272,
+      "width": 64,
+      "height": 64
+    },
+    {
+      "x": 3392,
+      "y": 2464,
+      "width": 128,
+      "height": 192
+    },
+    {
+      "x": 3840,
+      "y": 2528,
+      "width": 768,
+      "height": 64
+    },
+    {
+      "x": 3264,
+      "y": 2496,
+      "width": 128,
+      "height": 128
+    },
+    {
+      "x": 3072,
+      "y": 2528,
+      "width": 256,
+      "height": 64
+    },
+    {
+      "x": 2880,
+      "y": 2496,
+      "width": 128,
+      "height": 128
+    },
+    {
+      "x": 2720,
+      "y": 2400,
+      "width": 192,
+      "height": 320
+    },
+    {
+      "x": 2560,
+      "y": 2432,
+      "width": 128,
+      "height": 256
+    },
+    {
+      "x": 1024,
+      "y": 2496,
+      "width": 256,
+      "height": 128
+    },
+    {
+      "x": 1824,
+      "y": 2528,
+      "width": 1344,
+      "height": 64
+    },
+    {
+      "x": 448,
+      "y": 2528,
+      "width": 896,
+      "height": 64
+    },
+    {
+      "x": 352,
+      "y": 2192,
+      "width": 448,
+      "height": 32
+    },
+    {
+      "x": 704,
+      "y": 2128,
+      "width": 256,
+      "height": 32
+    },
+    {
+      "x": 992,
+      "y": 2064,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 1024,
+      "y": 2416,
+      "width": 256,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 1568,
+      "y": 2000,
+      "width": 832,
+      "height": 32
+    },
+    {
+      "x": 1568,
+      "y": 1968,
+      "width": 832,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 768,
+      "y": 1872,
+      "width": 128,
+      "height": 32
+    },
+    {
+      "x": 704,
+      "y": 1808,
+      "width": 128,
+      "height": 32
+    },
+    {
+      "x": 640,
+      "y": 1744,
+      "width": 128,
+      "height": 32
+    },
+    {
+      "x": 576,
+      "y": 1680,
+      "width": 128,
+      "height": 32
+    },
+    {
+      "x": 512,
+      "y": 1616,
+      "width": 128,
+      "height": 32
+    },
+    {
+      "x": 448,
+      "y": 1552,
+      "width": 128,
+      "height": 32
+    },
+    {
+      "x": 224,
+      "y": 1488,
+      "width": 448,
+      "height": 32
+    },
+    {
+      "x": 608,
+      "y": 1232,
+      "width": 320,
+      "height": 32
+    },
+    {
+      "x": 5856,
+      "y": 2064,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 5408,
+      "y": 2176,
+      "width": 704,
+      "height": 256
+    },
+    {
+      "x": 4960,
+      "y": 2176,
+      "width": 192,
+      "height": 256
+    },
+    {
+      "x": 4768,
+      "y": 2112,
+      "width": 192,
+      "height": 384
+    },
+    {
+      "x": 4960,
+      "y": 2032,
+      "width": 192,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 4576,
+      "y": 2176,
+      "width": 192,
+      "height": 256
+    },
+    {
+      "x": 4576,
+      "y": 2032,
+      "width": 192,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 4416,
+      "y": 2144,
+      "width": 128,
+      "height": 320
+    },
+    {
+      "x": 4320,
+      "y": 2112,
+      "width": 64,
+      "height": 256
+    },
+    {
+      "x": 4256,
+      "y": 2048,
+      "width": 64,
+      "height": 384
+    },
+    {
+      "x": 4000,
+      "y": 2016,
+      "width": 448,
+      "height": 448
+    },
+    {
+      "x": 3744,
+      "y": 1984,
+      "width": 64,
+      "height": 384
+    },
+    {
+      "x": 3616,
+      "y": 1952,
+      "width": 192,
+      "height": 320
+    },
+    {
+      "x": 3552,
+      "y": 2144,
+      "width": 64,
+      "height": 64
+    },
+    {
+      "x": 3072,
+      "y": 1824,
+      "width": 896,
+      "height": 64
+    },
+    {
+      "x": 2752,
+      "y": 1504,
+      "width": 256,
+      "height": 192
+    },
+    {
+      "x": 2656,
+      "y": 1696,
+      "width": 64,
+      "height": 192
+    },
+    {
+      "x": 2176,
+      "y": 1440,
+      "width": 896,
+      "height": 64
+    },
+    {
+      "x": 1568,
+      "y": 1280,
+      "width": 320,
+      "height": 384
+    },
+    {
+      "x": 2112,
+      "y": 1248,
+      "width": 768,
+      "height": 64
+    },
+    {
+      "x": 1600,
+      "y": 960,
+      "width": 256,
+      "height": 256
+    },
+    {
+      "x": 1728,
+      "y": 672,
+      "width": 384,
+      "height": 320
+    },
+    {
+      "x": 1792,
+      "y": 864,
+      "width": 128,
+      "height": 64
+    },
+    {
+      "x": 1760,
+      "y": 928,
+      "width": 64,
+      "height": 64
+    },
+    {
+      "x": 1952,
+      "y": 640,
+      "width": 64,
+      "height": 256
+    },
+    {
+      "x": 2272,
+      "y": 576,
+      "width": 576,
+      "height": 128
+    },
+    {
+      "x": 2720,
+      "y": 480,
+      "width": 448,
+      "height": 64
+    },
+    {
+      "x": 2848,
+      "y": 544,
+      "width": 576,
+      "height": 64
+    },
+    {
+      "x": 2976,
+      "y": 608,
+      "width": 320,
+      "height": 64
+    },
+    {
+      "x": 3104,
+      "y": 1120,
+      "width": 64,
+      "height": 960
+    },
+    {
+      "x": 2752,
+      "y": 1248,
+      "width": 256,
+      "height": 64
+    },
+    {
+      "x": 2752,
+      "y": 1040,
+      "width": 128,
+      "height": 32
+    },
+    {
+      "x": 2944,
+      "y": 928,
+      "width": 256,
+      "height": 64
+    },
+    {
+      "x": 2848,
+      "y": 1088,
+      "width": 64,
+      "height": 256
+    },
+    {
+      "x": 3552,
+      "y": 1312,
+      "width": 448,
+      "height": 192
+    },
+    {
+      "x": 4096,
+      "y": 1312,
+      "width": 256,
+      "height": 192
+    },
+    {
+      "x": 4416,
+      "y": 1344,
+      "width": 384,
+      "height": 128
+    },
+    {
+      "x": 4640,
+      "y": 1440,
+      "width": 192,
+      "height": 64
+    },
+    {
+      "x": 4640,
+      "y": 1376,
+      "width": 64,
+      "height": 64
+    },
+    {
+      "x": 4736,
+      "y": 1504,
+      "width": 256,
+      "height": 64
+    },
+    {
+      "x": 4704,
+      "y": 1664,
+      "width": 64,
+      "height": 256
+    },
+    {
+      "x": 5088,
+      "y": 1760,
+      "width": 704,
+      "height": 64
+    },
+    {
+      "x": 5600,
+      "y": 1728,
+      "width": 320,
+      "height": 128
+    },
+    {
+      "x": 5632,
+      "y": 1632,
+      "width": 256,
+      "height": 64
+    },
+    {
+      "x": 5664,
+      "y": 1568,
+      "width": 192,
+      "height": 64
+    },
+    {
+      "x": 5888,
+      "y": 1552,
+      "width": 256,
+      "height": 32
+    },
+    {
+      "x": 6368,
+      "y": 1152,
+      "width": 64,
+      "height": 128
+    },
+    {
+      "x": 4768,
+      "y": 544,
+      "width": 3264,
+      "height": 64
+    },
+    {
+      "x": 4160,
+      "y": 608,
+      "width": 384,
+      "height": 64
+    },
+    {
+      "x": 5216,
+      "y": 608,
+      "width": 320,
+      "height": 64
+    },
+    {
+      "x": 160,
+      "y": 1040,
+      "width": 320,
+      "height": 32
+    },
+    {
+      "x": 2528,
+      "y": 224,
+      "width": 320,
+      "height": 64
+    },
+    {
+      "x": 2080,
+      "y": 208,
+      "width": 64,
+      "height": 32
+    },
+    {
+      "x": 1760,
+      "y": 208,
+      "width": 64,
+      "height": 32
+    },
+    {
+      "x": 1440,
+      "y": 272,
+      "width": 64,
+      "height": 32
+    },
+    {
+      "x": 1184,
+      "y": 400,
+      "width": 64,
+      "height": 32
+    },
+    {
+      "x": 960,
+      "y": 528,
+      "width": 128,
+      "height": 32
+    },
+    {
+      "x": 672,
+      "y": 720,
+      "width": 192,
+      "height": 32
+    },
+    {
+      "x": 1440,
+      "y": 1072,
+      "width": 64,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 1504,
+      "y": 816,
+      "width": 64,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 2016,
+      "y": 496,
+      "width": 960,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 2720,
+      "y": 432,
+      "width": 448,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 4669,
+      "y": 496,
+      "width": 3456,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 160,
+      "y": 1456,
+      "width": 320,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 2880,
+      "y": 2416,
+      "width": 128,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 3072,
+      "y": 2480,
+      "width": 256,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 3264,
+      "y": 2416,
+      "width": 128,
+      "height": 32,
+      "type": "spikes"
+    },
+    {
+      "x": 384,
+      "y": 848,
+      "width": 128,
+      "height": 32
+    },
+    {
+      "x": 3200,
+      "y": -8,
+      "width": 6400,
+      "height": 16
+    }
+  ],
+  "dynamic_objects": [
+    {
+      "name": "shooter1",
+      "x": 6144,
+      "y": 992,
+      "width": 256,
+      "height": 64,
+      "animation_count": 1,
+      "bullet_radius": 10,
+      "bullet_speed": 300,
+      "shoot_direction": "down",
+      "shoot_period": 1000,
+      "speed": 200,
+      "type": "shooter",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "cloud",
+          "duration": 200,
+          "frames_count": 10
+        }
+      ],
+      "bullet_animation_count": 1,
+      "bullet_animations": [
+        {
+          "name": "drop",
+          "duration": 1000,
+          "frames_count": 1
+        }
+      ],
+      "way_points": [
+        {
+          "x": 6144,
+          "y": 992
+        },
+        {
+          "x": 5120,
+          "y": 992
+        }
+      ]
+    },
+    {
+      "name": "exit",
+      "x": 2912,
+      "y": 848,
+      "width": 0,
+      "height": 0
+    },
+    {
+      "name": "player",
+      "x": 2528,
+      "y": 96,
+      "width": 0,
+      "height": 0,
+      "animation_count": 2,
+      "animations": [
+        {
+          "name": "damage",
+          "duration": 500,
+          "frames_count": 19
+        },
+        {
+          "name": "jump",
+          "duration": 500,
+          "frames_count": 8
+        }
+      ]
+    },
+    {
+      "name": "patroller1",
+      "x": 768,
+      "y": 2432,
+      "width": 128,
+      "height": 128,
+      "ellipse": true,
+      "animation_count": 1,
+      "speed": 150,
+      "type": "patroller",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
+        }
+      ],
+      "way_points": [
+        {
+          "x": 768,
+          "y": 2432
+        },
+        {
+          "x": 192,
+          "y": 2432
+        }
+      ]
+    },
+    {
+      "name": "shooter2",
+      "x": 2336,
+      "y": 2400,
+      "width": 192,
+      "height": 192,
+      "animation_count": 1,
+      "bullet_radius": 5,
+      "bullet_speed": 1000,
+      "shoot_direction": "left_right",
+      "shoot_period": 1000,
+      "speed": 250,
+      "type": "shooter",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "burdock",
+          "duration": 300,
+          "frames_count": 7
+        }
+      ],
+      "bullet_animation_count": 1,
+      "bullet_animations": [
+        {
+          "name": "thorn",
+          "duration": 100,
+          "frames_count": 1
+        }
+      ],
+      "way_points": [
+        {
+          "x": 2336,
+          "y": 2400
+        },
+        {
+          "x": 1408,
+          "y": 2400
+        }
+      ]
+    },
+    {
+      "name": "patroller2",
+      "x": 4096,
+      "y": 2432,
+      "width": 128,
+      "height": 128,
+      "ellipse": true,
+      "animation_count": 1,
+      "speed": 200,
+      "type": "patroller",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
+        }
+      ],
+      "way_points": [
+        {
+          "x": 4096,
+          "y": 2432
+        },
+        {
+          "x": 3584,
+          "y": 2432
+        }
+      ]
+    },
+    {
+      "name": "mushroom1",
+      "x": 3104,
+      "y": 2208,
+      "width": 64,
+      "height": 64,
+      "animation_count": 1,
+      "type": "mushroom",
+      "animations": [
+        {
+          "name": "mushroom",
+          "duration": 100,
+          "frames_count": 1
+        }
+      ]
+    },
+    {
+      "name": "mushroom2",
+      "x": 6368,
+      "y": 1312,
+      "width": 64,
+      "height": 64,
+      "animation_count": 1,
+      "type": "mushroom",
+      "animations": [
+        {
+          "name": "mushroom",
+          "duration": 100,
+          "frames_count": 1
+        }
+      ]
+    },
+    {
+      "name": "patroller3",
+      "x": 5184,
+      "y": 1984,
+      "width": 128,
+      "height": 128,
+      "ellipse": true,
+      "animation_count": 1,
+      "speed": 200,
+      "type": "patroller",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
+        }
+      ],
+      "way_points": [
+        {
+          "x": 5184,
+          "y": 1984
+        },
+        {
+          "x": 5632,
+          "y": 1984
+        }
+      ]
+    },
+    {
+      "name": "patroller4",
+      "x": 4864,
+      "y": 1664,
+      "width": 128,
+      "height": 128,
+      "ellipse": true,
+      "animation_count": 1,
+      "speed": 200,
+      "type": "patroller",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "chestnut",
+          "duration": 600,
+          "frames_count": 7
+        }
+      ],
+      "way_points": [
+        {
+          "x": 4864,
+          "y": 1664
+        },
+        {
+          "x": 5312,
+          "y": 1664
+        }
+      ]
+    },
+    {
+      "name": "mushroom3",
+      "x": 1824,
+      "y": 1376,
+      "width": 64,
+      "height": 64,
+      "animation_count": 1,
+      "type": "mushroom",
+      "animations": [
+        {
+          "name": "mushroom",
+          "duration": 100,
+          "frames_count": 1
+        }
+      ]
+    },
+    {
+      "name": "shooter4",
+      "x": 4480,
+      "y": 928,
+      "width": 256,
+      "height": 64,
+      "animation_count": 1,
+      "bullet_radius": 10,
+      "bullet_speed": 300,
+      "shoot_direction": "down",
+      "shoot_period": 1000,
+      "speed": 200,
+      "type": "shooter",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "cloud",
+          "duration": 200,
+          "frames_count": 10
+        }
+      ],
+      "bullet_animation_count": 1,
+      "bullet_animations": [
+        {
+          "name": "drop",
+          "duration": 1000,
+          "frames_count": 1
+        }
+      ],
+      "way_points": [
+        {
+          "x": 4480,
+          "y": 928
+        },
+        {
+          "x": 3456,
+          "y": 928
+        }
+      ]
+    },
+    {
+      "name": "shooter3",
+      "x": 1952,
+      "y": 1120,
+      "width": 192,
+      "height": 192,
+      "animation_count": 1,
+      "bullet_radius": 10,
+      "bullet_speed": 500,
+      "shoot_direction": "left_right",
+      "shoot_period": 1000,
+      "speed": 250,
+      "type": "shooter",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "burdock",
+          "duration": 300,
+          "frames_count": 7
+        }
+      ],
+      "bullet_animation_count": 1,
+      "bullet_animations": [
+        {
+          "name": "thorn",
+          "duration": 100,
+          "frames_count": 1
+        }
+      ],
+      "way_points": [
+        {
+          "x": 1952,
+          "y": 1120
+        },
+        {
+          "x": 2368,
+          "y": 1120
+        }
+      ]
+    },
+    {
+      "name": "platform1",
+      "x": 2976,
+      "y": 1616,
+      "width": 192,
+      "height": 32,
+      "animation_count": 1,
+      "plate_name": "plate1",
+      "speed": 100,
+      "type": "platform",
+      "way_point_size": 2,
+      "animations": [
+        {
+          "name": "platform",
+          "duration": 1000,
+          "frames_count": 1
+        }
+      ],
+      "way_points": [
+        {
+          "x": 2976,
+          "y": 1616
+        },
+        {
+          "x": 2784,
+          "y": 1616
+        }
+      ]
+    }
+  ]
+}

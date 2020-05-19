@@ -10,8 +10,8 @@ GameController::GameController()
   view_->setWindowIcon(QIcon(":/images/menu/icon.png"));
   player_animation_name_ = settings_.value("animation_name").toString();
 
-  level_mushrooms_[1] = settings_.value("level_2", 0).toInt();
-  for (int i = 2; i <= 11; i++) {
+  level_mushrooms_[0] = settings_.value("level_1", 0).toInt();
+  for (int i = 1; i <= 11; i++) {
     level_mushrooms_[i] =
         settings_.value("level_" + QString::number(i + 1), -1).toInt();
   }
@@ -96,19 +96,6 @@ Key GameController::GetKeyFromCode(int key_code) {
 }
 
 void GameController::CloseCurrentLevel() {
-  if (map_ != nullptr) {
-    level_mushrooms_[level_number_] = std::max(level_mushrooms_[level_number_],
-                                               map_->GetPickedMushroomsCount());
-    // Если собрали не меньше 2х грибов, то открываем следующий уровень
-    if (level_number_ + 1 != level_mushrooms_.size()
-        && level_mushrooms_[level_number_] >= 2
-        && level_mushrooms_[level_number_ + 1] == -1) {
-      level_mushrooms_[level_number_ + 1] = 0;
-      settings_.setValue("level_" + QString::number(level_number_ + 2), 0);
-    }
-  }
-  settings_.setValue("level_" + QString::number(level_number_ + 1),
-                     level_mushrooms_[level_number_]);
   interface_ = nullptr;
   map_ = nullptr;
   player_ = nullptr;
@@ -133,6 +120,20 @@ void GameController::OpenPauseMenu() {
 }
 
 void GameController::OpenVictoryMenu() {
+  if (map_ != nullptr) {
+    level_mushrooms_[level_number_] = std::max(level_mushrooms_[level_number_],
+                                               map_->GetPickedMushroomsCount());
+    // Если собрали не меньше 2х грибов, то открываем следующий уровень
+    if (level_number_ + 1 != level_mushrooms_.size()
+        && level_mushrooms_[level_number_] >= 2
+        && level_mushrooms_[level_number_ + 1] == -1) {
+      level_mushrooms_[level_number_ + 1] = 0;
+      settings_.setValue("level_" + QString::number(level_number_ + 2), 0);
+    }
+  }
+  settings_.setValue("level_" + QString::number(level_number_ + 1),
+                     level_mushrooms_[level_number_]);
+
   audio_manager_->StopAudioPlayer(level_audio_key_);
   audio_manager_->PlayAudioPlayer(menu_audio_key_);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory));
@@ -178,8 +179,9 @@ void GameController::StartNextLevel() {
 
 void GameController::Reset() {
   std::fill(level_mushrooms_.begin(), level_mushrooms_.end(), -1);
-  settings_.setValue("level_2", 0);
-  for (int i = 2; i <= 11; i++) {
+  level_mushrooms_[0] = 0;
+  settings_.setValue("level_1", 0);
+  for (int i = 1; i <= 11; i++) {
     settings_.setValue("level_" + QString::number(i + 1), -1);
   }
 }
@@ -211,6 +213,7 @@ void GameController::StartLevel(int level_number) {
   level_number_ = level_number;
   player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
   player_->SetAnimationName(player_animation_name_);
+  player_->SetCurrentLevel(level_number + 1);
   interface_ = std::make_shared<GameInterface>(this);
   view_->takeCentralWidget();
   view_->setCentralWidget(interface_.get());
@@ -276,6 +279,10 @@ int GameController::GetVolume(Volume volume) {
     }
     case Volume::kSound: {
       return sound_volume_;
+    }
+
+    default: {
+      return 0;
     }
   }
 }

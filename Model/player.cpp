@@ -57,7 +57,8 @@ void Player::Update(int time) {
     TakeDamage();
   }
 
-  if (map_.lock()->IsKeyPressed(Key::kSpace) && player_part_ == nullptr) {
+  if (map_.lock()->IsKeyPressed(Key::kSpace) && player_part_ == nullptr
+      && level_number_ > 2) {
     player_part_ = std::make_shared<Entity>(map_,
                                             b2_dynamicBody,
                                             GetPositionInPixels(),
@@ -110,7 +111,7 @@ void Player::BeginCollision(b2Fixture* fixture,
   }
 
   if (fixture == bottom_sensor_) {
-    jumps_remaining_ = kPlayerJumpCount;
+    jumps_remaining_ = jump_count_;
   } else if (fixture == left_sensor_) {
     left_collisions_++;
   } else if (fixture == right_sensor_) {
@@ -162,4 +163,11 @@ void Player::TakeDamage() {
 void Player::SetAnimationName(const QString& animation_name) {
   animation_name_ = animation_name;
   animator_->SetCurrentAnimation(animation_name_);
+}
+
+void Player::SetCurrentLevel(int level_number) {
+  level_number_ = level_number;
+  if (level_number_ > 2) {
+    jump_count_ = 2;
+  }
 }
