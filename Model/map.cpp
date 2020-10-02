@@ -56,7 +56,7 @@ double Map::GetScale() const {
 }
 
 void Map::SetShift(QPoint shift) {
-  shift_ = shift;
+  shift_ = (shift / scale_ - kVisibleSize) / 2.0;
 }
 
 QPoint Map::GetShift() const {

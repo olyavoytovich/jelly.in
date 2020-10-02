@@ -44,20 +44,18 @@ void View::Draw(QPainter* painter) {
       static_cast<double>(painter->window().height())
           / map->GetVisibleSize().y()));
   map->SetShift(QPoint(painter->window().width(), painter->window().height()));
-  map->SetShift(
-      (map->GetShift() / map->GetScale() - map->GetVisibleSize()) / 2.0);
-
   map->UpdateCameraPosition();
-  painter->translate(map->GetShift() * map->GetScale());
-  painter->translate(-map->GetCurrentCamera().topLeft() * map->GetScale());
-
   map->UpdateImageScale(static_cast<int>(map->GetMapImage()->width()
                             * map->GetScale()),
                         static_cast<int>(map->GetMapImage()->height()
                             * map->GetScale()));
-  painter->drawImage(0, 0, *map->GetScaledMapImage());
-  painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
 
+  painter->translate(map->GetShift() * map->GetScale());
+  painter->translate(-map->GetCurrentCamera().topLeft() * map->GetScale());
+
+  painter->drawImage(0, 0, *map->GetScaledMapImage());
+
+  painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
   std::shared_ptr<std::vector<std::shared_ptr<GameObject>>>
       game_objects = map->GetGameObjects();
   for (const auto& object : *game_objects) {
