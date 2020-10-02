@@ -9,6 +9,7 @@ View::View(AbstractGameController* game_controller)
 
 void View::paintEvent(QPaintEvent*) {
   QPainter painter(this);
+  game_controller_->UpdateCamera(&painter);
   this->Draw(&painter);
 }
 
@@ -37,18 +38,6 @@ void View::Draw(QPainter* painter) {
   }
 
   painter->save();
-
-  map->SetScale(std::max(
-      static_cast<double>(painter->window().width())
-          / map->GetVisibleSize().x(),
-      static_cast<double>(painter->window().height())
-          / map->GetVisibleSize().y()));
-  map->SetShift(QPoint(painter->window().width(), painter->window().height()));
-  map->UpdateCameraPosition();
-  map->UpdateImageScale(static_cast<int>(map->GetMapImage()->width()
-                            * map->GetScale()),
-                        static_cast<int>(map->GetMapImage()->height()
-                            * map->GetScale()));
 
   painter->translate(map->GetShift() * map->GetScale());
   painter->translate(-map->GetCurrentCamera().topLeft() * map->GetScale());

@@ -33,9 +33,7 @@ class Map {
   ~Map() = default;
 
   void Update(int time);
-  void SetScale(double scale);
   double GetScale() const;
-  void SetShift(QPoint shift);
   QPoint GetShift() const;
   std::shared_ptr<GameObject> GetPlayer() const;
   int GetPickedMushroomsCount() const;
@@ -58,15 +56,15 @@ class Map {
   void SetGeneralVolume(int general_volume);
   void SetCurrentVolume(int current_volume);
 
-  void UpdateImageScale(int width, int height);
-  void UpdateCameraPosition();
+  void UpdateCamera(QPainter* painter);
 
-  QPoint GetVisibleSize() const;
   QRect GetCurrentCamera() const;
-  std::shared_ptr<QImage> GetMapImage() const;
   std::shared_ptr<QImage> GetScaledMapImage() const;
   std::shared_ptr<std::vector<std::shared_ptr<GameObject>>>
       GetGameObjects() const;
+
+  void UpdateImageScale(int width, int height);
+  void UpdateCameraPosition();
 
  private:
   // Данные константы передаются в функцию Step(), которая используется при

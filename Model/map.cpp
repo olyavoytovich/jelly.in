@@ -47,16 +47,8 @@ void Map::Update(int time) {
   is_key_pressed_.assign(is_key_pressed_.size(), false);
 }
 
-void Map::SetScale(double scale) {
-  scale_ = scale;
-}
-
 double Map::GetScale() const {
   return scale_;
-}
-
-void Map::SetShift(QPoint shift) {
-  shift_ = (shift / scale_ - kVisibleSize) / 2.0;
 }
 
 QPoint Map::GetShift() const {
@@ -162,16 +154,19 @@ void Map::UpdateCameraPosition() {
   }
 }
 
-QPoint Map::GetVisibleSize() const {
-  return kVisibleSize;
+void Map::UpdateCamera(QPainter* painter) {
+  scale_ =std::max(
+      static_cast<double>(painter->window().width()) / kVisibleSize.x(),
+      static_cast<double>(painter->window().height()) / kVisibleSize.y());
+  shift_ = QPoint(painter->window().width(), painter->window().height());
+  shift_ = (shift_ / scale_ - kVisibleSize) / 2.0;
+  UpdateCameraPosition();
+  UpdateImageScale(static_cast<int>(map_image_.width() * scale_),
+                        static_cast<int>(map_image_.height() * scale_));
 }
 
 QRect Map::GetCurrentCamera() const {
   return current_camera_;
-}
-
-std::shared_ptr<QImage> Map::GetMapImage() const {
-  return std::make_shared<QImage>(map_image_);
 }
 
 std::shared_ptr<QImage> Map::GetScaledMapImage() const {
