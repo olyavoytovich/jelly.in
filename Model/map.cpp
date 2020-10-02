@@ -155,7 +155,7 @@ void Map::UpdateCameraPosition() {
 }
 
 void Map::UpdateCamera(QPainter* painter) {
-  scale_ =std::max(
+  scale_ = std::max(
       static_cast<double>(painter->window().width()) / kVisibleSize.x(),
       static_cast<double>(painter->window().height()) / kVisibleSize.y());
   shift_ = QPoint(painter->window().width(), painter->window().height());
