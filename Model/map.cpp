@@ -162,23 +162,24 @@ void Map::UpdateCameraPosition() {
   }
 }
 
-QPoint Map::GetVisibleSize() {
+QPoint Map::GetVisibleSize() const {
   return kVisibleSize;
 }
 
-QRect Map::GetCurrentCamera() {
+QRect Map::GetCurrentCamera() const {
   return current_camera_;
 }
 
-std::shared_ptr<QImage> Map::GetMapImage() {
+std::shared_ptr<QImage> Map::GetMapImage() const {
   return std::make_shared<QImage>(map_image_);
 }
 
-std::shared_ptr<QImage> Map::GetScaledMapImage() {
+std::shared_ptr<QImage> Map::GetScaledMapImage() const {
   return std::make_shared<QImage>(scaled_map_image_);
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<GameObject>>> Map::GetGameObjects() {
+std::shared_ptr<std::vector<std::shared_ptr<GameObject>>>
+    Map::GetGameObjects() const {
   return std::make_shared<std::vector<std::shared_ptr<GameObject>>>(
       game_objects_);
 }

@@ -61,11 +61,12 @@ class Map {
   void UpdateImageScale(int width, int height);
   void UpdateCameraPosition();
 
-  QPoint GetVisibleSize();
-  QRect GetCurrentCamera();
-  std::shared_ptr<QImage> GetMapImage();
-  std::shared_ptr<QImage> GetScaledMapImage();
-  std::shared_ptr<std::vector<std::shared_ptr<GameObject>>> GetGameObjects();
+  QPoint GetVisibleSize() const;
+  QRect GetCurrentCamera() const;
+  std::shared_ptr<QImage> GetMapImage() const;
+  std::shared_ptr<QImage> GetScaledMapImage() const;
+  std::shared_ptr<std::vector<std::shared_ptr<GameObject>>>
+      GetGameObjects() const;
 
  private:
   // Данные константы передаются в функцию Step(), которая используется при
