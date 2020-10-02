@@ -5,22 +5,13 @@
 #include <QKeyEvent>
 #include <QPainter>
 
-// kAnyKey должен быть в enum последним
-enum class Key {
-  kLeft,
-  kUp,
-  kRight,
-  kSpace,
-  kAnyKey
-};
+#include "../Model/map.h"
 
 enum class Volume {
   kGeneral,
   kMusic,
   kSound
 };
-
-class Map;
 
 class AbstractGameController {
  public:

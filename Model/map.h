@@ -6,10 +6,18 @@
 #include <utility>
 #include <vector>
 
-#include "Controller/abstract_game_controller.h"
 #include "audio_manager.h"
 #include "box2d/box2d.h"
 #include "game_object.h"
+
+// kAnyKey должен быть в enum последним
+enum class Key {
+  kLeft,
+  kUp,
+  kRight,
+  kSpace,
+  kAnyKey
+};
 
 enum class EntityType {
   kPlayer = 1,
@@ -63,6 +71,7 @@ class Map {
   std::shared_ptr<std::vector<std::shared_ptr<GameObject>>>
       GetGameObjects() const;
 
+ private:
   void UpdateImageScale(int width, int height);
   void UpdateCameraPosition();
 
