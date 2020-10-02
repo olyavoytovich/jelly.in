@@ -43,13 +43,6 @@ void GameController::Update(int time) {
   }
 }
 
-void GameController::Draw(QPainter* painter) const {
-  if (map_ == nullptr) {
-    return;
-  }
-  map_->Draw(painter);
-}
-
 void GameController::PressKey(int key_code) {
   if (key_code == Qt::Key_Escape) {
     if (view_->centralWidget() == interface_.get()) {
@@ -285,4 +278,8 @@ int GameController::GetVolume(Volume volume) {
       return 0;
     }
   }
+}
+
+std::shared_ptr<Map> GameController::GetMap() {
+  return map_;
 }

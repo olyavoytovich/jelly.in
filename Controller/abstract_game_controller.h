@@ -19,12 +19,13 @@ enum class Volume {
   kSound
 };
 
+class Map;
+
 class AbstractGameController {
  public:
   virtual ~AbstractGameController() = default;
 
   virtual void Update(int time) = 0;
-  virtual void Draw(QPainter* painter) const = 0;
   virtual void PressKey(int key_code) = 0;
   virtual void ClampKey(int key_code) = 0;
   virtual void ReleaseKey(int key_code) = 0;
@@ -54,6 +55,8 @@ class AbstractGameController {
   virtual void SetVolume(Volume volume, int power) = 0;
 
   virtual void StartLevel(int level_number) = 0;
+
+  virtual std::shared_ptr<Map> GetMap() = 0;
 };
 
 #endif  // CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_

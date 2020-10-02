@@ -31,7 +31,6 @@ class GameController : public AbstractGameController {
   ~GameController() override = default;
 
   void Update(int time) override;
-  void Draw(QPainter* painter) const override;
   void PressKey(int key_code) override;
   void ClampKey(int key_code) override;
   void ReleaseKey(int key_code) override;
@@ -63,6 +62,8 @@ class GameController : public AbstractGameController {
 
   void StartLevel(int level_number) override;
   void OpenMenu(std::shared_ptr<Menu> menu);
+
+  std::shared_ptr<Map> GetMap();
 
  private:
   Key GetKeyFromCode(int key_code);

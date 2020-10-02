@@ -47,36 +47,20 @@ void Map::Update(int time) {
   is_key_pressed_.assign(is_key_pressed_.size(), false);
 }
 
-void Map::Draw(QPainter* painter) {
-  painter->save();
-
-  scale_ = std::max(
-      static_cast<double>(painter->window().width()) / kVisibleSize.x(),
-      static_cast<double>(painter->window().height()) / kVisibleSize.y());
-  shift_ = QPoint(painter->window().width(), painter->window().height());
-  shift_ = (shift_ / scale_ - kVisibleSize) / 2.0;
-
-  UpdateCameraPosition();
-  painter->translate(shift_ * scale_);
-  painter->translate(-current_camera_.topLeft() * scale_);
-
-  UpdateImageScale(static_cast<int>(map_image_.width() * scale_),
-                   static_cast<int>(map_image_.height() * scale_));
-  painter->drawImage(0, 0, scaled_map_image_);
-  painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
-
-  for (const auto& object : game_objects_) {
-    object->Draw(painter);
-  }
-
-  painter->setBrush(QBrush(Qt::green, Qt::BrushStyle::SolidPattern));
-  player_->Draw(painter);
-
-  painter->restore();
+void Map::SetScale(double scale) {
+  scale_ = scale;
 }
 
 double Map::GetScale() const {
   return scale_;
+}
+
+void Map::SetShift(QPoint shift) {
+  shift_ = shift;
+}
+
+QPoint Map::GetShift() const {
+  return shift_;
 }
 
 std::shared_ptr<GameObject> Map::GetPlayer() const {
@@ -176,4 +160,25 @@ void Map::UpdateCameraPosition() {
   if (current_camera_.bottom() > map_image_.height() - shift_.y()) {
     current_camera_.moveBottom(map_image_.height() - shift_.y());
   }
+}
+
+QPoint Map::GetVisibleSize() {
+  return kVisibleSize;
+}
+
+QRect Map::GetCurrentCamera() {
+  return current_camera_;
+}
+
+std::shared_ptr<QImage> Map::GetMapImage() {
+  return std::make_shared<QImage>(map_image_);
+}
+
+std::shared_ptr<QImage> Map::GetScaledMapImage() {
+  return std::make_shared<QImage>(scaled_map_image_);
+}
+
+std::shared_ptr<std::vector<std::shared_ptr<GameObject>>> Map::GetGameObjects() {
+  return std::make_shared<std::vector<std::shared_ptr<GameObject>>>(
+      game_objects_);
 }

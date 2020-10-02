@@ -7,6 +7,7 @@
 #include <QTimer>
 #include <QVBoxLayout>
 
+#include <Model/map.h>
 #include "Controller/abstract_game_controller.h"
 #include "View/abstract_view.h"
 
@@ -22,6 +23,8 @@ class View : public QMainWindow, public AbstractView {
   void timerEvent(QTimerEvent* event) override;
   void keyPressEvent(QKeyEvent* event) override;
   void keyReleaseEvent(QKeyEvent* event) override;
+
+  void Draw(QPainter* painter);
 
  private:
   const int kFrameInterval = 16;
