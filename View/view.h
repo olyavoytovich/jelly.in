@@ -1,6 +1,8 @@
 #ifndef VIEW_VIEW_H_
 #define VIEW_VIEW_H_
 
+#include <vector>
+#include <memory>
 #include <QMainWindow>
 #include <QObject>
 #include <QPaintEvent>
