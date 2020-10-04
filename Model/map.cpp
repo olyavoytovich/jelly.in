@@ -6,6 +6,7 @@ Map::Map(const std::shared_ptr<QImage>& map_image)
     : world_(std::make_shared<b2World>(b2Vec2(0, 20))),
       current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()),
       map_image_(map_image),
+      scaled_map_image_(std::make_shared<QImage>(*map_image)),
       is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
       is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false),
       audio_manager_(std::make_shared<AudioManager>()) {}

@@ -101,8 +101,7 @@ class Map {
   std::vector<std::shared_ptr<GameObject>> game_objects_;
   std::vector<std::shared_ptr<GameObject>> game_objects_to_add_;
   std::shared_ptr<QImage> map_image_;
-  std::shared_ptr<QImage>
-      scaled_map_image_ = std::make_shared<QImage>();
+  std::shared_ptr<QImage> scaled_map_image_;
 
   double scale_ = 1;
   QPoint shift_ = QPoint();
