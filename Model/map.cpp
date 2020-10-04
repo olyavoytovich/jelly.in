@@ -123,7 +123,6 @@ void Map::UpdateImageScale(int width, int height) {
   if (scaled_map_image_->width() != width
       && scaled_map_image_->height() != height) {
     *scaled_map_image_ = map_image_->scaled(width, height, Qt::KeepAspectRatio);
-
   }
 }
 
