@@ -48,7 +48,6 @@ class AbstractGameController {
 
   virtual void StartLevel(int level_number) = 0;
 
-  virtual void UpdateCamera(QPainter* painter) = 0;
   virtual std::shared_ptr<Map> GetMap() = 0;
 };
 

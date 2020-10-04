@@ -9,8 +9,9 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QString file_text = input_file.readAll();
   input_file.close();
 
-  QImage map_image(":/images/" + map_name + ".png");
-  if (map_image.isNull()) {
+  std::shared_ptr<QImage> map_image =
+      std::shared_ptr<QImage>(new QImage(":/images/" + map_name + ".png"));
+  if (map_image->isNull()) {
     return nullptr;
   }
 

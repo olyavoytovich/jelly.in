@@ -283,10 +283,3 @@ int GameController::GetVolume(Volume volume) {
 std::shared_ptr<Map> GameController::GetMap() {
   return map_;
 }
-
-void GameController::UpdateCamera(QPainter* painter) {
-  if (map_ == nullptr) {
-    return;
-  }
-  map_->UpdateCamera(painter);
-}

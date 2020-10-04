@@ -9,7 +9,6 @@ View::View(AbstractGameController* game_controller)
 
 void View::paintEvent(QPaintEvent*) {
   QPainter painter(this);
-  game_controller_->UpdateCamera(&painter);
   this->Draw(&painter);
 }
 
@@ -36,6 +35,7 @@ void View::Draw(QPainter* painter) {
   if (map == nullptr) {
     return;
   }
+  map->UpdateCamera(painter);
 
   painter->save();
 
@@ -45,11 +45,7 @@ void View::Draw(QPainter* painter) {
   painter->drawImage(0, 0, *map->GetScaledMapImage());
 
   painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
-  std::shared_ptr<std::vector<std::shared_ptr<GameObject>>>
-      game_objects = map->GetGameObjects();
-  for (const auto& object : *game_objects) {
-    object->Draw(painter);
-  }
+  map->DrawGameObjects(painter);
 
   painter->setBrush(QBrush(Qt::green, Qt::BrushStyle::SolidPattern));
   map->GetPlayer()->Draw(painter);

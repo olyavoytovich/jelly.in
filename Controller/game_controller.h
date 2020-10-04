@@ -63,8 +63,7 @@ class GameController : public AbstractGameController {
   void StartLevel(int level_number) override;
   void OpenMenu(std::shared_ptr<Menu> menu);
 
-  std::shared_ptr<Map> GetMap();
-  void UpdateCamera(QPainter* painter);
+  std::shared_ptr<Map> GetMap() override;
 
  private:
   Key GetKeyFromCode(int key_code);

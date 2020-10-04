@@ -1,15 +1,15 @@
 #ifndef VIEW_VIEW_H_
 #define VIEW_VIEW_H_
 
-#include <vector>
 #include <memory>
+#include <vector>
 #include <QMainWindow>
 #include <QObject>
 #include <QPaintEvent>
 #include <QTimer>
 #include <QVBoxLayout>
 
-#include <Model/map.h>
+#include "Model/map.h"
 #include "Controller/abstract_game_controller.h"
 #include "View/abstract_view.h"
 

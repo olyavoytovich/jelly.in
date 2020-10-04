@@ -1,10 +1,11 @@
 #include "map.h"
 
-Map::Map(const QImage& map_image)
+#include <memory>
+
+Map::Map(const std::shared_ptr<QImage>& map_image)
     : world_(std::make_shared<b2World>(b2Vec2(0, 20))),
       current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()),
       map_image_(map_image),
-      scaled_map_image_(map_image),
       is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
       is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false),
       audio_manager_(std::make_shared<AudioManager>()) {}
@@ -119,9 +120,10 @@ void Map::SetCurrentVolume(int current_volume) {
 }
 
 void Map::UpdateImageScale(int width, int height) {
-  if (scaled_map_image_.width() != width
-      && scaled_map_image_.height() != height) {
-    scaled_map_image_ = map_image_.scaled(width, height, Qt::KeepAspectRatio);
+  if (scaled_map_image_->width() != width
+      && scaled_map_image_->height() != height) {
+    *scaled_map_image_ = map_image_->scaled(width, height, Qt::KeepAspectRatio);
+
   }
 }
 
@@ -143,14 +145,14 @@ void Map::UpdateCameraPosition() {
   if (current_camera_.left() < shift_.x()) {
     current_camera_.moveLeft(shift_.x());
   }
-  if (current_camera_.right() > map_image_.width() - shift_.x()) {
-    current_camera_.moveRight(map_image_.width() - shift_.x());
+  if (current_camera_.right() > map_image_->width() - shift_.x()) {
+    current_camera_.moveRight(map_image_->width() - shift_.x());
   }
   if (current_camera_.top() < shift_.y()) {
     current_camera_.moveTop(shift_.y());
   }
-  if (current_camera_.bottom() > map_image_.height() - shift_.y()) {
-    current_camera_.moveBottom(map_image_.height() - shift_.y());
+  if (current_camera_.bottom() > map_image_->height() - shift_.y()) {
+    current_camera_.moveBottom(map_image_->height() - shift_.y());
   }
 }
 
@@ -161,8 +163,8 @@ void Map::UpdateCamera(QPainter* painter) {
   shift_ = QPoint(painter->window().width(), painter->window().height());
   shift_ = (shift_ / scale_ - kVisibleSize) / 2.0;
   UpdateCameraPosition();
-  UpdateImageScale(static_cast<int>(map_image_.width() * scale_),
-                        static_cast<int>(map_image_.height() * scale_));
+  UpdateImageScale(static_cast<int>(map_image_->width() * scale_),
+                        static_cast<int>(map_image_->height() * scale_));
 }
 
 QRect Map::GetCurrentCamera() const {
@@ -170,11 +172,11 @@ QRect Map::GetCurrentCamera() const {
 }
 
 std::shared_ptr<QImage> Map::GetScaledMapImage() const {
-  return std::make_shared<QImage>(scaled_map_image_);
+  return scaled_map_image_;
 }
 
-std::shared_ptr<std::vector<std::shared_ptr<GameObject>>>
-    Map::GetGameObjects() const {
-  return std::make_shared<std::vector<std::shared_ptr<GameObject>>>(
-      game_objects_);
+void Map::DrawGameObjects(QPainter* painter) const {
+  for (auto object : game_objects_) {
+    object->Draw(painter);
+  }
 }
