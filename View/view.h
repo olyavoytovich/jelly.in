@@ -1,13 +1,13 @@
 #ifndef VIEW_VIEW_H_
 #define VIEW_VIEW_H_
 
-#include <memory>
-#include <vector>
 #include <QMainWindow>
 #include <QObject>
 #include <QPaintEvent>
 #include <QTimer>
 #include <QVBoxLayout>
+#include <memory>
+#include <vector>
 
 #include "Controller/abstract_game_controller.h"
 #include "Model/entity.h"
@@ -28,7 +28,9 @@ class View : public QMainWindow, public AbstractView {
   void keyReleaseEvent(QKeyEvent* event) override;
 
   void Draw(QPainter* painter);
-  void DrawObject(QPainter* painter, std::shared_ptr<GameObject> entity, std::shared_ptr<Map> map_) const;
+  void DrawObject(QPainter* painter,
+                  std::shared_ptr<GameObject> entity,
+                  std::shared_ptr<Map> map_) const;
 
  private:
   const int kFrameInterval = 16;

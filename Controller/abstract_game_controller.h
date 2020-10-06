@@ -1,9 +1,9 @@
 #ifndef CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_
 #define CONTROLLER_ABSTRACT_GAME_CONTROLLER_H_
 
-#include <memory>
 #include <QKeyEvent>
 #include <QPainter>
+#include <memory>
 
 #include "../Model/map.h"
 

@@ -9,7 +9,7 @@ View::View(AbstractGameController* game_controller)
 
 void View::paintEvent(QPaintEvent*) {
   QPainter painter(this);
-  this->Draw(&painter);
+  Draw(&painter);
 }
 
 void View::timerEvent(QTimerEvent* event) {

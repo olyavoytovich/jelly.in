@@ -79,6 +79,7 @@ class Entity : public GameObject {
   virtual void EndCollision(b2Fixture* my_fixture, EntityType other_type);
 
   EntityType GetEntityType() const;
+  
  protected:
   int MetersToPixels(float value) const;
   QPoint MetersToPixels(b2Vec2 vector) const;
@@ -91,11 +92,11 @@ class Entity : public GameObject {
 
   // Выбирает громкость в зависимости от расстояния до игрока
   int CountVolumeFromDistance();
- protected:
 
+ protected:
   const float kEpsilon = 1e-5;
- protected:
 
+ protected:
   b2Body* body_ = nullptr;
 
   std::vector<b2Vec2> way_points_;
