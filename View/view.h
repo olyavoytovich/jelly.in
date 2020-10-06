@@ -29,8 +29,8 @@ class View : public QMainWindow, public AbstractView {
 
   void Draw(QPainter* painter);
   void DrawObject(QPainter* painter,
-                  std::shared_ptr<GameObject> entity,
-                  std::shared_ptr<Map> map_) const;
+                  std::shared_ptr<GameObject> game_objects,
+                  std::shared_ptr<Map> map) const;
 
  private:
   const int kFrameInterval = 16;

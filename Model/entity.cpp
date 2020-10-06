@@ -282,13 +282,6 @@ std::shared_ptr<Animator> Entity::GetAnimator() {
   return animator_;
 }
 
-float Entity::GetSunflowerWidthPercent() {
-  return kSunflowerWidthPercent;
-}
-float Entity::GetSunflowerHeightPercent() {
-  return kSunflowerHeightPercent;
-}
-
 void Entity::BeginCollision(b2Fixture*, EntityType my_type, EntityType) {
   if (my_type == EntityType::kBullet) {
     MarkAsDeleted();

@@ -11,22 +11,6 @@
 #include "game_object.h"
 #include "map.h"
 
-struct PolygonShape {
-  PolygonShape(QPolygon polygon, const QPoint& position)
-      : polygon(std::move(polygon)), position(position) {}
-
-  QPolygon polygon;
-  QPoint position;
-};
-
-struct CircleShape {
-  CircleShape(int radius, const QPoint& position)
-      : radius(radius), position(position) {}
-
-  int radius;
-  QPoint position;
-};
-
 class Entity : public GameObject {
  public:
   // Конструктор, создающий тело из одной формы - полигон.
@@ -68,8 +52,6 @@ class Entity : public GameObject {
   QPoint GetPositionInPixels() const override;
   QRect GetBoundings() const;
   QRect GetBoundingRectangle();
-  float GetSunflowerWidthPercent();
-  float GetSunflowerHeightPercent();
 
   std::shared_ptr<Animator> GetAnimator();
   virtual void BeginCollision(b2Fixture* my_fixture,
@@ -84,7 +66,6 @@ class Entity : public GameObject {
   int MetersToPixels(float value) const;
   QPoint MetersToPixels(b2Vec2 vector) const;
   float PixelsToMeters(int value) const;
-
   b2Vec2 PixelsToMeters(QPoint vector) const;
   b2Fixture* CreateFixture(const b2Shape& shape);
 
@@ -92,9 +73,6 @@ class Entity : public GameObject {
 
   // Выбирает громкость в зависимости от расстояния до игрока
   int CountVolumeFromDistance();
-
- protected:
-  const float kEpsilon = 1e-5;
 
  protected:
   b2Body* body_ = nullptr;
@@ -129,9 +107,6 @@ class Entity : public GameObject {
  private:
   const float kBodyDensity = 1;
   const float kPixelsPerMeter = 100;
-
-  const float kSunflowerWidthPercent = 2.0;
-  const float kSunflowerHeightPercent = 4.4;
 
  private:
   b2Vec2 target_velocity = {0, 0};

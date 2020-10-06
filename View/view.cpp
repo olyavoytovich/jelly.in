@@ -31,23 +31,25 @@ void View::keyReleaseEvent(QKeyEvent* event) {
 }
 
 void View::DrawObject(QPainter* painter,
-                      std::shared_ptr<GameObject> entity,
-                      std::shared_ptr<Map> map_) const {
+                      std::shared_ptr<GameObject> game_objects,
+                      std::shared_ptr<Map> map) const {
   // Fixture используется, чтобы прикрепить форму к телу для обнаружения
   // коллизий. Содержит необходимые для отрисовки геометрические данные,
   // кроме них - трение, фильтр коллизий и др.
-  std::shared_ptr<Animator> animator_ = entity->GetAnimator();
+  std::shared_ptr<Animator> animator_ = game_objects->GetAnimator();
   if (animator_ != nullptr) {
-    QRect rectangle_for_image = entity->GetBoundings();
-    int width = static_cast<int>(entity->GetBoundingRectangle().width()
-        * map_->GetScale());
-    int height = static_cast<int>(entity->GetBoundingRectangle().height()
-        * map_->GetScale());
-    if (entity->GetEntityType() == EntityType::kSunflower) {
-      width = static_cast<int>(width * entity->GetSunflowerWidthPercent());
-      height = static_cast<int>(height * entity->GetSunflowerHeightPercent());
+    QRect rectangle_for_image = game_objects->GetBoundings();
+    int width = static_cast<int>(game_objects->GetBoundingRectangle().width()
+        * map->GetScale());
+    int height = static_cast<int>(game_objects->GetBoundingRectangle().height()
+        * map->GetScale());
+    if (game_objects->GetEntityType() == EntityType::kSunflower) {
+      const float kSunflowerWidthPercent = 2.0;
+      const float kSunflowerHeightPercent = 4.4;
+      width = static_cast<int>(width * kSunflowerWidthPercent);
+      height = static_cast<int>(height * kSunflowerHeightPercent);
     }
-    painter->drawImage(rectangle_for_image.topLeft() * map_->GetScale(),
+    painter->drawImage(rectangle_for_image.topLeft() * map->GetScale(),
                        *(animator_->GetCurrentImage(width, height)));
   }
 }

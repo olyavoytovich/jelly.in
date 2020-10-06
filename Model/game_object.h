@@ -34,8 +34,6 @@ class GameObject {
   virtual void Update(int time);
   virtual std::shared_ptr<Animator> GetAnimator() = 0;
   virtual QRect GetBoundingRectangle() = 0;
-  virtual float GetSunflowerWidthPercent() = 0;
-  virtual float GetSunflowerHeightPercent() = 0;
   virtual QRect GetBoundings() const = 0;
   virtual EntityType GetEntityType() const = 0;
 
