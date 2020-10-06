@@ -19,22 +19,6 @@ enum class Key {
   kAnyKey
 };
 
-enum class EntityType {
-  kPlayer = 1,
-  kBullet = 2,
-  kChestnut = 4,
-  kCloud = 8,
-  kBurdock = 16,
-  kSunflower = 32,
-  kGround = 64,
-  kPlayerPart = 128,
-  kSpikes = 256,
-  kExit = 512,
-  kPlate = 1024,
-  kMushroom = 2048,
-  kDefault
-};
-
 class Map {
  public:
   explicit Map(const std::shared_ptr<QImage>& map_image);
@@ -68,7 +52,7 @@ class Map {
 
   QRect GetCurrentCamera() const;
   std::shared_ptr<QImage> GetScaledMapImage() const;
-  void DrawGameObjects(QPainter* painter) const;
+  std::vector<std::shared_ptr<GameObject>> GetGameObjects() const;
 
  private:
   void UpdateImageScale(int width, int height);

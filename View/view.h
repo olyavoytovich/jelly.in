@@ -9,8 +9,9 @@
 #include <QTimer>
 #include <QVBoxLayout>
 
-#include "Model/map.h"
 #include "Controller/abstract_game_controller.h"
+#include "Model/entity.h"
+#include "Model/map.h"
 #include "View/abstract_view.h"
 
 class View : public QMainWindow, public AbstractView {
@@ -27,6 +28,7 @@ class View : public QMainWindow, public AbstractView {
   void keyReleaseEvent(QKeyEvent* event) override;
 
   void Draw(QPainter* painter);
+  void DrawObject(QPainter* painter, std::shared_ptr<GameObject> entity, std::shared_ptr<Map> map_) const;
 
  private:
   const int kFrameInterval = 16;

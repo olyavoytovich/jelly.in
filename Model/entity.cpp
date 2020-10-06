@@ -59,56 +59,6 @@ Entity::Entity(std::weak_ptr<Map> map,
   }
 }
 
-Entity::Entity(std::weak_ptr<Map> map,
-               b2BodyType body_type,
-               const QPoint& body_position,
-               const std::vector<CircleShape>& circles,
-               const std::vector<PolygonShape>& polygons,
-               EntityType entity_type)
-    : map_(std::move(map)), entity_type_(entity_type) {
-  InitializeBody(body_type, body_position);
-
-  for (auto&&[radius, shape_position] : circles) {
-    b2CircleShape shape = CreateCircleShape(radius, shape_position);
-    CreateFixture(shape);
-  }
-
-  for (auto&&[polygon, shape_position] : polygons) {
-    b2PolygonShape shape = CreatePolygonShape(polygon, shape_position);
-    CreateFixture(shape);
-  }
-  InitializeBoundaryRectangle();
-  if (entity_type_ == EntityType::kMushroom) {
-    SetNoCollisionMask(~(static_cast<uint16_t>(EntityType::kPlayer)
-        + static_cast<uint16_t>(EntityType::kPlayerPart)));
-    player_get_mushroom_audio_key_ = map_.lock()->GetAudioManager()->
-        CreateAudioPlayer(AudioName::kPlayerGettingMushroom);
-  }
-  if (entity_type_ == EntityType::kChestnut) {
-    chestnut_audio_key_ = map_.lock()->GetAudioManager()->
-        CreateAudioPlayer(AudioName::kChestnut);
-  }
-}
-
-void Entity::Draw(QPainter* painter) const {
-  // Fixture используется, чтобы прикрепить форму к телу для обнаружения
-  // коллизий. Содержит необходимые для отрисовки геометрические данные,
-  // кроме них - трение, фильтр коллизий и др.
-  if (animator_ != nullptr) {
-    QRect rectangle_for_image = GetBoundings();
-    int width =
-        static_cast<int>(bounding_rectangle_.width() * map_.lock()->GetScale());
-    int height = static_cast<int>(bounding_rectangle_.height()
-        * map_.lock()->GetScale());
-    if (entity_type_ == EntityType::kSunflower) {
-      width = static_cast<int>(width * kSunflowerWidthPercent);
-      height = static_cast<int>(height * kSunflowerHeightPercent);
-    }
-    painter->drawImage(rectangle_for_image.topLeft() * map_.lock()->GetScale(),
-                       *(animator_->GetCurrentImage(width, height)));
-  }
-}
-
 b2PolygonShape Entity::CreatePolygonShape(const QPolygon& polygon,
                                           const QPoint& shape_position) const {
   std::vector<b2Vec2> polygon_points;
@@ -322,6 +272,21 @@ QPoint Entity::GetPositionInPixels() const {
 
 QRect Entity::GetBoundings() const {
   return bounding_rectangle_.translated(GetPositionInPixels());
+}
+
+QRect Entity::GetBoundingRectangle() {
+  return bounding_rectangle_;
+}
+
+std::shared_ptr<Animator> Entity::GetAnimator() {
+  return animator_;
+}
+
+float Entity::GetSunflowerWidthPercent() {
+  return kSunflowerWidthPercent;
+}
+float Entity::GetSunflowerHeightPercent() {
+  return kSunflowerHeightPercent;
 }
 
 void Entity::BeginCollision(b2Fixture*, EntityType my_type, EntityType) {

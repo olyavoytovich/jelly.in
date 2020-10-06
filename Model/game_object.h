@@ -4,8 +4,27 @@
 #include <QPainter>
 #include <QPolygon>
 #include <utility>
+#include <memory>
 
 #include "box2d/box2d.h"
+
+class Animator;
+
+enum class EntityType {
+  kPlayer = 1,
+  kBullet = 2,
+  kChestnut = 4,
+  kCloud = 8,
+  kBurdock = 16,
+  kSunflower = 32,
+  kGround = 64,
+  kPlayerPart = 128,
+  kSpikes = 256,
+  kExit = 512,
+  kPlate = 1024,
+  kMushroom = 2048,
+  kDefault
+};
 
 class GameObject {
  public:
@@ -13,7 +32,12 @@ class GameObject {
   virtual ~GameObject() = default;
 
   virtual void Update(int time);
-  virtual void Draw(QPainter* painter) const;
+  virtual std::shared_ptr<Animator> GetAnimator() = 0;
+  virtual QRect GetBoundingRectangle() = 0;
+  virtual float GetSunflowerWidthPercent() = 0;
+  virtual float GetSunflowerHeightPercent() = 0;
+  virtual QRect GetBoundings() const = 0;
+  virtual EntityType GetEntityType() const = 0;
 
   virtual void MarkAsDeleted();
   virtual bool IsDeleted() const;

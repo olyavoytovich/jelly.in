@@ -164,7 +164,7 @@ void Map::UpdateCamera(QPainter* painter) {
   shift_ = (shift_ / scale_ - kVisibleSize) / 2.0;
   UpdateCameraPosition();
   UpdateImageScale(static_cast<int>(map_image_->width() * scale_),
-                        static_cast<int>(map_image_->height() * scale_));
+                   static_cast<int>(map_image_->height() * scale_));
 }
 
 QRect Map::GetCurrentCamera() const {
@@ -175,8 +175,7 @@ std::shared_ptr<QImage> Map::GetScaledMapImage() const {
   return scaled_map_image_;
 }
 
-void Map::DrawGameObjects(QPainter* painter) const {
-  for (auto object : game_objects_) {
-    object->Draw(painter);
-  }
+std::vector<std::shared_ptr<GameObject>>
+    Map::GetGameObjects() const {
+  return game_objects_;
 }

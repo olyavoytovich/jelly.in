@@ -26,58 +26,6 @@ Shooter::Shooter(std::weak_ptr<Map> map,
   InitializeAudio();
 }
 
-Shooter::Shooter(std::weak_ptr<Map> map,
-                 b2BodyType type,
-                 const QPoint& body_position,
-                 int radius,
-                 const std::vector<QPoint>& way_points,
-                 BulletDirection bullet_direction,
-                 int shoot_period,
-                 int bullet_speed,
-                 int bullet_radius,
-                 std::shared_ptr<Animator> animator,
-                 std::shared_ptr<Animator> bullet_animator,
-                 EntityType entity_type,
-                 int speed)
-    : Entity(std::move(map), type, body_position, radius, entity_type),
-      bullet_direction_(bullet_direction),
-      shoot_period_(shoot_period),
-      bullet_speed_(PixelsToMeters(bullet_speed)),
-      bullet_radius_(bullet_radius),
-      bullet_animator_(std::move(bullet_animator)) {
-  SetSpeed(speed);
-  SetAnimator(std::move(animator));
-  SetWayPoints(way_points);
-  InitializeAudio();
-}
-
-Shooter::Shooter(std::weak_ptr<Map> map,
-                 b2BodyType body_type,
-                 const QPoint& body_position,
-                 const std::vector<CircleShape>& circles,
-                 const std::vector<PolygonShape>& polygons,
-                 const std::vector<QPoint>& way_points,
-                 BulletDirection bullet_direction,
-                 int shoot_period,
-                 int bullet_speed,
-                 int bullet_radius,
-                 std::shared_ptr<Animator> animator,
-                 std::shared_ptr<Animator> bullet_animator,
-                 EntityType entity_type,
-                 int speed)
-    : Entity(std::move(map), body_type, body_position, circles, polygons,
-             entity_type),
-      bullet_direction_(bullet_direction),
-      shoot_period_(shoot_period),
-      bullet_speed_(PixelsToMeters(bullet_speed)),
-      bullet_radius_(bullet_radius),
-      bullet_animator_(std::move(bullet_animator)) {
-  SetSpeed(speed);
-  SetAnimator(std::move(animator));
-  SetWayPoints(way_points);
-  InitializeAudio();
-}
-
 void Shooter::Update(int time) {
   Entity::Update(time);
   last_shoot_time_ += time;
