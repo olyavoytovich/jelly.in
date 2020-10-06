@@ -79,7 +79,7 @@ class Entity : public GameObject {
   virtual void EndCollision(b2Fixture* my_fixture, EntityType other_type);
 
   EntityType GetEntityType() const;
-  
+
  protected:
   int MetersToPixels(float value) const;
   QPoint MetersToPixels(b2Vec2 vector) const;
