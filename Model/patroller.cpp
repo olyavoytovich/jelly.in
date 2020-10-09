@@ -13,6 +13,5 @@ Patroller::Patroller(std::weak_ptr<Map> map,
   SetAnimator(std::move(animator));
   animator_->LoopAnimation();
   animator_->Play();
-  int flex = 1;
   SetWayPoints(way_points);
 }

@@ -76,7 +76,8 @@ void Player::Update(int time) {
   }
 
   if (player_part_ != nullptr
-      && !player_part_->GetBoundingRectangle().intersects(GetBoundingRectangle())) {
+      && !player_part_->GetBoundingRectangle().intersects(
+          GetBoundingRectangle())) {
     player_part_->SetEntityType(EntityType::kPlayerPart);
   }
 
