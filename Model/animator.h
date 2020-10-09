@@ -23,7 +23,7 @@ class Animator {
                            bool stop_current_animation = true);
 
   void Update(int time);
-  std::shared_ptr<QImage> GetCurrentImage(int width, int height);
+  std::shared_ptr<QImage> GetCurrentImage(int width, int height) const;
 
  private:
   void Reset();

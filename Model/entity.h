@@ -50,17 +50,15 @@ class Entity : public GameObject {
 
   b2Body* GetB2Body() const override;
   QPoint GetPositionInPixels() const override;
-  QRect GetBoundings() const;
-  QRect GetBoundingRectangle();
+  QRect GetBoundingRectangle() const override;
+  std::shared_ptr<Animator> GetAnimator() const override;
+  EntityType GetEntityType() const;
 
-  std::shared_ptr<Animator> GetAnimator();
   virtual void BeginCollision(b2Fixture* my_fixture,
                               EntityType my_type,
                               EntityType other_type);
 
   virtual void EndCollision(b2Fixture* my_fixture, EntityType other_type);
-
-  EntityType GetEntityType() const;
 
  protected:
   int MetersToPixels(float value) const;
@@ -109,7 +107,7 @@ class Entity : public GameObject {
   const float kPixelsPerMeter = 100;
 
  private:
-  b2Vec2 target_velocity = {0, 0};
+  b2Vec2 target_velocity_ = {0, 0};
   bool is_active_ = true;
   EntityType entity_type_;
   int player_get_mushroom_audio_key_;

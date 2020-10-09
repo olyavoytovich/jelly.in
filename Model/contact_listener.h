@@ -3,7 +3,6 @@
 
 #include "box2d/box2d.h"
 #include "entity.h"
-#include "map.h"
 #include "patroller.h"
 #include "player.h"
 #include "pressure_plate.h"

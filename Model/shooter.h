@@ -7,6 +7,7 @@
 #include <vector>
 #include <utility>
 
+#include "animator.h"
 #include "entity.h"
 
 enum class BulletDirection {
@@ -54,8 +55,6 @@ class Shooter : public Entity {
   int bullet_radius_;
 
   std::shared_ptr<Animator> bullet_animator_;
-
-  std::shared_ptr<GameObject> player_ = nullptr;
 
   int thorn_audio_key_;
   std::vector<int> drop_audio_keys_;

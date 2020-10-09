@@ -36,11 +36,11 @@ Player::Player(std::weak_ptr<Map> map,
   SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
 
   player_jump_audio_key_ = map_.lock()->GetAudioManager()->
-          CreateAudioPlayer(AudioName::kPlayerJump);
+      CreateAudioPlayer(AudioName::kPlayerJump);
   player_separation_audio_key_ = map_.lock()->GetAudioManager()->
-          CreateAudioPlayer(AudioName::kPlayerSeparation);
+      CreateAudioPlayer(AudioName::kPlayerSeparation);
   player_receive_damage_audio_key_ = map_.lock()->GetAudioManager()->
-          CreateAudioPlayer(AudioName::kPlayerTakingDamage);
+      CreateAudioPlayer(AudioName::kPlayerTakingDamage);
 }
 
 void Player::Update(int time) {
@@ -72,11 +72,11 @@ void Player::Update(int time) {
     map_.lock()->AddGameObject(player_part_);
 
     map_.lock()->GetAudioManager()->
-            PlayAudioPlayer(player_separation_audio_key_);
+        PlayAudioPlayer(player_separation_audio_key_);
   }
 
   if (player_part_ != nullptr
-      && !player_part_->GetBoundings().intersects(GetBoundings())) {
+      && !player_part_->GetBoundingRectangle().intersects(GetBoundingRectangle())) {
     player_part_->SetEntityType(EntityType::kPlayerPart);
   }
 
@@ -157,7 +157,7 @@ void Player::TakeDamage() {
   current_health_--;
 
   map_.lock()->GetAudioManager()->
-          PlayAudioPlayer(player_receive_damage_audio_key_);
+      PlayAudioPlayer(player_receive_damage_audio_key_);
 }
 
 void Player::SetAnimationName(const QString& animation_name) {

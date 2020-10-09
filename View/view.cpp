@@ -38,10 +38,10 @@ void View::DrawObject(QPainter* painter,
   // кроме них - трение, фильтр коллизий и др.
   std::shared_ptr<Animator> animator_ = game_objects->GetAnimator();
   if (animator_ != nullptr) {
-    QRect rectangle_for_image = game_objects->GetBoundings();
-    int width = static_cast<int>(game_objects->GetBoundingRectangle().width()
+    QRect rectangle_for_image = game_objects->GetBoundingRectangle();
+    int width = static_cast<int>(rectangle_for_image.width()
         * map->GetScale());
-    int height = static_cast<int>(game_objects->GetBoundingRectangle().height()
+    int height = static_cast<int>(rectangle_for_image.height()
         * map->GetScale());
     if (game_objects->GetEntityType() == EntityType::kSunflower) {
       const float kSunflowerWidthPercent = 2.0;

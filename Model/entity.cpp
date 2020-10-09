@@ -31,10 +31,6 @@ Entity::Entity(std::weak_ptr<Map> map,
   if (entity_type == EntityType::kExit) {
     SetNoCollisionMask(~static_cast<uint16_t>(EntityType::kPlayer));
   }
-  if (entity_type_ == EntityType::kChestnut) {
-    chestnut_audio_key_ = map_.lock()->GetAudioManager()->
-        CreateAudioPlayer(AudioName::kChestnut);
-  }
 }
 
 Entity::Entity(std::weak_ptr<Map> map,
@@ -47,16 +43,19 @@ Entity::Entity(std::weak_ptr<Map> map,
   b2CircleShape shape = CreateCircleShape(radius);
   CreateFixture(shape);
   InitializeBoundaryRectangle();
-  if (entity_type_ == EntityType::kMushroom) {
-    SetNoCollisionMask(~(static_cast<uint16_t>(EntityType::kPlayer)
-        + static_cast<uint16_t>(EntityType::kPlayerPart)));
-    player_get_mushroom_audio_key_ = map_.lock()->GetAudioManager()->
-        CreateAudioPlayer(AudioName::kPlayerGettingMushroom);
-  }
   if (entity_type_ == EntityType::kChestnut) {
     chestnut_audio_key_ = map_.lock()->GetAudioManager()->
         CreateAudioPlayer(AudioName::kChestnut);
   }
+}
+
+void Entity::InitializeBody(b2BodyType body_type, const QPoint& body_position) {
+  b2BodyDef body_definition;
+  body_definition.position = PixelsToMeters(body_position);
+  body_definition.type = body_type;
+  body_definition.fixedRotation = true;
+  body_definition.userData = static_cast<void*>(this);
+  body_ = map_.lock()->CreateBody(&body_definition);
 }
 
 b2PolygonShape Entity::CreatePolygonShape(const QPolygon& polygon,
@@ -80,6 +79,55 @@ b2CircleShape Entity::CreateCircleShape(int radius,
   shape.m_radius = PixelsToMeters(radius);
   shape.m_p = PixelsToMeters(shape_position);
   return shape;
+}
+
+b2Fixture* Entity::CreateFixture(const b2Shape& shape) {
+  b2Fixture* fixture = body_->CreateFixture(&shape, kBodyDensity);
+  ApplyEntityType(fixture);
+  return fixture;
+}
+
+void Entity::ApplyEntityType(b2Fixture* fixture) {
+  fixture->SetUserData(static_cast<void*>(&entity_type_));
+  b2Filter filter = fixture->GetFilterData();
+  filter.categoryBits = static_cast<int>(entity_type_);
+  fixture->SetFilterData(filter);
+}
+
+void Entity::InitializeBoundaryRectangle() {
+  QPoint left_point = QPoint(20000, 20000);
+  QPoint right_point = QPoint(-20000, -20000);
+  for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
+       fixture = fixture->GetNext()) {
+    switch (fixture->GetShape()->GetType()) {
+      case b2Shape::e_polygon: {
+        auto polygon_shape = dynamic_cast<b2PolygonShape*>(fixture->GetShape());
+        for (int i = 0; i < polygon_shape->m_count; i++) {
+          QPoint vertex = MetersToPixels(polygon_shape->m_vertices[i]);
+          left_point.rx() = std::min(left_point.x(), vertex.x());
+          right_point.rx() = std::max(right_point.x(), vertex.x());
+          left_point.ry() = std::min(left_point.y(), vertex.y());
+          right_point.ry() = std::max(right_point.y(), vertex.y());
+        }
+        break;
+      }
+
+      case b2Shape::e_circle: {
+        auto circle_shape = dynamic_cast<b2CircleShape*>(fixture->GetShape());
+        int radius = MetersToPixels(circle_shape->m_radius);
+        left_point.rx() = std::min(left_point.x(), -radius);
+        right_point.rx() = std::max(right_point.x(), radius);
+        left_point.ry() = std::min(left_point.y(), -radius);
+        right_point.ry() = std::max(right_point.y(), radius);
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+  }
+  bounding_rectangle_ = QRect(left_point, right_point);
 }
 
 void Entity::SetAnimator(std::shared_ptr<Animator> animator) {
@@ -109,10 +157,10 @@ void Entity::SetVelocity(b2Vec2 velocity, bool apply_once) {
   if (body_->GetType() == b2_kinematicBody) {
     body_->SetLinearVelocity(velocity);
   }
-  target_velocity = velocity;
+  target_velocity_ = velocity;
   if (apply_once) {
     ApplyImpulse();
-    target_velocity = b2Vec2(0, 0);
+    target_velocity_ = b2Vec2(0, 0);
   }
 }
 
@@ -131,13 +179,6 @@ void Entity::SetEntityType(EntityType entity_type) {
        fixture = fixture->GetNext()) {
     ApplyEntityType(fixture);
   }
-}
-
-void Entity::ApplyEntityType(b2Fixture* fixture) {
-  fixture->SetUserData(static_cast<void*>(&entity_type_));
-  b2Filter filter = fixture->GetFilterData();
-  filter.categoryBits = static_cast<int>(entity_type_);
-  fixture->SetFilterData(filter);
 }
 
 void Entity::Update(int time) {
@@ -180,15 +221,6 @@ void Entity::Stop() {
   SetVelocity(b2Vec2(0, 0));
 }
 
-void Entity::InitializeBody(b2BodyType body_type, const QPoint& body_position) {
-  b2BodyDef body_definition;
-  body_definition.position = PixelsToMeters(body_position);
-  body_definition.type = body_type;
-  body_definition.fixedRotation = true;
-  body_definition.userData = static_cast<void*>(this);
-  body_ = map_.lock()->CreateBody(&body_definition);
-}
-
 int Entity::MetersToPixels(float value) const {
   return static_cast<int>(value * kPixelsPerMeter);
 }
@@ -205,12 +237,6 @@ b2Vec2 Entity::PixelsToMeters(QPoint vector) const {
   return b2Vec2(PixelsToMeters(vector.x()), PixelsToMeters(vector.y()));
 }
 
-b2Fixture* Entity::CreateFixture(const b2Shape& shape) {
-  b2Fixture* fixture = body_->CreateFixture(&shape, kBodyDensity);
-  ApplyEntityType(fixture);
-  return fixture;
-}
-
 void Entity::SetNoCollisionMask(uint16_t mask) {
   for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
        fixture = fixture->GetNext()) {
@@ -225,60 +251,20 @@ b2Body* Entity::GetB2Body() const {
 }
 
 void Entity::ApplyImpulse() {
-  b2Vec2 target_impulse = target_velocity - body_->GetLinearVelocity();
+  b2Vec2 target_impulse = target_velocity_ - body_->GetLinearVelocity();
   target_impulse *= body_->GetMass();
   body_->ApplyLinearImpulseToCenter(target_impulse, true);
-}
-
-void Entity::InitializeBoundaryRectangle() {
-  QPoint left_point = QPoint(20000, 20000);
-  QPoint right_point = QPoint(-20000, -20000);
-  for (auto fixture = body_->GetFixtureList(); fixture != nullptr;
-       fixture = fixture->GetNext()) {
-    switch (fixture->GetShape()->GetType()) {
-      case b2Shape::e_polygon: {
-        auto polygon_shape = dynamic_cast<b2PolygonShape*>(fixture->GetShape());
-        for (int i = 0; i < polygon_shape->m_count; i++) {
-          QPoint vertex = MetersToPixels(polygon_shape->m_vertices[i]);
-          left_point.rx() = std::min(left_point.x(), vertex.x());
-          right_point.rx() = std::max(right_point.x(), vertex.x());
-          left_point.ry() = std::min(left_point.y(), vertex.y());
-          right_point.ry() = std::max(right_point.y(), vertex.y());
-        }
-        break;
-      }
-
-      case b2Shape::e_circle: {
-        auto circle_shape = dynamic_cast<b2CircleShape*>(fixture->GetShape());
-        int radius = MetersToPixels(circle_shape->m_radius);
-        left_point.rx() = std::min(left_point.x(), -radius);
-        right_point.rx() = std::max(right_point.x(), radius);
-        left_point.ry() = std::min(left_point.y(), -radius);
-        right_point.ry() = std::max(right_point.y(), radius);
-        break;
-      }
-
-      default: {
-        break;
-      }
-    }
-  }
-  bounding_rectangle_ = QRect(left_point, right_point);
 }
 
 QPoint Entity::GetPositionInPixels() const {
   return MetersToPixels(body_->GetWorldCenter());
 }
 
-QRect Entity::GetBoundings() const {
+QRect Entity::GetBoundingRectangle() const {
   return bounding_rectangle_.translated(GetPositionInPixels());
 }
 
-QRect Entity::GetBoundingRectangle() {
-  return bounding_rectangle_;
-}
-
-std::shared_ptr<Animator> Entity::GetAnimator() {
+std::shared_ptr<Animator> Entity::GetAnimator() const {
   return animator_;
 }
 

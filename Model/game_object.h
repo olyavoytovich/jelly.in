@@ -6,9 +6,8 @@
 #include <utility>
 #include <memory>
 
+#include "animator.h"
 #include "box2d/box2d.h"
-
-class Animator;
 
 enum class EntityType {
   kPlayer = 1,
@@ -32,9 +31,8 @@ class GameObject {
   virtual ~GameObject() = default;
 
   virtual void Update(int time);
-  virtual std::shared_ptr<Animator> GetAnimator() = 0;
-  virtual QRect GetBoundingRectangle() = 0;
-  virtual QRect GetBoundings() const = 0;
+  virtual std::shared_ptr<Animator> GetAnimator() const = 0;
+  virtual QRect GetBoundingRectangle() const = 0;
   virtual EntityType GetEntityType() const = 0;
 
   virtual void MarkAsDeleted();
