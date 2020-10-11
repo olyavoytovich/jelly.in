@@ -9,7 +9,6 @@
 #include "audio_manager.h"
 #include "box2d/box2d.h"
 #include "game_object.h"
-// #include "mushroom.h"
 
 // kAnyKey должен быть в enum последним
 enum class Key {
