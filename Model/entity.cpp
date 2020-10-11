@@ -21,13 +21,6 @@ Entity::Entity(std::weak_ptr<Map> map,
   CreateFixture(shape);
   InitializeBoundaryRectangle();
 
-  if (entity_type == EntityType::kMushroom) {
-    // Грибы сталкиваются только с игроком или его частью
-    SetNoCollisionMask(~(static_cast<uint16_t>(EntityType::kPlayer)
-        + static_cast<uint16_t>(EntityType::kPlayerPart)));
-    player_get_mushroom_audio_key_ = map_.lock()->GetAudioManager()->
-        CreateAudioPlayer(AudioName::kPlayerGettingMushroom);
-  }
   if (entity_type == EntityType::kExit) {
     SetNoCollisionMask(~static_cast<uint16_t>(EntityType::kPlayer));
   }
@@ -270,12 +263,6 @@ std::shared_ptr<Animator> Entity::GetAnimator() const {
 
 void Entity::BeginCollision(b2Fixture*, EntityType my_type, EntityType) {
   if (my_type == EntityType::kBullet) {
-    MarkAsDeleted();
-  }
-  if (my_type == EntityType::kMushroom && !IsDeleted()) {
-    map_.lock()->PickUpMushroom();
-    map_.lock()->GetAudioManager()->
-        PlayAudioPlayer(player_get_mushroom_audio_key_);
     MarkAsDeleted();
   }
 }

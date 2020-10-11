@@ -1,7 +1,5 @@
 #include "map.h"
 
-#include <memory>
-
 Map::Map(const std::shared_ptr<QImage>& map_image)
     : world_(std::make_shared<b2World>(b2Vec2(0, 20))),
       current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()),
@@ -24,6 +22,9 @@ void Map::Update(int time) {
 
   for (auto& object : game_objects_) {
     if (object->IsDeleted()) {
+      if (object->GetEntityType() == EntityType::kMushroom) {
+        PickUpMushroom(object->IsPicked());
+      }
       if (object->GetB2Body() != nullptr) {
         world_->DestroyBody(object->GetB2Body());
       }
@@ -104,8 +105,12 @@ bool Map::IsKeyClamped(Key key) {
   return is_key_clamped_[static_cast<int>(key)];
 }
 
-void Map::PickUpMushroom() {
-  picked_mushrooms_++;
+#include <iostream>
+void Map::PickUpMushroom(bool is_picked) {
+  if (is_picked) {
+    std::cerr<<"flex";
+    picked_mushrooms_++;
+  }
 }
 
 std::shared_ptr<AudioManager> Map::GetAudioManager() const {
@@ -175,7 +180,7 @@ std::shared_ptr<QImage> Map::GetScaledMapImage() const {
   return scaled_map_image_;
 }
 
-std::vector<std::shared_ptr<GameObject>>
-    Map::GetGameObjects() const {
-  return game_objects_;
+std::vector<std::shared_ptr<GameObject>>*
+Map::GetGameObjects() {
+  return &game_objects_;
 }

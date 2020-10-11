@@ -19,6 +19,7 @@
 #include "contact_listener.h"
 #include "entity.h"
 #include "map.h"
+#include "mushroom.h"
 #include "patroller.h"
 #include "player.h"
 #include "pressure_plate.h"

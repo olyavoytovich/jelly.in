@@ -70,7 +70,7 @@ void View::Draw(QPainter* painter) {
 
   painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
   auto game_objects = map->GetGameObjects();
-  for (auto game_object : game_objects) {
+  for (auto game_object : *game_objects) {
     DrawObject(painter, game_object, map);
   }
 

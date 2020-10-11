@@ -9,6 +9,7 @@
 #include "audio_manager.h"
 #include "box2d/box2d.h"
 #include "game_object.h"
+// #include "mushroom.h"
 
 // kAnyKey должен быть в enum последним
 enum class Key {
@@ -42,18 +43,18 @@ class Map {
   bool IsKeyPressed(Key key);
   bool IsKeyClamped(Key key);
 
-  void PickUpMushroom();
-
   std::shared_ptr<AudioManager> GetAudioManager() const;
+
   void SetGeneralVolume(int general_volume);
   void SetCurrentVolume(int current_volume);
-
   void UpdateCamera(QPainter* painter);
 
   QRect GetCurrentCamera() const;
-  std::shared_ptr<QImage> GetScaledMapImage() const;
-  std::vector<std::shared_ptr<GameObject>> GetGameObjects() const;
 
+  std::shared_ptr<QImage> GetScaledMapImage() const;
+  std::vector<std::shared_ptr<GameObject>>* GetGameObjects();
+
+  void PickUpMushroom(bool is_picked);
  private:
   void UpdateImageScale(int width, int height);
   void UpdateCameraPosition();

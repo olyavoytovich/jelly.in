@@ -34,6 +34,7 @@ class GameObject {
   virtual std::shared_ptr<Animator> GetAnimator() const = 0;
   virtual QRect GetBoundingRectangle() const = 0;
   virtual EntityType GetEntityType() const = 0;
+  virtual bool IsPicked() const;
 
   virtual void MarkAsDeleted();
   virtual bool IsDeleted() const;

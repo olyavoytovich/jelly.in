@@ -13,3 +13,7 @@ bool GameObject::IsDeleted() const {
 b2Body* GameObject::GetB2Body() const {
   return nullptr;
 }
+
+bool GameObject::IsPicked() const {
+  return false;
+}

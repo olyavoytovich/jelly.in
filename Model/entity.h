@@ -43,6 +43,7 @@ class Entity : public GameObject {
                    float speed, bool apply_once = false);
   void SetEntityType(EntityType entity_type);
 
+  //virtual bool IsPicked() const;
   void Update(int time) override;
 
   void Activate();
@@ -110,7 +111,6 @@ class Entity : public GameObject {
   b2Vec2 target_velocity_ = {0, 0};
   bool is_active_ = true;
   EntityType entity_type_;
-  int player_get_mushroom_audio_key_;
   int chestnut_audio_key_;
 };
 
