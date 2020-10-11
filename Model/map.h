@@ -53,8 +53,8 @@ class Map {
 
   std::shared_ptr<QImage> GetScaledMapImage() const;
   std::vector<std::shared_ptr<GameObject>>* GetGameObjects();
-
   void PickUpMushroom(bool is_picked);
+
  private:
   void UpdateImageScale(int width, int height);
   void UpdateCameraPosition();

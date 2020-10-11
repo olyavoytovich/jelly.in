@@ -105,10 +105,8 @@ bool Map::IsKeyClamped(Key key) {
   return is_key_clamped_[static_cast<int>(key)];
 }
 
-#include <iostream>
 void Map::PickUpMushroom(bool is_picked) {
   if (is_picked) {
-    std::cerr<<"flex";
     picked_mushrooms_++;
   }
 }

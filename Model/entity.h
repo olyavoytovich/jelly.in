@@ -43,7 +43,6 @@ class Entity : public GameObject {
                    float speed, bool apply_once = false);
   void SetEntityType(EntityType entity_type);
 
-  //virtual bool IsPicked() const;
   void Update(int time) override;
 
   void Activate();
