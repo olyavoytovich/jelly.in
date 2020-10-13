@@ -42,17 +42,17 @@ class Map {
   bool IsKeyPressed(Key key);
   bool IsKeyClamped(Key key);
 
-  std::shared_ptr<AudioManager> GetAudioManager() const;
+  void PickUpMushroom();
 
+  std::shared_ptr<AudioManager> GetAudioManager() const;
   void SetGeneralVolume(int general_volume);
   void SetCurrentVolume(int current_volume);
+
   void UpdateCamera(QPainter* painter);
 
   QRect GetCurrentCamera() const;
-
   std::shared_ptr<QImage> GetScaledMapImage() const;
-  std::vector<std::shared_ptr<GameObject>>* GetGameObjects();
-  void PickUpMushroom(bool is_picked);
+  std::vector<std::shared_ptr<GameObject>> GetGameObjects() const;
 
  private:
   void UpdateImageScale(int width, int height);

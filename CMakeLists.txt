@@ -27,7 +27,6 @@ set(SOURCES main.cpp
         Model/game_object.cpp
         Model/map.cpp
         Model/map_loader.cpp
-        Model/mushroom.cpp
         Model/patroller.cpp
         Model/player.cpp
         Model/pressure_plate.cpp
