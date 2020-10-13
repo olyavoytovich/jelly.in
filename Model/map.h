@@ -52,7 +52,7 @@ class Map {
 
   QRect GetCurrentCamera() const;
   std::shared_ptr<QImage> GetScaledMapImage() const;
-  std::vector<std::shared_ptr<GameObject>> GetGameObjects() const;
+  std::vector<std::shared_ptr<GameObject>>* GetGameObjects();
 
  private:
   void UpdateImageScale(int width, int height);
