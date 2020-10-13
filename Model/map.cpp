@@ -176,6 +176,6 @@ std::shared_ptr<QImage> Map::GetScaledMapImage() const {
 }
 
 std::vector<std::shared_ptr<GameObject>>*
-    Map::GetGameObjects(){
+    Map::GetGameObjects() {
   return &game_objects_;
 }
