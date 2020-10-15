@@ -17,6 +17,7 @@ SOURCES += \
         Model/animation.cpp \
         Model/animator.cpp \
         Model/audio_manager.cpp \
+        Model/camera.cpp \
         Model/contact_listener.cpp \
         Model/entity.cpp \
         Model/game_object.cpp \
@@ -90,6 +91,7 @@ HEADERS += \
     Model/animation.h \
     Model/animator.h \
     Model/audio_manager.h \
+    Model/camera.h \
     Model/constants.h \
     Model/contact_listener.h \
     Model/entity.h \
