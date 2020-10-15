@@ -44,8 +44,6 @@ void View::DrawObject(QPainter* painter,
     int height = static_cast<int>(rectangle_for_image.height()
         * map->GetScale());
     if (game_objects->GetEntityType() == EntityType::kSunflower) {
-      const float kSunflowerWidthPercent = 2.0;
-      const float kSunflowerHeightPercent = 4.4;
       width = static_cast<int>(width * kSunflowerWidthPercent);
       height = static_cast<int>(height * kSunflowerHeightPercent);
     }

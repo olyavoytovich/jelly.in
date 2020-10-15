@@ -35,6 +35,9 @@ class View : public QMainWindow, public AbstractView {
  private:
   const int kFrameInterval = 16;
 
+  const float kSunflowerWidthPercent = 2.0;
+  const float kSunflowerHeightPercent = 4.4;
+
  private:
   AbstractGameController* game_controller_ = nullptr;
   int timer_id_;

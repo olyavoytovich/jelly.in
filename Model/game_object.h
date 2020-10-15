@@ -3,8 +3,8 @@
 
 #include <QPainter>
 #include <QPolygon>
-#include <utility>
 #include <memory>
+#include <utility>
 
 #include "animator.h"
 #include "box2d/box2d.h"
