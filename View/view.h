@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "Controller/abstract_game_controller.h"
+#include "Model/camera.h"
 #include "Model/entity.h"
 #include "Model/map.h"
 #include "View/abstract_view.h"
@@ -29,8 +30,7 @@ class View : public QMainWindow, public AbstractView {
 
   void Draw(QPainter* painter);
   void DrawObject(QPainter* painter,
-                  std::shared_ptr<GameObject> game_objects,
-                  std::shared_ptr<Map> map) const;
+                  const std::shared_ptr<GameObject>& game_object) const;
 
  private:
   const int kFrameInterval = 16;
@@ -41,6 +41,9 @@ class View : public QMainWindow, public AbstractView {
  private:
   AbstractGameController* game_controller_ = nullptr;
   int timer_id_;
+
+  std::shared_ptr<Map> map_;
+  std::shared_ptr<Camera> camera_;
 };
 
 #endif  // VIEW_VIEW_H_

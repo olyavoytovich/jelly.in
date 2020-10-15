@@ -8,6 +8,7 @@
 
 #include "audio_manager.h"
 #include "box2d/box2d.h"
+#include "camera.h"
 #include "game_object.h"
 
 // kAnyKey должен быть в enum последним
@@ -25,8 +26,6 @@ class Map {
   ~Map() = default;
 
   void Update(int time);
-  double GetScale() const;
-  QPoint GetShift() const;
   std::shared_ptr<GameObject> GetPlayer() const;
   int GetPickedMushroomsCount() const;
 
@@ -50,13 +49,12 @@ class Map {
 
   void UpdateCamera(QPainter* painter);
 
-  QRect GetCurrentCamera() const;
+  std::shared_ptr<Camera> GetCurrentCamera() const;
   std::shared_ptr<QImage> GetScaledMapImage() const;
   std::vector<std::shared_ptr<GameObject>>* GetGameObjects();
 
  private:
-  void UpdateImageScale(int width, int height);
-  void UpdateCameraPosition();
+  void UpdateImageScale(const QSize& image_size);
 
  private:
   // Данные константы передаются в функцию Step(), которая используется при
@@ -70,25 +68,17 @@ class Map {
   const int kVelocityAccuracy = 6;
   const int kPositionAccuracy = 2;
 
-  // Ширина и Высота камеры
-  const QPoint kVisibleSize = QPoint(1600, 900);
-  // Ширина и Высота прямоугольника игрока (из центра камеры)
-  const QPoint kPlayerBoundary = QPoint(400, 225);
-
  private:
   std::shared_ptr<b2World> world_;
   std::shared_ptr<GameObject> player_;
   std::shared_ptr<b2ContactListener> contact_listener_;
 
-  QRect current_camera_;
+  std::shared_ptr<Camera> camera_;
 
   std::vector<std::shared_ptr<GameObject>> game_objects_;
   std::vector<std::shared_ptr<GameObject>> game_objects_to_add_;
   std::shared_ptr<QImage> map_image_;
   std::shared_ptr<QImage> scaled_map_image_;
-
-  double scale_ = 1;
-  QPoint shift_ = QPoint();
 
   int picked_mushrooms_ = 0;
 
