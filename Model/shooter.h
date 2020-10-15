@@ -7,6 +7,7 @@
 #include <vector>
 #include <utility>
 
+#include "animator.h"
 #include "entity.h"
 
 enum class BulletDirection {
@@ -20,35 +21,6 @@ class Shooter : public Entity {
           b2BodyType type,
           const QPoint& body_position,
           const QPolygon& polygon,
-          const std::vector<QPoint>& way_points,
-          BulletDirection bullet_direction,
-          int shoot_period,
-          int bullet_speed,
-          int bullet_radius,
-          std::shared_ptr<Animator> animator,
-          std::shared_ptr<Animator> bullet_animator,
-          EntityType entity_type,
-          int speed = 0);
-
-  Shooter(std::weak_ptr<Map> map,
-          b2BodyType type,
-          const QPoint& body_position,
-          int radius,
-          const std::vector<QPoint>& way_points,
-          BulletDirection bullet_direction,
-          int shoot_period,
-          int bullet_speed,
-          int bullet_radius,
-          std::shared_ptr<Animator> animator,
-          std::shared_ptr<Animator> bullet_animator,
-          EntityType entity_type,
-          int speed = 0);
-
-  Shooter(std::weak_ptr<Map> map,
-          b2BodyType body_type,
-          const QPoint& body_position,
-          const std::vector<CircleShape>& circles,
-          const std::vector<PolygonShape>& polygons,
           const std::vector<QPoint>& way_points,
           BulletDirection bullet_direction,
           int shoot_period,
@@ -83,8 +55,6 @@ class Shooter : public Entity {
   int bullet_radius_;
 
   std::shared_ptr<Animator> bullet_animator_;
-
-  std::shared_ptr<GameObject> player_ = nullptr;
 
   int thorn_audio_key_;
   std::vector<int> drop_audio_keys_;

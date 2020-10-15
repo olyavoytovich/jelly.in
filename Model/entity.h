@@ -11,22 +11,6 @@
 #include "game_object.h"
 #include "map.h"
 
-struct PolygonShape {
-  PolygonShape(QPolygon polygon, const QPoint& position)
-      : polygon(std::move(polygon)), position(position) {}
-
-  QPolygon polygon;
-  QPoint position;
-};
-
-struct CircleShape {
-  CircleShape(int radius, const QPoint& position)
-      : radius(radius), position(position) {}
-
-  int radius;
-  QPoint position;
-};
-
 class Entity : public GameObject {
  public:
   // Конструктор, создающий тело из одной формы - полигон.
@@ -43,23 +27,7 @@ class Entity : public GameObject {
          int radius,
          EntityType entity_type);
 
-  // Конструктор, благодаря которому можно создать тело из нескольких форм со
-  // своими локальными координатами. Третий параметр (body_position) - это
-  // координаты всего тела, следующий параметр - вектор структур CircleShape.
-  // В каждой структуре хранятся данные о радиусе и о локальных координатах
-  // данного круга. Пятый параметр так же вектор структур. В одной структуре
-  // PolygonShape хранятся данные о форме QPolygon и о локальных координатах.
-  Entity(std::weak_ptr<Map> map,
-         b2BodyType body_type,
-         const QPoint& body_position,
-         const std::vector<CircleShape>& circles,
-         const std::vector<PolygonShape>& polygons,
-         EntityType entity_type);
-
   ~Entity() override = default;
-
-  // Отрисовывает все формы тела.
-  void Draw(QPainter* painter) const override;
 
   b2PolygonShape CreatePolygonShape(const QPolygon& polygon,
                                     const QPoint& shape_position =
@@ -82,29 +50,27 @@ class Entity : public GameObject {
 
   b2Body* GetB2Body() const override;
   QPoint GetPositionInPixels() const override;
-  QRect GetBoundings() const;
+  QRect GetBoundingRectangle() const override;
+  std::shared_ptr<Animator> GetAnimator() const override;
+  EntityType GetEntityType() const;
 
   virtual void BeginCollision(b2Fixture* my_fixture,
                               EntityType my_type,
                               EntityType other_type);
-  virtual void EndCollision(b2Fixture* my_fixture, EntityType other_type);
 
-  EntityType GetEntityType() const;
+  virtual void EndCollision(b2Fixture* my_fixture, EntityType other_type);
 
  protected:
   int MetersToPixels(float value) const;
   QPoint MetersToPixels(b2Vec2 vector) const;
   float PixelsToMeters(int value) const;
   b2Vec2 PixelsToMeters(QPoint vector) const;
-
   b2Fixture* CreateFixture(const b2Shape& shape);
+
   void SetNoCollisionMask(uint16_t mask);
 
   // Выбирает громкость в зависимости от расстояния до игрока
   int CountVolumeFromDistance();
-
- protected:
-  const float kEpsilon = 1e-5;
 
  protected:
   b2Body* body_ = nullptr;
@@ -140,11 +106,8 @@ class Entity : public GameObject {
   const float kBodyDensity = 1;
   const float kPixelsPerMeter = 100;
 
-  const float kSunflowerWidthPercent = 2.0;
-  const float kSunflowerHeightPercent = 4.4;
-
  private:
-  b2Vec2 target_velocity = {0, 0};
+  b2Vec2 target_velocity_ = {0, 0};
   bool is_active_ = true;
   EntityType entity_type_;
   int player_get_mushroom_audio_key_;

@@ -6,8 +6,6 @@
 #include <utility>
 #include <vector>
 
-#include "map.h"
-
 class Animation {
  public:
   Animation(std::vector<std::shared_ptr<QImage>> frames,

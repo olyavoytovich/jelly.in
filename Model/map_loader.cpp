@@ -9,8 +9,9 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
   QString file_text = input_file.readAll();
   input_file.close();
 
-  QImage map_image(":/images/" + map_name + ".png");
-  if (map_image.isNull()) {
+  auto map_image =
+      std::make_shared<QImage>(":/images/" + map_name + ".png");
+  if (map_image->isNull()) {
     return nullptr;
   }
 
@@ -171,14 +172,6 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
                                                        b2_dynamicBody,
                                                        object_position,
                                                        radius,
-                                                       way_points,
-                                                       animator,
-                                                       object_speed));
-      } else {
-        map->AddGameObject(std::make_shared<Patroller>(map,
-                                                       b2_dynamicBody,
-                                                       object_position,
-                                                       object_points,
                                                        way_points,
                                                        animator,
                                                        object_speed));

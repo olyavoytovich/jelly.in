@@ -5,6 +5,7 @@
 #include <vector>
 #include <utility>
 
+#include "animator.h"
 #include "entity.h"
 
 class Patroller : public Entity {
@@ -12,24 +13,7 @@ class Patroller : public Entity {
   Patroller(std::weak_ptr<Map> map,
             b2BodyType type,
             const QPoint& body_position,
-            const QPolygon& polygon,
-            const std::vector<QPoint>& way_points,
-            std::shared_ptr<Animator> animator,
-            int speed);
-
-  Patroller(std::weak_ptr<Map> map,
-            b2BodyType type,
-            const QPoint& body_position,
             int radius,
-            const std::vector<QPoint>& way_points,
-            std::shared_ptr<Animator> animator,
-            int speed);
-
-  Patroller(std::weak_ptr<Map> map,
-            b2BodyType body_type,
-            const QPoint& body_position,
-            const std::vector<CircleShape>& circles,
-            const std::vector<PolygonShape>& polygons,
             const std::vector<QPoint>& way_points,
             std::shared_ptr<Animator> animator,
             int speed);

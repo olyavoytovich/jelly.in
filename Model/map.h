@@ -6,36 +6,27 @@
 #include <utility>
 #include <vector>
 
-#include "Controller/abstract_game_controller.h"
 #include "audio_manager.h"
 #include "box2d/box2d.h"
 #include "game_object.h"
 
-enum class EntityType {
-  kPlayer = 1,
-  kBullet = 2,
-  kChestnut = 4,
-  kCloud = 8,
-  kBurdock = 16,
-  kSunflower = 32,
-  kGround = 64,
-  kPlayerPart = 128,
-  kSpikes = 256,
-  kExit = 512,
-  kPlate = 1024,
-  kMushroom = 2048,
-  kDefault
+// kAnyKey должен быть в enum последним
+enum class Key {
+  kLeft,
+  kUp,
+  kRight,
+  kSpace,
+  kAnyKey
 };
 
 class Map {
  public:
-  explicit Map(const QImage& map_image);
+  explicit Map(const std::shared_ptr<QImage>& map_image);
   ~Map() = default;
 
   void Update(int time);
-  void Draw(QPainter* painter);
-
   double GetScale() const;
+  QPoint GetShift() const;
   std::shared_ptr<GameObject> GetPlayer() const;
   int GetPickedMushroomsCount() const;
 
@@ -56,6 +47,12 @@ class Map {
   std::shared_ptr<AudioManager> GetAudioManager() const;
   void SetGeneralVolume(int general_volume);
   void SetCurrentVolume(int current_volume);
+
+  void UpdateCamera(QPainter* painter);
+
+  QRect GetCurrentCamera() const;
+  std::shared_ptr<QImage> GetScaledMapImage() const;
+  std::vector<std::shared_ptr<GameObject>>* GetGameObjects();
 
  private:
   void UpdateImageScale(int width, int height);
@@ -87,8 +84,8 @@ class Map {
 
   std::vector<std::shared_ptr<GameObject>> game_objects_;
   std::vector<std::shared_ptr<GameObject>> game_objects_to_add_;
-  QImage map_image_;
-  QImage scaled_map_image_;
+  std::shared_ptr<QImage> map_image_;
+  std::shared_ptr<QImage> scaled_map_image_;
 
   double scale_ = 1;
   QPoint shift_ = QPoint();

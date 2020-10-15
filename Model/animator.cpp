@@ -8,7 +8,7 @@ Animator::Animator(
   frame_duration_ = current_animation_->GetFrameDuration(is_repeated_back_);
 }
 
-std::shared_ptr<QImage> Animator::GetCurrentImage(int width, int height) {
+std::shared_ptr<QImage> Animator::GetCurrentImage(int width, int height) const {
   return current_animation_->GetCurrentFrame(current_frame_, width, height);
 }
 

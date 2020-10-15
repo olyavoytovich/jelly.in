@@ -1,10 +1,12 @@
 #include "map.h"
 
-Map::Map(const QImage& map_image)
+#include <memory>
+
+Map::Map(const std::shared_ptr<QImage>& map_image)
     : world_(std::make_shared<b2World>(b2Vec2(0, 20))),
       current_camera_(0, 0, kVisibleSize.x(), kVisibleSize.y()),
       map_image_(map_image),
-      scaled_map_image_(map_image),
+      scaled_map_image_(std::make_shared<QImage>(*map_image)),
       is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
       is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false),
       audio_manager_(std::make_shared<AudioManager>()) {}
@@ -47,36 +49,12 @@ void Map::Update(int time) {
   is_key_pressed_.assign(is_key_pressed_.size(), false);
 }
 
-void Map::Draw(QPainter* painter) {
-  painter->save();
-
-  scale_ = std::max(
-      static_cast<double>(painter->window().width()) / kVisibleSize.x(),
-      static_cast<double>(painter->window().height()) / kVisibleSize.y());
-  shift_ = QPoint(painter->window().width(), painter->window().height());
-  shift_ = (shift_ / scale_ - kVisibleSize) / 2.0;
-
-  UpdateCameraPosition();
-  painter->translate(shift_ * scale_);
-  painter->translate(-current_camera_.topLeft() * scale_);
-
-  UpdateImageScale(static_cast<int>(map_image_.width() * scale_),
-                   static_cast<int>(map_image_.height() * scale_));
-  painter->drawImage(0, 0, scaled_map_image_);
-  painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
-
-  for (const auto& object : game_objects_) {
-    object->Draw(painter);
-  }
-
-  painter->setBrush(QBrush(Qt::green, Qt::BrushStyle::SolidPattern));
-  player_->Draw(painter);
-
-  painter->restore();
-}
-
 double Map::GetScale() const {
   return scale_;
+}
+
+QPoint Map::GetShift() const {
+  return shift_;
 }
 
 std::shared_ptr<GameObject> Map::GetPlayer() const {
@@ -143,9 +121,9 @@ void Map::SetCurrentVolume(int current_volume) {
 }
 
 void Map::UpdateImageScale(int width, int height) {
-  if (scaled_map_image_.width() != width
-      && scaled_map_image_.height() != height) {
-    scaled_map_image_ = map_image_.scaled(width, height, Qt::KeepAspectRatio);
+  if (scaled_map_image_->width() != width
+      && scaled_map_image_->height() != height) {
+    *scaled_map_image_ = map_image_->scaled(width, height, Qt::KeepAspectRatio);
   }
 }
 
@@ -167,13 +145,36 @@ void Map::UpdateCameraPosition() {
   if (current_camera_.left() < shift_.x()) {
     current_camera_.moveLeft(shift_.x());
   }
-  if (current_camera_.right() > map_image_.width() - shift_.x()) {
-    current_camera_.moveRight(map_image_.width() - shift_.x());
+  if (current_camera_.right() > map_image_->width() - shift_.x()) {
+    current_camera_.moveRight(map_image_->width() - shift_.x());
   }
   if (current_camera_.top() < shift_.y()) {
     current_camera_.moveTop(shift_.y());
   }
-  if (current_camera_.bottom() > map_image_.height() - shift_.y()) {
-    current_camera_.moveBottom(map_image_.height() - shift_.y());
+  if (current_camera_.bottom() > map_image_->height() - shift_.y()) {
+    current_camera_.moveBottom(map_image_->height() - shift_.y());
   }
+}
+
+void Map::UpdateCamera(QPainter* painter) {
+  scale_ = std::max(
+      static_cast<double>(painter->window().width()) / kVisibleSize.x(),
+      static_cast<double>(painter->window().height()) / kVisibleSize.y());
+  shift_ = QPoint(painter->window().width(), painter->window().height());
+  shift_ = (shift_ / scale_ - kVisibleSize) / 2.0;
+  UpdateCameraPosition();
+  UpdateImageScale(static_cast<int>(map_image_->width() * scale_),
+                   static_cast<int>(map_image_->height() * scale_));
+}
+
+QRect Map::GetCurrentCamera() const {
+  return current_camera_;
+}
+
+std::shared_ptr<QImage> Map::GetScaledMapImage() const {
+  return scaled_map_image_;
+}
+
+std::vector<std::shared_ptr<GameObject>>* Map::GetGameObjects() {
+  return &game_objects_;
 }

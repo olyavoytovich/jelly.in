@@ -2,8 +2,6 @@
 
 void GameObject::Update(int) {}
 
-void GameObject::Draw(QPainter*) const {}
-
 void GameObject::MarkAsDeleted() {
   is_object_deleted_ = true;
 }
