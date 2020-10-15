@@ -64,12 +64,10 @@ void View::Draw(QPainter* painter) {
 
   painter->drawImage(0, 0, *map_->GetScaledMapImage());
 
-  painter->setBrush(QBrush(Qt::black, Qt::BrushStyle::BDiagPattern));
   for (const auto& game_object : *map_->GetGameObjects()) {
     DrawObject(painter, game_object);
   }
 
-  painter->setBrush(QBrush(Qt::green, Qt::BrushStyle::SolidPattern));
   DrawObject(painter, map_->GetPlayer());
 
   painter->restore();
