@@ -84,8 +84,7 @@ SOURCES += \
         box2d/dynamics/b2_world.cpp \
         box2d/dynamics/b2_world_callbacks.cpp \
         box2d/rope/b2_rope.cpp \
-        Model/sound.cpp \
-        Model/mushroom.cpp
+        Model/sound.cpp
 
 HEADERS += \
     Controller/abstract_game_controller.h \
@@ -163,8 +162,7 @@ HEADERS += \
     box2d/dynamics/b2_island.h \
     box2d/dynamics/b2_polygon_circle_contact.h \
     box2d/dynamics/b2_polygon_contact.h \
-    Model/sound.h \
-    Model/mushroom.h
+    Model/sound.h
 
 RESOURCES += \
     resources.qrc
