@@ -95,6 +95,7 @@ class Entity : public GameObject {
   std::shared_ptr<Animator> animator_ = nullptr;
 
   std::shared_ptr<Sound> chestnut_sound_;
+
  private:
   void InitializeBody(b2BodyType body_type, const QPoint& body_position);
 

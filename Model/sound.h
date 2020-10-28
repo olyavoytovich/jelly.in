@@ -7,7 +7,7 @@
 
 class Sound {
  public:
-  Sound(QUrl media);
+  explicit Sound(QUrl media);
 
   void Play();
   void Replay();
