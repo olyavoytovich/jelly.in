@@ -34,13 +34,14 @@ Player::Player(std::weak_ptr<Map> map,
   right_sensor_->SetSensor(true);
 
   SetNoCollisionMask(static_cast<uint16_t>(EntityType::kPlayer));
+}
 
-  player_jump_audio_key_ = map_.lock()->GetAudioManager()->
-      CreateAudioPlayer(AudioName::kPlayerJump);
-  player_separation_audio_key_ = map_.lock()->GetAudioManager()->
-      CreateAudioPlayer(AudioName::kPlayerSeparation);
-  player_receive_damage_audio_key_ = map_.lock()->GetAudioManager()->
-      CreateAudioPlayer(AudioName::kPlayerTakingDamage);
+void Player::InitializeSound(std::shared_ptr<Sound> jump_sound,
+                             std::shared_ptr<Sound> separation_sound,
+                             std::shared_ptr<Sound> receive_damage_sound) {
+  jump_sound_ = std::move(jump_sound);
+  separation_sound_ = std::move(separation_sound);
+  receive_damage_sound_ = std::move(receive_damage_sound);
 }
 
 void Player::Update(int time) {
@@ -71,8 +72,7 @@ void Player::Update(int time) {
     player_part_->SetAnimator(std::make_shared<Animator>(*animator_));
     map_.lock()->AddGameObject(player_part_);
 
-    map_.lock()->GetAudioManager()->
-        PlayAudioPlayer(player_separation_audio_key_);
+    separation_sound_->Play();
   }
 
   if (player_part_ != nullptr
@@ -88,7 +88,7 @@ void Player::Update(int time) {
     body_->ApplyLinearImpulseToCenter(
         b2Vec2(0, -kPlayerJumpSpeed * body_->GetMass()), true);
 
-    map_.lock()->GetAudioManager()->ReplayAudioPlayer(player_jump_audio_key_);
+    jump_sound_->Replay();
   }
   float target_speed = -body_->GetLinearVelocity().x;
   if (map_.lock()->IsKeyClamped(Key::kLeft) && left_collisions_ == 0) {
@@ -157,8 +157,7 @@ void Player::TakeDamage() {
   no_damage_time_left_ = kNoDamageTime;
   current_health_--;
 
-  map_.lock()->GetAudioManager()->
-      PlayAudioPlayer(player_receive_damage_audio_key_);
+  receive_damage_sound_->Play();
 }
 
 void Player::SetAnimationName(const QString& animation_name) {

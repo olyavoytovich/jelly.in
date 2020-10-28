@@ -31,14 +31,14 @@ class Shooter : public Entity {
           EntityType entity_type,
           int speed = 0);
 
+  void InitializeSound(std::shared_ptr<Sound> shooter_sound);
+
   ~Shooter() override = default;
 
   void Update(int time) override;
 
  private:
   std::shared_ptr<Entity> CreateBullet(const QPoint& bullet_position);
-
-  void InitializeAudio();
 
  private:
   BulletDirection bullet_direction_;
@@ -56,6 +56,8 @@ class Shooter : public Entity {
 
   std::shared_ptr<Animator> bullet_animator_;
 
+  std::shared_ptr<Sound> burdock_shoot_sound_;
+  std::shared_ptr<Sound> cloud_shoot_sound_;
   int thorn_audio_key_;
   std::vector<int> drop_audio_keys_;
 };

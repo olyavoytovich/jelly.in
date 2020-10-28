@@ -18,6 +18,8 @@ class Patroller : public Entity {
             std::shared_ptr<Animator> animator,
             int speed);
 
+  void InitializeSound(std::shared_ptr<Sound> patroller_sound);
+
   ~Patroller() override = default;
 };
 

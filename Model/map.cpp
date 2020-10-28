@@ -1,13 +1,18 @@
 #include "map.h"
 
-Map::Map(const std::shared_ptr<QImage>& map_image)
+Map::Map(const std::shared_ptr<QImage>& map_image,
+         std::shared_ptr<std::vector<std::shared_ptr<Sound>>> sound_data)
     : world_(std::make_shared<b2World>(b2Vec2(0, 20))),
       camera_(std::make_shared<Camera>(map_image->size())),
       map_image_(map_image),
       scaled_map_image_(std::make_shared<QImage>(*map_image)),
       is_key_pressed_(static_cast<int>(Key::kAnyKey) + 1, false),
       is_key_clamped_(static_cast<int>(Key::kAnyKey) + 1, false),
-      audio_manager_(std::make_shared<AudioManager>()) {}
+      sound_data_(std::move(sound_data)),
+      mushroom_sound_(std::make_shared<Sound>(QUrl(
+          "qrc:/audio/player/mushroom.mp3"))) {
+  sound_data_->push_back(mushroom_sound_);
+}
 
 void Map::Update(int time) {
   if (player_->IsDeleted()) {
@@ -96,18 +101,13 @@ bool Map::IsKeyClamped(Key key) {
 
 void Map::PickUpMushroom() {
   picked_mushrooms_++;
+  mushroom_sound_->Replay();
 }
 
-std::shared_ptr<AudioManager> Map::GetAudioManager() const {
-  return audio_manager_;
-}
-
-void Map::SetGeneralVolume(int general_volume) {
-  audio_manager_->SetGeneralVolume(general_volume);
-}
-
-void Map::SetCurrentVolume(int current_volume) {
-  audio_manager_->SetCurrentVolume(current_volume);
+void Map::SetDefaultVolume(int volume) {
+  for (auto sound : *sound_data_) {
+    sound->SetDefaultVolume(volume);
+  }
 }
 
 void Map::UpdateImageScale(const QSize& image_size) {

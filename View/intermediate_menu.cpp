@@ -63,8 +63,10 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
     connect(back_arrow_, &QPushButton::clicked, this, [&]() {
       game_controller_->OpenSettingsMenu();
     });
+
+    // Play sound
     connect(back_arrow_, &QPushButton::pressed, this, [&]() {
-      audio_manager_->PlayAudio(AudioName::kButtonClick);
+      audio_manager_->Replay(AudioName::kButtonClick);
     });
     return;
   }
@@ -85,14 +87,15 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
     game_controller_->RestartGame();
   });
 
+  // Play sound
   connect(main_menu_button_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
+    audio_manager_->Replay(AudioName::kButtonClick);
   });
   connect(choose_level_button_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
+    audio_manager_->Replay(AudioName::kButtonClick);
   });
   connect(restart_button_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
+    audio_manager_->Replay(AudioName::kButtonClick);
   });
 
   if (menu_type_ == MenuType::kPause) {
@@ -101,8 +104,9 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
       game_controller_->ResumeGame();
     });
 
+    // Play sound
     connect(resume_button_, &QPushButton::pressed, this, [&]() {
-      audio_manager_->PlayAudio(AudioName::kButtonClick);
+      audio_manager_->Replay(AudioName::kButtonClick);
     });
   } else if (menu_type == MenuType::kVictory) {
     resume_button_ = new Button(image_set, this, "Next Level");
@@ -110,8 +114,9 @@ IntermediateMenu::IntermediateMenu(AbstractGameController* game_controller,
       game_controller_->StartNextLevel();
     });
 
+    // Play sound
     connect(resume_button_, &QPushButton::pressed, this, [&]() {
-      audio_manager_->PlayAudio(AudioName::kButtonClick);
+      audio_manager_->Replay(AudioName::kButtonClick);
     });
   }
 

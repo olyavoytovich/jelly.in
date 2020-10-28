@@ -15,3 +15,7 @@ Patroller::Patroller(std::weak_ptr<Map> map,
   animator_->Play();
   SetWayPoints(way_points);
 }
+
+void Patroller::InitializeSound(std::shared_ptr<Sound> patroller_sound) {
+  chestnut_sound_ = std::move(patroller_sound);
+}

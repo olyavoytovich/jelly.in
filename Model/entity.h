@@ -10,6 +10,7 @@
 #include "audio_manager.h"
 #include "game_object.h"
 #include "map.h"
+#include "sound.h"
 
 class Entity : public GameObject {
  public:
@@ -93,6 +94,7 @@ class Entity : public GameObject {
 
   std::shared_ptr<Animator> animator_ = nullptr;
 
+  std::shared_ptr<Sound> chestnut_sound_;
  private:
   void InitializeBody(b2BodyType body_type, const QPoint& body_position);
 
@@ -110,8 +112,6 @@ class Entity : public GameObject {
   b2Vec2 target_velocity_ = {0, 0};
   bool is_active_ = true;
   EntityType entity_type_;
-  int player_get_mushroom_audio_key_;
-  int chestnut_audio_key_;
 };
 
 #endif  // MODEL_ENTITY_H_

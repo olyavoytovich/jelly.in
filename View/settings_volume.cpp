@@ -28,8 +28,10 @@ SettingsVolume::SettingsVolume(AbstractGameController* game_controller,
   connect(back_arrow_, &QPushButton::clicked, this, [&]() {
     game_controller_->OpenSettingsMenu();
   });
+
+  // Play sound
   connect(back_arrow_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
+    audio_manager_->Replay(AudioName::kButtonClick);
   });
 
   for (int i = 0; i < 3; i++) {
@@ -43,8 +45,10 @@ SettingsVolume::SettingsVolume(AbstractGameController* game_controller,
       squares_[i]->SetText(QString::number(power));
       game_controller_->SetVolume(volume, power);
     });
+
+    // Play sound
     connect(right_arrows_[i], &QPushButton::pressed, this, [&]() {
-      audio_manager_->PlayAudio(AudioName::kButtonClick);
+      audio_manager_->Replay(AudioName::kButtonClick);
     });
 
     connect(left_arrows_[i], &QPushButton::clicked, this, [&, i]() {
@@ -57,8 +61,10 @@ SettingsVolume::SettingsVolume(AbstractGameController* game_controller,
       squares_[i]->SetText(QString::number(power));
       game_controller_->SetVolume(volume, power);
     });
+
+    // Play sound
     connect(left_arrows_[i], &QPushButton::pressed, this, [&]() {
-      audio_manager_->PlayAudio(AudioName::kButtonClick);
+      audio_manager_->Replay(AudioName::kButtonClick);
     });
   }
 }

@@ -23,14 +23,15 @@ MainMenu::MainMenu(AbstractGameController* game_controller, QWidget* parent)
     qApp->exit();
   });
 
+  // Play sound
   connect(play_button_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
+    audio_manager_->Replay(AudioName::kButtonClick);
   });
   connect(settings_button_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
+    audio_manager_->Replay(AudioName::kButtonClick);
   });
   connect(exit_button_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
+    audio_manager_->Replay(AudioName::kButtonClick);
   });
 }
 

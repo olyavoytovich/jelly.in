@@ -15,13 +15,15 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
     return nullptr;
   }
 
+  auto sound_data = std::make_shared<std::vector<std::shared_ptr<Sound>>>();
+
   QJsonDocument json_document(QJsonDocument::fromJson(file_text.toUtf8()));
   QJsonObject json_main = json_document.object();
   QJsonArray solids = json_main["solids"].toArray();
 
   QJsonObject object, point_obj;
 
-  auto map = std::make_shared<Map>(map_image);
+  auto map = std::make_shared<Map>(map_image, sound_data);
   map->SetContactListener(std::make_shared<ContactListener>());
   for (const auto& solid_object : solids) {
     object = solid_object.toObject();
@@ -124,11 +126,24 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       }
       auto animator = std::make_shared<Animator>(name_to_player_animation,
                                                  kPlayerAnimations[0]);
+      auto jump_sound =
+          std::make_shared<Sound>(QUrl("qrc:/audio/player/jump.mp3"));
+      auto separation_sound =
+          std::make_shared<Sound>(QUrl("qrc:/audio/player/separation.mp3"));
+      auto receive_damage_sound =
+          std::make_shared<Sound>(QUrl("qrc:/audio/player/taking_damage.mp3"));
 
-      map->SetPlayerObject(std::make_shared<Player>(map,
-                                                    position,
-                                                    object_points,
-                                                    animator));
+      auto player = std::make_shared<Player>(map,
+                                             position,
+                                             object_points,
+                                             animator);
+      player->InitializeSound(jump_sound,
+                              separation_sound,
+                              receive_damage_sound);
+      map->SetPlayerObject(player);
+      sound_data->push_back(jump_sound);
+      sound_data->push_back(separation_sound);
+      sound_data->push_back(receive_damage_sound);
       continue;
     }
     std::shared_ptr<Animator>
@@ -168,13 +183,18 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
     if (object["type"].toString() == "patroller") {
       if (!object["ellipse"].isNull()) {
         int radius = object["width"].toInt() / 2;
-        map->AddGameObject(std::make_shared<Patroller>(map,
-                                                       b2_dynamicBody,
-                                                       object_position,
-                                                       radius,
-                                                       way_points,
-                                                       animator,
-                                                       object_speed));
+        auto patroller_sound =
+            std::make_shared<Sound>(QUrl("qrc:/audio/enemy/chestnut.mp3"));
+        auto patroller = std::make_shared<Patroller>(map,
+                                                     b2_dynamicBody,
+                                                     object_position,
+                                                     radius,
+                                                     way_points,
+                                                     animator,
+                                                     object_speed);
+        patroller->InitializeSound(patroller_sound);
+        map->AddGameObject(patroller);
+        sound_data->push_back(patroller_sound);
       }
     }
 
@@ -194,13 +214,16 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
       int bullet_radius = object["bullet_radius"].toInt();
 
       EntityType shooter_type = EntityType::kDefault;
+      QUrl path = QUrl("");
       QString animation_name = animations[0].toObject()["name"].toString();
       if (animation_name == "sunflower") {
         shooter_type = EntityType::kSunflower;
       } else if (animation_name == "cloud") {
         shooter_type = EntityType::kCloud;
+        path = QUrl("qrc:/audio/enemy/cloud_bullet.mp3");
       } else if (animation_name == "burdock") {
         shooter_type = EntityType::kBurdock;
+        path = QUrl("qrc:/audio/enemy/burdock_bullet.mp3");
       }
 
       if (shooter_type == EntityType::kDefault) {
@@ -208,19 +231,25 @@ std::shared_ptr<Map> MapLoader::LoadMap(const QString& map_name) {
         return nullptr;
       }
 
-      map->AddGameObject(std::make_shared<Shooter>(map,
-                                                   body_type,
-                                                   object_position,
-                                                   object_points,
-                                                   way_points,
-                                                   bullet_direction,
-                                                   shoot_period,
-                                                   bullet_speed,
-                                                   bullet_radius,
-                                                   animator,
-                                                   bullet_animator,
-                                                   shooter_type,
-                                                   object_speed));
+      auto shooter_sound = std::make_shared<Sound>(path);
+
+      auto shooter = std::make_shared<Shooter>(map,
+                                               body_type,
+                                               object_position,
+                                               object_points,
+                                               way_points,
+                                               bullet_direction,
+                                               shoot_period,
+                                               bullet_speed,
+                                               bullet_radius,
+                                               animator,
+                                               bullet_animator,
+                                               shooter_type,
+                                               object_speed);
+      shooter->InitializeSound(shooter_sound);
+
+      map->AddGameObject(shooter);
+      sound_data->push_back(shooter_sound);
     }
 
     if (object["type"].toString() == "mushroom") {

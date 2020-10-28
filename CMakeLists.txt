@@ -43,7 +43,9 @@ set(SOURCES main.cpp
         View/settings_menu.cpp
         View/settings_volume.cpp
         View/view.cpp
-        ${box2d})
+        ${box2d}
+        Model/sound.cpp
+        )
 
 qt5_add_big_resources(SOURCES resources.qrc)
 add_executable(jellyin ${SOURCES})

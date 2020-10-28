@@ -7,6 +7,7 @@
 #include "animator.h"
 #include "constants.h"
 #include "entity.h"
+#include "sound.h"
 
 class Player : public Entity {
  public:
@@ -28,6 +29,10 @@ class Player : public Entity {
 
   void SetAnimationName(const QString& animation_name);
   void SetCurrentLevel(int level_number);
+
+  void InitializeSound(std::shared_ptr<Sound> jump_sound,
+                      std::shared_ptr<Sound> separation_sound,
+                      std::shared_ptr<Sound> receive_damage_sound);
 
  public:
   static const int kPlayerWidth = 64;
@@ -65,9 +70,9 @@ class Player : public Entity {
 
   std::shared_ptr<Entity> player_part_ = nullptr;
 
-  int player_jump_audio_key_;
-  int player_separation_audio_key_;
-  int player_receive_damage_audio_key_;
+  std::shared_ptr<Sound> jump_sound_;
+  std::shared_ptr<Sound> separation_sound_;
+  std::shared_ptr<Sound> receive_damage_sound_;
 };
 
 #endif  // MODEL_PLAYER_H_

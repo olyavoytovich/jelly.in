@@ -19,29 +19,34 @@ SettingsMenu::SettingsMenu(AbstractGameController* game_controller,
   connect(back_arrow_, &QPushButton::clicked, this, [&]() {
     game_controller_->OpenMainMenu();
   });
-  connect(back_arrow_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
-  });
 
   connect(controls_, &QPushButton::clicked, this, [&]() {
     game_controller_->OpenSettingsControls();
-  });
-  connect(controls_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
   });
 
   connect(volume_, &QPushButton::clicked, this, [&]() {
     game_controller_->OpenSettingsVolume();
   });
-  connect(volume_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
-  });
 
   connect(reset_, &QPushButton::clicked, this, [&]() {
     game_controller_->Reset();
   });
+
+  // Play sound
+  connect(back_arrow_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->Replay(AudioName::kButtonClick);
+  });
+
+  connect(controls_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->Replay(AudioName::kButtonClick);
+  });
+
+  connect(volume_, &QPushButton::pressed, this, [&]() {
+    audio_manager_->Replay(AudioName::kButtonClick);
+  });
+
   connect(reset_, &QPushButton::pressed, this, [&]() {
-    audio_manager_->PlayAudio(AudioName::kButtonClick);
+    audio_manager_->Replay(AudioName::kButtonClick);
   });
 }
 

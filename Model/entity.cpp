@@ -25,8 +25,6 @@ Entity::Entity(std::weak_ptr<Map> map,
     // Грибы сталкиваются только с игроком или его частью
     SetNoCollisionMask(~(static_cast<uint16_t>(EntityType::kPlayer)
         + static_cast<uint16_t>(EntityType::kPlayerPart)));
-    player_get_mushroom_audio_key_ = map_.lock()->GetAudioManager()->
-        CreateAudioPlayer(AudioName::kPlayerGettingMushroom);
   }
   if (entity_type == EntityType::kExit) {
     SetNoCollisionMask(~static_cast<uint16_t>(EntityType::kPlayer));
@@ -43,10 +41,6 @@ Entity::Entity(std::weak_ptr<Map> map,
   b2CircleShape shape = CreateCircleShape(radius);
   CreateFixture(shape);
   InitializeBoundaryRectangle();
-  if (entity_type_ == EntityType::kChestnut) {
-    chestnut_audio_key_ = map_.lock()->GetAudioManager()->
-        CreateAudioPlayer(AudioName::kChestnut);
-  }
 }
 
 void Entity::InitializeBody(b2BodyType body_type, const QPoint& body_position) {
@@ -202,9 +196,8 @@ void Entity::Update(int time) {
     SetVelocity(way_points_[way_point_index_], body_position, speed_);
   }
   if (entity_type_ == EntityType::kChestnut) {
-    map_.lock()->GetAudioManager()->
-        SetVolume(chestnut_audio_key_, CountVolumeFromDistance());
-    map_.lock()->GetAudioManager()->PlayAudioPlayer(chestnut_audio_key_);
+    chestnut_sound_->SetVolume(CountVolumeFromDistance());
+    chestnut_sound_->Play();
   }
 }
 
@@ -272,10 +265,8 @@ void Entity::BeginCollision(b2Fixture*, EntityType my_type, EntityType) {
   if (my_type == EntityType::kBullet) {
     MarkAsDeleted();
   }
-  if (my_type == EntityType::kMushroom && !IsDeleted()) {
+  if (!IsDeleted() && my_type == EntityType::kMushroom) {
     map_.lock()->PickUpMushroom();
-    map_.lock()->GetAudioManager()->
-        PlayAudioPlayer(player_get_mushroom_audio_key_);
     MarkAsDeleted();
   }
 }

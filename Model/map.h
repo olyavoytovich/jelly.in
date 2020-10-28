@@ -10,6 +10,7 @@
 #include "box2d/box2d.h"
 #include "camera.h"
 #include "game_object.h"
+#include "sound.h"
 
 // kAnyKey должен быть в enum последним
 enum class Key {
@@ -22,7 +23,8 @@ enum class Key {
 
 class Map {
  public:
-  explicit Map(const std::shared_ptr<QImage>& map_image);
+  Map(const std::shared_ptr<QImage>& map_image,
+      std::shared_ptr<std::vector<std::shared_ptr<Sound>>> sound_data);
   ~Map() = default;
 
   void Update(int time);
@@ -43,9 +45,7 @@ class Map {
 
   void PickUpMushroom();
 
-  std::shared_ptr<AudioManager> GetAudioManager() const;
-  void SetGeneralVolume(int general_volume);
-  void SetCurrentVolume(int current_volume);
+  void SetDefaultVolume(int volume);
 
   void UpdateCamera(QPainter* painter);
 
@@ -85,7 +85,9 @@ class Map {
   std::vector<bool> is_key_pressed_;
   std::vector<bool> is_key_clamped_;
 
-  std::shared_ptr<AudioManager> audio_manager_;
+  std::shared_ptr<Sound> mushroom_sound_;
+  // Sound data
+  std::shared_ptr<std::vector<std::shared_ptr<Sound>>> sound_data_;
 };
 
 #endif  // MODEL_MAP_H_

@@ -18,13 +18,9 @@ GameController::GameController()
 
   LoadVolume();
 
-  level_audio_key_ = audio_manager_->
-      CreateAudioPlayerByPlayList(AudioName::kBackground);
-  audio_manager_->SetPlayBackMode(level_audio_key_, QMediaPlaylist::Loop);
-  menu_audio_key_ = audio_manager_->
-      CreateAudioPlayerByPlayList(AudioName::kMenuAudio);
-  audio_manager_->SetPlayBackMode(menu_audio_key_, QMediaPlaylist::Loop);
-  audio_manager_->PlayAudioPlayer(menu_audio_key_);
+  audio_manager_->SetPlayBackMode(AudioName::kMenuAudio, QMediaPlaylist::Loop);
+  audio_manager_->SetPlayBackMode(AudioName::kBackground, QMediaPlaylist::Loop);
+  audio_manager_->Play(AudioName::kMenuAudio);
 }
 
 void GameController::Update(int time) {
@@ -96,19 +92,19 @@ void GameController::CloseCurrentLevel() {
 
 void GameController::OpenChooseLevelMenu() {
   OpenMenu(std::make_shared<ChooseLevelMenu>(this));
-  audio_manager_->PlayAudioPlayer(menu_audio_key_);
+  audio_manager_->Play(AudioName::kMenuAudio);
   CloseCurrentLevel();
 }
 
 void GameController::OpenMainMenu() {
   OpenMenu(std::make_shared<MainMenu>(this));
-  audio_manager_->PlayAudioPlayer(menu_audio_key_);
+  audio_manager_->Play(AudioName::kMenuAudio);
   CloseCurrentLevel();
 }
 
 void GameController::OpenPauseMenu() {
-  audio_manager_->PauseAudioPlayer(level_audio_key_);
-  audio_manager_->PlayAudioPlayer(menu_audio_key_);
+  audio_manager_->Pause(AudioName::kBackground);
+  audio_manager_->Play(AudioName::kMenuAudio);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kPause));
 }
 
@@ -127,15 +123,15 @@ void GameController::OpenVictoryMenu() {
   settings_.setValue("level_" + QString::number(level_number_ + 1),
                      level_mushrooms_[level_number_]);
 
-  audio_manager_->StopAudioPlayer(level_audio_key_);
-  audio_manager_->PlayAudioPlayer(menu_audio_key_);
+  audio_manager_->Stop(AudioName::kBackground);
+  audio_manager_->Play(AudioName::kMenuAudio);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kVictory));
   CloseCurrentLevel();
 }
 
 void GameController::OpenFailMenu() {
-  audio_manager_->StopAudioPlayer(level_audio_key_);
-  audio_manager_->PlayAudioPlayer(menu_audio_key_);
+  audio_manager_->Stop(AudioName::kBackground);
+  audio_manager_->Play(AudioName::kMenuAudio);
   OpenMenu(std::make_shared<IntermediateMenu>(this, MenuType::kFail));
   CloseCurrentLevel();
 }
@@ -158,8 +154,8 @@ void GameController::OpenSettingsVolume() {
 void GameController::ResumeGame() {
   view_->takeCentralWidget();
   view_->setCentralWidget(interface_.get());
-  audio_manager_->StopAudioPlayer(menu_audio_key_);
-  audio_manager_->PlayAudioPlayer(level_audio_key_);
+  audio_manager_->Stop(AudioName::kMenuAudio);
+  audio_manager_->Play(AudioName::kBackground);
 }
 
 void GameController::RestartGame() {
@@ -182,8 +178,6 @@ void GameController::Reset() {
 void GameController::OpenMenu(std::shared_ptr<Menu> menu) {
   menu_ = std::move(menu);
   if (menu_ != nullptr) {
-    menu_->SetGeneralVolume(general_volume_);
-    menu_->SetCurrentVolume(sound_volume_);
     view_->takeCentralWidget();
     view_->setCentralWidget(menu_.get());
   }
@@ -199,10 +193,9 @@ void GameController::StartLevel(int level_number) {
   if (map_ == nullptr) {
     return;
   }
-  map_->SetGeneralVolume(general_volume_);
-  map_->SetCurrentVolume(sound_volume_);
-  audio_manager_->StopAudioPlayer(menu_audio_key_);
-  audio_manager_->ReplayAudioPlayer(level_audio_key_);
+  map_->SetDefaultVolume(general_volume_ * sound_volume_ / 100);
+  audio_manager_->Stop(AudioName::kMenuAudio);
+  audio_manager_->Replay(AudioName::kBackground);
   level_number_ = level_number;
   player_ = std::dynamic_pointer_cast<Player>(map_->GetPlayer());
   player_->SetAnimationName(player_animation_name_);
@@ -242,20 +235,28 @@ void GameController::SetVolume(Volume volume, int power) {
   switch (volume) {
     case Volume::kGeneral: {
       general_volume_ = power;
-      audio_manager_->SetGeneralVolume(general_volume_);
-      menu_->SetGeneralVolume(general_volume_);
+      audio_manager_->SetVolume(AudioName::kButtonClick,
+                                general_volume_ * sound_volume_ / 100);
+      audio_manager_->SetVolume(AudioName::kMenuAudio,
+                                general_volume_ * music_volume_ / 100);
+      audio_manager_->SetVolume(AudioName::kBackground,
+                                general_volume_ * music_volume_ / 100);
       settings_.setValue("volume/general", general_volume_);
       break;
     }
     case Volume::kMusic: {
       music_volume_ = power;
-      audio_manager_->SetCurrentVolume(music_volume_);
+      audio_manager_->SetVolume(AudioName::kMenuAudio,
+                                general_volume_ * music_volume_ / 100);
+      audio_manager_->SetVolume(AudioName::kBackground,
+                                general_volume_ * music_volume_ / 100);
       settings_.setValue("volume/music", music_volume_);
       break;
     }
     case Volume::kSound: {
       sound_volume_ = power;
-      menu_->SetCurrentVolume(sound_volume_);
+      audio_manager_->SetVolume(AudioName::kButtonClick,
+                                general_volume_ * sound_volume_ / 100);
       settings_.setValue("volume/sound", sound_volume_);
       break;
     }

@@ -86,8 +86,6 @@ class GameController : public AbstractGameController {
   std::shared_ptr<Player> player_ = nullptr;
 
   std::shared_ptr<AudioManager> audio_manager_;
-  int level_audio_key_;
-  int menu_audio_key_;
 
   int general_volume_ = 40;
   int music_volume_ = 40;
